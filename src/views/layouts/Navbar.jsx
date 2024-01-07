@@ -2,6 +2,7 @@
 import React from "react";
 import { Avatar, Dropdown } from 'flowbite-react';
 import { DarkThemeToggle, Flowbite } from 'flowbite-react';
+import { NavLink } from "react-router-dom";
 
 function Navbar({onToggleSidebar}) {
 
@@ -25,14 +26,30 @@ function Navbar({onToggleSidebar}) {
                 }
               >
                 <Dropdown.Header>
-                  <span className="block text-sm">Bonnie Green</span>
-                  <span className="block truncate text-sm font-medium">name@flowbite.com</span>
+                  <span className="block text-sm">Bahari</span>
+                  <span className="block truncate text-sm font-medium">baharihari49@gmail.com</span>
                 </Dropdown.Header>
-                <Dropdown.Item>Dashboard</Dropdown.Item>
-                <Dropdown.Item>Settings</Dropdown.Item>
-                <Dropdown.Item>Earnings</Dropdown.Item>
+                <Dropdown.Item className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.109 17H1v-2a4 4 0 0 1 4-4h.87M10 4.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm7.95 2.55a2 2 0 0 1 0 2.829l-6.364 6.364-3.536.707.707-3.536 6.364-6.364a2 2 0 0 1 2.829 0Z"/>
+                    </svg>
+                    <NavLink to={'/profile'}>
+                        Profile
+                    </NavLink>
+                </Dropdown.Item>
+                <Dropdown.Item className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 4c0 1.657-3.582 3-8 3S1 5.657 1 4m16 0c0-1.657-3.582-3-8-3S1 2.343 1 4m16 0v6M1 4v6m0 0c0 1.657 3.582 3 8 3s8-1.343 8-3M1 10v6c0 1.657 3.582 3 8 3s8-1.343 8-3v-6"/>
+                    </svg>
+                    Ganti database
+                </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item>Sign out</Dropdown.Item>
+                <Dropdown.Item className="flex item-center gap-2">
+                    <svg className="w-4 h-4 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"/>
+                    </svg>
+                    Keluar
+                </Dropdown.Item>
               </Dropdown>
             )
       }
@@ -62,7 +79,7 @@ function Navbar({onToggleSidebar}) {
                 <a href="#" className="flex items-center justify-between mr-4">
                     {/* <img src="https://res.cloudinary.com/du0tz73ma/image/upload/w_1000/q_auto:best/f_auto/v1702445620/octansidnByBoxity_vwv8wi.png"
                         className="mr-3 h-10 md:h-12" alt="Flowbite Logo" /> */}
-                    <span className="text-xl lg:text-3xl font-semibold dark:text-white">Logo bisnis</span>
+                    <span className="text-xl lg:text-2xl font-semibold dark:text-white">PT. Teknologi Naya Abadi</span>
                 </a>
             </div>
             <div className="flex items-center lg:order-2">
