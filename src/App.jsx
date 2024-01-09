@@ -1,11 +1,12 @@
 import Sidebar from './views/layouts/Sidebar'
 import Navbar from './views/layouts/Navbar'
 import { createContext, useState } from 'react'
-import Master from './views/dashboard/user/master/Master';
+import Master from './views/sidebar/user/Master';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Role from './views/dashboard/user/Role&Permission';
+import Role from './views/sidebar/user/Role&Permission';
 import Profile from './views/profile/Profile';
 import Footer from './views/layouts/Footer';
+import CompanyList from './views/sidebar/company/CompanyList';
 // import './App.css'
 
 function App() {
@@ -17,10 +18,6 @@ function App() {
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
-
-  // const toggleOpenModal  = () => {
-  //   setOpenModal(!openModal)
-  // }
 
   return (
     <>
@@ -35,6 +32,7 @@ function App() {
             <Route path="/user/master" element={<Master />} />
             <Route path='/user/role' element={< Role />} />
             <Route path='/profile' element={< Profile />} />
+            <Route path='/company/list' element={< CompanyList />} />
           </Routes>
         </div>
         <div className='md:ml-64 h-auto relative'>

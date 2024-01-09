@@ -1,4 +1,4 @@
-'use client';
+'';
 import React from "react";
 import { Avatar, Dropdown } from 'flowbite-react';
 import { DarkThemeToggle, Flowbite } from 'flowbite-react';
@@ -77,9 +77,9 @@ function Navbar({onToggleSidebar}) {
                     <span className="sr-only">Toggle sidebar</span>
                 </button>
                 <a href="#" className="flex items-center justify-between mr-4">
-                    {/* <img src="https://res.cloudinary.com/du0tz73ma/image/upload/w_1000/q_auto:best/f_auto/v1702445620/octansidnByBoxity_vwv8wi.png"
-                        className="mr-3 h-10 md:h-12" alt="Flowbite Logo" /> */}
-                    <span className="text-xl lg:text-2xl font-semibold dark:text-white">PT. Teknologi Naya Abadi</span>
+                    <img src="https://res.cloudinary.com/boxity-id/image/upload/v1704217862/tna/Logo_PT._Teknologi_Naya_Abadi_bpxbbt.png"
+                        className="mr-3 h-5 md:h-8" alt="PT. Teknologi Naya Abadi" />
+                    {/* <span className="text-xl lg:text-2xl font-semibold dark:text-white">PT. Teknologi Naya Abadi</span> */}
                 </a>
             </div>
             <div className="flex items-center lg:order-2">
