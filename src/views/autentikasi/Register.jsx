@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { useRef, useState, useEffect } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
+import { Spinner } from "flowbite-react"
 
 
 const Register = ({setAuth}) => {
@@ -13,11 +14,15 @@ const Register = ({setAuth}) => {
     const [response, setResponse] = useState()
     const [emailValidation, setEmailValidation] = useState()
     const [passwordValidation, setPasswordValidation] = useState()
+    const [nameValidation, setNameValidation] = useState()
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if(!!response){
             setEmailValidation(!!response.email ? response.email[0] : '')
             setPasswordValidation(!!response.password ? response.password[0] : '')
+            setNameValidation(!!response.name ? response.name[0] : '')
+            setLoading(!loading)
         }
     }, [response]) 
 
@@ -25,6 +30,8 @@ const Register = ({setAuth}) => {
 
     const handelRegister = async (e) => {
         e.preventDefault()
+        setLoading(!loading);
+
         try {
             const formData = {
                 name: nameRef.current.value,
@@ -49,6 +56,8 @@ const Register = ({setAuth}) => {
 
         } catch (error) {
             console.log(error);
+        } finally{
+            setLoading(false); // Set loading to false after the request completes
         }
 
 
@@ -56,11 +65,13 @@ const Register = ({setAuth}) => {
 
     return(
         <section className="bg-gray-50 dark:bg-gray-900">
+            <div modal-backdrop="" className={`${loading ? `hidden` : `fixed z-10 inset-0`} bg-gray-900 bg-opacity-50 dark:bg-opacity-80  flex items-center justify-center`}>
+            <Spinner className={`${loading ? `hidden` : ``}`} aria-label="Extra large spinner example" size="xl" />
+          </div>
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                    <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-                        alt="logo" />
-                    Flowbite
+                <img src="https://res.cloudinary.com/boxity-id/image/upload/v1704217862/tna/Logo_PT._Teknologi_Naya_Abadi_bpxbbt.png"
+                        className="mr-3 h-5 md:h-10" alt="PT. Teknologi Naya Abadi" />
                 </a>
                 <div
                     className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -76,6 +87,7 @@ const Register = ({setAuth}) => {
                                 <input type="text" ref={nameRef} name="name" id="name"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="name@company.com" required=""/>
+                                     <p className={`${!!emailValidation ? `` : `hidden`} text-red-500 text-sm font-medium mt-2`}>{emailValidation}</p>
                             </div>
                             <div>
                                 <label htmlFor="email"

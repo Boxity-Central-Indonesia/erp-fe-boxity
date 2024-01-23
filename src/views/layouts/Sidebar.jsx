@@ -4,7 +4,8 @@ import { NavLink } from 'react-router-dom';
 
 function Sidebar({ isOpen }) {
   const elementUserDropdown = useRef(null);
-  const elementCompanyDropdown = useRef(null);
+  const elemenOrganizationDropdown = useRef(null);
+  const elemenEmployeeDropdown = useRef(null);
   const elementOrdersDropdown = useRef(null)
   const elementInvoicesDropdown = useRef(null)
   const elementPaymentDropdown = useRef(null)
@@ -13,10 +14,12 @@ function Sidebar({ isOpen }) {
   const elementLeadsDropdown = useRef(null)
   const elementProductsProductionDropdown = useRef(null);
   const elementReportsDropdown = useRef(null);
+  const elementWarehousesAndProducts = useRef(null)
 
   const dropdown = (dropdownRef) => {
     dropdownRef.current.classList.toggle('hidden');
   };
+  
 
   const renderDropdown = (dropdownRef, label, icon, items) => (
     <li>
@@ -42,18 +45,69 @@ function Sidebar({ isOpen }) {
     </li>
   );
 
+
+  const renderNestedDropdown = (dropdownRef, label, icon, items) => (
+    <li>
+      <button
+        onClick={() => dropdown(dropdownRef)}
+        type="button"
+        className="flex items-center primary-color-sidebar-hover w-full p-2 text-base font-medium primary-color-sidebar-hover transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+        aria-controls={`dropdown-${label.toLowerCase()}`}
+        data-collapse-toggle={`dropdown-${label.toLowerCase()}`}
+      >
+        {icon}
+        <span className="ml-3">{label}</span>
+      </button>
+      <ul ref={dropdownRef} id={`dropdown-${label.toLowerCase()}`} className="hidden pl-10 py-2 space-y-2">
+        {items.map((item, index) => (
+          <React.Fragment key={index}>
+            {item.type === 'dropdown' ? (
+              renderDropdown(item.ref, item.label, item.icon, item.items)
+            ) : (
+              <NavLink
+                to={item.path}
+                className="flex items-center primary-color-sidebar-hover p-2 text-base primary-color-sidebar-hover transition duration-75 rounded-lg  group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+              >
+                {item.label}
+              </NavLink>
+            )}
+          </React.Fragment>
+        ))}
+      </ul>
+    </li>
+  );
+  
+  
+  
+
   const userDropdownItems = [
     { path: '/user/master', label: 'Master Data' },
     { path: '/user/role', label: 'Role & Permission' },
     // ... tambahkan item dropdown lainnya sesuai kebutuhan
   ];
 
-  const companyDropdownItems = [
-    { path: '/company/list', label: 'Company List' },
-    { path: '/company/list-employes', label: 'Employees List' },
-    { path: '/company/list-departments', label: 'Departments List' },
-    // ... tambahkan item dropdown lainnya sesuai kebutuhan
+  const organizationDropdownItems = [
+    { path: '/company/list', label: 'Companies' },
+    { path: '/departement/list', label: 'Departments' },
+    { path: '/branch/list', label: 'Branches' },
+    {
+      type: 'dropdown',
+      ref: elemenEmployeeDropdown,
+      label: 'Employees',
+      icon: <svg className="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.333 6.764a3 3 0 1 1 3.141-5.023M2.5 16H1v-2a4 4 0 0 1 4-4m7.379-8.121a3 3 0 1 1 2.976 5M15 10a4 4 0 0 1 4 4v2h-1.761M13 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-4 6h2a4 4 0 0 1 4 4v2H5v-2a4 4 0 0 1 4-4Z"/>
+    </svg>,
+      items: [
+        { path: '/employes/categories', label: 'Categories' },
+        { path: '/employes/list', label: 'List' },
+      ],
+    },
   ];
+  
+
+  const warehousesAndProductsItems = [
+    {path : 'warehouses-products/products', label: 'Products'}
+  ]
 
   const ordersDropdownItems = [
     { path: '/orders/list', label: 'Orders List' },
@@ -73,11 +127,11 @@ function Sidebar({ isOpen }) {
     { path: '/payments/detail', label: 'Payments Details' },
   ];
 
-  const productsDropdownItems = [
-    { path: '/products/list', label: 'Products List' },
-    { path: '/products/category', label: 'Products Category' },
-    { path: '/products/subcategory', label: 'Products Subcategory' },
-  ];
+  // const productsDropdownItems = [
+  //   { path: '/products/list', label: 'Products List' },
+  //   { path: '/products/category', label: 'Products Category' },
+  //   { path: '/products/subcategory', label: 'Products Subcategory' },
+  // ];
 
   const inventoryTransactionsDropdownItems = [
     { path: '/inventory/list', label: 'Inventory Changes List' },
@@ -127,17 +181,24 @@ function Sidebar({ isOpen }) {
             ),
             userDropdownItems
           )}
-          {renderDropdown(
-            elementCompanyDropdown,
-            'Company',
+        {renderNestedDropdown(elemenOrganizationDropdown, 'Organization',
+        (
+          <svg className="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 1h12M3 1v16M3 1H2m13 0v16m0-16h1m-1 16H3m12 0h2M3 17H1M6 4h1v1H6V4Zm5 0h1v1h-1V4ZM6 8h1v1H6V8Zm5 0h1v1h-1V8Zm-3 4h2a1 1 0 0 1 1 1v4H7v-4a1 1 0 0 1 1-1Z"/>
+        </svg>
+        ) , organizationDropdownItems)}
+        {renderDropdown(
+            elementWarehousesAndProducts,
+            'Warehouses & Produ..',
             (
-              <svg className="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.333 6.764a3 3 0 1 1 3.141-5.023M2.5 16H1v-2a4 4 0 0 1 4-4m7.379-8.121a3 3 0 1 1 2.976 5M15 10a4 4 0 0 1 4 4v2h-1.761M13 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-4 6h2a4 4 0 0 1 4 4v2H5v-2a4 4 0 0 1 4-4Z"/>
-            </svg>
+              <svg className="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 19">
+                <path d="M10.013 4.175 5.006 7.369l5.007 3.194-5.007 3.193L0 10.545l5.006-3.193L0 4.175 5.006.981l5.007 3.194ZM4.981 15.806l5.006-3.193 5.006 3.193L9.987 19l-5.006-3.194Z"/>
+                <path d="m10.013 10.545 5.006-3.194-5.006-3.176 4.98-3.194L20 4.175l-5.007 3.194L20 10.562l-5.007 3.194-4.98-3.211Z"/>
+              </svg>
             ),
-            companyDropdownItems
+            warehousesAndProductsItems
           )}
-          {renderDropdown (
+          {renderNestedDropdown (
             elementOrdersDropdown,
             'Orders',
             (
@@ -147,6 +208,7 @@ function Sidebar({ isOpen }) {
             ),
             ordersDropdownItems
           )}
+          
           {renderDropdown(
             elementInvoicesDropdown,
             'Invoices',
@@ -167,7 +229,7 @@ function Sidebar({ isOpen }) {
               ),
               paymentsDropdownItems
           )}
-          {renderDropdown(
+          {/* {renderDropdown(
             elementProductsDropdown,
             'Products',
             (
@@ -177,7 +239,7 @@ function Sidebar({ isOpen }) {
               </svg>
             ),
             productsDropdownItems
-          )}
+          )} */}
           {renderDropdown(
             elementInventoryTransactionsDropdown,
             'Inventory Transactions',

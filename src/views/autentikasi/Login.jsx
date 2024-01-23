@@ -3,12 +3,11 @@ import axios from "axios";
 import { useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom"; 
 import Cookies from "js-cookie";
+import { Spinner } from 'flowbite-react';
 
 const Login = ({ setAuth }) => {
 
   
-  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
 
 
   const emailRef = useRef(null);
@@ -17,6 +16,7 @@ const Login = ({ setAuth }) => {
   const [response, setResponse] = useState(null); // Initialize with null
   const [validationEmail, setValidationEmail] = useState();
   const [validationPassword, setValidationPassword] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const cleanup = () => {
@@ -29,27 +29,17 @@ const Login = ({ setAuth }) => {
 
   useEffect(() => {
     if (response) {
-      setValidationEmail(response.message.email?.[0] ?? ''); // Handle potential undefined
+      setValidationEmail(response.message.email?.[0] ?? ''); // Handle potential undefinedt
+      setValidationPassword(response.message.password?.[0] ?? '')
+      setLoading(!loading)
     }
   }, [response]);
 
-  // useEffect(() => {
-  //   axios.get('/sanctum/csrf-cookie')
-  //     .then(response => {
-  //      setCsrf(response.data.csrfToken)
-  //      console.log(response.data);
-
-  //   // Simpan token untuk penggunaan di masa mendatang
-  // });
-  // })
-
-
-    console.log(validationEmail);
-  
     const navigate = useNavigate();
   
     const handleFormSubmit = async (e) => {
       e.preventDefault();
+      setLoading(!loading);
   
       try {
         const response = await axios.post(import.meta.env.VITE_API_URL + "login", {
@@ -66,8 +56,8 @@ const Login = ({ setAuth }) => {
         setResponse(response.data);
         
         if (response.data.status === 200) {
-            Cookies.set('token', response.data.access_token);
-            setAuth(true); // Update auth state
+          setAuth(true); // Update auth state
+          Cookies.set('token', response.data.access_token);
             navigate('/');
         }
       } catch (error) {
@@ -78,16 +68,20 @@ const Login = ({ setAuth }) => {
           // Handle generic errors
           setValidationPassword('An error occurred. Please try again.');
         }
+      } finally {
+        setLoading(false); // Set loading to false after the request completes
       }
     };
   
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
+          <div modal-backdrop="" className={`${loading ? `hidden` : `fixed z-10 inset-0`} bg-gray-900 bg-opacity-50 dark:bg-opacity-80  flex items-center justify-center`}>
+          <Spinner className={`${loading ? `hidden` : ``}`} aria-label="Extra large spinner example" size="xl" />
+          </div>
             <div className="flex flex-col items-center justify-center px-6 mx-auto md:h-screen lg:py-0">
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                    <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-                        alt="logo" />
-                    Flowbite
+                <img src="https://res.cloudinary.com/boxity-id/image/upload/v1704217862/tna/Logo_PT._Teknologi_Naya_Abadi_bpxbbt.png"
+                        className="mr-3 h-5 md:h-10" alt="PT. Teknologi Naya Abadi" />
                 </a>
                 <div
                     className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -96,7 +90,7 @@ const Login = ({ setAuth }) => {
                             className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Sign in to your account
                         </h1>
-                        <form className="space-y-4 md:space-y-6" action="#">
+                        <form className="space-y-4 md:space-y-6 z-20" action="#">
                             <div>
                                 <label htmlFor="email"
                                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your

@@ -12,6 +12,10 @@ import Register from './views/autentikasi/Register';
 import Auth from './function/Auth';
 import Dashboard from './views/sidebar/dashboard/Dashboard';
 import Cookies from 'js-cookie';
+import Departement from './views/sidebar/company/DepartementList';
+import EmployesList from './views/sidebar/company/EmployesList';
+import BranchList from './views/sidebar/company/BranchList';
+import Products from './views/sidebar/warehousesAndProducts/Products';
 
 
 function App() {
@@ -77,6 +81,38 @@ function App() {
               element={
                 <Auth.ProtectedRoute>
                   <CompanyList />
+                </Auth.ProtectedRoute>
+              }
+            />
+            <Route
+              path="/departement/list"
+              element={
+                <Auth.ProtectedRoute>
+                  <Departement />
+                </Auth.ProtectedRoute>
+              }
+            />
+             <Route
+              path="/employes/list"
+              element={
+                <Auth.ProtectedRoute>
+                  <EmployesList />
+                </Auth.ProtectedRoute>
+              }
+            />
+            <Route
+              path="/branch/list"
+              element={
+                <Auth.ProtectedRoute>
+                  <BranchList />
+                </Auth.ProtectedRoute>
+              }
+            />
+             <Route
+              path="/warehouses-products/products"
+              element={
+                <Auth.ProtectedRoute>
+                  <Products />
                 </Auth.ProtectedRoute>
               }
             />

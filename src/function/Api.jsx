@@ -40,3 +40,38 @@ export const postApiData = async (endpoint, data) => {
     throw error;
   }
 };
+
+export const putApiData = async (endpoint, data) => {
+  try {
+    const response = await axios.put(`${import.meta.env.VITE_API_URL}${endpoint}`, data, {
+      withXSRFToken: true,
+      headers: {
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      }
+    });
+    return response.data;
+  } catch (error) {
+    // Handle error
+    console.log('Error in API request:', error);
+    throw error;
+  }
+};
+
+
+export const deleteApiData = async (endpoint) => {
+  try {
+    const response = await axios.delete(`${import.meta.env.VITE_API_URL}${endpoint}`, {
+      withXSRFToken: true,
+      headers: {
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      }
+    });
+    return response.data;
+  } catch (error) {
+    // Handle error
+    console.log('Error in DELETE API request:', error);
+    throw error;
+  }
+};
+
+
