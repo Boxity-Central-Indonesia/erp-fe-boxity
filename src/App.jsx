@@ -16,6 +16,7 @@ import Departement from './views/sidebar/company/DepartementList';
 import EmployesList from './views/sidebar/company/EmployesList';
 import BranchList from './views/sidebar/company/BranchList';
 import Products from './views/sidebar/warehousesAndProducts/Products';
+import { ColorProvider } from './views/conifg/GlobalColour';
 
 
 function App() {
@@ -34,114 +35,116 @@ function App() {
 
   return (
     <>
-     <Router>
-     <div className='antialiased bg-gray-50 dark:bg-gray-900'>
-      <Auth.AuthenticatedComponent>
-          <Navbar onToggleSidebar={toggleSidebar} setAuth={setAuth}/>
-          <Sidebar isOpen={isSidebarOpen} />
-      </Auth.AuthenticatedComponent>
-
-      <main>
-        <div style={{minHeight: '100vh'}} className={`p-4 ${auth ? `md:ml-64 pt-20` : `ml-0`} h-auto overflow-hidden`}>
-        <Routes>
-            <Route
-              path="/"
-              element={
-                <Auth.ProtectedRoute>
-                  <Dashboard />
-                </Auth.ProtectedRoute>
-              }
-            />
-            <Route
-              path="/user/master"
-              element={
-                <Auth.ProtectedRoute>
-                  <Master />
-                </Auth.ProtectedRoute>
-              }
-            />
-            <Route
-              path="/user/role"
-              element={
-                <Auth.ProtectedRoute>
-                  <Role />
-                </Auth.ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <Auth.ProtectedRoute>
-                  <Profile />
-                </Auth.ProtectedRoute>
-              }
-            />
-            <Route
-              path="/company/list"
-              element={
-                <Auth.ProtectedRoute>
-                  <CompanyList />
-                </Auth.ProtectedRoute>
-              }
-            />
-            <Route
-              path="/departement/list"
-              element={
-                <Auth.ProtectedRoute>
-                  <Departement />
-                </Auth.ProtectedRoute>
-              }
-            />
-             <Route
-              path="/employes/list"
-              element={
-                <Auth.ProtectedRoute>
-                  <EmployesList />
-                </Auth.ProtectedRoute>
-              }
-            />
-            <Route
-              path="/branch/list"
-              element={
-                <Auth.ProtectedRoute>
-                  <BranchList />
-                </Auth.ProtectedRoute>
-              }
-            />
-             <Route
-              path="/warehouses-products/products"
-              element={
-                <Auth.ProtectedRoute>
-                  <Products />
-                </Auth.ProtectedRoute>
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                <Auth.UnprotectedRoute>
-                  <Login setAuth={setAuth}/>
-                </Auth.UnprotectedRoute>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <Auth.UnprotectedRoute>
-                  <Register setAuth={setAuth}/>
-                </Auth.UnprotectedRoute>
-              }
-            />
-          </Routes>
-        </div>
-        <div className='md:ml-64 h-auto relative'>
+     < ColorProvider >
+        <Router>
+        <div className='antialiased bg-gray-50 dark:bg-gray-900'>
           <Auth.AuthenticatedComponent>
-              < Footer />
+              <Navbar onToggleSidebar={toggleSidebar} setAuth={setAuth}/>
+              <Sidebar isOpen={isSidebarOpen} />
           </Auth.AuthenticatedComponent>
-        </div>
-      </main>
-      </div>
-     </Router>
+
+          <main>
+            <div style={{minHeight: '100vh'}} className={`p-4 ${auth ? `md:ml-64 pt-20` : `ml-0`} h-auto overflow-hidden`}>
+            <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <Dashboard />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/user/master"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <Master />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/user/role"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <Role />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <Profile />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/company/list"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <CompanyList />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/departement/list"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <Departement />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/employes/list"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <EmployesList />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/branch/list"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <BranchList />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/warehouses-products/products"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <Products />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/login"
+                  element={
+                    <Auth.UnprotectedRoute>
+                      <Login setAuth={setAuth}/>
+                    </Auth.UnprotectedRoute>
+                  }
+                />
+                <Route
+                  path="/register"
+                  element={
+                    <Auth.UnprotectedRoute>
+                      <Register setAuth={setAuth}/>
+                    </Auth.UnprotectedRoute>
+                  }
+                />
+              </Routes>
+            </div>
+            <div className='md:ml-64 h-auto relative'>
+              <Auth.AuthenticatedComponent>
+                  < Footer />
+              </Auth.AuthenticatedComponent>
+            </div>
+          </main>
+          </div>
+        </Router>
+     </ColorProvider>
     </>
   );
 }

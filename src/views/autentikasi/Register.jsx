@@ -2,6 +2,8 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { useRef, useState, useEffect } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
+import { useColor } from "../conifg/GlobalColour"
+import Button from "../sidebar/layouts/Button"
 import { Spinner } from "flowbite-react"
 
 
@@ -16,6 +18,9 @@ const Register = ({setAuth}) => {
     const [passwordValidation, setPasswordValidation] = useState()
     const [nameValidation, setNameValidation] = useState()
     const [loading, setLoading] = useState(true);
+
+    const { globalColor, changeColor } = useColor();
+
 
     useEffect(() => {
         if(!!response){
@@ -70,8 +75,9 @@ const Register = ({setAuth}) => {
           </div>
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                <img src="https://res.cloudinary.com/boxity-id/image/upload/v1704217862/tna/Logo_PT._Teknologi_Naya_Abadi_bpxbbt.png"
-                        className="mr-3 h-5 md:h-10" alt="PT. Teknologi Naya Abadi" />
+                <img src="https://res.cloudinary.com/boxity-id/image/upload/v1678791965/asset_boxity/logo/logo_primary_um5cgb.png"
+                        className="mr-3 h-5 md:h-12" alt="PT. Teknologi Naya Abadi" />
+                {/* <p>PT Boxity Central Indonesia</p> */}
                 </a>
                 <div
                     className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -116,12 +122,9 @@ const Register = ({setAuth}) => {
                                     required=""/>
                                   
                             </div>
-                            <button type="submit"
-                                onClick={handelRegister}
-                                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create
-                                an account</button>
+                            < Button event={handelRegister} label={'Create account'} bgColour={globalColor}/>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Already have an account? <NavLink to={'/login'}
+                                Already have an account? <NavLink style={{color: globalColor}} to={'/login'}
                                     className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login
                                     here</NavLink>
                             </p>

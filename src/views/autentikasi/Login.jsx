@@ -4,9 +4,11 @@ import { useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom"; 
 import Cookies from "js-cookie";
 import { Spinner } from 'flowbite-react';
+import { useColor } from "../conifg/GlobalColour";
+import Button from "../sidebar/layouts/Button";
 
 const Login = ({ setAuth }) => {
-
+  const { globalColor, changeColor } = useColor();
   
 
 
@@ -80,9 +82,11 @@ const Login = ({ setAuth }) => {
           </div>
             <div className="flex flex-col items-center justify-center px-6 mx-auto md:h-screen lg:py-0">
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                <img src="https://res.cloudinary.com/boxity-id/image/upload/v1704217862/tna/Logo_PT._Teknologi_Naya_Abadi_bpxbbt.png"
-                        className="mr-3 h-5 md:h-10" alt="PT. Teknologi Naya Abadi" />
+                <img src="https://res.cloudinary.com/boxity-id/image/upload/v1678791965/asset_boxity/logo/logo_primary_um5cgb.png"
+                        className="mr-3 h-5 md:h-12" alt="PT. Teknologi Naya Abadi" />
+                {/* <p>PT Boxity Central Indonesia</p> */}
                 </a>
+                
                 <div
                     className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -108,12 +112,13 @@ const Login = ({ setAuth }) => {
                                     required="" />
                                     <p className={`${!!validationPassword ? `` : `hidden`} text-red-500 text-sm font-medium mt-2`}>{validationPassword}</p>
                             </div>
-                            <button onClick={handleFormSubmit} type="submit"
-                                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
-                                in</button>
+                            {/* <button style={{ backgroundColor: globalColor }} onClick={handleFormSubmit} type="submit"
+                                className="w-full text-white hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
+                                in</button> */}
+                                < Button event={handleFormSubmit} type={'submit'} bgColour={globalColor} label={'Signt In'}/>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Don’t have an account yet? <NavLink to={'/register'}
-                                    className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign
+                                Don’t have an account yet? <NavLink style={{color: globalColor}} to={'/register'}
+                                    className="font-medium hover:underline dark:text-primary-500">Sign
                                     up</NavLink>
                             </p>
                         </form>

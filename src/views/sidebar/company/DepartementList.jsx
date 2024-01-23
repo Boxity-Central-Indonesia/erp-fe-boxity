@@ -65,7 +65,7 @@ const Departement = () => {
           size: 'md',
           labelModal: 'Add Company',
           labelBtnModal: 'Add new company',
-          lebelSecondaryBtn: 'Back',
+          labelBtnSecondaryModal: 'Back',
           handelBtn: () => create()
         })
   

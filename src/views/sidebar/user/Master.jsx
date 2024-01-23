@@ -51,7 +51,8 @@ const Master = () => {
     setDataModal({
       size: '2xl',
       labelModal: 'Add user',
-      labelBtnModal: 'Add new user'
+      labelBtnModal: 'Add new user',
+      labelBtnSecondaryModal: 'Back',
     })
 
     toggleOpenModal();
@@ -180,11 +181,12 @@ const editUserMaster = async () => {
 
 const showEditUserMaster = async (param) => {
   // console.log(id);
-  const response = await getApiData(`user/read?id=${param}`);
+  const response = await getApiData(`users/${param}`);
   setDataModal({
     size: '2xl',
     labelModal: 'Edit user',
     labelBtnModal: 'Save',
+    labelBtnSecondaryModal: 'Back'
   });
 
   if (response.status === 200) {
@@ -310,6 +312,7 @@ const handleChange = (event) => {
         labelModal={dataModal.labelModal}
         labelBtnModal={dataModal.labelBtnModal}
         handelBtnModal={handelBtn}
+        labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
       />
      < TabelComponent data={data} dataHeading={dataTabelHeading} handelEdit={showEditUserMaster}/>
     </>
