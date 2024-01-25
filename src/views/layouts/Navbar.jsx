@@ -87,9 +87,12 @@ function Navbar({onToggleSidebar, setAuth}) {
                     <span className="sr-only">Toggle sidebar</span>
                 </button>
                 <a href="#" className="flex items-center justify-between mr-4">
-                    <img src="https://res.cloudinary.com/boxity-id/image/upload/v1704217862/tna/Logo_PT._Teknologi_Naya_Abadi_bpxbbt.png"
-                        className="mr-3 h-5 md:h-8" alt="PT. Teknologi Naya Abadi" />
-                    {/* <span className="text-xl lg:text-2xl font-semibold dark:text-white">PT. Teknologi Naya Abadi</span> */}
+                    <img src="https://res.cloudinary.com/boxity-id/image/upload/v1678791965/asset_boxity/logo/logo_primary_um5cgb.png"
+                        className="mr-3 h-5 md:h-10 dark:hidden" alt="PT. Teknologi Naya Abadi" />
+                {/* <p>PT Boxity Central Indonesia</p> */}
+                <img src="https://res.cloudinary.com/boxity-id/image/upload/v1678791550/asset_boxity/logo/Asset_36_i0dcvz.png"
+                        className="mr-3 h-5 md:h-12 hidden dark:block" alt="PT. Teknologi Naya Abadi" />
+                {/* <p>PT Boxity Central Indonesia</p> */}
                 </a>
             </div>
             <div className="flex items-center lg:order-2">

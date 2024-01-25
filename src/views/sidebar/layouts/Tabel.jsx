@@ -3,8 +3,11 @@ import React from 'react';
 import { Table } from 'flowbite-react';
 import Paginate from './Paginate';
 import TabelHeading from './TabelHeading';
+import { useColor } from '../../conifg/GlobalColour';
 
 const TabelComponent = ({ data, dataHeading, handelEdit })  => {
+
+  const { globalColor, changeColor } = useColor();
 
   const handleEditClick = (param) => {
     handelEdit(param)
@@ -83,8 +86,9 @@ const TabelComponent = ({ data, dataHeading, handelEdit })  => {
                           {item[key]}
                         </Table.Cell>
                       ))}
-                    <Table.Cell className='text-right'>
+                    <Table.Cell  className='text-right'>
                       <button
+                        style={{color: globalColor}}
                         className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
                         onClick={() => handleEditClick(item.id)}
                       >

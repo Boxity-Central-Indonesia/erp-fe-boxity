@@ -33,7 +33,7 @@ const Login = ({ setAuth }) => {
     if (response) {
       setValidationEmail(response.message.email?.[0] ?? ''); // Handle potential undefinedt
       setValidationPassword(response.message.password?.[0] ?? '')
-      setLoading(!loading)
+      setLoading(() => !loading)
     }
   }, [response]);
 
@@ -41,7 +41,7 @@ const Login = ({ setAuth }) => {
   
     const handleFormSubmit = async (e) => {
       e.preventDefault();
-      setLoading(!loading);
+      setLoading(() => !loading)
   
       try {
         const response = await axios.post(import.meta.env.VITE_API_URL + "login", {
@@ -66,12 +66,13 @@ const Login = ({ setAuth }) => {
         if (error.response && error.response.data.message) {
           // Handle specific error messages from the API
           setValidationPassword(error.response.data.message);
+          setLoading(() => loading)
         } else {
           // Handle generic errors
           setValidationPassword('An error occurred. Please try again.');
+          setLoading(() => loading)
         }
-      } finally {
-        setLoading(false); // Set loading to false after the request completes
+        // setResponse(error.response.data)
       }
     };
   
@@ -115,7 +116,14 @@ const Login = ({ setAuth }) => {
                             {/* <button style={{ backgroundColor: globalColor }} onClick={handleFormSubmit} type="submit"
                                 className="w-full text-white hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
                                 in</button> */}
-                                < Button event={handleFormSubmit} type={'submit'} bgColour={globalColor} label={'Signt In'}/>
+                                < Button
+                                event={handleFormSubmit} 
+                                type={'submit'} 
+                                bgColour={'primary'} 
+                                label={'Signt In'}
+                                paddingY={2.5}
+                                className={`w-full`}
+                                />
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Don’t have an account yet? <NavLink style={{color: globalColor}} to={'/register'}
                                     className="font-medium hover:underline dark:text-primary-500">Sign

@@ -1,9 +1,13 @@
 
 import axios from 'axios';
-import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
+import { Checkbox, Label, Modal, TextInput } from 'flowbite-react';
 import Cookies from 'js-cookie';
 import { useEffect, useRef, useState } from 'react';
 import { postApiData } from '../../../function/Api';
+import Button from './Button';
+import IconAdd from './icons/IconAdd';
+import IconSave from './icons/IconSave';
+import IconDelete from './icons/IconDelete';
 
 export const ModalContainer = ({ 
   openModal,
@@ -15,6 +19,7 @@ export const ModalContainer = ({
   labelBtnSecondaryModal,
   handelBtnModal,
   openModalDelete,
+  typeModal,
 }) => {
     const closeModal = () => {
         onToggleModal(); 
@@ -51,10 +56,23 @@ export const ModalContainer = ({
           {modalBody(response)}
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={handelBtnSubmit}>{labelBtnModal}</Button>
-          <Button color={labelBtnSecondaryModal === 'Delete' ? 'red' : 'gray'} onClick={labelBtnSecondaryModal  === 'Delete' ? openModalDelete : onToggleModal}>
+          {/* <Button onClick={handelBtnSubmit}>{labelBtnModal}</Button> */}
+          < Button 
+          event={handelBtnModal} 
+          label={labelBtnModal} 
+          bgColour={'primary'} 
+          icon={labelBtnModal == 'Save' ? IconSave() : IconAdd()} 
+          paddingY={'3'}/>
+          {/* <Button color={labelBtnSecondaryModal === 'Delete' ? 'red' : 'gray'} onClick={labelBtnSecondaryModal  === 'Delete' ? openModalDelete : onToggleModal}>
             {labelBtnSecondaryModal}
-          </Button>
+          </Button> */}
+          < Button  
+            event={labelBtnSecondaryModal  === 'Delete' ? openModalDelete : onToggleModal} 
+            label={labelBtnSecondaryModal}
+            bgColour={typeModal}
+            paddingY={'3'}
+            icon={IconDelete()}
+          />
         </Modal.Footer>
       </Modal>
     </>

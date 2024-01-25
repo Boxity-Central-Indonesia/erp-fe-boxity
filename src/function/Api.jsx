@@ -26,7 +26,7 @@ export const getApiData = async (endpoint) => {
 
 // Fungsi untuk melakukan POST request
 export const postApiData = async (endpoint, data) => {
-  try {
+  // try {
     const response = await axios.post(`${import.meta.env.VITE_API_URL}${endpoint}`, data, {
       withXSRFToken: true,
       headers: {
@@ -34,11 +34,11 @@ export const postApiData = async (endpoint, data) => {
       }
     });
     return response.data;
-  } catch (error) {
-    // Handle error
-    console.log('Error in API request:', error);
-    throw error;
-  }
+  // } catch (error) {
+  //   // Handle error
+  //   console.log('Error in API request:', error);
+  //   throw error;
+  // }
 };
 
 export const putApiData = async (endpoint, data) => {
