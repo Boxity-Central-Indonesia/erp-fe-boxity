@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef} from "react"
-import TabelComponent from "../layouts/Tabel"
-import IconAdd from "../layouts/icons/IconAdd"
-import { getApiData, postApiData, putApiData, deleteApiData } from "../../../function/Api"
-import { ModalConfirmDelete, ModalContainer } from "../layouts/ModalContainer"
+import TabelComponent from "../../../layouts/Tabel"
+import IconAdd from "../../../layouts/icons/IconAdd"
+import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../function/Api"
+import { ModalConfirmDelete, ModalContainer } from "../../../layouts/ModalContainer"
+import FormInput from "../../../layouts/FormInput"
 
 
 const Departement = () => {
@@ -14,6 +15,10 @@ const Departement = () => {
     const [dataEdit, setDataEdit] = useState({});
     const [modalDelete, setModalDelete] = useState(false);
     const [idDelete, setIdDelete] = useState()
+    const [input, setInput] = useState([])
+    const [responseError, setResponseError] = useState();
+    const [validationError, setValidationError] = useState();
+    const [selectedValue, setSelectedValue] = useState('');
 
 
     const toggleOpenModal = () => {
@@ -29,6 +34,7 @@ const Departement = () => {
                     name: item.name,
                     responsibilities: item.responsibilities,
                     company: item.company.name,
+                    company_id: item.company_id
                 }))
                 setData(() => newData)
             } catch (error) {
@@ -40,12 +46,24 @@ const Departement = () => {
     }, [refresh])
 
     useEffect(() => {
+        if(!!responseError) {
+            setValidationError(
+                {
+                    name: !!responseError.name ? responseError.name[0] : '',
+                    responsibilities: !!responseError.responsibilities ? responseError.responsibilities[0] : '',
+                    company_id: !!responseError.company_id ? responseError.company_id[0] : '',
+                }
+            )
+        }
+    }, [responseError])
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await getApiData('companies')
                 const newData = response.data.map(item => ({
                     id: item.id,
-                    company: item.name
+                    name: item.name
                  }))
 
                  setDataCompanies(() => newData)
@@ -68,21 +86,21 @@ const Departement = () => {
           labelBtnSecondaryModal: 'Back',
           handelBtn: () => create()
         })
+
+        setValidationError(
+            {
+                name: '',
+                responsibilities: '',
+                company_id: '',
+            }
+        )
   
-        // setDataEdit({
-        //   name: '',
-        //   email: '',
-        //   phone_number: '',
-        //   id: '',
-        //   website: '',
-        //   address: '',
-        //   city: '',
-        //   province: '',
-        //   postal_code: '',
-        //   country: '',
-        //   industry: '',
-        //   description: '',
-        // });
+        setDataEdit({
+            name: '',
+            responsibilities: '',
+            company_id: '',
+            id: '',
+        })
         toggleOpenModal()
       }
 
@@ -114,7 +132,7 @@ const Departement = () => {
                 setRefresh(!refresh)
             }
         } catch (error) {
-            
+            setResponseError(error.response.data)
         }
     }
 
@@ -132,6 +150,8 @@ const Departement = () => {
             ...prevDataEdit,
             [name]: value,
           }));
+
+          setSelectedValue(value); // Perbarui state yang sesuai dengan value elemen select
         };
 
     const edit = async () => {
@@ -154,7 +174,7 @@ const Departement = () => {
 
     }
 
-    const handelEdit =  async (param) => {
+    const handelEdit =  async (param, param2) => {
         setDataModal({
             size: 'md',
             labelModal: 'Edit Departmen',
@@ -163,8 +183,16 @@ const Departement = () => {
             handelBtn: edit
         })
 
+        setValidationError(
+            {
+                name: '',
+                responsibilities: '',
+                company_id: '',
+            }
+        )
+
         try {
-            const response = await getApiData('companies/2/departments/' + param)
+            const response = await getApiData('companies/'+ param2 +'/departments/' + param)
             if(response.status == 200) {
                 setDataEdit({
                     name: response.data.name,
@@ -209,30 +237,72 @@ const Departement = () => {
 
     // delete end
 
+    useEffect(() => {
+        setInput([
+            {
+                element: 'input',
+                type: 'text',
+                name: 'name',
+                ref: refBody.nameRef,
+                value: dataEdit.name,
+                label: 'Name',
+                htmlFor: 'name',
+                id: 'name',
+                onchange: handleChange,
+                placeholder: 'Name',
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: 'responsibilities',
+                ref: refBody.responsibilitiesRef,
+                value: dataEdit.responsibilities,
+                label: 'Responsibilities',
+                htmlFor: 'responsibilities',
+                id: 'responsibilities',
+                onchange: handleChange,
+                placeholder: 'Responsibilities',
+            },
+            {
+                element: 'select',
+                ref: refBody.company_idRef,
+                name: 'company_id',
+                label: 'Companies',
+                htmlFor: 'categori companies',
+                id: 'categori companies',
+                dataSelect: dataCompanies,
+                value: dataEdit.company_id,
+                onchange: handleChange
+            },
+        ])
+    }, [dataEdit])
+
 
     const dataModalBody = () => {
         return (
             <>
                 <form className="">
                     <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id}/>
-                <div className="grid gap-4 mb-4 grid-cols-2">
-                    <div className="col-span-2">
-                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                        <input type="text" name="name" id="name" value={dataEdit.name} onChange={handleChange} ref={refBody.nameRef} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Departmen name" required="" />
-                    </div>
-                    <div className="col-span-2">
-                        <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsibilities</label>
-                        <input type="text" name="responsibilities" id="price" value={dataEdit.responsibilities} onChange={handleChange} ref={refBody.responsibilitiesRef} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Responsibilities" required="" />
-                    </div>
-                    <div className="col-span-2">
-                        <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Companies</label>
-                        <select defaultValue={dataEdit.company_id} id="category" ref={refBody.company_idRef} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option>Select companies</option>
-                            { dataCompanies && dataCompanies.map( item => (
-                                <option key={item.id} value={item.id}>{item.company}</option>
-                            ))}
-                        </select>
-                    </div>
+                <div className="grid gap-4 mb-4 grid-cols-1">
+                   {input.map((item, index) => (
+                    < FormInput
+                    key={item.id}
+                    element={item.element}
+                    htmlFor={item.htmlFor}
+                    label={item.label}
+                    type={item.type}
+                    name={item.name}
+                    referens={item.ref}
+                    value={item.value}
+                    id={item.id}
+                    onChange={item.onchange}
+                    placeholder={item.placeholder} 
+                    dataSelect={item.dataSelect}
+                    uniqueId={index}
+                    validationError={validationError}
+                    selectedValue={selectedValue}
+                    />
+                   ))}
                 </div>
             </form>
             </>

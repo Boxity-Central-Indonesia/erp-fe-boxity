@@ -1,6 +1,6 @@
-import TabelComponent from '../layouts/Tabel';
-import IconAdd from '../layouts/icons/IconAdd';
-import {ModalContainer} from '../layouts/ModalContainer';
+import TabelComponent from '../../../layouts/Tabel';
+import IconAdd from '../../../layouts/icons/IconAdd';
+import {ModalContainer} from '../../../layouts/ModalContainer';
 import { useState } from 'react';
 
 function Role() {

@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
 import { useColor } from "../conifg/GlobalColour"
-import Button from "../sidebar/layouts/Button"
+import Button from "../layouts/Button"
 import { Spinner } from "flowbite-react"
 
 

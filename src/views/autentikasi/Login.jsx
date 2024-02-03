@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { Spinner } from 'flowbite-react';
 import { useColor } from "../conifg/GlobalColour";
-import Button from "../sidebar/layouts/Button";
+import Button from "../layouts/Button";
 
 const Login = ({ setAuth }) => {
   const { globalColor, changeColor } = useColor();

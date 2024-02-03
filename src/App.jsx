@@ -2,21 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './views/layouts/Sidebar';
 import Navbar from './views/layouts/Navbar';
-import Master from './views/sidebar/user/Master';
-import Role from './views/sidebar/user/Role&Permission';
+import Master from './views/sidebar/listMenu/user/Master';
+import Role from './views/sidebar/listMenu/user/Role&Permission';
 import Profile from './views/profile/Profile';
 import Footer from './views/layouts/Footer';
-import CompanyList from './views/sidebar/company/CompanyList';
+import CompanyList from './views/sidebar/listMenu/company/CompanyList';
 import Login from './views/autentikasi/Login';
 import Register from './views/autentikasi/Register';
 import Auth from './function/Auth';
-import Dashboard from './views/sidebar/dashboard/Dashboard';
+import Dashboard from './views/sidebar/listMenu/dashboard/Dashboard';
 import Cookies from 'js-cookie';
-import Departement from './views/sidebar/company/DepartementList';
-import EmployesList from './views/sidebar/company/EmployesList';
-import BranchList from './views/sidebar/company/BranchList';
-import Products from './views/sidebar/warehousesAndProducts/Products';
+import Departement from './views/sidebar/listMenu/company/DepartementList';
+import EmployesList from './views/sidebar/listMenu/company/employees/EmployesList';
+import BranchList from './views/sidebar/listMenu/company/BranchList';
+import Products from './views/sidebar/listMenu/products/Products';
+import { Category } from './views/sidebar/listMenu/products/Category/Category';
+import { Warehouses } from './views/sidebar/listMenu/warehouses/Warehouses';
 import { ColorProvider } from './views/conifg/GlobalColour';
+import { WarehousesLocation } from './views/sidebar/listMenu/warehouses/locations/WarehousesLocation';
 
 
 function App() {
@@ -111,10 +114,34 @@ function App() {
                   }
                 />
                 <Route
-                  path="/warehouses-products/products"
+                  path="products/list"
                   element={
                     <Auth.ProtectedRoute>
                       <Products />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="products/category"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <Category />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                 <Route
+                  path="warehouses/list"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <Warehouses />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                 <Route
+                  path="warehouses/location"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <WarehousesLocation />
                     </Auth.ProtectedRoute>
                   }
                 />

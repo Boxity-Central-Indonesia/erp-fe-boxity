@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from "react"
-import TabelComponent from "../layouts/Tabel"
-import IconAdd from "../layouts/icons/IconAdd"
-import { deleteApiData, getApiData, postApiData, putApiData } from "../../../function/Api"
-import { ModalConfirmDelete, ModalContainer } from "../layouts/ModalContainer"
+import TabelComponent from "../../../layouts/Tabel"
+import IconAdd from "../../../layouts/icons/IconAdd"
+import { deleteApiData, getApiData, postApiData, putApiData } from "../../../../function/Api"
+import { ModalConfirmDelete, ModalContainer } from "../../../layouts/ModalContainer"
+import FormInput from "../../../layouts/FormInput"
 
 const BranchList = () => {
     const [data, setData] = useState()
@@ -13,6 +14,9 @@ const BranchList = () => {
     const [refresh,setRefresh] = useState(false)
     const [idDelete, setIdDelete] = useState()
     const [modalDelete, setModalDelete] = useState();
+    const [input, setInput] = useState([])
+    const [responseError, setResponseError] = useState()
+    const [validationError, setValidationError] = useState()
     
 
 
@@ -23,9 +27,9 @@ const BranchList = () => {
     const refBody = {
         nameRef: useRef(),
         addressRef: useRef(),
-        phoneNumberRef: useRef(),
+        phone_numberRef: useRef(),
         emailRef: useRef(),
-        companyIdRef: useRef(),
+        company_idRef: useRef(),
         idRef: useRef()
     }
 
@@ -59,7 +63,7 @@ const BranchList = () => {
                 const response = await getApiData('companies')
                 const newData = response.data.map(item => ({
                     id: item.id,
-                    company: item.name
+                    name: item.name
                  }))
 
                  setDataCompanies(() => newData)
@@ -73,6 +77,20 @@ const BranchList = () => {
 
     // get data end
 
+    // handelErro
+    useEffect(() => {
+        if(!!responseError){
+            setValidationError({
+                name: !!responseError.name ? responseError.name[0] : '',
+                address:!!responseError.address ? responseError.address[0] : '',
+                phone_number: !!responseError.phone_number ? responseError.phone_number[0] : '',
+                email: !!responseError.email ? responseError.email[0] : '',
+                company_id: !!responseError.company_id ? responseError.company_id[0] : '',
+            })
+        }
+    }, [responseError])
+    // handelErro end
+
     // create
     
     const handelCreate = () => {
@@ -85,6 +103,21 @@ const BranchList = () => {
                 handelBtn: () => create()
             }
         )
+        setDataEdit({
+            name: '',
+            address: '',
+            phone_number: '',
+            email: '',
+            company_id: '',
+            id: ''
+        })
+        setValidationError({
+            name: '',
+            address: '',
+            phone_number: '',
+            email: '',
+            company_id: '',
+        })
         toggleOpenModal()
     }
 
@@ -103,9 +136,9 @@ const BranchList = () => {
         const dataBody = {
             name: refBody.nameRef.current.value,
             address: refBody.addressRef.current.value,
-            phone_number: refBody.phoneNumberRef.current.value,
+            phone_number: refBody.phone_numberRef.current.value,
             email: refBody.emailRef.current.value,
-            company_id: refBody.companyIdRef.current.value
+            company_id: refBody.company_idRef.current.value
         }
 
 
@@ -124,7 +157,7 @@ const BranchList = () => {
                 setOpenModal((prevOpenModal) => !prevOpenModal)
             }
         } catch (error) {
-            console.log(error);
+            setResponseError(error.response.data)
         }   
         
        
@@ -138,14 +171,13 @@ const BranchList = () => {
         const dataBody = {
             name: refBody.nameRef.current.value,
             address: refBody.addressRef.current.value,
-            phone_number: refBody.phoneNumberRef.current.value,
+            phone_number: refBody.phone_numberRef.current.value,
             email: refBody.emailRef.current.value,
-            company_id: refBody.companyIdRef.current.value
+            company_id: refBody.company_idRef.current.value
         }
 
         try {
             const response = await putApiData('companies/2/branches/' + refBody.idRef.current.value, dataBody)
-            console.log(response);
             if(response.status == 201){
                 setRefresh(!refresh)
                 setOpenModal((prevOpenModal) => !prevOpenModal)
@@ -162,6 +194,13 @@ const BranchList = () => {
             labelBtnModal: 'Save',
             labelBtnSecondaryModal: 'Delete',
             handelBtn: edit
+        })
+        setValidationError({
+            name: '',
+            address: '',
+            phone_number: '',
+            email: '',
+            company_id: '',
         })
         try {
             const response = await getApiData('companies/2/branches/' + param)
@@ -209,39 +248,95 @@ const BranchList = () => {
     }
     // delete end
 
-
+    useEffect(() => {
+        setInput([
+            {
+                element: 'input',
+                type: 'text',
+                name: 'name',
+                ref: refBody.nameRef,
+                value: dataEdit.name,
+                label: 'Name',
+                htmlFor: 'name',
+                id: 'name',
+                onchange: handleChange,
+                placeholder: 'Name',
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: 'address',
+                ref: refBody.addressRef,
+                value: dataEdit.address,
+                label: 'Address',
+                htmlFor: 'address',
+                id: 'address',
+                onchange: handleChange,
+                placeholder: 'Address',
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: 'phone_number',
+                ref: refBody.phone_numberRef,
+                value: dataEdit.phone_number,
+                label: 'Phone number',
+                htmlFor: 'phone_number',
+                id: 'phone_number',
+                onchange: handleChange,
+                placeholder: 'Phone number',
+            },
+            {
+                element: 'input',
+                type: 'email',
+                name: 'email',
+                ref: refBody.emailRef,
+                value: dataEdit.email,
+                label: 'Email',
+                htmlFor: 'email',
+                id: 'email',
+                onchange: handleChange,
+                placeholder: 'Email',
+    
+            },
+            {
+                element: 'select',
+                ref: refBody.company_idRef,
+                name: 'company_id',
+                label: 'Companies',
+                htmlFor: 'categori companies',
+                id: 'categori companies',
+                dataSelect: dataCompanies,
+                value: dataEdit.company_id,
+                onchange: handleChange
+            },
+        ])
+    }, [dataEdit])
 
     const dataModalBody = () => {
         return (
             <>
             <form className="">
                 <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id}/>
-            <div className="grid gap-4 mb-4 grid-cols-4">
-                <div className="col-span-2">
-                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                    <input type="text" name="name" id="name" value={dataEdit.name} onChange={handleChange} ref={refBody.nameRef} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Branch name" required="" />
-                </div>
-                <div className="col-span-2">
-                    <label htmlFor="address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-                    <input type="text" name="address" id="address" value={dataEdit.address} onChange={handleChange} ref={refBody.addressRef} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Branch address" required="" />
-                </div>
-                <div className="col-span-2">
-                    <label htmlFor="phone-number" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone number</label>
-                    <input type="text" name="phone_number" id="phone-number" value={dataEdit.phone_number} onChange={handleChange} ref={refBody.phoneNumberRef} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Phone number" required="" />
-                </div>
-                <div className="col-span-2">
-                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                    <input type="text" name="email" id="email" value={dataEdit.email} onChange={handleChange} ref={refBody.emailRef} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Branch email" required="" />
-                </div>
-                <div className="col-span-4">
-                    <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Companies</label>
-                    <select defaultValue={dataEdit.company_id} id="category" ref={refBody.companyIdRef} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option>Select companies</option>
-                        { dataCompanies && dataCompanies.map( item => (
-                            <option key={item.id} value={item.id}>{item.company}</option>
-                        ))}
-                    </select>
-                </div>
+            <div className="grid gap-4 mb-4 grid-cols-2">
+               {input.map((item, index) => (
+                  < FormInput
+                  key={item.id}
+                  element={item.element}
+                  htmlFor={item.htmlFor}
+                  label={item.label}
+                  type={item.type}
+                  name={item.name}
+                  referens={item.ref}
+                  value={item.value}
+                  id={item.id}
+                  onChange={item.onchange}
+                  placeholder={item.placeholder} 
+                  dataSelect={item.dataSelect}
+                  uniqueId={index}
+                  validationError={validationError}
+                  />
+               ))}
             </div>
         </form>
         </>
@@ -254,6 +349,9 @@ const BranchList = () => {
         heading: 'Branch list',
         eventToggleModal: handelCreate,
     }]
+
+
+
 
     return(
         <>

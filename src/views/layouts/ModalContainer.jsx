@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Checkbox, Label, Modal, TextInput } from 'flowbite-react';
 import Cookies from 'js-cookie';
 import { useEffect, useRef, useState } from 'react';
-import { postApiData } from '../../../function/Api';
+import { postApiData } from '../../function/Api';
 import Button from './Button';
 import IconAdd from './icons/IconAdd';
 import IconSave from './icons/IconSave';

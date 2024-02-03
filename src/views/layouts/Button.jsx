@@ -1,4 +1,4 @@
-import { useColor } from "../../conifg/GlobalColour"
+import { useColor } from "../conifg/GlobalColour"
 
 const Button = ({
         event, 
@@ -8,6 +8,7 @@ const Button = ({
         icon, 
         type, 
         paddingY,
+        paddingX,
         className,
     }) => {
 
@@ -19,7 +20,7 @@ const Button = ({
             color: textColour}} 
             onClick={event} 
             type={type}
-            className={`${className} flex items-center gap-1 justify-center bg-white border-gray-300 dark:border-gray-600 ${bgColour == 'primary' ? `text-white` : `text-gray-600 border`} dark:text-white hover:bg-gray-100 focus:ring-4 font-medium rounded-lg text-sm px-4 py-${paddingY} dark:bg-gray-800 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800`}>
+            className={`${className} flex items-center gap-1 justify-center bg-white border-gray-500 dark:border-gray-400 ${bgColour == 'primary' ? `text-white` : `border`} dark:text-white hover:bg-gray-100 focus:ring-4 font-medium rounded-lg text-sm px-${!!paddingX ? paddingX : '4'} py-${paddingY} dark:bg-gray-800 focus:outline-none dark:focus:ring-primary-800`}>
             {icon}
             {label}
         </button>

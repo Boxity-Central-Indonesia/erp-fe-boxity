@@ -1,10 +1,10 @@
-import { deleteApiData, getApiData, postApiData, putApiData } from "../../../function/Api"
-import FormInput from "../layouts/FormInput"
-import { ModalConfirmDelete, ModalContainer } from "../layouts/ModalContainer"
-import TabelComponent from "../layouts/Tabel"
-import IconAdd from "../layouts/icons/IconAdd"
+import { deleteApiData, getApiData, postApiData, putApiData } from "../../../../function/Api"
+import FormInput from "../../layouts/FormInput"
+import { ModalConfirmDelete, ModalContainer } from "../../layouts/ModalContainer"
+import TabelComponent from "../../layouts/Tabel"
+import IconAdd from "../../layouts/icons/IconAdd"
 import { useEffect, useState, useRef } from "react"
-import { TextArea } from "../layouts/FormInput"
+import { TextArea } from "../../layouts/FormInput"
 
 const EmployesList= () => {
     const [openModal, setOpenModal] = useState(false)
@@ -18,6 +18,8 @@ const EmployesList= () => {
     const [validationError, setValidationError] = useState();
     const [modalDelete, setModalDelete] = useState();
     const [idDelete, setIdDelete] = useState();
+    const [input, setInput] = useState([]);
+    const [dataHeading, setDataHeading] = useState();
 
     const toggleOpenModal = () => {
         setOpenModal(!openModal)
@@ -52,8 +54,8 @@ const EmployesList= () => {
         if(!!responseError){
             setValidationError(
                 {
-                    name: !!responseError.name ? responseError.name[0] : '',
-                    email: !!responseError.email ? responseError.email[0] : '',
+                    name: responseError?.name?.[0] || '',
+                    email: responseError?.email?.[0] || '',
                     phone_number: !!responseError.phone_number ? responseError.phone_number[0] : '',
                     company_id:!!responseError.company_id ? responseError.company_id[0] : '',
                     job_title:!!responseError.job_title ? responseError.job_title[0] : '',
@@ -82,8 +84,8 @@ const EmployesList= () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await getApiData('employees')
-                const newData = response.data.map(item => ({
+                const { data } = await getApiData('employees');
+                const newData = data.map(item => ({
                     id: item.id,
                     name: item.name,
                     email: item.email,
@@ -92,15 +94,15 @@ const EmployesList= () => {
                     'Job title': item.job_title,
                     'Employment Status': item.employment_status,
                     'address': item.address
-                 }))
-
-                 setData(() => newData)
+                }));
+        
+                setData(newData);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
-        }
-
-        fetchData()
+        };
+    fetchData()        
+        
     }, [refresh])
 
     // get employes end
@@ -112,7 +114,7 @@ const EmployesList= () => {
                 const response = await getApiData('companies')
                 const newData = response.data.map(item => ({
                     id: item.id,
-                    name: item.name
+                    name: <item className="names"></item>
                  }))
 
                  setDataCompanies(() => newData)
@@ -125,15 +127,45 @@ const EmployesList= () => {
     }, [])
     // get compinies end
 
-    const handleChange = (event) => {
-        // Mendapatkan nama dan nilai input yang berubah
-        const { name, value } = event.target;
+
+
+    const handleChangeAndGetDepartment = async (event) => {
+         // Mendapatkan nama dan nilai input yang berubah
+         const { name, value } = event.target;
         
-        // Memperbarui state sesuai dengan nilai input yang berubah
-        setDataEdit((prevDataEdit) => ({
-            ...prevDataEdit,
-            [name]: value,
-          }));
+         try {
+            const response = await getApiData('companies/7/departments')
+            const newData = response.data.map(item => ({
+                id: item.id,
+                name: item.name
+            }))
+
+            setDataDepartments(() => newData)
+
+        } catch (error) {
+            console.log(error);
+        }
+
+         // Memperbarui state sesuai dengan nilai input yang berubah
+         setDataEdit((prevDataEdit) => ({
+             ...prevDataEdit,
+             [name]: value,
+         }));
+       
+       
+        };
+
+    const handleChange = async (event) => {
+            // Mendapatkan nama dan nilai input yang berubah
+            const { name, value } = event.target;
+        
+            // Memperbarui state sesuai dengan nilai input yang berubah
+            setDataEdit((prevDataEdit) => ({
+                ...prevDataEdit,
+                [name]: value,
+            }));
+          
+          
         };
 
 
@@ -171,20 +203,6 @@ const EmployesList= () => {
         }
     }
 
-    const getDepartments = async () => {
-        try {
-            const response = await getApiData('companies/7/departments')
-            const newData = response.data.map(item => ({
-                id: item.id,
-                name: item.name
-            }))
-
-            setDataDepartments(() => newData)
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     const handelCreate = async () => {
         setDataModal({
@@ -372,223 +390,227 @@ const EmployesList= () => {
     // delete end
     
 
-    const dataHeading = [
-        {
-            label: 'Add Employes',
-            icon: IconAdd(),
-            heading: 'Employes list',
-            eventToggleModal: handelCreate,
-        }
-    ]
+   
 
 
 
+    useEffect(() => {
+        setDataHeading([
+            {
+                label: 'Add Employes',
+                icon: IconAdd(),
+                heading: 'Employes list',
+                eventToggleModal: handelCreate,
+            }
+        ])
 
-    const input=[
-        {
-            element: 'input',
-            type: 'text',
-            name: 'name',
-            ref: refBody.nameRef,
-            value: dataEdit.name,
-            label: 'Name',
-            htmlFor: 'name',
-            id: 'name',
-            onchange: handleChange,
-            placeholder: 'Name',
-        },
-        {
-            element: 'input',
-            type: 'email',
-            name: 'email',
-            ref: refBody.emailRef,
-            value: dataEdit.email,
-            label: 'Email',
-            htmlFor: 'email',
-            id: 'email',
-            onchange: handleChange,
-            placeholder: 'Email',
-
-        },
-        {
-            element: 'input',
-            type: 'text',
-            name: 'phone_number',
-            ref: refBody.phone_numberRef,
-            value: dataEdit.phone_number,
-            label: 'Phone number',
-            htmlFor: 'phone_number',
-            id: 'phone_number',
-            onchange: handleChange,
-            placeholder: 'Phone number',
-        },
-        {
-            element: 'select',
-            ref: refBody.company_idRef,
-            name: 'company_id',
-            label: 'Companies',
-            htmlFor: 'categori companies',
-            id: 'categori companies',
-            dataSelect: dataCompanies,
-            value: dataEdit.company_id,
-            onchange: getDepartments
-        },
-        {
-            element: 'input',
-            type: 'text',
-            name: 'job_title',
-            ref: refBody.job_titleRef,
-            value: dataEdit.job_title,
-            label: 'Job title',
-            htmlFor: 'job_title',
-            id: 'job_title',
-            onchange: handleChange,
-            placeholder: 'Job title',
-        },
-        {
-            element: 'input',
-            type: 'date',
-            name: 'date_of_birth',
-            ref: refBody.date_of_birthRef,
-            value: dataEdit.date_of_birth,
-            label: 'Date of birth',
-            htmlFor: 'date_of_birth',
-            id: 'date_of_birth',
-            onchange: handleChange,
-            placeholder: 'Date of birth',
-        },
-        {
-            element: 'select',
-            name: 'employment_status',
-            ref: refBody.employment_statusRef,
-            value: dataEdit.employment_status,
-            label: 'satus',
-            htmlFor: 'employment_status',
-            id: 'employment_status',
-            dataSelect: [
-                {value: 'Aktif', name: 'Aktif'},
-                {value: 'Tidak aktif', name: 'Tidak aktif'},
-            ]
-        },
-        {
-            element: 'input',
-            type: 'date',
-            name: 'hire_date',
-            ref: refBody.hire_dateRef,
-            value: dataEdit.hire_date,
-            label: 'Hire date',
-            htmlFor: 'hire_date',
-            id: 'hire_date',
-            onchange: handleChange,
-            placeholder: 'Hire date',
-        },
-        {
-            element: 'input',
-            type: 'date',
-            name: 'termination_date',
-            ref: refBody.termination_dateRef,
-            value: dataEdit.termination_date,
-            label: 'Termination date',
-            htmlFor: 'termination_date',
-            id: 'termination_date',
-            onchange: handleChange,
-            placeholder: 'Termination date',
-        },
-        {
-            element: 'input',
-            type: 'text',
-            name: 'address',
-            ref: refBody.addressRef,
-            value: dataEdit.address,
-            label: 'Address',
-            htmlFor: 'address',
-            id: 'address',
-            onchange: handleChange,
-            placeholder: 'Address',
-        },
-        {
-            element: 'input',
-            type: 'text',
-            name: 'city',
-            ref: refBody.cityRef,
-            value: dataEdit.city,
-            label: 'City',
-            htmlFor: 'city',
-            id: 'city',
-            onchange: handleChange,
-            placeholder: 'City',
-        },
-        {
-            element: 'input',
-            type: 'text',
-            name: 'province',
-            ref: refBody.provinceRef,
-            value: dataEdit.province,
-            label: 'Province',
-            htmlFor: 'province',
-            id: 'province',
-            onchange: handleChange,
-            placeholder: 'Province',
-        },
-        {
-            element: 'input',
-            type: 'number',
-            name: 'postal_code',
-            ref: refBody.postal_codeRef,
-            value: dataEdit.postal_code,
-            label: 'Postal Code',
-            htmlFor: 'postal_code',
-            id: 'postal_code',
-            onchange: handleChange,
-            placeholder: 'Postal Code',
-        },
-        {
-            element: 'input',
-            type: 'text',
-            name: 'country',
-            ref: refBody.countryRef,
-            value: dataEdit.country,
-            label: 'Country',
-            htmlFor: 'country',
-            id: 'country',
-            onchange: handleChange,
-            placeholder: 'Country',
-        },
-        {
-            element: 'select',
-            ref: refBody.department_idRef,
-            name: 'department_id',
-            label: 'Departments',
-            htmlFor: 'department',
-            id: 'department',
-            value: dataEdit.department_id,
-            dataSelect: dataDepartments
-        },
-        {
-            element: 'input',
-            type: 'text',
-            name: 'emergency_contact_name',
-            ref: refBody.emergency_contact_nameRef,
-            value: dataEdit.emergency_contact_name,
-            label: 'Emergency Contact Name',
-            htmlFor: 'emergency_contact_name',
-            id: 'emergency_contact_name',
-            onchange: handleChange,
-            placeholder: 'Emergency Contact Name',
-        },
-        {
-            element: 'input',
-            type: 'text',
-            name: 'emergency_contact_phone_number',
-            ref: refBody.emergency_contact_phone_numberRef,
-            value: dataEdit.emergency_contact_phone_number,
-            label: 'Emergency Contact Phone Number',
-            htmlFor: 'emergency_contact_phone_number',
-            id: 'emergency_contact_phone_number',
-            onchange: handleChange,
-            placeholder: 'Emergency Contact Phone Number',
-        },
-    ]
+        setInput([
+            {
+                element: 'input',
+                type: 'text',
+                name: 'name',
+                ref: refBody.nameRef,
+                value: dataEdit.name,
+                label: 'Name',
+                htmlFor: 'name',
+                id: 'name',
+                onchange: handleChange,
+                placeholder: 'Name',
+            },
+            {
+                element: 'input',
+                type: 'email',
+                name: 'email',
+                ref: refBody.emailRef,
+                value: dataEdit.email,
+                label: 'Email',
+                htmlFor: 'email',
+                id: 'email',
+                onchange: handleChange,
+                placeholder: 'Email',
+    
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: 'phone_number',
+                ref: refBody.phone_numberRef,
+                value: dataEdit.phone_number,
+                label: 'Phone number',
+                htmlFor: 'phone_number',
+                id: 'phone_number',
+                onchange: handleChange,
+                placeholder: 'Phone number',
+            },
+            {
+                element: 'select',
+                ref: refBody.company_idRef,
+                name: 'company_id',
+                label: 'Companies',
+                htmlFor: 'categori companies',
+                id: 'categori companies',
+                dataSelect: dataCompanies,
+                value: dataEdit.company_id,
+                onchange: handleChangeAndGetDepartment
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: 'job_title',
+                ref: refBody.job_titleRef,
+                value: dataEdit.job_title,
+                label: 'Job title',
+                htmlFor: 'job_title',
+                id: 'job_title',
+                onchange: handleChange,
+                placeholder: 'Job title',
+            },
+            {
+                element: 'input',
+                type: 'date',
+                name: 'date_of_birth',
+                ref: refBody.date_of_birthRef,
+                value: dataEdit.date_of_birth,
+                label: 'Date of birth',
+                htmlFor: 'date_of_birth',
+                id: 'date_of_birth',
+                onchange: handleChange,
+                placeholder: 'Date of birth',
+            },
+            {
+                element: 'select',
+                name: 'employment_status',
+                ref: refBody.employment_statusRef,
+                value: dataEdit.employment_status,
+                label: 'satus',
+                htmlFor: 'employment_status',
+                id: 'employment_status',
+                dataSelect: [
+                    {value: 'Aktif', name: 'Aktif'},
+                    {value: 'Tidak aktif', name: 'Tidak aktif'},
+                ]
+            },
+            {
+                element: 'input',
+                type: 'date',
+                name: 'hire_date',
+                ref: refBody.hire_dateRef,
+                value: dataEdit.hire_date,
+                label: 'Hire date',
+                htmlFor: 'hire_date',
+                id: 'hire_date',
+                onchange: handleChange,
+                placeholder: 'Hire date',
+            },
+            {
+                element: 'input',
+                type: 'date',
+                name: 'termination_date',
+                ref: refBody.termination_dateRef,
+                value: dataEdit.termination_date,
+                label: 'Termination date',
+                htmlFor: 'termination_date',
+                id: 'termination_date',
+                onchange: handleChange,
+                placeholder: 'Termination date',
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: 'address',
+                ref: refBody.addressRef,
+                value: dataEdit.address,
+                label: 'Address',
+                htmlFor: 'address',
+                id: 'address',
+                onchange: handleChange,
+                placeholder: 'Address',
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: 'city',
+                ref: refBody.cityRef,
+                value: dataEdit.city,
+                label: 'City',
+                htmlFor: 'city',
+                id: 'city',
+                onchange: handleChange,
+                placeholder: 'City',
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: 'province',
+                ref: refBody.provinceRef,
+                value: dataEdit.province,
+                label: 'Province',
+                htmlFor: 'province',
+                id: 'province',
+                onchange: handleChange,
+                placeholder: 'Province',
+            },
+            {
+                element: 'input',
+                type: 'number',
+                name: 'postal_code',
+                ref: refBody.postal_codeRef,
+                value: dataEdit.postal_code,
+                label: 'Postal Code',
+                htmlFor: 'postal_code',
+                id: 'postal_code',
+                onchange: handleChange,
+                placeholder: 'Postal Code',
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: 'country',
+                ref: refBody.countryRef,
+                value: dataEdit.country,
+                label: 'Country',
+                htmlFor: 'country',
+                id: 'country',
+                onchange: handleChange,
+                placeholder: 'Country',
+            },
+            {
+                element: 'select',
+                ref: refBody.department_idRef,
+                name: 'department_id',
+                label: 'Department',
+                htmlFor: 'department',
+                id: 'department',
+                dataSelect: dataDepartments,
+                value: dataEdit.department_id,
+                onchange: handleChange
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: 'emergency_contact_name',
+                ref: refBody.emergency_contact_nameRef,
+                value: dataEdit.emergency_contact_name,
+                label: 'Emergency Contact Name',
+                htmlFor: 'emergency_contact_name',
+                id: 'emergency_contact_name',
+                onchange: handleChange,
+                placeholder: 'Emergency Contact Name',
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: 'emergency_contact_phone_number',
+                ref: refBody.emergency_contact_phone_numberRef,
+                value: dataEdit.emergency_contact_phone_number,
+                label: 'Emergency Contact Phone Number',
+                htmlFor: 'emergency_contact_phone_number',
+                id: 'emergency_contact_phone_number',
+                onchange: handleChange,
+                placeholder: 'Emergency Contact Phone Number',
+            },
+        ])
+    }, [dataEdit])
 
 
 
@@ -597,7 +619,7 @@ const EmployesList= () => {
             <>
                 <form className="">
                     <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id}/>
-                    <div className="grid gap-4 mb-4 grid-cols-3">
+                    <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-3">
                         {input.map( (item, index) => (
                             < FormInput
                             key={item.id}
@@ -617,7 +639,7 @@ const EmployesList= () => {
                             />
                         ) )}
                         < TextArea 
-                        span={'3'}
+                        span={`col-span-3`}
                         label={'Notes'}
                         htmlFor={'notes'}
                         id={'notes'}

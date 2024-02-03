@@ -3,14 +3,14 @@ import React from 'react';
 import { Table } from 'flowbite-react';
 import Paginate from './Paginate';
 import TabelHeading from './TabelHeading';
-import { useColor } from '../../conifg/GlobalColour';
+import { useColor } from '../conifg/GlobalColour';
 
 const TabelComponent = ({ data, dataHeading, handelEdit })  => {
 
   const { globalColor, changeColor } = useColor();
 
-  const handleEditClick = (param) => {
-    handelEdit(param)
+  const handleEditClick = (param, param2) => {
+    handelEdit(param, param2)
   }
 
   if (!data) {
@@ -90,7 +90,7 @@ const TabelComponent = ({ data, dataHeading, handelEdit })  => {
                       <button
                         style={{color: globalColor}}
                         className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                        onClick={() => handleEditClick(item.id)}
+                        onClick={() => handleEditClick(item.id, item.company_id)}
                       >
                         Edit
                       </button>

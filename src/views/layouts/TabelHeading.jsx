@@ -1,7 +1,7 @@
 // TabelHeading.jsx
 import React from 'react';
 import Button from './Button';
-import { useColor } from '../../conifg/GlobalColour';
+import { useColor } from '../conifg/GlobalColour';
 
 const TabelHeading = ({ toggleOpenModal, icon, label }) => {
 
