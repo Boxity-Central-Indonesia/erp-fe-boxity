@@ -5,7 +5,8 @@ import { useState } from "react"
 import IconAdd from "../../../../layouts/icons/IconAdd"
 import FormInput from "../../../../layouts/FormInput"
 import { TextArea } from "../../../../layouts/FormInput"
-import { ModalContainer } from "../../../../layouts/ModalContainer"
+import { ModalConfirmDelete, ModalContainer } from "../../../../layouts/ModalContainer"
+import { Spinner } from "../../../../layouts/Spinner"
 
 
 export const WarehousesLocation = () => {
@@ -16,6 +17,16 @@ export const WarehousesLocation = () => {
         input,
         create,
         dataModal,
+        validationError,
+        loading,
+        handleEdit,
+        edit,
+        dataEdit,
+        refBody,
+        openModalDelete,
+        modalDelete,
+        closeModalDelete,
+        handleDelete
     } = CRUD()
     const [dataHeading, setDataHeading] = useState( [{
         label: 'Add locations',
@@ -30,6 +41,7 @@ export const WarehousesLocation = () => {
         return(
             <>
             <form action="">
+                <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id}/>
                 <div className="grid grid-cols-1 gap-4 mb-3">
                 {input.map((item, index) => (
                             < FormInput
@@ -46,7 +58,7 @@ export const WarehousesLocation = () => {
                             placeholder={item.placeholder} 
                             dataSelect={item.dataSelect}
                             uniqueId={index}
-                            // validationError={validationError}
+                            validationError={validationError}
                             />
                         ))}
                 </div>
@@ -58,6 +70,10 @@ export const WarehousesLocation = () => {
     return (
         <>
 
+        < Spinner
+        loading={loading} 
+        />
+
         <ModalContainer 
         openModal={openModal}
         onToggleModal={handleCreate}
@@ -67,10 +83,16 @@ export const WarehousesLocation = () => {
         labelBtnModal={dataModal.labelBtnModal}
         labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
         handelBtnModal={dataModal.handelBtn}
-        // openModalDelete={openModalDelete}
+        openModalDelete={openModalDelete}
         />
 
-        < TabelComponent data={data} dataHeading={dataHeading}/>
+        < ModalConfirmDelete 
+        modalDelete={modalDelete}
+        closeModalDelete={closeModalDelete}
+        handelDelete={handleDelete}
+        />
+
+        < TabelComponent data={data} dataHeading={dataHeading} handelEdit={handleEdit}/>
         </>
     )
 }

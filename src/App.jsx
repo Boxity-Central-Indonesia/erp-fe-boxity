@@ -20,7 +20,8 @@ import { Category } from './views/sidebar/listMenu/products/Category/Category';
 import { Warehouses } from './views/sidebar/listMenu/warehouses/Warehouses';
 import { ColorProvider } from './views/conifg/GlobalColour';
 import { WarehousesLocation } from './views/sidebar/listMenu/warehouses/locations/WarehousesLocation';
-
+import { VendorsList } from './views/sidebar/listMenu/vendors/list/List';
+import { VendorContacts } from './views/sidebar/listMenu/vendors/contact/contact';
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -142,6 +143,22 @@ function App() {
                   element={
                     <Auth.ProtectedRoute>
                       <WarehousesLocation />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="vendors/list"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <VendorsList />
+                    </Auth.ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="vendors/contacts"
+                  element={
+                    <Auth.ProtectedRoute>
+                      <VendorContacts />
                     </Auth.ProtectedRoute>
                   }
                 />

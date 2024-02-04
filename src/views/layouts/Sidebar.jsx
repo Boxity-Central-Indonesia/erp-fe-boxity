@@ -18,6 +18,8 @@ function Sidebar({ isOpen }) {
   const elementReportsDropdown = useRef(null);
   const elementProducts = useRef(null)
   const elementWarehouses = useRef(null)
+  const elementVendors = useRef(null)
+
 
   const dropdown = (dropdownRef) => {
     dropdownRef.current.classList.toggle('hidden');
@@ -105,6 +107,12 @@ function Sidebar({ isOpen }) {
   const warehousesItems = [
     {path : 'warehouses/list', label: 'List'},
     {path : 'warehouses/location', label: 'Location'}
+  ]
+
+  const vendorsItem = [
+    {path : 'vendors/list', label: 'List'},
+    {path : 'vendors/contacts', label: 'Contact'},
+    {path : 'vendors/transaction', label: 'Transaction'}
   ]
 
   const ordersDropdownItems = [
@@ -216,6 +224,16 @@ function Sidebar({ isOpen }) {
             </svg>
             ),
             warehousesItems
+          )}
+           {renderDropdown(
+            elementVendors,
+            'Vendors',
+            (
+              <svg className="w-[24px] h-[24px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 4h12M6 4v16M6 4H5m13 0v16m0-16h1m-1 16H6m12 0h1M6 20H5M9 7h1v1H9V7Zm5 0h1v1h-1V7Zm-5 4h1v1H9v-1Zm5 0h1v1h-1v-1Zm-3 4h2a1 1 0 0 1 1 1v4h-4v-4a1 1 0 0 1 1-1Z"/>
+            </svg>
+            ),
+            vendorsItem
           )}
           {renderNestedDropdown (
             elementOrdersDropdown,
