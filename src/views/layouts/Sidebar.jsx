@@ -387,26 +387,6 @@ function Sidebar({ isOpen }) {
             paymentsDropdownItems
           )}
           {renderDropdown(
-            elementInventoryTransactionsDropdown,
-            "Inventory Transactions",
-            <svg
-              className="w-[24px] h-[24px] text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 13h3.4a1 1 0 0 1 1 .6 4 4 0 0 0 7.3 0 1 1 0 0 1 .9-.6H20M4 13v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M4 13l2-9h12l2 9M9 7h6m-7 3h8"
-              />
-            </svg>,
-            inventoryTransactionsDropdownItems
-          )}
-          {renderDropdown(
             elementLeadsDropdown,
             "Leads",
             <svg
