@@ -5,6 +5,36 @@ import IconAdd from "../../../../layouts/icons/IconAdd"
 import { useEffect, useState, useRef } from "react"
 import { TextArea } from "../../../../layouts/FormInput"
 import {CRUD} from "./components/CRUD"
+import TabelComponentTest from "../../../../layouts/TabelTest"
+// import {
+//     createColumnHelper,
+//     flexRender,
+//     getCoreRowModel,
+//     useReactTable,
+//     getSortedRowModel,
+//     // SortingFns,
+//     getPaginationRowModel,
+//   } from '@tanstack/react-table';
+
+//   const columnHelper = createColumnHelper();
+
+//   const columns = [
+//     columnHelper.accessor('name', {
+//       cell: (info) => info.getValue(),
+//     }),
+//     columnHelper.accessor('email', {
+//       cell: (info) => info.getValue(),
+//     }),
+//     columnHelper.accessor('phone', {
+//       cell: (info) => info.renderValue(),
+//     }),
+//     columnHelper.accessor('company', {
+//         cell: (info) => info.renderValue(),
+//     }),
+//     columnHelper.accessor('job title', {
+//         cell: (info) => info.renderValue(),
+//     }),,
+//   ];
 
 const EmployesList= () => {
     const {
@@ -22,16 +52,27 @@ const EmployesList= () => {
         modalDelete,
         validationError,
     } = CRUD()
+    // const [sorting, setSorting] = useState([]);
+    
 
+    // const table = useReactTable({
+        // data,
+        // columns,
+        // state: {
+        //   sorting,
+        // },
+        // initialState: {
+        //   pagination: {
+        //     pageSize: 2,
+        //   },
+        // },
+        // getCoreRowModel: getCoreRowModel(),
+        // onSortingChange: setSorting,
+        // getSortedRowModel: getSortedRowModel(),
+        // getPaginationRowModel: getPaginationRowModel(),
+    //   });
 
     // const {data} = READ()
-
-    const [dataHeading, setDataHeading] = useState( [{
-        label: 'Add Employes',
-        icon: IconAdd(),
-        heading: 'Employes list',
-        eventToggleModal: handelCreate,
-    }]);
 
    
 
@@ -95,7 +136,10 @@ const EmployesList= () => {
         handelDelete={handelDelete}
         />
 
-        < TabelComponent data={data} dataHeading={dataHeading} handelEdit={handelEdit}/>
+        < TabelComponentTest 
+        data={data}
+        dataHeading={dataHeading}
+        />
        </>
     )
 }

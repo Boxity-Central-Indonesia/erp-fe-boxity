@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.0",
+    "@tanstack/match-sorter-utils": "^8.11.8",
+    "@tanstack/react-table": "^8.11.8",
     "axios": "^1.6.5",
     "flowbite": "^2.2.1",
     "flowbite-react": "^0.7.2",
