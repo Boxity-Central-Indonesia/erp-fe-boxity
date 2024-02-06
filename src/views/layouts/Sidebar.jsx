@@ -124,7 +124,6 @@ function Sidebar({ isOpen }) {
   const accountsItem = [
     { path: "accounts/list", label: "List" },
     { path: "accounts/transaction", label: "Transaction" },
-    { path: "accounts/balance", label: "Balance" },
   ];
 
   const ordersDropdownItems = [
@@ -145,17 +144,8 @@ function Sidebar({ isOpen }) {
     { path: "/payments/detail", label: "Payments Details" },
   ];
 
-  const inventoryTransactionsDropdownItems = [
-    { path: "/inventory/list", label: "Inventory Changes List" },
-    { path: "/inventory/kind", label: "Inventory Changes Type" },
-    { path: "/inventory/amount", label: "Inventory Changes Amount" },
-  ];
-
   const leadsDropdownItems = [
-    { path: "/leads/list", label: "Leads List" },
-    { path: "/leads/name", label: "Leads Name" },
-    { path: "/leads/email", label: "Leads Email" },
-    { path: "/leads/number-phone", label: "Leads Phone Number" },
+    { path: "/leads/list", label: "Leads Prospek List" },
   ];
 
   const productsProductionDropdownItems = [
