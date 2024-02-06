@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Sidebar from './views/layouts/Sidebar';
 import Navbar from './views/layouts/Navbar';
 import Master from './views/sidebar/listMenu/user/Master';
+import Role from './views/sidebar/listMenu/user/Role&Permission';
 import Profile from './views/profile/Profile';
 import Footer from './views/layouts/Footer';
 import CompanyList from './views/sidebar/listMenu/company/CompanyList';
@@ -21,25 +22,6 @@ import { ColorProvider } from './views/conifg/GlobalColour';
 import { WarehousesLocation } from './views/sidebar/listMenu/warehouses/locations/WarehousesLocation';
 import { VendorsList } from './views/sidebar/listMenu/vendors/list/List';
 import { VendorContacts } from './views/sidebar/listMenu/vendors/contact/contact';
-import { VendorTransactions } from './views/sidebar/listMenu/vendors/transaction/Transactions';
-import RoleAndPermission from './views/sidebar/listMenu/user/Role&Permission';
-import { Account } from './views/sidebar/listMenu/account/list/Account';
-import { Test } from './views/sidebar/listMenu/user/test';
-import { AccountTransaction } from './views/sidebar/listMenu/account/transaction/AccountTransactions';
-import { Penjualan } from './views/sidebar/listMenu/reports/penjualan/Penjualan';
-import { Pembelian } from './views/sidebar/listMenu/reports/pembelian/Pembelian';
-import { ArusKas } from './views/sidebar/listMenu/reports/arusKas/ArusKas';
-import { BukuBesar } from './views/sidebar/listMenu/reports/bukuBesar/BukuBesar';
-import { Hutang } from './views/sidebar/listMenu/reports/hutang/Hutang';
-import { KasBesar } from './views/sidebar/listMenu/reports/kasBesar/KasBesar';
-import { LeadsProspek } from './views/sidebar/listMenu/reports/leadsProspek/LeadsProspek';
-import { Neraca } from './views/sidebar/listMenu/reports/neraca/Neraca';
-import { Pendapatan } from './views/sidebar/listMenu/reports/pendapatan/Pendapatan';
-import { Pengeluaran } from './views/sidebar/listMenu/reports/pengeluaran/Pengeluaran';
-import { PersediaanBarang } from './views/sidebar/listMenu/reports/persediaanBarang/PersediaanBarang';
-import { Piutang } from './views/sidebar/listMenu/reports/piutang/Piutang';
-import { Produksi } from './views/sidebar/listMenu/reports/produksi/Produksi';
-import { VendorTransaction } from './views/sidebar/listMenu/reports/vendorTransaction/VendorTransaction';
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -88,15 +70,7 @@ function App() {
                   path="/user/role"
                   element={
                     <Auth.ProtectedRoute>
-                      <RoleAndPermission />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                 <Route
-                  path="/user/test"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <Test />
+                      <Role />
                     </Auth.ProtectedRoute>
                   }
                 />
@@ -185,142 +159,6 @@ function App() {
                   element={
                     <Auth.ProtectedRoute>
                       <VendorContacts />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                 <Route
-                  path="vendors/transactions"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <VendorTransactions />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                  <Route
-                  path="accounts/list"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <Account />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                 <Route
-                  path="accounts/transaction"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <AccountTransaction />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                 <Route
-                  path="/reports/sales"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <Penjualan />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/purchases"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <Pembelian />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/income"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <Pendapatan />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/expenditure"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <Pengeluaran />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/inventory"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <PersediaanBarang />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/leads"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <LeadsProspek />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/production"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <Produksi />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/vendor-transactions"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <VendorTransaction />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/cash-flow"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <ArusKas />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/ledger"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <BukuBesar />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/debt"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <Hutang />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/cash-account"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <KasBesar />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/balance-sheet"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <Neraca />
-                    </Auth.ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/reports/accounts-receivable"
-                  element={
-                    <Auth.ProtectedRoute>
-                      <Piutang />
                     </Auth.ProtectedRoute>
                   }
                 />

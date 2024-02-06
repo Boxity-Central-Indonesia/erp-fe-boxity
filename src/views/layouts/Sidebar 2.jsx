@@ -19,7 +19,6 @@ function Sidebar({ isOpen }) {
   const elementProducts = useRef(null)
   const elementWarehouses = useRef(null)
   const elementVendors = useRef(null)
-  const elementAccount = useRef(null)
 
 
   const dropdown = (dropdownRef) => {
@@ -89,7 +88,6 @@ function Sidebar({ isOpen }) {
   const userDropdownItems = [
     { path: '/user/master', label: 'Master Data' },
     { path: '/user/role', label: 'Role & Permission' },
-    { path: '/user/test', label: 'Test' },
     // ... tambahkan item dropdown lainnya sesuai kebutuhan
   ];
 
@@ -114,13 +112,7 @@ function Sidebar({ isOpen }) {
   const vendorsItem = [
     {path : 'vendors/list', label: 'List'},
     {path : 'vendors/contacts', label: 'Contact'},
-    {path : 'vendors/transactions', label: 'Transaction'}
-  ]
-
-  const accountsItem = [
-    {path : 'accounts/list', label: 'List'},
-    {path : 'accounts/transaction', label: 'Transaction'},
-    {path : 'accounts/balance', label: 'Balance'}
+    {path : 'vendors/transaction', label: 'Transaction'}
   ]
 
   const ordersDropdownItems = [
@@ -164,20 +156,12 @@ function Sidebar({ isOpen }) {
   ];
 
   const reportsDropdownItems = [
-    { path: '/sales-report', label: 'Sales Report' },
-    { path: '/purchase-report', label: 'Purchase Report' },
-    { path: '/revenue-report', label: 'Revenue Report' },
-    { path: '/expenses-report', label: 'Expenses Report' },
-    { path: '/inventory-report', label: 'Inventory Report' },
-    { path: '/leads-report', label: 'Leads Report' },
-    { path: '/vendor-report', label: 'Vendor Report' },
-    { path: '/balance-sheet-report', label: 'Balance Sheet Report' },
-    { path: '/payables-report', label: 'Payables Report' },
-    { path: '/receivables-report', label: 'Receivables Report' },
-    { path: '/cashflow-report', label: 'Cash Flow Report' },
-    { path: '/ledger-report', label: 'Ledger Report' },
-    { path: '/cash-ledger-report', label: 'Cash Ledger Report' },
-    { path: '/production-report', label: 'Production Report' },
+    { path: '/reports/sales', label: 'Sales Report' },
+    { path: '/reports/income', label: 'Income Report' },
+    { path: '/reports/expenditure', label: 'Expenditure Report' },
+    { path: '/reports/inventory', label: 'Inventory Report' },
+    { path: '/reports/leads', label: 'Leads Report' },
+    { path: '/reports/production', label: 'Production Report' },
   ];
 
 
@@ -245,21 +229,11 @@ function Sidebar({ isOpen }) {
             elementVendors,
             'Vendors',
             (
-              <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 6H5m2 3H5m2 3H5m2 3H5m2 3H5m11-1a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2M7 3h11c.6 0 1 .4 1 1v16c0 .6-.4 1-1 1H7a1 1 0 0 1-1-1V4c0-.6.4-1 1-1Zm8 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
-              </svg>
+              <svg className="w-[24px] h-[24px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 4h12M6 4v16M6 4H5m13 0v16m0-16h1m-1 16H6m12 0h1M6 20H5M9 7h1v1H9V7Zm5 0h1v1h-1V7Zm-5 4h1v1H9v-1Zm5 0h1v1h-1v-1Zm-3 4h2a1 1 0 0 1 1 1v4h-4v-4a1 1 0 0 1 1-1Z"/>
+            </svg>
             ),
             vendorsItem
-          )}
-           {renderDropdown(
-            elementAccount,
-            'Accounts',
-            (
-              <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8H5m12 0c.6 0 1 .4 1 1v2.6M17 8l-4-4M5 8a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h12c.6 0 1-.4 1-1v-2.6M5 8l4-4 4 4m6 4h-4a2 2 0 1 0 0 4h4c.6 0 1-.4 1-1v-2c0-.6-.4-1-1-1Z"/>
-              </svg>
-            ),
-            accountsItem
           )}
           {renderNestedDropdown (
             elementOrdersDropdown,
