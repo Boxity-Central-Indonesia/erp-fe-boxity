@@ -45,6 +45,10 @@ import { PersediaanBarang } from "./views/sidebar/listMenu/reports/persediaanBar
 import { Piutang } from "./views/sidebar/listMenu/reports/piutang/Piutang";
 import { Produksi } from "./views/sidebar/listMenu/reports/produksi/Produksi";
 import { VendorTransaction } from "./views/sidebar/listMenu/reports/vendorTransaction/VendorTransaction";
+import { OrderList } from "./views/sidebar/listMenu/order/list/OrderList";
+import { InvoicesList } from "./views/sidebar/listMenu/invoices/Invoices";
+import { Payments } from "./views/sidebar/listMenu/payments/Payments";
+import { LeadsProspekList } from "./views/sidebar/listMenu/leadsProspek/LeadsProspek";
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -218,6 +222,38 @@ function App() {
                     element={
                       <Auth.ProtectedRoute>
                         <AccountTransaction />
+                      </Auth.ProtectedRoute>
+                    }
+                  />
+                   <Route
+                    path="orders/list"
+                    element={
+                      <Auth.ProtectedRoute>
+                        <OrderList />
+                      </Auth.ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="invoices/list"
+                    element={
+                      <Auth.ProtectedRoute>
+                        <InvoicesList />
+                      </Auth.ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="payments/list"
+                    element={
+                      <Auth.ProtectedRoute>
+                        <Payments />
+                      </Auth.ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="leads/list"
+                    element={
+                      <Auth.ProtectedRoute>
+                        <LeadsProspekList />
                       </Auth.ProtectedRoute>
                     }
                   />

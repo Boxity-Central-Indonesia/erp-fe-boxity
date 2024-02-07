@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { getApiData, postApiData, putApiData,  deleteApiData } from "../../../../../../function/Api"
+import { getApiData, postApiData, putApiData,  deleteApiData } from "../../../../../function/Api"
 
 export const CRUD = () => {
     const [openModal, setOpenModal] = useState()
@@ -11,19 +11,23 @@ export const CRUD = () => {
     const [modalDelete, setModalDelete] = useState()
     const [idDelete, setIdDelete] = useState()
     const [loading, setLoading] = useState(true)
-    const [dataAccount, setDataAccount] = useState()
+    const [dataOrder, setDataOrder] = useState()
     const [dataEdit, setDataEdit] = useState({
-        type: '',
-        date: '',
-        account_id: '',
-        amount: ''
+      order_id: '',
+      total_amount: '',
+      balance_due: '',
+      invoice_date: '',
+      due_date: '',
+      status: '',
+      id: ''
     })
     const [refBody, setRefBody] = useState({
-        typeRef: useRef(),
-        dateRef: useRef(),
-        account_idRef: useRef(),
-        amountRef: useRef(),
-        idRef: useRef()
+        order_idRef: useRef(),
+        total_amountRef: useRef(),
+        balance_dueRef: useRef(),
+        invoice_dateRef: useRef(),
+        due_dateRef: useRef(),
+        statusRef: useRef(),
     })
     const handleChange = (event) => {
         // Mendapatkan nama dan nilai input yang berubah
@@ -43,53 +47,79 @@ export const CRUD = () => {
         setInput([
             {
                 element: 'select',
-                name: 'type',
-                ref: refBody.typeRef,
-                value: dataEdit.type,
-                label: 'Type',
-                htmlFor: 'type',
-                id: 'type',
-                dataSelect: [
-                    {value: 'debit', name: 'Debit'},
-                    {value: 'kredit', name: 'Kredit'},
-                ],
+                name: 'order_id',
+                ref: refBody.order_idRef,
+                value: dataEdit.order_id,
+                label: 'Order',
+                htmlFor: 'order_id',
+                id: 'order_id',
+                dataSelect: dataOrder,
                 onchange: handleChange
             },
             {
                 element: 'select',
-                name: 'account_id',
-                ref: refBody.account_idRef,
-                label: 'Account',
-                htmlFor: 'account_id',
-                id: 'account_id',
-                dataSelect: dataAccount,
-                value: dataEdit.account_id,
+                name: 'status',
+                ref: refBody.statusRef,
+                value: dataEdit.status,
+                label: 'Staatus',
+                htmlFor: 'status',
+                id: 'status',
+                dataSelect: [
+                    {value: 'unpaid', name: 'unpaid'},
+                    {value: 'paid', name: 'paid'},
+                    {value: 'partial', name: 'partial'},
+                ],
                 onchange: handleChange
             },
             {
                 element: 'input',
-                type: 'date',
-                name: 'date',
-                ref: refBody.dateRef,
-                value: dataEdit.date,
-                label: 'Date',
-                htmlFor: 'date',
-                id: 'date',
+                type: 'number',
+                name: 'total_amount',
+                ref: refBody.total_amountRef,
+                value: dataEdit.total_amount,
+                label: 'Total amount',
+                htmlFor: 'total_amount',
+                id: 'total_amount',
                 onchange: handleChange,
-                placeholder: 'Date',
+                placeholder: 'Total amount',
             },
             {
                 element: 'input',
                 type: 'number',
-                name: 'amount',
-                ref: refBody.amountRef,
-                value: dataEdit.amount,
-                label: 'Amount',
-                htmlFor: 'amount',
-                id: 'amount',
+                name: 'balance_due',
+                ref: refBody.balance_dueRef,
+                value: dataEdit.balance_due,
+                label: 'Balance due',
+                htmlFor: 'balance_due',
+                id: 'balance_due',
                 onchange: handleChange,
-                placeholder: 'Amount',
+                placeholder: 'Balance due',
             },
+            {
+                element: 'input',
+                type: 'date',
+                name: 'invoice_date',
+                ref: refBody.invoice_dateRef,
+                value: dataEdit.invoice_date,
+                label: 'Invocie date',
+                htmlFor: 'invoice_date',
+                id: 'invoice_date',
+                onchange: handleChange,
+                placeholder: 'Invocie date',
+            },
+            {
+                element: 'input',
+                type: 'date',
+                name: 'due_date',
+                ref: refBody.due_dateRef,
+                value: dataEdit.due_date,
+                label: 'Due date',
+                htmlFor: 'due_date',
+                id: 'due_date',
+                onchange: handleChange,
+                placeholder: 'Due date',
+            },
+            
         ])
     }, [dataEdit])
 
@@ -97,10 +127,12 @@ export const CRUD = () => {
         if(!!responseError) {
             setValidationError(
                 {
-                    type: responseError?.type?.[0] || '',
-                    date: responseError?.date?.[0] || '',
-                    amount: responseError?.amount?.[0] || '',
-                    account_id: responseError?.account_id?.[0] || '',
+                    order_id: responseError?.order_id?.[0] || '',
+                    total_amount: responseError?.total_amount?.[0] || '',
+                    balance_due: responseError?.balance_due?.[0] || '',
+                    invoice_date: responseError?.invoice_date?.[0] || '',
+                    due_date: responseError?.due_date?.[0] || '',
+                    status: responseError?.status?.[0] || '',
                 }
             )
         }
@@ -111,15 +143,14 @@ export const CRUD = () => {
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const {data, status} = await getApiData('accounts-transactions') 
+                    const {data, status} = await getApiData('payments') 
                     if(status === 200) {
                         const newData = data.map(item => ({
-                            'account name': item.account.name,
-                            'account type': item.account.type,
+                            'invoices': item.invoice_id,
+                            'payment method': item.payment_method,
+                            'payment date': item.payment_date,
+                            'amount paid': item.amount_paid,
                             id: item.id,
-                            type: item.type,
-                            amount: item.amount,
-                            'account balance': item.account.balance,
 
                         }))
                         setData(() => newData)
@@ -130,24 +161,25 @@ export const CRUD = () => {
             }
             getData()
         }, [refresh])
+
         useEffect(() => {
-            const getDataAccount = async () => {
+            const getDataForSelec = async (endpoint, state) => {
                 try {
-                    const {data, status} = await getApiData('accounts')
-                    if(status === 200) {
-                       const newData =  data.map(item => ({
+                    const {data, status} = await getApiData(endpoint)
+                    if(status === 200){
+                        const newData = data.map(item => ({
                             id: item.id,
                             name: item.name
-                       }))
-                       setDataAccount(() => newData)
-                    }
+                        }))
+                        state(() => newData)
+                    } 
                 } catch (error) {
                     console.log(error);
                 }
             }
-            getDataAccount()
-        }, [])
-    
+
+            getDataForSelec('orders', setDataOrder)
+        },[])
 
         return {
             data
@@ -157,23 +189,28 @@ export const CRUD = () => {
     const CREATE = () => {
         const handleCreate = () => {
             setDataModal({
-                labelModal: 'Add transaction',
-                labelBtnModal: 'Add new transaction',
+                labelModal: 'Add invoices',
+                labelBtnModal: 'Add new invoices',
                 labelBtnSecondaryModal: 'Back',
                 handelBtn: () => create()
             })
             setDataEdit({
-                type: '',
-                date: '',
-                account_id: '',
-                amount: ''
+                order_id: '',
+                total_amount: '',
+                balance_due: '',
+                invoice_date: '',
+                due_date: '',
+                status: '',
+                id: ''
             })
             setValidationError(
                 {
-                    type: '',
-                    date: '',
-                    account_id: '',
-                    amount: ''
+                    order_id: '',
+                    total_amount: '',
+                    balance_due: '',
+                    invoice_date: '',
+                    due_date: '',
+                    status: '',
                 }
             )
             setOpenModal(prevOpenModal => !prevOpenModal)
@@ -182,13 +219,15 @@ export const CRUD = () => {
         const create = async () => {
             setLoading(prevLoading => !prevLoading)
             const dataBody = {
-                type: refBody.typeRef.current.value,
-                date: refBody.dateRef.current.value,
-                account_id: refBody.account_idRef.current.value,
-                amount: refBody.amountRef.current.value,
+                order_id: refBody.order_idRef.current.value,
+                total_amount: refBody.total_amountRef.current.value,
+                balance_due: refBody.balance_dueRef.current.value,
+                invoice_date: refBody.invoice_dateRef.current.value,
+                due_date: refBody.due_dateRef.current.value,
+                status: refBody.statusRef.current.value,
             }
             try {
-                const {status} = await postApiData('accounts-transactions', dataBody)
+                const {status} = await postApiData('invoices', dataBody)
                 if(status === 201) {
                     setRefresh(!refresh)
                     setOpenModal(prevOpenModal => !prevOpenModal)

@@ -65,7 +65,7 @@ const TabelComponent = ({ data, dataHeading, handelEdit })  => {
           < TabelHeading toggleOpenModal={dataHeading[0].eventToggleModal} icon={dataHeading[0].icon}
             label={dataHeading[0].label} />
           <div className="overflow-x-auto">
-            <Table hoverable>
+            <Table hoverable className='overflow-x-auto min-w-full w-max'>
               <Table.Head>
                 {data && data[0] && Object.keys(data[0]).map((key) => (
                 key !== 'id' && data[0][key] !== null && (
