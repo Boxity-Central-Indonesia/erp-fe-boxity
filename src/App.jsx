@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -49,6 +50,8 @@ import { OrderList } from "./views/sidebar/listMenu/order/list/OrderList";
 import { InvoicesList } from "./views/sidebar/listMenu/invoices/Invoices";
 import { Payments } from "./views/sidebar/listMenu/payments/Payments";
 import { LeadsProspekList } from "./views/sidebar/listMenu/leadsProspek/LeadsProspek";
+import { ProccesActifity } from "./views/sidebar/listMenu/Products production/ProccesActivity/ProccesActifity";
+import { PackagesData } from "./views/sidebar/listMenu/Products production/PackagesData/PackagesData";
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -257,6 +260,22 @@ function App() {
                       </Auth.ProtectedRoute>
                     }
                   />
+                   <Route
+                    path="products-production/proses-activity"
+                    element={
+                      <Auth.ProtectedRoute>
+                        <ProccesActifity />
+                      </Auth.ProtectedRoute>
+                    }
+                  />
+                   <Route
+                    path="products-production/packages-data"
+                    element={
+                      <Auth.ProtectedRoute>
+                        <PackagesData />
+                      </Auth.ProtectedRoute>
+                    }
+                  />
                   <Route
                     path="/reports/sales"
                     element={
@@ -265,6 +284,7 @@ function App() {
                       </Auth.ProtectedRoute>
                     }
                   />
+                  
                   <Route
                     path="/reports/purchases"
                     element={

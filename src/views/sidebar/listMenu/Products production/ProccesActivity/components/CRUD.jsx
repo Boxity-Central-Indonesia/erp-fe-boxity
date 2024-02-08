@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { getApiData, postApiData, putApiData,  deleteApiData } from "../../../../../function/Api"
+import { getApiData, postApiData, putApiData,  deleteApiData } from "../../../../../../function/Api"
 
 export const CRUD = () => {
     const [openModal, setOpenModal] = useState()
@@ -162,24 +162,24 @@ export const CRUD = () => {
             getData()
         }, [refresh])
 
-        useEffect(() => {
-            const getDataForSelec = async (endpoint, state) => {
-                try {
-                    const {data, status} = await getApiData(endpoint)
-                    if(status === 200){
-                        const newData = data.map(item => ({
-                            id: item.id,
-                            name: item.name
-                        }))
-                        state(() => newData)
-                    } 
-                } catch (error) {
-                    console.log(error);
-                }
-            }
+        // useEffect(() => {
+        //     const getDataForSelec = async (endpoint, state) => {
+        //         try {
+        //             const {data, status} = await getApiData(endpoint)
+        //             if(status === 200){
+        //                 const newData = data.map(item => ({
+        //                     id: item.id,
+        //                     name: item.name
+        //                 }))
+        //                 state(() => newData)
+        //             } 
+        //         } catch (error) {
+        //             console.log(error);
+        //         }
+        //     }
 
-            getDataForSelec('orders', setDataOrder)
-        },[])
+        //     getDataForSelec('orders', setDataOrder)
+        // },[])
 
         return {
             data

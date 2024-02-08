@@ -149,10 +149,8 @@ function Sidebar({ isOpen }) {
   ];
 
   const productsProductionDropdownItems = [
-    { path: "/products/production", label: "Products Production" },
-    { path: "/products/production/process", label: "Production Process" },
-    { path: "/products/production/raw-material", label: "Raw Material" },
-    { path: "/products/production/labor", label: "Labor" },
+    { path: "/products-production/proses-activity", label: "Proses activity" },
+    { path: "/products-production/packages-data", label: "Packages data (pengemasan)" },
   ];
 
   const reportsDropdownItems = [
@@ -408,7 +406,7 @@ function Sidebar({ isOpen }) {
           )}
           {renderDropdown(
             elementProductsProductionDropdown,
-            "Products Production",
+            "Produc.. manufacturer",
             <svg
               className="w-[24px] h-[24px] text-gray-800 dark:text-white"
               aria-hidden="true"

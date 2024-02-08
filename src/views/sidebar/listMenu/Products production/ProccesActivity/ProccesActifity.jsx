@@ -1,14 +1,14 @@
 import { useState } from "react"
-import TabelComponent from "../../../layouts/Tabel"
-import IconAdd from "../../../layouts/icons/IconAdd"
-import { ModalContainer } from "../../../layouts/ModalContainer"
-import { ModalConfirmDelete } from "../../../layouts/ModalContainer"
-import { Spinner } from "../../../layouts/Spinner"
-import { CRUD } from "./comoponents/CRUD"
-import FormInput from "../../../layouts/FormInput"
-import { TextArea } from "../../../layouts/FormInput"
+import TabelComponent from "../../../../layouts/Tabel"
+import IconAdd from "../../../../layouts/icons/IconAdd"
+import { ModalContainer } from "../../../../layouts/ModalContainer"
+import { ModalConfirmDelete } from "../../../../layouts/ModalContainer"
+import { Spinner } from "../../../../layouts/Spinner"
+import { CRUD } from "./components/CRUD"
+import FormInput from "../../../../layouts/FormInput"
+// import { TextArea } from "../../../layouts/FormInput"
 
-export const LeadsProspekList = () => {
+export const ProccesActifity = () => {
     const {
         data,
         openModal,
