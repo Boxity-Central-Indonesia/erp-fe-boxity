@@ -1,5 +1,5 @@
 {
-  "name": "timbang",
+  "name": "BoxityERP",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -14,10 +14,12 @@
     "@tanstack/match-sorter-utils": "^8.11.8",
     "@tanstack/react-table": "^8.11.8",
     "axios": "^1.6.5",
+    "chart.js": "^4.4.1",
     "flowbite": "^2.2.1",
     "flowbite-react": "^0.7.2",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1"
   },

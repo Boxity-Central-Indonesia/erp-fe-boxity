@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -19,7 +18,7 @@ import Dashboard from "./views/sidebar/listMenu/dashboard/Dashboard";
 import Cookies from "js-cookie";
 import Departement from "./views/sidebar/listMenu/company/DepartementList";
 import BranchList from "./views/sidebar/listMenu/company/BranchList";
-import { EmployesList } from "./views/sidebar/listMenu/company/employees/EmployesList";
+import { EmployesList } from "./views/sidebar/listMenu/company/employees/EmployeesList";
 import Products from "./views/sidebar/listMenu/products/Products";
 import { Category } from "./views/sidebar/listMenu/products/Category/Category";
 import { Warehouses } from "./views/sidebar/listMenu/warehouses/Warehouses";
@@ -141,7 +140,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/employes/list"
+                    path="/employees/list"
                     element={
                       <Auth.ProtectedRoute>
                         <EmployesList />
@@ -228,7 +227,7 @@ function App() {
                       </Auth.ProtectedRoute>
                     }
                   />
-                   <Route
+                  <Route
                     path="orders/list"
                     element={
                       <Auth.ProtectedRoute>
@@ -260,7 +259,7 @@ function App() {
                       </Auth.ProtectedRoute>
                     }
                   />
-                   <Route
+                  <Route
                     path="products-production/proses-activity"
                     element={
                       <Auth.ProtectedRoute>
@@ -268,7 +267,7 @@ function App() {
                       </Auth.ProtectedRoute>
                     }
                   />
-                   <Route
+                  <Route
                     path="products-production/packages-data"
                     element={
                       <Auth.ProtectedRoute>
@@ -284,7 +283,7 @@ function App() {
                       </Auth.ProtectedRoute>
                     }
                   />
-                  
+
                   <Route
                     path="/reports/purchases"
                     element={
