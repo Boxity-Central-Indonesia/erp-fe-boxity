@@ -78,40 +78,6 @@ const TabelComponentTest = ({data, dataHeading, handelEdit })  => {
       }
     }
   }, [table.getState().columnFilters[0]?.id]);
-  // function Filter({ column, table }) {
-  //   const firstValue = table.getPreFilteredRowModel().flatRows[0]?.getValue(column.id);
-  
-  //   return typeof firstValue === 'number' ? (
-  //     <div className="flex space-x-2">
-  //       <input
-  //         type="number"
-  //         value={(column.getFilterValue() || [])[0] ?? ''}
-  //         onChange={(e) =>
-  //           column.setFilterValue((old) => [e.target.value, old?.[1]])
-  //         }
-  //         placeholder={`Min`}
-  //         className="rounded-md text-sm h-8"
-  //       />
-  //       <input
-  //         type="number"
-  //         value={(column.getFilterValue() || [])[1] ?? ''}
-  //         onChange={(e) =>
-  //           column.setFilterValue((old) => [old?.[0], e.target.value])
-  //         }
-  //         placeholder={`Max`}
-  //         className="rounded-md text-sm h-8"
-  //       />
-  //     </div>
-  //   ) : (
-  //     <input
-  //       type="text"
-  //       value={column.getFilterValue() ?? ''}
-  //       onChange={(e) => column.setFilterValue(e.target.value)}
-  //       placeholder={`Search...`}
-  //       className="rounded-md text-sm h-7"
-  //     />
-  //   );
-  // }
 
   if (!data) {
     // Tampilkan pesan "Loading..." jika data masih undifined
@@ -162,8 +128,17 @@ const TabelComponentTest = ({data, dataHeading, handelEdit })  => {
       <h3 className="text-2xl font-semibold mb-3 dark:text-white">{dataHeading[0].heading}</h3>
       <div className="mx-auto">
         <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-          < TabelHeading toggleOpenModal={dataHeading[0].eventToggleModal} icon={dataHeading[0].icon}
-            label={dataHeading[0].label} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+          < TabelHeading
+          toggleOpenModal={dataHeading[0].eventToggleModal} 
+          icon={dataHeading[0].icon}
+          label={dataHeading[0].label} 
+          globalFilter={globalFilter} 
+          setGlobalFilter={setGlobalFilter} 
+          handleClickHeading={dataHeading[0].onclick}
+          showNavHeading={dataHeading[0].showNavHeading}
+          activeButton={dataHeading[0].activeButton}
+          setActiveButton={dataHeading[0].setActiveButton}
+          />
           <div className="overflow-x-auto">
             <Table hoverable>
               <Table.Head>

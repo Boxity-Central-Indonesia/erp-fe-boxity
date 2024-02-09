@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { getApiData, postApiData, putApiData,  deleteApiData } from "../../../../../function/Api"
+import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../../../function/Api"
 
 export const CRUD = () => {
     const [openModal, setOpenModal] = useState()

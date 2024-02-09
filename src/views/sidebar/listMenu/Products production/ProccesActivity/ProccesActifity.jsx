@@ -26,9 +26,9 @@ export const ProccesActifity = () => {
         loading
     } = CRUD()
     const [dataHeading, setDataHeading] = useState( [{
-        label: 'Add leads',
+        label: 'Add Proses activity',
         icon: IconAdd(),
-        heading: 'Leads prospek list',
+        heading: 'Proses activity list',
         eventToggleModal: handleCreate,
     }]);
 

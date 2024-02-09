@@ -63,7 +63,7 @@ const TabelComponent = ({ data, dataHeading, handelEdit })  => {
       <div className="mx-auto">
         <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
           < TabelHeading toggleOpenModal={dataHeading[0].eventToggleModal} icon={dataHeading[0].icon}
-            label={dataHeading[0].label} />
+            label={dataHeading[0].label}/>
           <div className="overflow-x-auto">
             <Table hoverable className='overflow-x-auto min-w-full w-max'>
               <Table.Head>

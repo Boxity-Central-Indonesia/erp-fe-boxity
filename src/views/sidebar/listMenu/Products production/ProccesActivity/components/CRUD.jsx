@@ -143,7 +143,7 @@ export const CRUD = () => {
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const {data, status} = await getApiData('leads') 
+                    const {data, status} = await getApiData('processing-activities') 
                     if(status === 200) {
                         const newData = data.map(item => ({
                             'prospek name': item.nama_prospek,

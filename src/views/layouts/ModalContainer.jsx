@@ -20,9 +20,10 @@ export const ModalContainer = ({
   handelBtnModal,
   openModalDelete,
   typeModal,
+  parameter,
 }) => {
     const closeModal = () => {
-        onToggleModal(); 
+        onToggleModal(!openModal); 
       }
 
       const [response, setResponse] = useState()
@@ -37,14 +38,14 @@ export const ModalContainer = ({
         }
     }, [response]) 
 
-      const apiUrl = import.meta.env.VITE_API_URL;
-      
       const handelBtnSubmit = () => {
-        if (typeof handelBtnModal === 'function') {
-            handelBtnModal();
-        } else {
-            console.error("handelBtnModal is not a function");
-        }
+       if(parameter === 'employees'){
+        handelBtnModal('employees')
+       }else if(parameter === 'employee-categories'){
+        handelBtnModal('employee-categories')
+       }else{
+        handelBtnModal('employees')
+       }
     }
 
   return (
@@ -58,7 +59,7 @@ export const ModalContainer = ({
         <Modal.Footer>
           {/* <Button onClick={handelBtnSubmit}>{labelBtnModal}</Button> */}
           < Button 
-          event={handelBtnModal} 
+          event={handelBtnSubmit} 
           label={labelBtnModal} 
           bgColour={'primary'} 
           icon={labelBtnModal == 'Save' ? IconSave() : IconAdd()} 
@@ -67,7 +68,7 @@ export const ModalContainer = ({
             {labelBtnSecondaryModal}
           </Button> */}
           < Button  
-            event={labelBtnSecondaryModal  === 'Delete' ? openModalDelete : onToggleModal} 
+            event={labelBtnSecondaryModal  === 'Delete' ? openModalDelete : closeModal} 
             label={labelBtnSecondaryModal}
             bgColour={typeModal}
             paddingY={'3'}
