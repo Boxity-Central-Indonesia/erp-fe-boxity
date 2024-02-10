@@ -16,7 +16,6 @@ export const CRUD = () => {
     const [idDelete, setIdDelete] = useState()
     const [loading, setLoading] = useState(true)
     const [dataOrder, setDataOrder] = useState()
-    const [activeButton, setActiveButton] = useState('packages')
     const [dataHeading, setDataHeading] = useState([
         {
             label: 'Add Packagest',
@@ -28,6 +27,7 @@ export const CRUD = () => {
                 {path: 'packaging', label: 'Packaging'},
                 {path: 'packages-product', label: 'Packages product'},
             ],
+            activeButton: 'packages'
             // onclick: handleClickHeading,
             // eventToggleModal: handelCreate,
         }
@@ -188,6 +188,7 @@ export const CRUD = () => {
                                     {path: 'packaging', label: 'Packaging'},
                                     {path: 'packages-product', label: 'Packages product'},
                                 ],
+                                activeButton: 'packages',
                                 onclick: handleClickHeading,
                                 eventToggleModal: handleCreate,
                             }
@@ -262,8 +263,7 @@ export const CRUD = () => {
                                 onclick: handleClickHeading,
                                 parameter: 'packages',
                                 showNavHeading: true,
-                                activeButton: activeButton,
-                                setActiveButton: setActiveButton,
+                                activeButton: param,
                                 dataNavHeading: [
                                     {path: 'packages', label: 'Packages'},
                                     {path: 'packaging', label: 'Packaging'},
@@ -283,8 +283,7 @@ export const CRUD = () => {
                                 onclick: handleClickHeading,
                                 parameter: 'packaging',
                                 showNavHeading: true,
-                                activeButton: activeButton,
-                                setActiveButton: setActiveButton,
+                                activeButton: param,
                                 dataNavHeading: [
                                     {path: 'packages', label: 'Packages'},
                                     {path: 'packaging', label: 'Packaging'},
@@ -304,8 +303,7 @@ export const CRUD = () => {
                                 onclick: handleClickHeading,
                                 parameter: 'packages-product',
                                 showNavHeading: true,
-                                activeButton: activeButton,
-                                setActiveButton: setActiveButton,
+                                activeButton: param,
                                 dataNavHeading: [
                                     {path: 'packages', label: 'Packages'},
                                     {path: 'packaging', label: 'Packaging'},
@@ -407,7 +405,23 @@ export const CRUD = () => {
                     setLoading(prevLoading => !prevLoading)
                     setResponseError(error.response.data.errors)
                 }
-            } 
+            } else {
+                dataBody = {
+                    package_name: refBody.package_nameRef.current.value,
+                    package_weight: refBody.package_weightRef.current.value,
+                }
+                try {
+                    const {status} = await postApiData('packages', dataBody)
+                    if(status === 201) {
+                        setRefresh(!refresh)
+                        setOpenModal(prevOpenModal => !prevOpenModal)
+                        setLoading(prevLoading => !prevLoading)
+                    }
+                } catch (error) {
+                    setLoading(prevLoading => !prevLoading)
+                    setResponseError(error.response.data.errors)
+                }
+            }
         }
 
 

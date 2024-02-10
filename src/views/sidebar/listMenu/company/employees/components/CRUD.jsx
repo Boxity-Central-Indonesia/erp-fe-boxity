@@ -18,7 +18,7 @@ export const CRUD = () => {
     const [dataDepartments, setDataDepartments] = useState();
     const [loading, setLoading] = useState(true)
     const [dataCategoryEmployes, setDataCategoryEmployes] = useState()
-    const [activeButton, setActiveButton] = useState('employees')
+    // const [activeButton, setActiveButton] = useState('employees')
     const [dataHeading, setDataHeading] = useState([
         {
             label: 'Add Employes',
@@ -29,6 +29,7 @@ export const CRUD = () => {
                 {path: 'employees', label: 'Employess'},
                 {path: 'employee-categories', label: 'Employee categories'},
             ],
+            activeButton: 'employees',
             // eventToggleModal: handelCreate,
             // onclick: handleClickHeading
         }
@@ -467,6 +468,7 @@ export const CRUD = () => {
                                 {path: 'employees', label: 'Employess'},
                                 {path: 'employee-categories', label: 'Employee categories'},
                             ],
+                            activeButton: 'employees',
                         }
                     ])
                 } catch (error) {
@@ -481,6 +483,7 @@ export const CRUD = () => {
                 const {data,status} = await getApiData(param)
                 if(status === 200) {
                     if(param === 'employees'){
+                        // setActiveButton(param)
                         const newData = dataEmployes(data)
                         setData(newData)
                         setDataHeading([
@@ -492,15 +495,15 @@ export const CRUD = () => {
                                 onclick: handleClickHeading,
                                 parameter: 'employees',
                                 showNavHeading: true,
-                                activeButton: activeButton,
-                                setActiveButton: setActiveButton,
                                 dataNavHeading: [
                                     {path: 'employees', label: 'Employess'},
                                     {path: 'employee-categories', label: 'Employee categories'},
-                                ]
+                                ],
+                                activeButton: param,
                             }
                         ])
                     }else if(param === 'employee-categories') {
+                        // setActiveButton(param)
                         const newData = dataEmployesCategories(data)
                         setData(newData)
                         setDataHeading([
@@ -512,12 +515,11 @@ export const CRUD = () => {
                                 onclick: handleClickHeading,
                                 parameter: 'employee-categories',
                                 showNavHeading: true,
-                                activeButton: activeButton,
-                                setActiveButton: setActiveButton,
                                 dataNavHeading: [
                                     {path: 'employees', label: 'Employess'},
                                     {path: 'employee-categories', label: 'Employee categories'},
-                                ]
+                                ],
+                                activeButton: param,
                             }
                         ])
                     }
@@ -702,6 +704,7 @@ export const CRUD = () => {
                     }
                 } catch (error) { 
                     setResponseError(error.response.data.errors)
+                    setLoading(prevLoading => !prevLoading)
                 }
             }
         }
@@ -963,8 +966,8 @@ export const CRUD = () => {
         setOpenModal,
         inputBody,
         loading,
-        activeButton,
-        setActiveButton,
+        // activeButton,
+        // setActiveButton,
     }
 
 }

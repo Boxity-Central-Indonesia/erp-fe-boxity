@@ -13,15 +13,11 @@ const TabelHeading = ({
   setGlobalFilter, 
   handleClickHeading, 
   showNavHeading,
-  dataNavHeading
+  dataNavHeading,
+  activeButton,
 }) => {
 
-  const [activeButton, setActiveButton] = useState()
   const { globalColor, changeColor } = useColor();
-  const handleClick = (param) => {
-    setActiveButton(param);
-    handleClickHeading(param);
-  };
 
   return (
     <>
@@ -33,7 +29,7 @@ const TabelHeading = ({
               borderColor: globalColor
             }}
             className={`btn_akses px-8 pb-3 ${activeButton === item.path ? 'border-b-4 z-10'
-              : 'border-b-2' }`} onClick={()=> handleClick(item.path)}
+              : 'border-b-2' }`} onClick={()=> handleClickHeading(item.path)}
               >
               {item.label}
             </button>

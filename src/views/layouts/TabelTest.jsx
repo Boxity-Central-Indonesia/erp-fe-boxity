@@ -137,7 +137,6 @@ const TabelComponentTest = ({data, dataHeading, handelEdit })  => {
           handleClickHeading={dataHeading[0].onclick}
           showNavHeading={dataHeading[0].showNavHeading}
           activeButton={dataHeading[0].activeButton}
-          setActiveButton={dataHeading[0].setActiveButton}
           dataNavHeading={dataHeading[0].dataNavHeading}
           />
           <div className="overflow-x-auto">
