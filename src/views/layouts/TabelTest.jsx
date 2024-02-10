@@ -138,6 +138,7 @@ const TabelComponentTest = ({data, dataHeading, handelEdit })  => {
           showNavHeading={dataHeading[0].showNavHeading}
           activeButton={dataHeading[0].activeButton}
           setActiveButton={dataHeading[0].setActiveButton}
+          dataNavHeading={dataHeading[0].dataNavHeading}
           />
           <div className="overflow-x-auto">
             <Table hoverable>

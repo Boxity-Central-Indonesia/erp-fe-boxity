@@ -5,9 +5,18 @@ import { useColor } from '../conifg/GlobalColour';
 import { useState, useEffect } from 'react';
 import { Dropdown } from 'flowbite-react';
 
-const TabelHeading = ({ toggleOpenModal, icon, label, globalFilter, setGlobalFilter, handleClickHeading, showNavHeading}) => {
+const TabelHeading = ({ 
+  toggleOpenModal, 
+  icon, 
+  label, 
+  globalFilter, 
+  setGlobalFilter, 
+  handleClickHeading, 
+  showNavHeading,
+  dataNavHeading
+}) => {
 
-  const [activeButton, setActiveButton] = useState('employees')
+  const [activeButton, setActiveButton] = useState()
   const { globalColor, changeColor } = useColor();
   const handleClick = (param) => {
     setActiveButton(param);
@@ -18,16 +27,18 @@ const TabelHeading = ({ toggleOpenModal, icon, label, globalFilter, setGlobalFil
     <>
       <section>
         <div className={`flex relative mb-8 mt-3 ${showNavHeading ? `` : `hidden`}`}>
-          <button className={`btn_akses px-8 pb-3 ${activeButton === 'employees' ? 'border-b-4 border-[#9345a3] z-10'
-            : 'border-b-2' }`} onClick={()=> handleClick('employees')}
-            >
-            Employes
-          </button>
-          <button className={`btn_akses px-8 pb-3 ${activeButton==='employee-categories' ? 'border-b-4 border-[#9345a3] z-10'
+          {dataNavHeading && dataNavHeading.map(item => (
+            <button className={`btn_akses px-8 pb-3 ${activeButton === item.path ? 'border-b-4 border-[#9345a3] z-10'
+              : 'border-b-2' }`} onClick={()=> handleClick(item.path)}
+              >
+              {item.label}
+            </button>
+          ))}
+          {/* <button className={`btn_akses px-8 pb-3 ${activeButton==='employee-categories' ? 'border-b-4 border-[#9345a3] z-10'
             : 'border-b-2' }`} onClick={()=> handleClick('employee-categories')}
             >
             Employes category
-          </button>
+          </button> */}
           <hr className="w-full absolute bottom-0 z-0 border-2" />
         </div>
         <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">

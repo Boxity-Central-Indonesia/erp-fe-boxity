@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../../../function/Api"
+import IconAdd from "../../../../../layouts/icons/IconAdd"
 
 export const CRUD = () => {
     const [openModal, setOpenModal] = useState()
@@ -12,6 +13,22 @@ export const CRUD = () => {
     const [idDelete, setIdDelete] = useState()
     const [loading, setLoading] = useState(true)
     const [dataOrder, setDataOrder] = useState()
+    const [activeButton, setActiveButton] = useState('packages')
+    const [dataHeading, setDataHeading] = useState([
+        {
+            label: 'Add Packagest',
+            icon: IconAdd(),
+            heading: 'Packages list',
+            showNavHeading: true,
+            dataNavHeading: [
+                {path: 'packages', label: 'Packages'},
+                {path: 'packaging', label: 'Packaging'},
+                {path: 'packages-product', label: 'Packages product'},
+            ]
+            // eventToggleModal: handelCreate,
+            // onclick: handleClickHeading
+        }
+    ])
     const [dataEdit, setDataEdit] = useState({
       order_id: '',
       total_amount: '',
@@ -181,8 +198,52 @@ export const CRUD = () => {
             getDataForSelec('orders', setDataOrder)
         },[])
 
+        const handleClickHeading = async (param) => {
+            try {
+                const {data,status} = await getApiData(param)
+                if(status === 200) {
+                    if(param === 'employees'){
+                        const newData = dataEmployes(data)
+                        setData(newData)
+                        setDataHeading([
+                            {
+                                label: 'Add Employes',
+                                icon: IconAdd(),
+                                heading: 'Employes list',
+                                eventToggleModal: handelCreate,
+                                onclick: handleClickHeading,
+                                parameter: 'employees',
+                                showNavHeading: true,
+                                activeButton: activeButton,
+                                setActiveButton: setActiveButton
+                            }
+                        ])
+                    }else if(param === 'employee-categories') {
+                        const newData = dataEmployesCategories(data)
+                        setData(newData)
+                        setDataHeading([
+                            {
+                                label: 'Add category',
+                                icon: IconAdd(),
+                                heading: 'Category list',
+                                eventToggleModal: handelCreate,
+                                onclick: handleClickHeading,
+                                parameter: 'employee-categories',
+                                showNavHeading: true,
+                                activeButton: activeButton,
+                                setActiveButton: setActiveButton,
+                            }
+                        ])
+                    }
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
         return {
-            data
+            data,
+            handleClickHeading
         }
     }
 
@@ -347,7 +408,7 @@ export const CRUD = () => {
 
 
 
-    const {data} = READ()
+    const {data, handleClickHeading} = READ()
     const {handleCreate} = CREATE()
     const {handleEdit} = EDIT()
     const {openModalDelete, closeModalDelete, handleDelete} = DELETE()
@@ -368,6 +429,8 @@ export const CRUD = () => {
         closeModalDelete,
         handleDelete,
         modalDelete,
-        loading
+        loading,
+        handleClickHeading,
+        dataHeading
     }
 }

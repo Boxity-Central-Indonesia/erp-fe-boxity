@@ -25,6 +25,10 @@ export const CRUD = () => {
             icon: IconAdd(),
             heading: 'Employes list',
             showNavHeading: true,
+            dataNavHeading: [
+                {path: 'employees', label: 'Employess'},
+                {path: 'employee-categories', label: 'Employee categories'},
+            ],
             // eventToggleModal: handelCreate,
             // onclick: handleClickHeading
         }
@@ -459,6 +463,10 @@ export const CRUD = () => {
                             eventToggleModal: handelCreate,
                             onclick: handleClickHeading,
                             showNavHeading: true,
+                            dataNavHeading: [
+                                {path: 'employees', label: 'Employess'},
+                                {path: 'employee-categories', label: 'Employee categories'},
+                            ],
                         }
                     ])
                 } catch (error) {
@@ -485,7 +493,11 @@ export const CRUD = () => {
                                 parameter: 'employees',
                                 showNavHeading: true,
                                 activeButton: activeButton,
-                                setActiveButton: setActiveButton
+                                setActiveButton: setActiveButton,
+                                dataNavHeading: [
+                                    {path: 'employees', label: 'Employess'},
+                                    {path: 'employee-categories', label: 'Employee categories'},
+                                ]
                             }
                         ])
                     }else if(param === 'employee-categories') {
@@ -502,6 +514,10 @@ export const CRUD = () => {
                                 showNavHeading: true,
                                 activeButton: activeButton,
                                 setActiveButton: setActiveButton,
+                                dataNavHeading: [
+                                    {path: 'employees', label: 'Employess'},
+                                    {path: 'employee-categories', label: 'Employee categories'},
+                                ]
                             }
                         ])
                     }
