@@ -43,10 +43,10 @@ export const PackagesData = () => {
     const dataModalBody = () => {
         return (
             <>
-                {/* <form className="">
+                <form className="">
                     <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id} />
-                    {dataHeading[0].parameter === 'employees' ? inputBody('employees') : dataHeading[0].parameter === 'employee-categories' ? inputBody('employee-categories') : inputBody('employees')}
-                </form> */}
+                    {dataHeading[0].parameter === 'packages' ? inputBody('packages') : dataHeading[0].parameter === 'packaging' ? inputBody('packaging') : dataHeading[0].parameter === 'packages-product' ? inputBody('packages-product') : inputBody('packages')}
+                </form>
 
             </>
         )
@@ -63,7 +63,7 @@ export const PackagesData = () => {
         labelBtnModal={dataModal.labelBtnModal}
         labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
         handelBtnModal={dataModal.handelBtn}
-        // parameter={dataHeading[0].parameter}
+        parameter={dataHeading[0].parameter}
         openModalDelete={openModalDelete}
         />
 

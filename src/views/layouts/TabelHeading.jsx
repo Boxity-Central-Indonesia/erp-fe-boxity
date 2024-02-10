@@ -28,7 +28,11 @@ const TabelHeading = ({
       <section>
         <div className={`flex relative mb-8 mt-3 ${showNavHeading ? `` : `hidden`}`}>
           {dataNavHeading && dataNavHeading.map(item => (
-            <button className={`btn_akses px-8 pb-3 ${activeButton === item.path ? 'border-b-4 border-[#9345a3] z-10'
+            <button
+            style={{
+              borderColor: globalColor
+            }}
+            className={`btn_akses px-8 pb-3 ${activeButton === item.path ? 'border-b-4 z-10'
               : 'border-b-2' }`} onClick={()=> handleClick(item.path)}
               >
               {item.label}

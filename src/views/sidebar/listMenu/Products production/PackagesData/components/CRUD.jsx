@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef } from "react"
 import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../../../function/Api"
 import IconAdd from "../../../../../layouts/icons/IconAdd"
+import FormInput from "../../../../../layouts/FormInput"
 
 export const CRUD = () => {
     const [openModal, setOpenModal] = useState()
     const [dataModal, setDataModal] = useState({})
-    const [input, setInput] = useState([])
+    const [inputPackages, setInputPackages] = useState([])
+    const [inputPackaging, setInputPackaging] = useState([])
+    const [inputPackageProduct, setInputPackageProduct] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [responseError, setResponseError] = useState()
     const [validationError, setValidationError] = useState()
@@ -24,27 +27,27 @@ export const CRUD = () => {
                 {path: 'packages', label: 'Packages'},
                 {path: 'packaging', label: 'Packaging'},
                 {path: 'packages-product', label: 'Packages product'},
-            ]
+            ],
+            // onclick: handleClickHeading,
             // eventToggleModal: handelCreate,
-            // onclick: handleClickHeading
         }
     ])
     const [dataEdit, setDataEdit] = useState({
-      order_id: '',
-      total_amount: '',
-      balance_due: '',
-      invoice_date: '',
-      due_date: '',
-      status: '',
-      id: ''
+        package_name: '',
+        package_weight: '',
+        product_id: '',
+        weight: '',
+        package_type: '',
+        package_id: '',
     })
+
     const [refBody, setRefBody] = useState({
-        order_idRef: useRef(),
-        total_amountRef: useRef(),
-        balance_dueRef: useRef(),
-        invoice_dateRef: useRef(),
-        due_dateRef: useRef(),
-        statusRef: useRef(),
+        package_nameRef: useRef(),
+        package_weightRef: useRef(),
+        product_idRef: useRef(),
+        weightRef: useRef(),
+        package_typeRef: useRef(),
+        package_idRef: useRef(),
     })
     const handleChange = (event) => {
         // Mendapatkan nama dan nilai input yang berubah
@@ -61,82 +64,92 @@ export const CRUD = () => {
 
 
     useEffect(() => {
-        setInput([
+        setInputPackages([
             {
-                element: 'select',
-                name: 'order_id',
-                ref: refBody.order_idRef,
-                value: dataEdit.order_id,
-                label: 'Order',
-                htmlFor: 'order_id',
-                id: 'order_id',
-                dataSelect: dataOrder,
-                onchange: handleChange
+                element: 'input',
+                type: 'text',
+                name: 'package_name',
+                ref: refBody.package_nameRef,
+                value: dataEdit.package_name,
+                label: 'Package name',
+                htmlFor: 'package_name',
+                id: 'package_name',
+                onchange: handleChange,
+                placeholder: 'Package name',
             },
             {
+                element: 'input',
+                type: 'text',
+                name: 'package_weight',
+                ref: refBody.package_weightRef,
+                value: dataEdit.package_weight,
+                label: 'Package weight',
+                htmlFor: 'package_weight',
+                id: 'package_weight',
+                onchange: handleChange,
+                placeholder: 'Package weight',
+            },
+        ])
+        setInputPackaging([
+            {
                 element: 'select',
-                name: 'status',
-                ref: refBody.statusRef,
-                value: dataEdit.status,
-                label: 'Staatus',
-                htmlFor: 'status',
-                id: 'status',
-                dataSelect: [
-                    {value: 'unpaid', name: 'unpaid'},
-                    {value: 'paid', name: 'paid'},
-                    {value: 'partial', name: 'partial'},
-                ],
-                onchange: handleChange
+                ref: refBody.product_idRef,
+                name: 'product_id',
+                label: 'Product',
+                htmlFor: 'product-id',
+                id: 'product-id',
+                // dataSelect: dataCompanies,
+                value: dataEdit.product_id,
+                // onchange: handleChangeAndGetDepartment
             },
             {
                 element: 'input',
                 type: 'number',
-                name: 'total_amount',
-                ref: refBody.total_amountRef,
-                value: dataEdit.total_amount,
-                label: 'Total amount',
-                htmlFor: 'total_amount',
-                id: 'total_amount',
+                name: 'weight',
+                ref: refBody.weightRef,
+                value: dataEdit.weight,
+                label: 'Weight',
+                htmlFor: 'weight',
+                id: 'weight',
                 onchange: handleChange,
-                placeholder: 'Total amount',
+                placeholder: 'Weight',
             },
             {
                 element: 'input',
-                type: 'number',
-                name: 'balance_due',
-                ref: refBody.balance_dueRef,
-                value: dataEdit.balance_due,
-                label: 'Balance due',
-                htmlFor: 'balance_due',
-                id: 'balance_due',
+                type: 'text',
+                name: 'package_type',
+                ref: refBody.package_typeRef,
+                value: dataEdit.package_type,
+                label: 'Package type',
+                htmlFor: 'package_type',
+                id: 'package_type',
                 onchange: handleChange,
-                placeholder: 'Balance due',
+                placeholder: 'Package type',
+            },
+        ])
+        setInputPackageProduct([
+            {
+                element: 'select',
+                ref: refBody.package_idRef,
+                name: 'package_id',
+                label: 'Package',
+                htmlFor: 'package-id',
+                id: 'package-id',
+                // dataSelect: dataCompanies,
+                value: dataEdit.package_id,
+                // onchange: handleChangeAndGetDepartment
             },
             {
-                element: 'input',
-                type: 'date',
-                name: 'invoice_date',
-                ref: refBody.invoice_dateRef,
-                value: dataEdit.invoice_date,
-                label: 'Invocie date',
-                htmlFor: 'invoice_date',
-                id: 'invoice_date',
-                onchange: handleChange,
-                placeholder: 'Invocie date',
+                element: 'select',
+                ref: refBody.product_idRef,
+                name: 'product_id',
+                label: 'Product',
+                htmlFor: 'product-id',
+                id: 'product-id',
+                // dataSelect: dataCompanies,
+                value: dataEdit.product_id,
+                // onchange: handleChangeAndGetDepartment
             },
-            {
-                element: 'input',
-                type: 'date',
-                name: 'due_date',
-                ref: refBody.due_dateRef,
-                value: dataEdit.due_date,
-                label: 'Due date',
-                htmlFor: 'due_date',
-                id: 'due_date',
-                onchange: handleChange,
-                placeholder: 'Due date',
-            },
-            
         ])
     }, [dataEdit])
 
@@ -144,12 +157,12 @@ export const CRUD = () => {
         if(!!responseError) {
             setValidationError(
                 {
-                    order_id: responseError?.order_id?.[0] || '',
-                    total_amount: responseError?.total_amount?.[0] || '',
-                    balance_due: responseError?.balance_due?.[0] || '',
-                    invoice_date: responseError?.invoice_date?.[0] || '',
-                    due_date: responseError?.due_date?.[0] || '',
-                    status: responseError?.status?.[0] || '',
+                    package_name: responseError?.package_name?.[0] || '',
+                    package_weight: responseError?.package_weight?.[0] || '',
+                    product_id: responseError?.product_id?.[0] || '',
+                    weight: responseError?.weight?.[0] || '',
+                    package_type: responseError?.package_type?.[0] || '',
+                    package_id: responseError?.package_id?.[0] || '',
                 }
             )
         }
@@ -160,17 +173,25 @@ export const CRUD = () => {
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const {data, status} = await getApiData('leads') 
+                    const {data, status} = await getApiData('packages') 
                     if(status === 200) {
-                        const newData = data.map(item => ({
-                            'prospek name': item.nama_prospek,
-                            'prospek email': item.email_prospek,
-                            'prospek number phone': item.nomor_telepon_prospek,
-                            'prospek_type' : item.tipe_prospek,
-                            id: item.id,
-
-                        }))
+                        const newData = dataPackages(data)
                         setData(() => newData)
+                        setDataHeading([
+                            {
+                                label: 'Add Packagest',
+                                icon: IconAdd(),
+                                heading: 'Packages list',
+                                showNavHeading: true,
+                                dataNavHeading: [
+                                    {path: 'packages', label: 'Packages'},
+                                    {path: 'packaging', label: 'Packaging'},
+                                    {path: 'packages-product', label: 'Packages product'},
+                                ],
+                                onclick: handleClickHeading,
+                                eventToggleModal: handleCreate,
+                            }
+                        ])
                     }
                 } catch (error) {
                     console.log(error);
@@ -198,42 +219,101 @@ export const CRUD = () => {
             getDataForSelec('orders', setDataOrder)
         },[])
 
+
+        const dataPackages = (data) => {
+            return data.map(item => ({
+                id: item.id,
+                'package name': item.package_name,
+                'package weight': item.package_weight,
+            }))
+        }
+
+        const dataPackaging = (data) => {
+            return data.map(item => ({
+                id: item.id,
+                'product_name': item.product_id,
+                weight: item.weight,
+                'package type': item.package_type
+            }))
+        }
+
+        const dataPackagesProduct = (data) => {
+            return data.map(item => ({
+                id: item.id,
+                "package": item.package_id,
+                'product': item.product
+            }))
+        }
+
+
         const handleClickHeading = async (param) => {
             try {
                 const {data,status} = await getApiData(param)
                 if(status === 200) {
-                    if(param === 'employees'){
-                        const newData = dataEmployes(data)
+                    if(param === 'packages'){
+                        const newData = dataPackages(data)
                         setData(newData)
                         setDataHeading([
                             {
-                                label: 'Add Employes',
+                                label: 'Add packagest',
                                 icon: IconAdd(),
-                                heading: 'Employes list',
-                                eventToggleModal: handelCreate,
+                                heading: 'Packaging list',
+                                eventToggleModal: handleCreate,
                                 onclick: handleClickHeading,
-                                parameter: 'employees',
-                                showNavHeading: true,
-                                activeButton: activeButton,
-                                setActiveButton: setActiveButton
-                            }
-                        ])
-                    }else if(param === 'employee-categories') {
-                        const newData = dataEmployesCategories(data)
-                        setData(newData)
-                        setDataHeading([
-                            {
-                                label: 'Add category',
-                                icon: IconAdd(),
-                                heading: 'Category list',
-                                eventToggleModal: handelCreate,
-                                onclick: handleClickHeading,
-                                parameter: 'employee-categories',
+                                parameter: 'packages',
                                 showNavHeading: true,
                                 activeButton: activeButton,
                                 setActiveButton: setActiveButton,
+                                dataNavHeading: [
+                                    {path: 'packages', label: 'Packages'},
+                                    {path: 'packaging', label: 'Packaging'},
+                                    {path: 'packages-product', label: 'Packages product'},
+                                ],
                             }
                         ])
+                    }else if(param === 'packaging') {
+                        const newData = dataPackaging(data)
+                        setData(newData)
+                        setDataHeading([
+                            {
+                                label: 'Add packaging',
+                                icon: IconAdd(),
+                                heading: 'Packaging list',
+                                eventToggleModal: handleCreate,
+                                onclick: handleClickHeading,
+                                parameter: 'packaging',
+                                showNavHeading: true,
+                                activeButton: activeButton,
+                                setActiveButton: setActiveButton,
+                                dataNavHeading: [
+                                    {path: 'packages', label: 'Packages'},
+                                    {path: 'packaging', label: 'Packaging'},
+                                    {path: 'packages-product', label: 'Packages product'},
+                                ],
+                            }
+                        ])
+                    }else if(param === 'packages-product'){
+                        const newData = dataPackagesProduct(data)
+                        setData(newData)
+                        setDataHeading([
+                            {
+                                label: 'Add packages product',
+                                icon: IconAdd(),
+                                heading: 'Packages product list',
+                                eventToggleModal: handleCreate,
+                                onclick: handleClickHeading,
+                                parameter: 'packages-product',
+                                showNavHeading: true,
+                                activeButton: activeButton,
+                                setActiveButton: setActiveButton,
+                                dataNavHeading: [
+                                    {path: 'packages', label: 'Packages'},
+                                    {path: 'packaging', label: 'Packaging'},
+                                    {path: 'packages-product', label: 'Packages product'},
+                                ],
+                            }
+                        ])
+
                     }
                 }
             } catch (error) {
@@ -248,56 +328,86 @@ export const CRUD = () => {
     }
 
     const CREATE = () => {
-        const handleCreate = () => {
+        const handleCreate = (param) => {
             setDataModal({
-                labelModal: 'Add invoices',
-                labelBtnModal: 'Add new invoices',
+                size: 'md',
+                labelModal: 'Add packaging',
+                labelBtnModal: 'Add new packaging',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: () => create()
+                handelBtn: create
             })
             setDataEdit({
-                order_id: '',
-                total_amount: '',
-                balance_due: '',
-                invoice_date: '',
-                due_date: '',
-                status: '',
-                id: ''
+                package_name: '',
+                package_weight: '',
+                product_id: '',
+                weight: '',
+                package_type: '',
             })
             setValidationError(
                 {
-                    order_id: '',
-                    total_amount: '',
-                    balance_due: '',
-                    invoice_date: '',
-                    due_date: '',
-                    status: '',
+                    package_name: '',
+                    package_weight: '',
+                    product_id: '',
+                    weight: '',
+                    package_type: '',
                 }
             )
             setOpenModal(prevOpenModal => !prevOpenModal)
         }
 
-        const create = async () => {
+        const create = async (param) => {
             setLoading(prevLoading => !prevLoading)
-            const dataBody = {
-                order_id: refBody.order_idRef.current.value,
-                total_amount: refBody.total_amountRef.current.value,
-                balance_due: refBody.balance_dueRef.current.value,
-                invoice_date: refBody.invoice_dateRef.current.value,
-                due_date: refBody.due_dateRef.current.value,
-                status: refBody.statusRef.current.value,
-            }
-            try {
-                const {status} = await postApiData('invoices', dataBody)
-                if(status === 201) {
-                    setRefresh(!refresh)
-                    setOpenModal(prevOpenModal => !prevOpenModal)
-                    setLoading(prevLoading => !prevLoading)
+            let dataBody = {}
+            if(param === 'packages'){
+                dataBody = {
+                    package_name: refBody.package_nameRef.current.value,
+                    package_weight: refBody.package_weightRef.current.value,
                 }
-            } catch (error) {
-                setLoading(prevLoading => !prevLoading)
-                setResponseError(error.response.data.errors)
-            }
+                try {
+                    const {status} = await postApiData(param, dataBody)
+                    if(status === 201) {
+                        setRefresh(!refresh)
+                        setOpenModal(prevOpenModal => !prevOpenModal)
+                        setLoading(prevLoading => !prevLoading)
+                    }
+                } catch (error) {
+                    setLoading(prevLoading => !prevLoading)
+                    setResponseError(error.response.data.errors)
+                }
+            }else if(param === 'packaging'){
+                dataBody = {
+                    product_id: refBody.product_idRef.current.value,
+                    weight: refBody.product_idRef.current.value,
+                    package_type: refBody.package_typeRef.current.value
+                }
+                try {
+                    const {status} = await postApiData(param, dataBody)
+                    if(status === 201) {
+                        setRefresh(!refresh)
+                        setOpenModal(prevOpenModal => !prevOpenModal)
+                        setLoading(prevLoading => !prevLoading)
+                    }
+                } catch (error) {
+                    setLoading(prevLoading => !prevLoading)
+                    setResponseError(error.response.data.errors)
+                }
+            } else if(param === 'packages-product'){
+                dataBody = {
+                    product_id: refBody.product_idRef.current.value,
+                    package_id: refBody.package_idRef.current.value
+                }
+                try {
+                    const {status} = await postApiData(param, dataBody)
+                    if(status === 201) {
+                        setRefresh(!refresh)
+                        setOpenModal(prevOpenModal => !prevOpenModal)
+                        setLoading(prevLoading => !prevLoading)
+                    }
+                } catch (error) {
+                    setLoading(prevLoading => !prevLoading)
+                    setResponseError(error.response.data.errors)
+                }
+            } 
         }
 
 
@@ -407,6 +517,84 @@ export const CRUD = () => {
     }
 
 
+    const inputBody = (param) => {
+        if(param === 'packages'){
+            return (
+                <>
+                 <div className="grid gap-4 mb-4 grid-cols-1">
+                            {inputPackages.map( (item, index) => (
+                                < FormInput
+                                key={item.id}
+                                element={item.element}
+                                htmlFor={item.htmlFor}
+                                label={item.label}
+                                type={item.type}
+                                name={item.name}
+                                referens={item.ref}
+                                value={item.value}
+                                id={item.id}
+                                onChange={(event) => item.onchange(event)}
+                                placeholder={item.placeholder} 
+                                dataSelect={item.dataSelect}
+                                uniqueId={index}
+                                validationError={validationError}
+                                />
+                            ) )}
+                    </div>
+                </>
+            )
+        }else if(param === 'packaging'){
+            return (
+                <>
+                 <div className="grid gap-4 mb-4 grid-cols-1">
+                            {inputPackaging.map( (item, index) => (
+                                < FormInput
+                                key={item.id}
+                                element={item.element}
+                                htmlFor={item.htmlFor}
+                                label={item.label}
+                                type={item.type}
+                                name={item.name}
+                                referens={item.ref}
+                                value={item.value}
+                                id={item.id}
+                                onChange={(event) => item.onchange(event)}
+                                placeholder={item.placeholder} 
+                                dataSelect={item.dataSelect}
+                                uniqueId={index}
+                                validationError={validationError}
+                                />
+                            ) )}
+                    </div>
+                </>
+            )
+        }else if(param === 'packages-product'){
+            return (
+                <>
+                 <div className="grid gap-4 mb-4 grid-cols-1">
+                            {inputPackageProduct.map( (item, index) => (
+                                < FormInput
+                                key={item.id}
+                                element={item.element}
+                                htmlFor={item.htmlFor}
+                                label={item.label}
+                                type={item.type}
+                                name={item.name}
+                                referens={item.ref}
+                                value={item.value}
+                                id={item.id}
+                                onChange={(event) => item.onchange(event)}
+                                placeholder={item.placeholder} 
+                                dataSelect={item.dataSelect}
+                                uniqueId={index}
+                                validationError={validationError}
+                                />
+                            ) )}
+                    </div>
+                </>
+            )
+        }
+    }
 
     const {data, handleClickHeading} = READ()
     const {handleCreate} = CREATE()
@@ -420,7 +608,7 @@ export const CRUD = () => {
         openModal,
         handleCreate,
         dataModal,
-        input,
+        inputPackages,
         validationError,
         handleEdit,
         dataEdit,
@@ -431,6 +619,8 @@ export const CRUD = () => {
         modalDelete,
         loading,
         handleClickHeading,
-        dataHeading
+        dataHeading,
+        setOpenModal,
+        inputBody,
     }
 }

@@ -11,12 +11,9 @@ import { Spinner } from "../../../../layouts/Spinner"
 export const EmployesList = () => {
     const {
         data,
-        handelCreate, 
         openModal, 
         setOpenModal,
         dataModal, 
-        inputEmployes,
-        inputEmployesCategory, 
         refBody,
         handelEdit,
         dataEdit,
@@ -24,8 +21,6 @@ export const EmployesList = () => {
         closeModalDelete,
         handelDelete,
         modalDelete,
-        validationError,
-        handleClickHeading,
         dataHeading,
         inputBody,
         loading,

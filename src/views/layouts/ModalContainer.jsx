@@ -39,14 +39,8 @@ export const ModalContainer = ({
     }, [response]) 
 
       const handelBtnSubmit = () => {
-       if(parameter === 'employees'){
-        handelBtnModal('employees')
-       }else if(parameter === 'employee-categories'){
-        handelBtnModal('employee-categories')
-       }else{
-        handelBtnModal('employees')
-       }
-    }
+        handelBtnModal(parameter)
+      }
 
   return (
     <>
