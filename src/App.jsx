@@ -42,7 +42,7 @@ import { Produksi } from "./views/sidebar/listMenu/reports/produksi/Produksi";
 import { LeadsProspekList } from "./views/sidebar/listMenu/leadsProspek/LeadsProspek";
 import { ProccesActifity } from "./views/sidebar/listMenu/Products production/ProccesActivity/ProccesActifity";
 import { PackagesData } from "./views/sidebar/listMenu/Products production/PackagesData/PackagesData";
-import {Vendors} from "./views/sidebar/listMenu/vendors/Vendors"
+import { Vendors } from "./views/sidebar/listMenu/vendors/Vendors";
 import { Transactions } from "./views/sidebar/listMenu/transaction/Transactions";
 
 function App() {
@@ -70,7 +70,10 @@ function App() {
 
             <main>
               <div
-                style={{ minHeight: "100vh" }}
+                style={{
+                  minHeight: "100vh",
+                  backgroundColor: "rgba(0,0,0,0.03)",
+                }}
                 className={`p-4 ${
                   auth ? `md:ml-64 pt-20` : `ml-0`
                 } h-auto overflow-hidden`}
@@ -172,7 +175,7 @@ function App() {
                       </Auth.ProtectedRoute>
                     }
                   />
-                   <Route
+                  <Route
                     path="transactions"
                     element={
                       <Auth.ProtectedRoute>

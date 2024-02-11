@@ -216,7 +216,6 @@ function Sidebar() {
     },
   ];
 
-  // Render function for submenu items
   const renderSubMenu = (subMenu, menuKey) => (
     <div
       className={`pl-5 transition-max-height duration-700 ease-in-out overflow-hidden ${
@@ -227,7 +226,7 @@ function Sidebar() {
         <NavLink
           key={index}
           to={item.path}
-          className="block px-2 py-1 text-base font-medium rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+          className="block px-2 py-1 text-base font-medium rounded-md hover:bg-orange-100 dark:hover:bg-gray-700"
           style={{
             fontColor: "#000",
             fontWeight: "normal",
@@ -259,7 +258,7 @@ py-4 text-gray-500 dark:text-gray-400 primary-color-sidebar-hover dark:text-gray
                 <li className="group">
                   <button
                     onClick={() => toggleDropdown(item.label)}
-                    className="flex items-center justify-between w-full px-4 py-2 text-sm font-semibold text-left bg-transparent rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none"
+                    className="flex items-center justify-between w-full px-4 py-2 text-sm font-semibold text-left bg-transparent rounded-lg hover:bg-orange-100 dark:hover:bg-gray-700 focus:outline-none"
                   >
                     <span className="flex items-center">
                       <span className="mr-3">{item.icon}</span>
