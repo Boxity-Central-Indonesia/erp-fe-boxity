@@ -1,10 +1,13 @@
-import FormInput from "../../../../layouts/FormInput"
-import { ModalConfirmDelete, ModalContainer } from "../../../../layouts/ModalContainer"
-import {CRUD} from "./components/CRUD"
-import TabelComponentTest from "../../../../layouts/TabelTest"
-import { Spinner } from "../../../../layouts/Spinner"
+import { ModalConfirmDelete, ModalContainer } from "../../../layouts/ModalContainer"
+import TabelComponent from "../../../layouts/Tabel"
+import IconAdd from "../../../layouts/icons/IconAdd"
+import { useEffect, useState, useRef } from "react"
+import { TextArea } from "../../../layouts/FormInput"
+import TabelComponentTest from "../../../layouts/TabelTest"
+import { Spinner } from "../../../layouts/Spinner"
+import { CRUD } from "./components/CRUD"
 
-export const EmployesList = () => {
+export const Vendors = () => {
     const {
         data,
         openModal, 

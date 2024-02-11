@@ -19,14 +19,9 @@ import Cookies from "js-cookie";
 import Departement from "./views/sidebar/listMenu/company/DepartementList";
 import BranchList from "./views/sidebar/listMenu/company/BranchList";
 import { EmployesList } from "./views/sidebar/listMenu/company/employees/EmployeesList";
-import Products from "./views/sidebar/listMenu/products/Products";
-import { Category } from "./views/sidebar/listMenu/products/Category/Category";
+import { Products } from "./views/sidebar/listMenu/products/Products";
 import { Warehouses } from "./views/sidebar/listMenu/warehouses/Warehouses";
 import { ColorProvider } from "./views/conifg/GlobalColour";
-import { WarehousesLocation } from "./views/sidebar/listMenu/warehouses/locations/WarehousesLocation";
-import { VendorsList } from "./views/sidebar/listMenu/vendors/list/List";
-import { VendorContacts } from "./views/sidebar/listMenu/vendors/contact/contact";
-import { VendorTransactions } from "./views/sidebar/listMenu/vendors/transaction/Transactions";
 import RoleAndPermission from "./views/sidebar/listMenu/user/Role&Permission";
 import { Account } from "./views/sidebar/listMenu/account/list/Account";
 import { Test } from "./views/sidebar/listMenu/user/test";
@@ -44,13 +39,11 @@ import { Pengeluaran } from "./views/sidebar/listMenu/reports/pengeluaran/Pengel
 import { PersediaanBarang } from "./views/sidebar/listMenu/reports/persediaanBarang/PersediaanBarang";
 import { Piutang } from "./views/sidebar/listMenu/reports/piutang/Piutang";
 import { Produksi } from "./views/sidebar/listMenu/reports/produksi/Produksi";
-import { VendorTransaction } from "./views/sidebar/listMenu/reports/vendorTransaction/VendorTransaction";
-import { OrderList } from "./views/sidebar/listMenu/order/list/OrderList";
-import { InvoicesList } from "./views/sidebar/listMenu/invoices/Invoices";
-import { Payments } from "./views/sidebar/listMenu/payments/Payments";
 import { LeadsProspekList } from "./views/sidebar/listMenu/leadsProspek/LeadsProspek";
 import { ProccesActifity } from "./views/sidebar/listMenu/Products production/ProccesActivity/ProccesActifity";
 import { PackagesData } from "./views/sidebar/listMenu/Products production/PackagesData/PackagesData";
+import {Vendors} from "./views/sidebar/listMenu/vendors/Vendors"
+import { Transactions } from "./views/sidebar/listMenu/transaction/Transactions";
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -164,14 +157,6 @@ function App() {
                     }
                   />
                   <Route
-                    path="products/category"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Category />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
                     path="warehouses/list"
                     element={
                       <Auth.ProtectedRoute>
@@ -180,34 +165,18 @@ function App() {
                     }
                   />
                   <Route
-                    path="warehouses/location"
+                    path="vendors"
                     element={
                       <Auth.ProtectedRoute>
-                        <WarehousesLocation />
+                        <Vendors />
                       </Auth.ProtectedRoute>
                     }
                   />
-                  <Route
-                    path="vendors/list"
+                   <Route
+                    path="transactions"
                     element={
                       <Auth.ProtectedRoute>
-                        <VendorsList />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="vendors/contacts"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <VendorContacts />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="vendors/transactions"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <VendorTransactions />
+                        <Transactions />
                       </Auth.ProtectedRoute>
                     }
                   />
@@ -224,30 +193,6 @@ function App() {
                     element={
                       <Auth.ProtectedRoute>
                         <AccountTransaction />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="orders/list"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <OrderList />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="invoices/list"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <InvoicesList />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="payments/list"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Payments />
                       </Auth.ProtectedRoute>
                     }
                   />
@@ -332,14 +277,14 @@ function App() {
                       </Auth.ProtectedRoute>
                     }
                   />
-                  <Route
+                  {/* <Route
                     path="/reports/vendor-transactions"
                     element={
                       <Auth.ProtectedRoute>
                         <VendorTransaction />
                       </Auth.ProtectedRoute>
                     }
-                  />
+                  /> */}
                   <Route
                     path="/reports/cash-flow"
                     element={

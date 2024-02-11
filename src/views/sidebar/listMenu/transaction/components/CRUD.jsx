@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react"
-import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../../../function/Api"
-import IconAdd from "../../../../../layouts/icons/IconAdd"
-import { TextArea } from "../../../../../layouts/FormInput"
-import FormInput from "../../../../../layouts/FormInput"
+import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../../function/Api"
+import IconAdd from "../../../../layouts/icons/IconAdd"
+import { TextArea } from "../../../../layouts/FormInput"
+import FormInput from "../../../../layouts/FormInput"
 
 export const CRUD = () => {
     const [refresh, setRefresh] = useState(false)
@@ -413,48 +413,71 @@ export const CRUD = () => {
 
 
 
-    const dataEmployes = (data) => {
+    const dataOrders = (data) => {
         return data.map(item => ({
+            'vendor name': item.vendor.name,
+            'product name': item.product.name,
+            'warehouse name': item.warehouse.name,
+            status: item.status,
+            'order status': item.order_status,
+            'order type': item.order_type,
+            'taxes': item.taxes,
+            details: item.details,
+            quantity: item.quantity,
+            'price per unnit': item.price_per_unit,
+            'shipping_cost': item.shipping_cost,
+            'total price': item.total_price,
             id: item.id,
-            name: item.name,
-            email: item.email,
-            phone_number: item.phone_number,
-            company: item.company.name,
-            'Job title': item.job_title,
-            'Employment Status': item.employment_status,
-            'address': item.address
+
+        }))
+    }
+    
+    const dataPayments = (data) => {
+        return data.map(item => ({
+            'invoices': item.invoice_id,
+            'payment method': item.payment_method,
+            'payment date': item.payment_date,
+            'amount paid': item.amount_paid,
+            id: item.id,
         }))
     }
 
-    const dataEmployesCategories = (data) => {
+    const dataInvoices = (data) => {
         return data.map(item => ({
+            'invoices data': item.invoice_date,
+            'due date': item.due_date,
+            'status': item.status,
+            'balance due': item.balance_due,
+            'total amount': item.total_amount,
             id: item.id,
-            name: item.name,
-            description: item.description
         }))
     }
+
+
+
 
     const READ = () => {
         const [data, setData] = useState()
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const { data } = await getApiData('employees');
-                    const newData = dataEmployes(data)
+                    const { data } = await getApiData('orders');
+                    const newData = dataOrders(data)
                     setData(newData);
                     setDataHeading([
                         {
-                            label: 'Add Employes',
+                            label: 'Add orders',
                             icon: IconAdd(),
-                            heading: 'Employes list',
+                            heading: 'Orders list',
                             eventToggleModal: handelCreate,
                             onclick: handleClickHeading,
                             showNavHeading: true,
                             dataNavHeading: [
-                                {path: 'employees', label: 'Employess'},
-                                {path: 'employee-categories', label: 'Employee categories'},
+                                {path: 'orders', label: 'Orders'},
+                                {path: 'invoices', label: 'Invoices'},
+                                {path: 'payments', label: 'Payments'},
                             ],
-                            activeButton: 'employees',
+                            activeButton: 'orders',
                         }
                     ])
                 } catch (error) {
@@ -467,16 +490,17 @@ export const CRUD = () => {
         const handleClickHeading = async (param) => {
             setDataHeading([
                 {
-                    label: param === 'employees' ? 'Add employees' : 'Add category',
+                    label: param === 'orders' ? 'Add orders' : param === 'invoices' ? 'Add invoices' : 'Add payments',
                     icon: IconAdd(),
-                    heading: param === 'employees' ? 'Employees' : 'Category employes' +' list',
+                    heading: param === 'orders' ? 'Orders list' : param === 'invoices' ? 'Invoices list' : 'Payments list',
                     eventToggleModal: handelCreate,
                     onclick: handleClickHeading,
-                    parameter: param === 'employees' ? 'employees' : 'employee-categories',
+                    parameter: param,
                     showNavHeading: true,
                     dataNavHeading: [
-                        {path: 'employees', label: 'Employess'},
-                        {path: 'employee-categories', label: 'Employee categories'},
+                        {path: 'orders', label: 'Orders'},
+                        {path: 'invoices', label: 'Invoices'},
+                        {path: 'payments', label: 'Payments'},
                     ],
                     activeButton: param,
                 }
@@ -486,13 +510,17 @@ export const CRUD = () => {
             try {
                 const {data,status} = await getApiData(param)
                 if(status === 200) {
-                    if(param === 'employees'){
-                        const newData = dataEmployes(data)
+                    if(param === 'orders'){
+                        const newData = dataOrders(data)
                         setSkeleton(prevSkeleton => !prevSkeleton)
                         setData(newData)
-                    }else if(param === 'employee-categories') {
+                    }else if(param === 'invoices') {
                         setSkeleton(prevSkeleton => !prevSkeleton)
-                        const newData = dataEmployesCategories(data)
+                        const newData = dataInvoices(data)
+                        setData(newData)
+                    }else if(param === 'payments') {
+                        setSkeleton(prevSkeleton => !prevSkeleton)
+                        const newData = dataPayments(data)
                         setData(newData)
                     }
                 }

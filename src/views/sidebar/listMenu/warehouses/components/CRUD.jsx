@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react"
-import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../../../function/Api"
-import IconAdd from "../../../../../layouts/icons/IconAdd"
-import { TextArea } from "../../../../../layouts/FormInput"
-import FormInput from "../../../../../layouts/FormInput"
+import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../../function/Api"
+import IconAdd from "../../../../layouts/icons/IconAdd"
+import { TextArea } from "../../../../layouts/FormInput"
+import FormInput from "../../../../layouts/FormInput"
 
 export const CRUD = () => {
     const [refresh, setRefresh] = useState(false)
@@ -413,48 +413,46 @@ export const CRUD = () => {
 
 
 
-    const dataEmployes = (data) => {
+    const dataWarehouses = (data) => {
         return data.map(item => ({
             id: item.id,
             name: item.name,
-            email: item.email,
-            phone_number: item.phone_number,
-            company: item.company.name,
-            'Job title': item.job_title,
-            'Employment Status': item.employment_status,
-            'address': item.address
+            address: item.address,
+            capacity: item.capacity
         }))
     }
 
-    const dataEmployesCategories = (data) => {
+    const dataWarehousesLocation = (data) => {
         return data.map(item => ({
-            id: item.id,
-            name: item.name,
-            description: item.description
+            'id': item.id,
+            'number': item.number,
+            'capacity': item.capacity,
+            'warehouse': item.warehouse.name
         }))
     }
+
 
     const READ = () => {
         const [data, setData] = useState()
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const { data } = await getApiData('employees');
-                    const newData = dataEmployes(data)
+                    const { data } = await getApiData('warehouses');
+                    const newData = dataWarehouses(data)
                     setData(newData);
                     setDataHeading([
                         {
-                            label: 'Add Employes',
+                            label: 'Add warehouses',
                             icon: IconAdd(),
-                            heading: 'Employes list',
+                            heading: 'Warehouses list',
                             eventToggleModal: handelCreate,
                             onclick: handleClickHeading,
                             showNavHeading: true,
                             dataNavHeading: [
-                                {path: 'employees', label: 'Employess'},
-                                {path: 'employee-categories', label: 'Employee categories'},
+                                {path: 'warehouses', label: 'List'},
+                                {path: 'warehouse-locations', label: 'Locations'},
                             ],
-                            activeButton: 'employees',
+                            activeButton: 'warehouses',
                         }
                     ])
                 } catch (error) {
@@ -467,16 +465,16 @@ export const CRUD = () => {
         const handleClickHeading = async (param) => {
             setDataHeading([
                 {
-                    label: param === 'employees' ? 'Add employees' : 'Add category',
+                    label: param === 'warehouses' ? 'Add warehouses' : 'Add warehouse locations',
                     icon: IconAdd(),
-                    heading: param === 'employees' ? 'Employees' : 'Category employes' +' list',
+                    heading: param === 'warehouses' ? 'Warehouses list' : 'Locations list',
                     eventToggleModal: handelCreate,
                     onclick: handleClickHeading,
-                    parameter: param === 'employees' ? 'employees' : 'employee-categories',
+                    parameter: param === 'warehouses' ? 'warehouses' : 'warehouse-locations',
                     showNavHeading: true,
                     dataNavHeading: [
-                        {path: 'employees', label: 'Employess'},
-                        {path: 'employee-categories', label: 'Employee categories'},
+                        {path: 'warehouses', label: 'List'},
+                        {path: 'warehouse-locations', label: 'Locations'},
                     ],
                     activeButton: param,
                 }
@@ -486,13 +484,13 @@ export const CRUD = () => {
             try {
                 const {data,status} = await getApiData(param)
                 if(status === 200) {
-                    if(param === 'employees'){
-                        const newData = dataEmployes(data)
+                    if(param === 'warehouses'){
+                        const newData = dataWarehouses(data)
                         setSkeleton(prevSkeleton => !prevSkeleton)
                         setData(newData)
-                    }else if(param === 'employee-categories') {
+                    }else if(param === 'warehouse-locations') {
                         setSkeleton(prevSkeleton => !prevSkeleton)
-                        const newData = dataEmployesCategories(data)
+                        const newData = dataWarehousesLocation(data)
                         setData(newData)
                     }
                 }

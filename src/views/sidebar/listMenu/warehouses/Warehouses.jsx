@@ -1,81 +1,60 @@
+import { ModalConfirmDelete, ModalContainer } from "../../../layouts/ModalContainer"
 import TabelComponent from "../../../layouts/Tabel"
-import { CRUD } from "./components/CRUD.JSX"
 import IconAdd from "../../../layouts/icons/IconAdd"
-import { useState } from "react"
-import { ModalContainer } from "../../../layouts/ModalContainer"
-import FormInput from "../../../layouts/FormInput"
-import { ModalConfirmDelete } from "../../../layouts/ModalContainer"
-
+import { useEffect, useState, useRef } from "react"
+import { TextArea } from "../../../layouts/FormInput"
+import TabelComponentTest from "../../../layouts/TabelTest"
+import { Spinner } from "../../../layouts/Spinner"
+import { CRUD } from "./components/CRUD"
 
 export const Warehouses = () => {
     const {
         data,
-        openModal,
-        handleCreate ,
-        dataModal,
-        input,
-        validationError,
-        handleEdit,
+        openModal, 
+        setOpenModal,
+        dataModal, 
         refBody,
+        handelEdit,
         dataEdit,
         openModalDelete,
-        idDelete,
-        modalDelete,
         closeModalDelete,
-        handelDelete
+        handelDelete,
+        modalDelete,
+        dataHeading,
+        inputBody,
+        loading,
+        handelCreate,
+        skeleton
     } = CRUD()
 
-
-    const [dataHeading, setDataHeading] = useState( [{
-        label: 'Add Warehouses',
-        icon: IconAdd(),
-        heading: 'Warehouses list',
-        eventToggleModal: handleCreate,
-    }]);
-
-    const modalBody = () => {
+    const dataModalBody = () => {
         return (
-            <form action="">
-                <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id}/>
-               <div className="grid gap-4 mb-4 grid-cols-1">
-               {input.map( (item, index) => (
-                            < FormInput
-                            key={item.id}
-                            element={item.element}
-                            htmlFor={item.htmlFor}
-                            label={item.label}
-                            type={item.type}
-                            name={item.name}
-                            referens={item.ref}
-                            value={item.value}
-                            id={item.id}
-                            onChange={(event) => item.onchange(event)}
-                            placeholder={item.placeholder} 
-                            dataSelect={item.dataSelect}
-                            uniqueId={index}
-                            validationError={validationError}
-                            />
-                        ) )}
-               </div>
-            </form>
+            <>
+                <form className="">
+                    <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id} />
+                    {dataHeading[0].parameter === 'employees' ? inputBody('employees') : dataHeading[0].parameter === 'employee-categories' ? inputBody('employee-categories') : inputBody('employees')}
+                </form>
+
+            </>
         )
     }
 
-
-    return (
-        <>
-
-        < ModalContainer 
+    return(
+       <>
+        <ModalContainer 
         openModal={openModal}
-        onToggleModal={handleCreate}
-        modalBody={modalBody}
-        sizeModal={'lg'}
+        onToggleModal={setOpenModal}
+        modalBody={dataModalBody}
+        sizeModal={dataModal.size}
         labelModal={dataModal.labelModal}
         labelBtnModal={dataModal.labelBtnModal}
         labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
         handelBtnModal={dataModal.handelBtn}
+        parameter={dataHeading[0].parameter}
         openModalDelete={openModalDelete}
         />
+
+        <Spinner loading={loading} />
 
         < ModalConfirmDelete 
         modalDelete={modalDelete}
@@ -83,7 +62,12 @@ export const Warehouses = () => {
         handelDelete={handelDelete}
         />
 
-        < TabelComponent data={data} dataHeading={dataHeading} handelEdit={handleEdit}/>
-        </>
+        < TabelComponentTest 
+        data={data}
+        dataHeading={dataHeading}
+        skeleton={skeleton}
+        setOpenModal={handelCreate}
+        />
+       </>
     )
 }

@@ -116,7 +116,7 @@ function Sidebar() {
       subMenu: [
         { path: "warehouses/list", label: "Warehouse" },
         { path: "products/list", label: "Product" },
-        { path: "vendors/list", label: "Vendor" },
+        { path: "vendors", label: "Vendor" },
       ],
     },
     {
@@ -139,9 +139,9 @@ function Sidebar() {
         </svg>
       ),
       subMenu: [
-        { path: "/orders/list", label: "Orders" },
-        { path: "/invoices/list", label: "Invoices" },
-        { path: "/payments/list", label: "Payments" },
+        { path: "/transactions", label: "Transactions" },
+        // { path: "/invoices/list", label: "Invoices" },
+        // { path: "/payments/list", label: "Payments" },
       ],
     },
     {

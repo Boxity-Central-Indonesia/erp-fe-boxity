@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react"
-import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../../../function/Api"
-import IconAdd from "../../../../../layouts/icons/IconAdd"
-import { TextArea } from "../../../../../layouts/FormInput"
-import FormInput from "../../../../../layouts/FormInput"
+import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../../function/Api"
+import IconAdd from "../../../../layouts/icons/IconAdd"
+import { TextArea } from "../../../../layouts/FormInput"
+import FormInput from "../../../../layouts/FormInput"
 
 export const CRUD = () => {
     const [refresh, setRefresh] = useState(false)
@@ -413,48 +413,69 @@ export const CRUD = () => {
 
 
 
-    const dataEmployes = (data) => {
+    const dataVendors = (data) => {
         return data.map(item => ({
             id: item.id,
             name: item.name,
+            address: item.address,
             email: item.email,
-            phone_number: item.phone_number,
-            company: item.company.name,
-            'Job title': item.job_title,
-            'Employment Status': item.employment_status,
-            'address': item.address
+            'phone number': item.phone_number,
+            'transaction type': item.transaction_type,
         }))
     }
 
-    const dataEmployesCategories = (data) => {
+
+    const dataVendorsTransactions = (data) => {
+        return data.map(item => ({
+            id: item.id,
+            vendor: item.vendor.name,
+            amount: item.amount,
+            product: item.product.name,
+            'unit price': item.unit_price,
+            'total price': item.total_price,
+            'taxes': item.taxes,
+            'shipping cost': item.shipping_cost,
+            'unit of measure': item.product.unit_of_measure ?? '--'
+        }))
+    }
+
+    const dataVendorsContact = (data) => {
         return data.map(item => ({
             id: item.id,
             name: item.name,
-            description: item.description
+            position: item.position,
+            'phone number': item.phone_number,
+            vendors: item.vendor.name
         }))
     }
+
+
+
+
+
 
     const READ = () => {
         const [data, setData] = useState()
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const { data } = await getApiData('employees');
-                    const newData = dataEmployes(data)
+                    const { data } = await getApiData('vendors');
+                    const newData = dataVendors(data)
                     setData(newData);
                     setDataHeading([
                         {
-                            label: 'Add Employes',
+                            label: 'Add vendors',
                             icon: IconAdd(),
-                            heading: 'Employes list',
+                            heading: 'Vendors list',
                             eventToggleModal: handelCreate,
                             onclick: handleClickHeading,
                             showNavHeading: true,
                             dataNavHeading: [
-                                {path: 'employees', label: 'Employess'},
-                                {path: 'employee-categories', label: 'Employee categories'},
+                                {path: 'vendors', label: 'Vendors'},
+                                {path: 'vendor-transactions', label: 'Vendor transactions'},
+                                {path: 'vendor-contacts', label: 'Vendor contacts'},
                             ],
-                            activeButton: 'employees',
+                            activeButton: 'vendors',
                         }
                     ])
                 } catch (error) {
@@ -467,16 +488,17 @@ export const CRUD = () => {
         const handleClickHeading = async (param) => {
             setDataHeading([
                 {
-                    label: param === 'employees' ? 'Add employees' : 'Add category',
+                    label: param === 'vendors' ? 'Add vendors' :  param === 'vendor-transactions' ? 'Add transactions' : 'Add contacts',
                     icon: IconAdd(),
-                    heading: param === 'employees' ? 'Employees' : 'Category employes' +' list',
+                    heading: param === 'vendors' ? 'Vendors list' : param === 'vendor-transactions' ? 'Transaction list' : 'Contacts list',
                     eventToggleModal: handelCreate,
                     onclick: handleClickHeading,
-                    parameter: param === 'employees' ? 'employees' : 'employee-categories',
+                    parameter: param,
                     showNavHeading: true,
                     dataNavHeading: [
-                        {path: 'employees', label: 'Employess'},
-                        {path: 'employee-categories', label: 'Employee categories'},
+                        {path: 'vendors', label: 'Vendors'},
+                        {path: 'vendor-transactions', label: 'Vendor transactions'},
+                        {path: 'vendor-contacts', label: 'Vendor contacts'},
                     ],
                     activeButton: param,
                 }
@@ -486,13 +508,17 @@ export const CRUD = () => {
             try {
                 const {data,status} = await getApiData(param)
                 if(status === 200) {
-                    if(param === 'employees'){
-                        const newData = dataEmployes(data)
+                    if(param === 'vendors'){
+                        const newData = dataVendors(data)
                         setSkeleton(prevSkeleton => !prevSkeleton)
                         setData(newData)
-                    }else if(param === 'employee-categories') {
+                    }else if(param === 'vendor-transactions') {
                         setSkeleton(prevSkeleton => !prevSkeleton)
-                        const newData = dataEmployesCategories(data)
+                        const newData = dataVendorsTransactions(data)
+                        setData(newData)
+                    }else if(param === 'vendor-contacts') {
+                        setSkeleton(prevSkeleton => !prevSkeleton)
+                        const newData = dataVendorsContact(data)
                         setData(newData)
                     }
                 }

@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react"
-import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../../../function/Api"
-import IconAdd from "../../../../../layouts/icons/IconAdd"
-import { TextArea } from "../../../../../layouts/FormInput"
-import FormInput from "../../../../../layouts/FormInput"
+import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../../function/Api"
+import IconAdd from "../../../../layouts/icons/IconAdd"
+import { TextArea } from "../../../../layouts/FormInput"
+import FormInput from "../../../../layouts/FormInput"
 
 export const CRUD = () => {
     const [refresh, setRefresh] = useState(false)
@@ -413,20 +413,20 @@ export const CRUD = () => {
 
 
 
-    const dataEmployes = (data) => {
+    const dataProducts = (data) => {
         return data.map(item => ({
             id: item.id,
+            code: item.code,
             name: item.name,
-            email: item.email,
-            phone_number: item.phone_number,
-            company: item.company.name,
-            'Job title': item.job_title,
-            'Employment Status': item.employment_status,
-            'address': item.address
+            warehouse: item.warehouse.name ?? '--',
+            category: item.category.name ?? '--',
+            type: item.type,
+            stock: item.stock,
+            price: item.price 
         }))
     }
 
-    const dataEmployesCategories = (data) => {
+    const dataProductCategories = (data) => {
         return data.map(item => ({
             id: item.id,
             name: item.name,
@@ -434,27 +434,52 @@ export const CRUD = () => {
         }))
     }
 
+    const dataProductPrices = (data) => {
+        return data.map(item => ({
+            id: item.id,
+            'product name': item.product.name,
+            'discount price': item.discount_price,
+            'buying price': item.buying_price,
+            'selling price': item.sellng_price,
+        }))
+    }
+
+    const dataProductMovements = (data) => {
+        return data.map(item => ({
+            id: item.id,
+            'product name': item.product.name,
+            'warhouses': item.warehouse.name,
+            'movement type': item.movement_type,
+            quantity: item.quantity,
+            price: item.price
+        }))
+    }
+
+
+
     const READ = () => {
         const [data, setData] = useState()
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const { data } = await getApiData('employees');
-                    const newData = dataEmployes(data)
+                    const { data } = await getApiData('products');
+                    const newData = dataProducts(data)
                     setData(newData);
                     setDataHeading([
                         {
-                            label: 'Add Employes',
+                            label: 'Add products',
                             icon: IconAdd(),
-                            heading: 'Employes list',
+                            heading: 'Product list',
                             eventToggleModal: handelCreate,
                             onclick: handleClickHeading,
                             showNavHeading: true,
                             dataNavHeading: [
-                                {path: 'employees', label: 'Employess'},
-                                {path: 'employee-categories', label: 'Employee categories'},
+                                {path: 'products', label: 'Products'},
+                                {path: 'product-categories', label: 'Product categories'},
+                                {path: 'product-prices', label: 'Product prices'},
+                                {path: 'product-movements', label: 'Product movements'},
                             ],
-                            activeButton: 'employees',
+                            activeButton: 'products',
                         }
                     ])
                 } catch (error) {
@@ -467,16 +492,18 @@ export const CRUD = () => {
         const handleClickHeading = async (param) => {
             setDataHeading([
                 {
-                    label: param === 'employees' ? 'Add employees' : 'Add category',
+                    label: param === 'products' ? 'Add products' : param === 'product-categories' ? 'Add categories' : param === 'product-prices' ? 'Add product prices' : param === 'product-movements' ? 'Add product movement' : '',
                     icon: IconAdd(),
-                    heading: param === 'employees' ? 'Employees' : 'Category employes' +' list',
+                    heading: param === 'products' ? 'Products' : param === 'product-categories' ? 'Categories' : param === 'Product-prices' ? 'product prices' : 'Product movement' +' list', 
                     eventToggleModal: handelCreate,
                     onclick: handleClickHeading,
-                    parameter: param === 'employees' ? 'employees' : 'employee-categories',
+                    parameter: param === 'products' ? 'products' : 'product-categories',
                     showNavHeading: true,
                     dataNavHeading: [
-                        {path: 'employees', label: 'Employess'},
-                        {path: 'employee-categories', label: 'Employee categories'},
+                        {path: 'products', label: 'Products'},
+                        {path: 'product-categories', label: 'product categories'},
+                        {path: 'product-prices', label: 'Product prices'},
+                        {path: 'product-movements', label: 'Product movements'},
                     ],
                     activeButton: param,
                 }
@@ -486,13 +513,21 @@ export const CRUD = () => {
             try {
                 const {data,status} = await getApiData(param)
                 if(status === 200) {
-                    if(param === 'employees'){
-                        const newData = dataEmployes(data)
+                    if(param === 'products'){
+                        const newData = dataProducts(data)
                         setSkeleton(prevSkeleton => !prevSkeleton)
                         setData(newData)
-                    }else if(param === 'employee-categories') {
+                    }else if(param === 'product-categories') {
                         setSkeleton(prevSkeleton => !prevSkeleton)
-                        const newData = dataEmployesCategories(data)
+                        const newData = dataProductCategories(data)
+                        setData(newData)
+                    }else if(param === 'product-prices') {
+                        setSkeleton(prevSkeleton => !prevSkeleton)
+                        const newData = dataProductPrices(data)
+                        setData(newData)
+                    }else if(param === 'product-movements'){
+                        setSkeleton(prevSkeleton => !prevSkeleton)
+                        const newData = dataProductMovements(data)
                         setData(newData)
                     }
                 }
