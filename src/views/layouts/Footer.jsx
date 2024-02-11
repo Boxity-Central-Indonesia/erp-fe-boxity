@@ -22,15 +22,17 @@ const Footer = () => {
   }, []); // The empty array means this effect runs once when the component mounts
   const authorReserved = import.meta.env.VITE_AUTHOR_RESERVED;
   const authorLINK = import.meta.env.VITE_AUTHOR_LINK;
+  const clientsNAME = import.meta.env.VITE_CLIENTS_NAME;
 
   return (
     <footer className="bg-white rounded-lg shadow dark:bg-gray-800 absolute bottom-0 w-full">
       <div className="w-full mx-auto py-6 px-6 flex flex-col md:flex-row items-center justify-between">
         <span className="text-sm text-center text-gray-500 sm:text-center dark:text-gray-400">
-          ©Copyright 2024 - {companyName || "loading..."} All rights reserved by
+          ©Copyright 2024 - {clientsNAME || "loading..."}. All rights reserved
+          by &nbsp;
           <abbr title={authorReserved}>
             <a href={authorLINK} target="_blank" rel="noopener noreferrer">
-              &nbsp;{authorReserved}
+              {authorReserved}
             </a>
           </abbr>
         </span>

@@ -114,11 +114,14 @@ const Login = ({ setAuth }) => {
           href="#"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
         >
-          <img
-            src="https://res.cloudinary.com/boxity-id/image/upload/v1678791965/asset_boxity/logo/logo_primary_um5cgb.png"
-            className="mr-3 h-5 md:h-12"
-            alt="PT. Teknologi Naya Abadi"
-          />
+          <div className="logo-container">
+            {" "}
+            <img
+              src="https://res.cloudinary.com/boxity-id/image/upload/v1678791965/asset_boxity/logo/logo_primary_um5cgb.png"
+              className="mr-3 h-5 md:h-12"
+              alt="Logo image"
+            />
+          </div>
           {/* <p>PT Boxity Central Indonesia</p> */}
         </a>
 
@@ -133,7 +136,7 @@ const Login = ({ setAuth }) => {
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Your email
+                  Email
                 </label>
                 <input
                   ref={emailRef}
@@ -174,9 +177,6 @@ const Login = ({ setAuth }) => {
                   {validationPassword}
                 </p>
               </div>
-              {/* <button style={{ backgroundColor: globalColor }} onClick={handleFormSubmit} type="submit"
-                                className="w-full text-white hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
-                                in</button> */}
               <Button
                 event={handleFormSubmit}
                 type={"submit"}

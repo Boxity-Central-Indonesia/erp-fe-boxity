@@ -1,0 +1,27 @@
+.logo-container {
+  max-width: 100%; /* Allow logo to scale down */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.logo-container img {
+  display: block; /* Ensure image behaves like a block element */
+  width: 200px; /* Scale image to fit container width */
+  height: auto; /* Maintain aspect ratio */
+}
+.login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px; /* Adjust as needed */
+  margin: 0 auto;
+  padding: 20px;
+}
+@media (max-width: 768px) {
+  .login-form {
+    max-width: 150px;
+  }
+  .logo-container img {
+    max-width: 150px; /* Set a maximum width for smaller screens */
+  }
+}
