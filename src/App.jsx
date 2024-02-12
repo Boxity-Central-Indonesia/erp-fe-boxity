@@ -62,7 +62,7 @@ function App() {
     <>
       <ColorProvider>
         <Router>
-          <div className="antialiased bg-gray-50 dark:bg-gray-900">
+          <div className="antialiased bg-gray-100 dark:bg-gray-900">
             <Auth.AuthenticatedComponent>
               <Navbar onToggleSidebar={toggleSidebar} setAuth={setAuth} />
               <Sidebar isOpen={isSidebarOpen} />
@@ -72,7 +72,7 @@ function App() {
               <div
                 style={{
                   minHeight: "100vh",
-                  backgroundColor: "rgba(0,0,0,0.03)",
+                  // backgroundColor: "rgba(0,0,0,0.03)",
                 }}
                 className={`p-4 ${
                   auth ? `md:ml-64 pt-20` : `ml-0`
