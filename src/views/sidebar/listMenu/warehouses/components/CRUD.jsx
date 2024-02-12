@@ -309,7 +309,7 @@ export const CRUD = () => {
                     heading: param === 'warehouses' ? 'Warehouses list' : 'Locations list',
                     eventToggleModal: handelCreate,
                     onclick: handleClickHeading,
-                    parameter: param === 'warehouses' ? 'warehouses' : 'warehouse-locations',
+                    parameter: param,
                     showNavHeading: true,
                     dataNavHeading: [
                         {path: 'warehouses', label: 'List'},

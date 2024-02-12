@@ -15,88 +15,80 @@ export const CRUD = () => {
   const [modalDelete, setModalDelete] = useState();
   const [idDelete, setIdDelete] = useState();
   const [dataModal, setDataModal] = useState({});
-  const [inputEmployes, setInputEmployes] = useState([]);
-  const [inputEmployesCategory, setInputEmployesCategory] = useState([]);
+  const [inputProducts, setInputProducts] = useState([]);
+  const [inputProductCategories, setInputProductCategories] = useState([]);
+  const [inputProductPrices, setInputProductPrices] = useState([]);
+  const [inputProductMovements, setInputProductMovements] = useState([]);
   const [responseError, setResponseError] = useState();
   const [validationError, setValidationError] = useState();
-  const [dataCompanies, setDataCompanies] = useState();
+  const [dataProductsSelect, setDataProducstSelect] = useState([]);
+  const [dataWarehouseesSelect, setDataWarehouseesSelect] = useState([])
   const [dataDepartments, setDataDepartments] = useState();
   const [loading, setLoading] = useState(true);
-  const [dataCategoryEmployes, setDataCategoryEmployes] = useState();
   const [skeleton, setSkeleton] = useState(false);
   const [dataHeading, setDataHeading] = useState([{}]);
+  const [path, setPath] = useState('products')
 
   // EmployesList
 
   const [refBody, setRefBody] = useState({
     nameRef: useRef(),
-    emailRef: useRef(),
-    phone_numberRef: useRef(),
-    company_idRef: useRef(),
-    job_titleRef: useRef(),
-    date_of_birthRef: useRef(),
-    employment_statusRef: useRef(),
-    hire_dateRef: useRef(),
-    termination_dateRef: useRef(),
-    addressRef: useRef(),
-    cityRef: useRef(),
-    provinceRef: useRef(),
-    postal_codeRef: useRef(),
-    countryRef: useRef(),
-    emergency_contact_nameRef: useRef(),
-    emergency_contact_phone_numberRef: useRef(),
-    notesRef: useRef(),
-    department_idRef: useRef(),
-    category_idRef: useRef(),
-    idRef: useRef(),
-    notesRef: useRef(),
+    codeRef: useRef(),
     descriptionRef: useRef(),
+    priceRef: useRef(),
+    typeRef: useRef(),
+    animal_typeRef: useRef(),
+    ageRef: useRef(),
+    weightRef: useRef(),
+    health_statusRef: useRef(),
+    stockRef: useRef(),
+    category_idRef: useRef(),
+    warehouse_idRef: useRef(),
+    unit_of_measureRef: useRef(),
+    raw_materialRef: useRef(),
+
+    // product price
+
+    product_idRef: useRef(),
+    selling_priceRef: useRef(),
+    buying_priceRef: useRef(),
+    discount_priceRef: useRef(),
+
+    // product movements
+
+    movement_typeRef: useRef(),
+    quantityRef: useRef(),
   });
+
   const [dataEdit, setDataEdit] = useState({
     name: "",
-    email: "",
-    phone_number: "",
-    company_id: "",
-    job_title: "",
-    date_of_birth: "",
-    employment_status: "",
-    hire_date: "",
-    termination_date: "",
-    address: "",
-    city: "",
-    province: "",
-    postal_code: "",
-    country: "",
-    emergency_contact_name: "",
-    emergency_contact_phone_number: "",
-    notes: "",
-    department_id: "",
-    category_id: "",
-    id: "",
+    code: '',
+    description: '',
+    price: '',
+    type: '',
+    animal_type: '',
+    age: '',
+    weight: '',
+    health_status: '',
+    stock: '',
+    category_id: '',
+    movement_type: '',
+    unit_of_measure: '',
+    raw_material: '',
+
+    // product price
+
+    product_id: '',
+    selling_price: '',
+    buying_price: '',
+    discount_price: '',
+
+    // product movements
+
+    movement_type: '',
+    quantity: '',
+
   });
-
-  const handleChangeAndGetDepartment = async (event) => {
-    // Mendapatkan nama dan nilai input yang berubah
-    const { name, value } = event.target;
-
-    try {
-      const response = await getApiData("companies/7/departments");
-      const newData = response.data.map((item) => ({
-        id: item.id,
-        name: item.name,
-      }));
-
-      setDataDepartments(() => newData);
-    } catch (error) {
-      console.log(error);
-    }
-
-    // Memperbarui state sesuai dengan nilai input yang berubah
-    setDataEdit((prevDataEdit) => ({
-      ...prevDataEdit,
-      [name]: value,
-    }));
-  };
 
   const handleChange = (event) => {
     // Mendapatkan nama dan nilai input yang berubah
@@ -113,83 +105,32 @@ export const CRUD = () => {
     if (!!responseError) {
       setValidationError({
         name: responseError?.name?.[0] || "",
-        email: responseError?.email?.[0] || "",
-        phone_number: !!responseError.phone_number
-          ? responseError.phone_number[0]
-          : "",
-        company_id: !!responseError.company_id
-          ? responseError.company_id[0]
-          : "",
-        job_title: !!responseError.job_title ? responseError.job_title[0] : "",
-        date_of_birth: !!responseError.date_of_birth
-          ? responseError.date_of_birth[0]
-          : "",
-        employment_status: !!responseError.employment_status
-          ? responseError.employment_status[0]
-          : "",
-        hire_date: !!responseError.hire_date ? responseError.hire_date[0] : "",
-        termination_date: !!responseError.termination_date
-          ? responseError.termination_date[0]
-          : "",
-        address: !!responseError.address ? responseError.address[0] : "",
-        city: !!responseError.city ? responseError.city[0] : "",
-        province: !!responseError.province ? responseError.province[0] : "",
-        postal_code: !!responseError.postal_code
-          ? responseError.postal_code[0]
-          : "",
-        country: !!responseError.country ? responseError.country[0] : "",
-        emergency_contact_name: !!responseError.emergency_contact_name
-          ? responseError.emergency_contact_name[0]
-          : "",
-        emergency_contact_phone_number:
-          !!responseError.emergency_contact_phone_number
-            ? responseError.emergency_contact_phone_number[0]
-            : "",
-        notes: !!responseError.notes ? responseError.notes[0] : "",
-        department_id: !!responseError.department_id
-          ? responseError.department_id[0]
-          : "",
+        code: responseError?.code?.[0] || "",
+        description: responseError?.description?.[0] || "",
+        price: responseError?.price?.[0] || "",
+        type: responseError?.type?.[0] || "",
+        animal_type: responseError?.animal_type?.[0] || "",
+        age: responseError?.age?.[0] || "",
+        weight: responseError?.weight?.[0] || "",
+        health_status: responseError?.health_status?.[0] || "",
+        stock: responseError?.stock?.[0] || "",
+        category_id: responseError?.category_id?.[0] || "",
+        warehouse_id: responseError?.warehouse_id?.[0] || "",
+        unit_of_measure: responseError?.unit_of_measure?.[0] || "",
+        raw_material: responseError?.raw_material?.[0] || "",
+        product_id: responseError?.product_id?.[0] || "",
+        selling_price: responseError?.selling_price?.[0] || "",
+        buying_price: responseError?.buying_price?.[0] || "",
+        discount_price: responseError?.discount_price?.[0] || "",
+        movement_type: responseError?.movement_type?.[0] || "",
+        quantity: responseError?.quantity?.[0] || "",
       });
     }
   }, [responseError]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getApiData("companies");
-        const newData = response.data.map((item) => ({
-          id: item.id,
-          name: item.name,
-        }));
 
-        setDataCompanies(() => newData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-
-    const fetchDataCategory = async () => {
-      try {
-        const { data, status } = await getApiData("employee-categories");
-        if (status === 200) {
-          const newData = data.map((item) => ({
-            id: item.id,
-            name: item.name,
-          }));
-
-          setDataCategoryEmployes(() => newData);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataCategory();
-  }, []);
-
-  useEffect(() => {
-    setInputEmployes([
+    setInputProducts([
       {
         element: "input",
         type: "text",
@@ -204,71 +145,123 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "email",
-        name: "email",
-        ref: refBody.emailRef,
-        value: dataEdit.email,
-        label: "Email",
-        htmlFor: "email",
-        id: "email",
+        type: "text",
+        name: "code",
+        ref: refBody.codeRef,
+        value: dataEdit.code,
+        label: "Code",
+        htmlFor: "code",
+        id: "code",
         onchange: handleChange,
-        placeholder: "Email",
+        placeholder: "Code",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "price",
+        ref: refBody.priceRef,
+        value: dataEdit.price,
+        label: "Price",
+        htmlFor: "price",
+        id: "price",
+        onchange: handleChange,
+        placeholder: "Price",
       },
       {
         element: "input",
         type: "text",
-        name: "phone_number",
-        ref: refBody.phone_numberRef,
-        value: dataEdit.phone_number,
-        label: "Phone number",
-        htmlFor: "phone_number",
-        id: "phone_number",
+        name: "type",
+        ref: refBody.typeRef,
+        value: dataEdit.type,
+        label: "Type",
+        htmlFor: "type",
+        id: "type",
         onchange: handleChange,
-        placeholder: "Phone number",
-      },
-      {
-        element: "select",
-        ref: refBody.company_idRef,
-        name: "company_id",
-        label: "Companies",
-        htmlFor: "categori companies",
-        id: "categori companies",
-        dataSelect: dataCompanies,
-        value: dataEdit.company_id,
-        onchange: handleChangeAndGetDepartment,
+        placeholder: "Type",
       },
       {
         element: "input",
         type: "text",
-        name: "job_title",
-        ref: refBody.job_titleRef,
-        value: dataEdit.job_title,
-        label: "Job title",
-        htmlFor: "job_title",
-        id: "job_title",
+        name: "animal_type",
+        ref: refBody.animal_typeRef,
+        value: dataEdit.animal_type,
+        label: "Animal type",
+        htmlFor: "animal_type",
+        id: "animal_type",
         onchange: handleChange,
-        placeholder: "Job title",
+        placeholder: "Animal type",
       },
       {
         element: "input",
-        type: "date",
-        name: "date_of_birth",
-        ref: refBody.date_of_birthRef,
-        value: dataEdit.date_of_birth,
-        label: "Date of birth",
-        htmlFor: "date_of_birth",
-        id: "date_of_birth",
+        type: "number",
+        name: "age",
+        ref: refBody.ageRef,
+        value: dataEdit.age,
+        label: "Age",
+        htmlFor: "age",
+        id: "age",
         onchange: handleChange,
-        placeholder: "Date of birth",
+        placeholder: "Age",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "weight",
+        ref: refBody.weightRef,
+        value: dataEdit.weight,
+        label: "Weight",
+        htmlFor: "weight",
+        id: "weight",
+        onchange: handleChange,
+        placeholder: "Weight",
+      },
+      {
+        element: "input",
+        type: "text",
+        name: "health_status",
+        ref: refBody.health_statusRef,
+        value: dataEdit.health_status,
+        label: "Health status",
+        htmlFor: "health_status",
+        id: "health_status",
+        onchange: handleChange,
+        placeholder: "Health status",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "stock",
+        ref: refBody.stockRef,
+        value: dataEdit.stock,
+        label: "Stock",
+        htmlFor: "stock",
+        id: "stock",
+        onchange: handleChange,
+        placeholder: "Stock",
+      },
+      
+      {
+        element: "select",
+        name: "category_id",
+        ref: refBody.category_idRef,
+        value: dataEdit.category_id,
+        label: "Category",
+        htmlFor: "category_id",
+        id: "category_id",
+        dataSelect: [
+          { value: "active", name: "Active" },
+          { value: "inactive", name: "Inactive" },
+        ],
+        onchange: handleChange,
       },
       {
         element: "select",
-        name: "employment_status",
-        ref: refBody.employment_statusRef,
-        value: dataEdit.employment_status,
-        label: "satus",
-        htmlFor: "employment_status",
-        id: "employment_status",
+        name: "warehouse_id",
+        ref: refBody.warehouse_idRef,
+        value: dataEdit.warehouse_id,
+        label: "Warehouses",
+        htmlFor: "warehouse_id",
+        id: "warehouse_id",
         dataSelect: [
           { value: "active", name: "Active" },
           { value: "inactive", name: "Inactive" },
@@ -277,136 +270,31 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "date",
-        name: "hire_date",
-        ref: refBody.hire_dateRef,
-        value: dataEdit.hire_date,
-        label: "Hire date",
-        htmlFor: "hire_date",
-        id: "hire_date",
+        type: "text",
+        name: "unit_of_measure",
+        ref: refBody.unit_of_measureRef,
+        value: dataEdit.unit_of_measure,
+        label: "Unit of measure",
+        htmlFor: "unit_of_measure",
+        id: "unit_of_measure",
         onchange: handleChange,
-        placeholder: "Hire date",
-      },
-      {
-        element: "input",
-        type: "date",
-        name: "termination_date",
-        ref: refBody.termination_dateRef,
-        value: dataEdit.termination_date,
-        label: "Termination date",
-        htmlFor: "termination_date",
-        id: "termination_date",
-        onchange: handleChange,
-        placeholder: "Termination date",
+        placeholder: "Unit of measure",
       },
       {
         element: "input",
         type: "text",
-        name: "address",
-        ref: refBody.addressRef,
-        value: dataEdit.address,
-        label: "Address",
-        htmlFor: "address",
-        id: "address",
+        name: "raw_material",
+        ref: refBody.raw_materialRef,
+        value: dataEdit.raw_material,
+        label: "Raw material",
+        htmlFor: "raw_material",
+        id: "raw_material",
         onchange: handleChange,
-        placeholder: "Address",
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "city",
-        ref: refBody.cityRef,
-        value: dataEdit.city,
-        label: "City",
-        htmlFor: "city",
-        id: "city",
-        onchange: handleChange,
-        placeholder: "City",
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "province",
-        ref: refBody.provinceRef,
-        value: dataEdit.province,
-        label: "Province",
-        htmlFor: "province",
-        id: "province",
-        onchange: handleChange,
-        placeholder: "Province",
-      },
-      {
-        element: "input",
-        type: "number",
-        name: "postal_code",
-        ref: refBody.postal_codeRef,
-        value: dataEdit.postal_code,
-        label: "Postal Code",
-        htmlFor: "postal_code",
-        id: "postal_code",
-        onchange: handleChange,
-        placeholder: "Postal Code",
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "country",
-        ref: refBody.countryRef,
-        value: dataEdit.country,
-        label: "Country",
-        htmlFor: "country",
-        id: "country",
-        onchange: handleChange,
-        placeholder: "Country",
-      },
-      {
-        element: "select",
-        ref: refBody.department_idRef,
-        name: "department_id",
-        label: "Department",
-        htmlFor: "department",
-        id: "department",
-        dataSelect: dataDepartments,
-        value: dataEdit.department_id,
-        onchange: handleChange,
-      },
-      {
-        element: "select",
-        ref: refBody.category_idRef,
-        name: "category_id",
-        label: "Category",
-        htmlFor: "category_id",
-        id: "category_id",
-        dataSelect: dataCategoryEmployes,
-        value: dataEdit.category_id,
-        onchange: handleChange,
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "emergency_contact_name",
-        ref: refBody.emergency_contact_nameRef,
-        value: dataEdit.emergency_contact_name,
-        label: "Emergency Contact Name",
-        htmlFor: "emergency_contact_name",
-        id: "emergency_contact_name",
-        onchange: handleChange,
-        placeholder: "Emergency Contact Name",
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "emergency_contact_phone_number",
-        ref: refBody.emergency_contact_phone_numberRef,
-        value: dataEdit.emergency_contact_phone_number,
-        label: "Emergency Contact Phone Number",
-        htmlFor: "emergency_contact_phone_number",
-        id: "emergency_contact_phone_number",
-        onchange: handleChange,
-        placeholder: "Emergency Contact Phone Number",
+        placeholder: "Raw material",
       },
     ]);
-    setInputEmployesCategory([
+
+    setInputProductCategories([
       {
         element: "input",
         type: "text",
@@ -419,7 +307,122 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Name",
       },
+    ])
+
+    setInputProductMovements([
+      {
+        element: "select",
+        name: "product_id",
+        ref: refBody.product_idRef,
+        value: dataEdit.product_id,
+        label: "Produk",
+        htmlFor: "product_id",
+        id: "product_id",
+        dataSelect: dataProductsSelect,
+        onchange: handleChange,
+      },
+      {
+        element: "select",
+        name: "warehouse_id",
+        ref: refBody.warehouse_idRef,
+        value: dataEdit.warehouse_id,
+        label: "Warehouses",
+        htmlFor: "warehouse_id",
+        id: "warehouse_id",
+        dataSelect: dataWarehouseesSelect,
+        onchange: handleChange,
+      },
+      {
+        element: "select",
+        name: "movement_type",
+        ref: refBody.movement_typeRef,
+        value: dataEdit.movement_type,
+        label: "Movement",
+        htmlFor: "movement_type",
+        id: "movement_type",
+        dataSelect: [
+          { value: "purchase", name: "purchase" },
+          { value: "sale", name: "sale" },
+          { value: "transafer", name: "transafer" },
+        ],
+        onchange: handleChange,
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "quantity",
+        ref: refBody.quantityRef,
+        value: dataEdit.quantity,
+        label: "Quantity",
+        htmlFor: "quantity",
+        id: "quantity",
+        onchange: handleChange,
+        placeholder: "Quantity",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "price",
+        ref: refBody.priceRef,
+        value: dataEdit.price,
+        label: "Price",
+        htmlFor: "price",
+        id: "price",
+        onchange: handleChange,
+        placeholder: "Quantity",
+      },
     ]);
+
+    setInputProductPrices([
+      {
+        element: "select",
+        name: "product_id",
+        ref: refBody.product_idRef,
+        value: dataEdit.product_id,
+        label: "Product",
+        htmlFor: "product_id",
+        id: "product_id",
+        dataSelect: dataProductsSelect,
+        onchange: handleChange,
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "selling_price",
+        ref: refBody.selling_priceRef,
+        value: dataEdit.selling_price,
+        label: "Selling price",
+        htmlFor: "selling_price",
+        id: "selling_price",
+        onchange: handleChange,
+        placeholder: "Selling price",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "buying_price",
+        ref: refBody.buying_priceRef,
+        value: dataEdit.buying_price,
+        label: "Buying price",
+        htmlFor: "buying_price",
+        id: "buying_price",
+        onchange: handleChange,
+        placeholder: "Buying price",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "discount_price",
+        ref: refBody.discount_priceRef,
+        value: dataEdit.discount_price,
+        label: "Discount price",
+        htmlFor: "discount_price",
+        id: "discount_price",
+        onchange: handleChange,
+        placeholder: "Discount price",
+      },
+    ]);
+
   }, [dataEdit]);
 
   const dataProducts = (data) => {
@@ -427,8 +430,8 @@ export const CRUD = () => {
       id: item.id,
       code: item.code,
       name: item.name,
-      warehouse: item.warehouse.name ?? "--",
-      category: item.category.name ?? "--",
+      warehouse: item.warehouse?.name || '--',
+      category: item.category?.name || "--",
       type: item.type,
       stock: item.stock,
       price: item.price,
@@ -449,7 +452,7 @@ export const CRUD = () => {
       "product name": item.product.name,
       "discount price": item.discount_price,
       "buying price": item.buying_price,
-      "selling price": item.sellng_price,
+      "selling price": item.selling_price,
     }));
   };
 
@@ -469,26 +472,88 @@ export const CRUD = () => {
     useEffect(() => {
       const getData = async () => {
         try {
-          const { data } = await getApiData("products");
-          const newData = dataProducts(data);
-          setData(newData);
-          setDataHeading([
-            {
-              label: "Add products",
-              icon: IconAdd(),
-              heading: "Product list",
-              eventToggleModal: handelCreate,
-              onclick: handleClickHeading,
-              showNavHeading: true,
-              dataNavHeading: [
-                { path: "product-categories", label: "Categories" },
-                { path: "products", label: "Products" },
-                { path: "product-prices", label: "Products prices" },
-                { path: "product-movements", label: "Track Movements" },
-              ],
-              activeButton: "products",
-            },
-          ]);
+          const { data } = await getApiData(path);
+          if(path === 'products'){
+            const newData = dataProducts(data);
+            setData(newData);
+            setDataHeading([
+              {
+                label: "Add products",
+                icon: IconAdd(),
+                heading: "Product list",
+                eventToggleModal: handelCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "product-categories", label: "Categories" },
+                  { path: "products", label: "Products" },
+                  { path: "product-prices", label: "Products prices" },
+                  { path: "product-movements", label: "Track Movements" },
+                ],
+                activeButton: "products",
+              },
+            ]);
+          }else if(path === 'product-categories'){
+            const newData = dataProductCategories(data);
+            setData(newData);
+            setDataHeading([
+              {
+                label: "Add products",
+                icon: IconAdd(),
+                heading: "Product list",
+                eventToggleModal: handelCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "product-categories", label: "Categories" },
+                  { path: "products", label: "Products" },
+                  { path: "product-prices", label: "Products prices" },
+                  { path: "product-movements", label: "Track Movements" },
+                ],
+                activeButton: path,
+              },
+            ]);
+          }else if(path === 'product-prices'){
+            const newData = dataProductPrices(data);
+            setData(newData);
+            setDataHeading([
+              {
+                label: "Add products",
+                icon: IconAdd(),
+                heading: "Product list",
+                eventToggleModal: handelCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "product-categories", label: "Categories" },
+                  { path: "products", label: "Products" },
+                  { path: "product-prices", label: "Products prices" },
+                  { path: "product-movements", label: "Track Movements" },
+                ],
+                activeButton: path,
+              },
+            ]);
+          }else if(path === 'product-movements'){
+            const newData = dataProductMovements(data);
+            setData(newData);
+            setDataHeading([
+              {
+                label: "Add products",
+                icon: IconAdd(),
+                heading: "Product list",
+                eventToggleModal: handelCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "product-categories", label: "Categories" },
+                  { path: "products", label: "Products" },
+                  { path: "product-prices", label: "Products prices" },
+                  { path: "product-movements", label: "Track Movements" },
+                ],
+                activeButton: path,
+              },
+            ]);
+          }
         } catch (error) {
           console.error(error);
         }
@@ -496,7 +561,35 @@ export const CRUD = () => {
       getData();
     }, [refresh]);
 
+    useEffect(() => {
+      const getSelectProducts = async () => {
+          const {data, status} = await getApiData('products')
+          if(status === 200) {
+              const newData = data.map(item => ({
+                  id: item.id,
+                  name: item.name
+              }))
+              setDataProducstSelect(newData)
+          }
+      }
+      getSelectProducts()
+
+      const getSelectWarehousees = async () => {
+        const {data, status} = await getApiData('warehouses')
+        if(status === 200) {
+            const newData = data.map(item => ({
+                id: item.id,
+                name: item.name
+            }))
+            setDataWarehouseesSelect(newData)
+        }
+    }
+    getSelectWarehousees()
+
+    }, [])
+
     const handleClickHeading = async (param) => {
+      setPath(param)
       setDataHeading([
         {
           label:
@@ -520,7 +613,7 @@ export const CRUD = () => {
               : "Product movement" + " list",
           eventToggleModal: handelCreate,
           onclick: handleClickHeading,
-          parameter: param === "products" ? "products" : "product-categories",
+          parameter: param,
           showNavHeading: true,
           dataNavHeading: [
             { path: "product-categories", label: "Categories" },
@@ -559,65 +652,53 @@ export const CRUD = () => {
       }
     };
 
-    // getDatEnd
-
     return { data, handleClickHeading };
   };
 
   const CREATE = () => {
     const handelCreate = (param) => {
-      if (param === "employees") {
+      if (param === "products") {
         setDataEdit({
           name: "",
-          email: "",
-          phone_number: "",
-          company_id: "",
-          job_title: "",
-          date_of_birth: "",
-          employment_status: "",
-          hire_date: "",
-          termination_date: "",
-          address: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country: "",
-          emergency_contact_name: "",
-          emergency_contact_phone_number: "",
-          notes: "",
-          department_id: "",
-          category_id: "",
-          id: "",
+          code: '',
+          description: '',
+          price: '',
+          type: '',
+          animal_type: '',
+          age: '',
+          weight: '',
+          health_status: '',
+          stock: '',
+          category_id: '',
+          movement_type: '',
+          unit_of_measure: '',
+          raw_material: '',
         });
         setValidationError({
           name: "",
-          email: "",
-          phone_number: "",
-          company_id: "",
-          job_title: "",
-          date_of_birth: "",
-          employment_status: "",
-          hire_date: "",
-          termination_date: "",
-          address: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country: "",
-          emergency_contact_name: "",
-          emergency_contact_phone_number: "",
-          notes: "",
-          department_id: "",
+          code: '',
+          description: '',
+          price: '',
+          type: '',
+          animal_type: '',
+          age: '',
+          weight: '',
+          health_status: '',
+          stock: '',
+          category_id: '',
+          movement_type: '',
+          unit_of_measure: '',
+          raw_material: '',
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add employes",
-          labelBtnModal: "Add new employes",
+          labelModal: "Add products",
+          labelBtnModal: "Add new products",
           labelBtnSecondaryModal: "Back",
           handelBtn: create,
         });
-      } else if (param === "employee-categories") {
+      } else if (param === "product-categories") {
         setDataEdit({
           name: "",
           description: "",
@@ -635,54 +716,88 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Back",
           handelBtn: create,
         });
+      } else if (param === "product-movements") {
+        setDataEdit({
+         product_id: '',
+         warehouse_id: '',
+         movement_type: '',
+         quantity: '',
+         price: ''
+        });
+        setValidationError({
+          product_id: '',
+          warehouse_id: '',
+          movement_type: '',
+          quantity: '',
+          price: ''
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Add movements",
+          labelBtnModal: "Add new movements",
+          labelBtnSecondaryModal: "Back",
+          handelBtn: create,
+        });
+      } else if (param === "product-prices") {
+        setDataEdit({
+          product_id: '',
+          selling_price: '',
+          buying_price: '',
+          discount_price: ''
+        });
+        setValidationError({
+          product_id: '',
+          selling_price: '',
+          buying_price: '',
+          discount_price: ''
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "lg",
+          labelModal: "Add prices",
+          labelBtnModal: "Add new prices",
+          labelBtnSecondaryModal: "Back",
+          handelBtn: create,
+        });
       } else {
         setDataEdit({
           name: "",
-          email: "",
-          phone_number: "",
-          company_id: "",
-          job_title: "",
-          date_of_birth: "",
-          employment_status: "",
-          hire_date: "",
-          termination_date: "",
-          address: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country: "",
-          emergency_contact_name: "",
-          emergency_contact_phone_number: "",
-          notes: "",
-          department_id: "",
-          category_id: "",
-          id: "",
+          code: '',
+          description: '',
+          price: '',
+          type: '',
+          animal_type: '',
+          age: '',
+          weight: '',
+          health_status: '',
+          stock: '',
+          category_id: '',
+          movement_type: '',
+          unit_of_measure: '',
+          raw_material: '',
         });
         setValidationError({
           name: "",
-          email: "",
-          phone_number: "",
-          company_id: "",
-          job_title: "",
-          date_of_birth: "",
-          employment_status: "",
-          hire_date: "",
-          termination_date: "",
-          address: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country: "",
-          emergency_contact_name: "",
-          emergency_contact_phone_number: "",
-          notes: "",
-          department_id: "",
+          code: '',
+          description: '',
+          price: '',
+          type: '',
+          animal_type: '',
+          age: '',
+          weight: '',
+          health_status: '',
+          stock: '',
+          category_id: '',
+          movement_type: '',
+          unit_of_measure: '',
+          raw_material: '',
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add employes",
-          labelBtnModal: "Add new employes",
+          labelModal: "Add products",
+          labelBtnModal: "Add new products",
           labelBtnSecondaryModal: "Back",
           handelBtn: create,
         });
@@ -690,36 +805,30 @@ export const CRUD = () => {
     };
 
     const create = async (param) => {
+      console.log(param);
       setLoading((prevLoading) => !prevLoading);
       let dataBody = {};
-      if (param === "employees") {
+      if (param === "products") {
         dataBody = {
           name: refBody.nameRef.current.value,
-          email: refBody.emailRef.current.value,
-          phone_number: refBody.phone_numberRef.current.value,
-          company_id: refBody.company_idRef.current.value,
-          job_title: refBody.job_titleRef.current.value,
-          date_of_birth: refBody.date_of_birthRef.current.value,
-          employment_status: refBody.employment_statusRef.current.value,
-          hire_date: refBody.hire_dateRef.current.value,
-          termination_date: refBody.termination_dateRef.current.value,
-          address: refBody.addressRef.current.value,
-          city: refBody.cityRef.current.value,
-          province: refBody.provinceRef.current.value,
-          postal_code: refBody.postal_codeRef.current.value,
-          country: refBody.countryRef.current.value,
-          emergency_contact_name:
-            refBody.emergency_contact_nameRef.current.value,
-          emergency_contact_phone_number:
-            refBody.emergency_contact_phone_numberRef.current.value,
-          notes: refBody.notesRef.current.value,
-          department_id: refBody.department_idRef.current.value,
+          code: refBody.codeRef.current.value,
+          description: refBody.descriptionRef.current.value,
+          price: refBody.priceRef.current.value,
+          type: refBody.typeRef.current.value,
+          animal_type: refBody.animal_typeRef.current.value,
+          age: refBody.ageRef.current.value,
+          weight: refBody.weightRef.current.value,
+          health_status: refBody.health_statusRef.current.value,
+          stock: refBody.stockRef.current.value,
           category_id: refBody.category_idRef.current.value,
+          unit_of_measure: refBody.unit_of_measureRef.current.value,
+          raw_material: refBody.raw_materialRef.current.value,
         };
 
         try {
-          const store = await postApiData("employees", dataBody);
+          const store = await postApiData(param, dataBody);
           if (store.status === 201) {
+            setPath(() => param)
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -728,15 +837,57 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
         }
-      } else if (param === "employee-categories") {
+      } else if (param === "product-categories") {
         dataBody = {
           name: refBody.nameRef.current.value,
           description: refBody.descriptionRef.current.value,
         };
 
         try {
-          const store = await postApiData("employee-categories", dataBody);
+          const store = await postApiData(param, dataBody);
           if (store.status === 201) {
+            setPath(param)
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "product-movements") {
+        dataBody = {
+          product_id: refBody.product_idRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          movement_type: refBody.movement_typeRef.current.value,
+          quantity: refBody.quantityRef.current.value,
+          price: refBody.priceRef.current.value
+        };
+
+        try {
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(() => param)
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "product-prices") {
+        dataBody = {
+          product_id: refBody.product_idRef.current.value,
+          selling_price: refBody.selling_priceRef.current.value,
+          buying_price: refBody.buying_priceRef.current.value,
+          discount_price: refBody.discount_priceRef.current.value
+        };
+
+        try {
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(() => param)
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -748,38 +899,30 @@ export const CRUD = () => {
       } else {
         dataBody = {
           name: refBody.nameRef.current.value,
-          email: refBody.emailRef.current.value,
-          phone_number: refBody.phone_numberRef.current.value,
-          company_id: refBody.company_idRef.current.value,
-          job_title: refBody.job_titleRef.current.value,
-          date_of_birth: refBody.date_of_birthRef.current.value,
-          employment_status: refBody.employment_statusRef.current.value,
-          hire_date: refBody.hire_dateRef.current.value,
-          termination_date: refBody.termination_dateRef.current.value,
-          address: refBody.addressRef.current.value,
-          city: refBody.cityRef.current.value,
-          province: refBody.provinceRef.current.value,
-          postal_code: refBody.postal_codeRef.current.value,
-          country: refBody.countryRef.current.value,
-          emergency_contact_name:
-            refBody.emergency_contact_nameRef.current.value,
-          emergency_contact_phone_number:
-            refBody.emergency_contact_phone_numberRef.current.value,
-          notes: refBody.notesRef.current.value,
-          department_id: refBody.department_idRef.current.value,
+          code: refBody.codeRef.current.value,
+          description: refBody.descriptionRef.current.value,
+          price: refBody.priceRef.current.value,
+          type: refBody.typeRef.current.value,
+          animal_type: refBody.animal_typeRef.current.value,
+          age: refBody.ageRef.current.value,
+          weight: refBody.weightRef.current.value,
+          health_status: refBody.health_statusRef.current.value,
+          stock: refBody.stockRef.current.value,
           category_id: refBody.category_idRef.current.value,
+          unit_of_measure: refBody.unit_of_measureRef.current.value,
+          raw_material: refBody.raw_materialRef.current.value,
         };
-
+        console.log(dataBody);
         try {
-          const store = await postApiData("employees", dataBody);
+          const store = await postApiData('products', dataBody);
           if (store.status === 201) {
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
-          setResponseError(error.response.data.errors);
           setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
         }
       }
     };
@@ -936,11 +1079,11 @@ export const CRUD = () => {
   };
 
   const inputBody = (param) => {
-    if (param === "employees") {
+    if (param === "products") {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-3">
-            {inputEmployes.map((item, index) => (
+            {inputProducts.map((item, index) => (
               <FormInput
                 key={item.id}
                 element={item.element}
@@ -960,21 +1103,22 @@ export const CRUD = () => {
             ))}
             <TextArea
               span={`col-span-3`}
-              label={"Notes"}
-              htmlFor={"notes"}
-              id={"notes"}
-              name={"notes"}
-              referens={refBody.notesRef}
-              placeholder={"Write notes here"}
+              label={"Description"}
+              htmlFor={"description"}
+              id={"description"}
+              name={"description"}
+              referens={refBody.descriptionRef}
+              placeholder={"Write description here"}
+              validationError={validationError}
             />
           </div>
         </>
       );
-    } else if (param === "employee-categories") {
+    } else if (param === "product-categories") {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1">
-            {inputEmployesCategory.map((item, index) => (
+            {inputProductCategories.map((item, index) => (
               <FormInput
                 key={item.id}
                 element={item.element}
@@ -1004,6 +1148,74 @@ export const CRUD = () => {
           </div>
         </>
       );
+    }else if (param === "product-prices") {
+      return (
+        <>
+          <div className="grid gap-4 mb-4 grid-cols-1">
+            {inputProductPrices.map((item, index) => (
+              <FormInput
+                key={item.id}
+                element={item.element}
+                htmlFor={item.htmlFor}
+                label={item.label}
+                type={item.type}
+                name={item.name}
+                referens={item.ref}
+                value={item.value}
+                id={item.id}
+                onChange={(event) => item.onchange(event)}
+                placeholder={item.placeholder}
+                dataSelect={item.dataSelect}
+                uniqueId={index}
+                validationError={validationError}
+              />
+            ))}
+            {/* <TextArea
+              span={`col-span-1`}
+              label={"Description"}
+              htmlFor={"description"}
+              id={"description"}
+              name={"description"}
+              referens={refBody.descriptionRef}
+              placeholder={"Write notes here"}
+            /> */}
+          </div>
+        </>
+      );
+    }else if (param === "product-movements") {
+      return (
+        <>
+          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+            {inputProductMovements.map((item, index) => (
+              <FormInput
+                key={item.id}
+                element={item.element}
+                htmlFor={item.htmlFor}
+                label={item.label}
+                type={item.type}
+                name={item.name}
+                referens={item.ref}
+                value={item.value}
+                id={item.id}
+                onChange={(event) => item.onchange(event)}
+                placeholder={item.placeholder}
+                dataSelect={item.dataSelect}
+                uniqueId={index}
+                validationError={validationError}
+              />
+            ))}
+            <TextArea
+              span={`col-span-2`}
+              label={"Description"}
+              htmlFor={"description"}
+              id={"description"}
+              name={"description"}
+              referens={refBody.descriptionRef}
+              placeholder={"Write notes here"}
+            />
+          </div>
+        </>
+      );
     }
   };
 
@@ -1017,8 +1229,6 @@ export const CRUD = () => {
     handelCreate,
     openModal,
     dataModal,
-    inputEmployes,
-    inputEmployesCategory,
     refBody,
     handelEdit,
     dataEdit,
@@ -1033,5 +1243,6 @@ export const CRUD = () => {
     inputBody,
     loading,
     skeleton,
+    path
   };
 };
