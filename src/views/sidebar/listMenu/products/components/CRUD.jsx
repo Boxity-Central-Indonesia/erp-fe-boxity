@@ -61,32 +61,32 @@ export const CRUD = () => {
   });
 
   const [dataEdit, setDataEdit] = useState({
-    name: "",
-    code: '',
-    description: '',
-    price: '',
-    type: '',
-    animal_type: '',
-    age: '',
-    weight: '',
-    health_status: '',
-    stock: '',
-    category_id: '',
-    movement_type: '',
-    unit_of_measure: '',
-    raw_material: '',
+    // name: "",
+    // code: '',
+    // description: '',
+    // price: '',
+    // type: '',
+    // animal_type: '',
+    // age: '',
+    // weight: '',
+    // health_status: '',
+    // stock: '',
+    // category_id: '',
+    // movement_type: '',
+    // unit_of_measure: '',
+    // raw_material: '',
 
-    // product price
+    // // product price
 
-    product_id: '',
-    selling_price: '',
-    buying_price: '',
-    discount_price: '',
+    // product_id: '',
+    // selling_price: '',
+    // buying_price: '',
+    // discount_price: '',
 
-    // product movements
+    // // product movements
 
-    movement_type: '',
-    quantity: '',
+    // movement_type: '',
+    // quantity: '',
 
   });
 

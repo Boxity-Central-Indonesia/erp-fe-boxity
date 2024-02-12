@@ -15,9 +15,11 @@ export const CRUD = () => {
   const [modalDelete, setModalDelete] = useState();
   const [idDelete, setIdDelete] = useState();
   const [dataModal, setDataModal] = useState({});
-  const [inputEmployes, setInputEmployes] = useState([]);
-  const [inputEmployesCategory, setInputEmployesCategory] = useState([]);
+  const [inputVendors, setInputVendors] = useState([])
+  const [inputVendorContact, setInputVendorContact] = useState([])
+  const [inputVendorTransaction, setInputVendorTransaction] = useState([])
   const [responseError, setResponseError] = useState();
+  const [dataVendorsSelect, setDataVendorsSelect] = useState([])
   const [validationError, setValidationError] = useState();
   const [dataCompanies, setDataCompanies] = useState();
   const [dataDepartments, setDataDepartments] = useState();
@@ -25,78 +27,52 @@ export const CRUD = () => {
   const [dataCategoryEmployes, setDataCategoryEmployes] = useState();
   const [skeleton, setSkeleton] = useState(false);
   const [dataHeading, setDataHeading] = useState([{}]);
+  const [path, setPath] =  useState('vendors')
 
   // EmployesList
 
   const [refBody, setRefBody] = useState({
     nameRef: useRef(),
-    emailRef: useRef(),
-    phone_numberRef: useRef(),
-    company_idRef: useRef(),
-    job_titleRef: useRef(),
-    date_of_birthRef: useRef(),
-    employment_statusRef: useRef(),
-    hire_dateRef: useRef(),
-    termination_dateRef: useRef(),
     addressRef: useRef(),
-    cityRef: useRef(),
-    provinceRef: useRef(),
-    postal_codeRef: useRef(),
-    countryRef: useRef(),
-    emergency_contact_nameRef: useRef(),
-    emergency_contact_phone_numberRef: useRef(),
-    notesRef: useRef(),
-    department_idRef: useRef(),
-    category_idRef: useRef(),
-    idRef: useRef(),
-    notesRef: useRef(),
-    descriptionRef: useRef(),
+    phone_numberRef: useRef(),
+    emailRef: useRef(),
+    transaction_typeRef: useRef(),
+
+    // contact
+    vendors_idRef: useRef(),
+    positionRef: useRef(),
+    
+    // transactions
+    amountRef: useRef(),
+    product_idRef: useRef(),
+    unit_priceRef: useRef(),
+    total_priceRef: useRef(),
+    taxesRef: useRef(),
+    shipping_costRef: useRef()
   });
   const [dataEdit, setDataEdit] = useState({
-    name: "",
-    email: "",
-    phone_number: "",
-    company_id: "",
-    job_title: "",
-    date_of_birth: "",
-    employment_status: "",
-    hire_date: "",
-    termination_date: "",
-    address: "",
-    city: "",
-    province: "",
-    postal_code: "",
-    country: "",
-    emergency_contact_name: "",
-    emergency_contact_phone_number: "",
-    notes: "",
-    department_id: "",
-    category_id: "",
-    id: "",
+    // name: "",
+    // email: "",
+    // phone_number: "",
+    // company_id: "",
+    // job_title: "",
+    // date_of_birth: "",
+    // employment_status: "",
+    // hire_date: "",
+    // termination_date: "",
+    // address: "",
+    // city: "",
+    // province: "",
+    // postal_code: "",
+    // country: "",
+    // emergency_contact_name: "",
+    // emergency_contact_phone_number: "",
+    // notes: "",
+    // department_id: "",
+    // category_id: "",
+    // id: "",
   });
 
-  const handleChangeAndGetDepartment = async (event) => {
-    // Mendapatkan nama dan nilai input yang berubah
-    const { name, value } = event.target;
-
-    try {
-      const response = await getApiData("companies/7/departments");
-      const newData = response.data.map((item) => ({
-        id: item.id,
-        name: item.name,
-      }));
-
-      setDataDepartments(() => newData);
-    } catch (error) {
-      console.log(error);
-    }
-
-    // Memperbarui state sesuai dengan nilai input yang berubah
-    setDataEdit((prevDataEdit) => ({
-      ...prevDataEdit,
-      [name]: value,
-    }));
-  };
 
   const handleChange = (event) => {
     // Mendapatkan nama dan nilai input yang berubah
@@ -120,35 +96,16 @@ export const CRUD = () => {
         company_id: !!responseError.company_id
           ? responseError.company_id[0]
           : "",
-        job_title: !!responseError.job_title ? responseError.job_title[0] : "",
-        date_of_birth: !!responseError.date_of_birth
-          ? responseError.date_of_birth[0]
-          : "",
-        employment_status: !!responseError.employment_status
-          ? responseError.employment_status[0]
-          : "",
-        hire_date: !!responseError.hire_date ? responseError.hire_date[0] : "",
-        termination_date: !!responseError.termination_date
-          ? responseError.termination_date[0]
-          : "",
         address: !!responseError.address ? responseError.address[0] : "",
-        city: !!responseError.city ? responseError.city[0] : "",
-        province: !!responseError.province ? responseError.province[0] : "",
-        postal_code: !!responseError.postal_code
-          ? responseError.postal_code[0]
-          : "",
-        country: !!responseError.country ? responseError.country[0] : "",
-        emergency_contact_name: !!responseError.emergency_contact_name
-          ? responseError.emergency_contact_name[0]
-          : "",
-        emergency_contact_phone_number:
-          !!responseError.emergency_contact_phone_number
-            ? responseError.emergency_contact_phone_number[0]
-            : "",
-        notes: !!responseError.notes ? responseError.notes[0] : "",
-        department_id: !!responseError.department_id
-          ? responseError.department_id[0]
-          : "",
+        transaction_type: responseError?.transaction_type?.[0] || "",
+        vendors_id: responseError?.vendors_id?.[0] || "",
+        position: responseError?.position?.[0] || "",
+        amount: responseError?.amount?.[0] || "",
+        product_id: responseError?.product_id?.[0] || "",
+        unit_price: responseError?.unit_price?.[0] || "",
+        total_price: responseError?.total_price?.[0] || "",
+        taxes: responseError?.taxes?.[0] || "",
+        shipping_cost: responseError?.shipping_cost?.[0] || "",
       });
     }
   }, [responseError]);
@@ -189,7 +146,7 @@ export const CRUD = () => {
   }, []);
 
   useEffect(() => {
-    setInputEmployes([
+    setInputVendors([
       {
         element: "input",
         type: "text",
@@ -217,91 +174,6 @@ export const CRUD = () => {
       {
         element: "input",
         type: "text",
-        name: "phone_number",
-        ref: refBody.phone_numberRef,
-        value: dataEdit.phone_number,
-        label: "Phone number",
-        htmlFor: "phone_number",
-        id: "phone_number",
-        onchange: handleChange,
-        placeholder: "Phone number",
-      },
-      {
-        element: "select",
-        ref: refBody.company_idRef,
-        name: "company_id",
-        label: "Companies",
-        htmlFor: "categori companies",
-        id: "categori companies",
-        dataSelect: dataCompanies,
-        value: dataEdit.company_id,
-        onchange: handleChangeAndGetDepartment,
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "job_title",
-        ref: refBody.job_titleRef,
-        value: dataEdit.job_title,
-        label: "Job title",
-        htmlFor: "job_title",
-        id: "job_title",
-        onchange: handleChange,
-        placeholder: "Job title",
-      },
-      {
-        element: "input",
-        type: "date",
-        name: "date_of_birth",
-        ref: refBody.date_of_birthRef,
-        value: dataEdit.date_of_birth,
-        label: "Date of birth",
-        htmlFor: "date_of_birth",
-        id: "date_of_birth",
-        onchange: handleChange,
-        placeholder: "Date of birth",
-      },
-      {
-        element: "select",
-        name: "employment_status",
-        ref: refBody.employment_statusRef,
-        value: dataEdit.employment_status,
-        label: "satus",
-        htmlFor: "employment_status",
-        id: "employment_status",
-        dataSelect: [
-          { value: "active", name: "Active" },
-          { value: "inactive", name: "Inactive" },
-        ],
-        onchange: handleChange,
-      },
-      {
-        element: "input",
-        type: "date",
-        name: "hire_date",
-        ref: refBody.hire_dateRef,
-        value: dataEdit.hire_date,
-        label: "Hire date",
-        htmlFor: "hire_date",
-        id: "hire_date",
-        onchange: handleChange,
-        placeholder: "Hire date",
-      },
-      {
-        element: "input",
-        type: "date",
-        name: "termination_date",
-        ref: refBody.termination_dateRef,
-        value: dataEdit.termination_date,
-        label: "Termination date",
-        htmlFor: "termination_date",
-        id: "termination_date",
-        onchange: handleChange,
-        placeholder: "Termination date",
-      },
-      {
-        element: "input",
-        type: "text",
         name: "address",
         ref: refBody.addressRef,
         value: dataEdit.address,
@@ -314,99 +186,43 @@ export const CRUD = () => {
       {
         element: "input",
         type: "text",
-        name: "city",
-        ref: refBody.cityRef,
-        value: dataEdit.city,
-        label: "City",
-        htmlFor: "city",
-        id: "city",
+        name: "phone_number",
+        ref: refBody.phone_numberRef,
+        value: dataEdit.phone_number,
+        label: "Phone number",
+        htmlFor: "phone_number",
+        id: "phone_number",
         onchange: handleChange,
-        placeholder: "City",
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "province",
-        ref: refBody.provinceRef,
-        value: dataEdit.province,
-        label: "Province",
-        htmlFor: "province",
-        id: "province",
-        onchange: handleChange,
-        placeholder: "Province",
-      },
-      {
-        element: "input",
-        type: "number",
-        name: "postal_code",
-        ref: refBody.postal_codeRef,
-        value: dataEdit.postal_code,
-        label: "Postal Code",
-        htmlFor: "postal_code",
-        id: "postal_code",
-        onchange: handleChange,
-        placeholder: "Postal Code",
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "country",
-        ref: refBody.countryRef,
-        value: dataEdit.country,
-        label: "Country",
-        htmlFor: "country",
-        id: "country",
-        onchange: handleChange,
-        placeholder: "Country",
+        placeholder: "Phone number",
       },
       {
         element: "select",
-        ref: refBody.department_idRef,
-        name: "department_id",
-        label: "Department",
-        htmlFor: "department",
-        id: "department",
-        dataSelect: dataDepartments,
-        value: dataEdit.department_id,
+        ref: refBody.transaction_typeRef,
+        name: "transaction_type",
+        label: "Transaction type",
+        htmlFor: "Transaction type",
+        id: "Transaction type",
+        dataSelect: [
+          {id: 'inbound', name: 'inbound'},
+          {id: 'outbound', name: 'outbound'},
+        ],
+        value: dataEdit.transaction_type,
         onchange: handleChange,
-      },
-      {
-        element: "select",
-        ref: refBody.category_idRef,
-        name: "category_id",
-        label: "Category",
-        htmlFor: "category_id",
-        id: "category_id",
-        dataSelect: dataCategoryEmployes,
-        value: dataEdit.category_id,
-        onchange: handleChange,
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "emergency_contact_name",
-        ref: refBody.emergency_contact_nameRef,
-        value: dataEdit.emergency_contact_name,
-        label: "Emergency Contact Name",
-        htmlFor: "emergency_contact_name",
-        id: "emergency_contact_name",
-        onchange: handleChange,
-        placeholder: "Emergency Contact Name",
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "emergency_contact_phone_number",
-        ref: refBody.emergency_contact_phone_numberRef,
-        value: dataEdit.emergency_contact_phone_number,
-        label: "Emergency Contact Phone Number",
-        htmlFor: "emergency_contact_phone_number",
-        id: "emergency_contact_phone_number",
-        onchange: handleChange,
-        placeholder: "Emergency Contact Phone Number",
       },
     ]);
-    setInputEmployesCategory([
+
+    setInputVendorContact([
+      {
+        element: "select",
+        ref: refBody.vendors_idRef,
+        name: "vendors_id",
+        label: "Vendors",
+        htmlFor: "vendors-id",
+        id: "vendors-id",
+        dataSelect: dataVendorsSelect,
+        value: dataEdit.vendors_id,
+        onchange: handleChange,
+      },
       {
         element: "input",
         type: "text",
@@ -419,7 +235,120 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Name",
       },
+      {
+        element: "input",
+        type: "text",
+        name: "position",
+        ref: refBody.positionRef,
+        value: dataEdit.position,
+        label: "Position",
+        htmlFor: "position",
+        id: "position",
+        onchange: handleChange,
+        placeholder: "Position",
+      },
+
+      {
+        element: "input",
+        type: "text",
+        name: "phone_number",
+        ref: refBody.phone_numberRef,
+        value: dataEdit.phone_number,
+        label: "Phone number",
+        htmlFor: "phone_number",
+        id: "phone_number",
+        onchange: handleChange,
+        placeholder: "Phone number",
+      },
+      
     ]);
+
+    setInputVendorTransaction([
+      {
+        element: "select",
+        ref: refBody.vendors_idRef,
+        name: "vendors_id",
+        label: "Vendors",
+        htmlFor: "vendors-id",
+        id: "vendors-id",
+        // dataSelect: dataCompanies,
+        value: dataEdit.vendors_id,
+        onchange: handleChange,
+      },
+      {
+        element: "select",
+        ref: refBody.product_idRef,
+        name: "product_id",
+        label: "Products",
+        htmlFor: "product-id",
+        id: "product-id",
+        // dataSelect: dataCompanies,
+        value: dataEdit.product_id,
+        onchange: handleChange,
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "amount",
+        ref: refBody.amountRef,
+        value: dataEdit.amount,
+        label: "Amount",
+        htmlFor: "amount",
+        id: "amount",
+        onchange: handleChange,
+        placeholder: "Amount",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "unit_price",
+        ref: refBody.unit_priceRef,
+        value: dataEdit.unit_price,
+        label: "Unit price",
+        htmlFor: "unit_price",
+        id: "unit_price",
+        onchange: handleChange,
+        placeholder: "Unit price",
+      },
+
+      {
+        element: "input",
+        type: "number",
+        name: "total_price",
+        ref: refBody.total_priceRef,
+        value: dataEdit.total_price,
+        label: "Total price",
+        htmlFor: "total_price",
+        id: "total_price",
+        onchange: handleChange,
+        placeholder: "Total price",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "taxes",
+        ref: refBody.taxesRef,
+        value: dataEdit.taxes,
+        label: "Taxes",
+        htmlFor: "taxes",
+        id: "taxes",
+        onchange: handleChange,
+        placeholder: "Taxes",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "shipping_cost",
+        ref: refBody.shipping_costRef,
+        value: dataEdit.shipping_cost,
+        label: "Shipping cost",
+        htmlFor: "shipping_cost",
+        id: "shipping_cost",
+        onchange: handleChange,
+        placeholder: "Shipping cost",
+      },
+    ]);
+
   }, [dataEdit]);
 
   const dataVendors = (data) => {
@@ -463,24 +392,64 @@ export const CRUD = () => {
       const getData = async () => {
         try {
           const { data } = await getApiData("vendors");
-          const newData = dataVendors(data);
-          setData(newData);
-          setDataHeading([
-            {
-              label: "Add vendors",
-              icon: IconAdd(),
-              heading: "Vendors list",
-              eventToggleModal: handelCreate,
-              onclick: handleClickHeading,
-              showNavHeading: true,
-              dataNavHeading: [
-                { path: "vendors", label: "Vendors" },
-                { path: "vendor-contacts", label: "Contacts" },
-                { path: "vendor-transactions", label: "Vendor Transactions" },
-              ],
-              activeButton: "vendors",
-            },
-          ]);
+          if(path === 'vendors'){
+            const newData = dataVendors(data);
+            setData(newData);
+            setDataHeading([
+              {
+                label: "Add vendors",
+                icon: IconAdd(),
+                heading: "Vendors list",
+                eventToggleModal: handelCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "vendors", label: "Vendors" },
+                  { path: "vendor-contacts", label: "Contacts" },
+                  { path: "vendor-transactions", label: "Vendor Transactions" },
+                ],
+                activeButton: path,
+              },
+            ]);
+          }else if(path === 'vendor-contacts'){
+            const newData = dataVendorsContact(data);
+            setData(newData);
+            setDataHeading([
+              {
+                label: "Add vendors",
+                icon: IconAdd(),
+                heading: "Vendors list",
+                eventToggleModal: handelCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "vendors", label: "Vendors" },
+                  { path: "vendor-contacts", label: "Contacts" },
+                  { path: "vendor-transactions", label: "Vendor Transactions" },
+                ],
+                activeButton: path,
+              },
+            ]);
+          }else if(path === 'vendor-transactions'){
+            const newData = dataVendorsTransactions(data);
+            setData(newData);
+            setDataHeading([
+              {
+                label: "Add vendors",
+                icon: IconAdd(),
+                heading: "Vendors list",
+                eventToggleModal: handelCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "vendors", label: "Vendors" },
+                  { path: "vendor-contacts", label: "Contacts" },
+                  { path: "vendor-transactions", label: "Vendor Transactions" },
+                ],
+                activeButton: path,
+              },
+            ]);
+          }
         } catch (error) {
           console.error(error);
         }
@@ -488,7 +457,23 @@ export const CRUD = () => {
       getData();
     }, [refresh]);
 
+    useEffect(() => {
+      const getDataVendor = async () => {
+          const {data, status} = await getApiData('vendors')
+          if(status === 200) {
+              const newData = data.map(item => ({
+                  id: item.id,
+                  name: item.name
+              }))
+              setDataVendorsSelect(newData)
+          }
+      }
+      getDataVendor()
+
+    }, [])
+
     const handleClickHeading = async (param) => {
+      setPath(param)
       setDataHeading([
         {
           label:
@@ -547,123 +532,97 @@ export const CRUD = () => {
 
   const CREATE = () => {
     const handelCreate = (param) => {
-      if (param === "employees") {
+      if (param === "vendors") {
         setDataEdit({
-          name: "",
-          email: "",
-          phone_number: "",
-          company_id: "",
-          job_title: "",
-          date_of_birth: "",
-          employment_status: "",
-          hire_date: "",
-          termination_date: "",
-          address: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country: "",
-          emergency_contact_name: "",
-          emergency_contact_phone_number: "",
-          notes: "",
-          department_id: "",
-          category_id: "",
-          id: "",
+          name: '',
+          address: '',
+          phone_number: '',
+          transaction_type: '',
+          email: '',
         });
         setValidationError({
-          name: "",
-          email: "",
-          phone_number: "",
-          company_id: "",
-          job_title: "",
-          date_of_birth: "",
-          employment_status: "",
-          hire_date: "",
-          termination_date: "",
-          address: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country: "",
-          emergency_contact_name: "",
-          emergency_contact_phone_number: "",
-          notes: "",
-          department_id: "",
+          name: '',
+          address: '',
+          phone_number: '',
+          transaction_type: '',
+          email: '',
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
-          size: "6xl",
-          labelModal: "Add employes",
-          labelBtnModal: "Add new employes",
+          size: "2xl",
+          labelModal: "Add vendor",
+          labelBtnModal: "Add new vendor",
           labelBtnSecondaryModal: "Back",
           handelBtn: create,
         });
-      } else if (param === "employee-categories") {
+      } else if (param === "vendor-contacts") {
         setDataEdit({
-          name: "",
-          description: "",
-          id: "",
+          vendors_id: '',
+          name: '',
+          position: '',
+          phone_number: '',
         });
         setValidationError({
-          name: "",
-          description: "",
+          vendors_id: '',
+          name: '',
+          position: '',
+          phone_number: '',
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
-          size: "md",
-          labelModal: "Add category",
-          labelBtnModal: "Add new category",
+          size: "lg",
+          labelModal: "Add contact",
+          labelBtnModal: "Add new contact",
+          labelBtnSecondaryModal: "Back",
+          handelBtn: create,
+        });
+      }else if (param === "vendor-transactions") {
+        setDataEdit({
+          vendors_id: '',
+          amount: '',
+          product_id: '',
+          unit_price: '',
+          total_price: '',
+          taxes: '',
+          shipping_cost: '',
+        });
+        setValidationError({
+          vendors_id: '',
+          amount: '',
+          product_id: '',
+          unit_price: '',
+          total_price: '',
+          taxes: '',
+          shipping_cost: '',
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Add transactions",
+          labelBtnModal: "Add new transactions",
           labelBtnSecondaryModal: "Back",
           handelBtn: create,
         });
       } else {
         setDataEdit({
-          name: "",
-          email: "",
-          phone_number: "",
-          company_id: "",
-          job_title: "",
-          date_of_birth: "",
-          employment_status: "",
-          hire_date: "",
-          termination_date: "",
-          address: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country: "",
-          emergency_contact_name: "",
-          emergency_contact_phone_number: "",
-          notes: "",
-          department_id: "",
-          category_id: "",
-          id: "",
+          name: '',
+          address: '',
+          phone_number: '',
+          transaction_type: '',
+          email: '',
         });
         setValidationError({
-          name: "",
-          email: "",
-          phone_number: "",
-          company_id: "",
-          job_title: "",
-          date_of_birth: "",
-          employment_status: "",
-          hire_date: "",
-          termination_date: "",
-          address: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country: "",
-          emergency_contact_name: "",
-          emergency_contact_phone_number: "",
-          notes: "",
-          department_id: "",
+          name: '',
+          address: '',
+          phone_number: '',
+          transaction_type: '',
+          email: '',
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
-          size: "6xl",
-          labelModal: "Add employes",
-          labelBtnModal: "Add new employes",
+          size: "2xl",
+          labelModal: "Add vendor",
+          labelBtnModal: "Add new vendor",
           labelBtnSecondaryModal: "Back",
           handelBtn: create,
         });
@@ -673,34 +632,19 @@ export const CRUD = () => {
     const create = async (param) => {
       setLoading((prevLoading) => !prevLoading);
       let dataBody = {};
-      if (param === "employees") {
+      if (param === "vendors") {
         dataBody = {
           name: refBody.nameRef.current.value,
-          email: refBody.emailRef.current.value,
-          phone_number: refBody.phone_numberRef.current.value,
-          company_id: refBody.company_idRef.current.value,
-          job_title: refBody.job_titleRef.current.value,
-          date_of_birth: refBody.date_of_birthRef.current.value,
-          employment_status: refBody.employment_statusRef.current.value,
-          hire_date: refBody.hire_dateRef.current.value,
-          termination_date: refBody.termination_dateRef.current.value,
           address: refBody.addressRef.current.value,
-          city: refBody.cityRef.current.value,
-          province: refBody.provinceRef.current.value,
-          postal_code: refBody.postal_codeRef.current.value,
-          country: refBody.countryRef.current.value,
-          emergency_contact_name:
-            refBody.emergency_contact_nameRef.current.value,
-          emergency_contact_phone_number:
-            refBody.emergency_contact_phone_numberRef.current.value,
-          notes: refBody.notesRef.current.value,
-          department_id: refBody.department_idRef.current.value,
-          category_id: refBody.category_idRef.current.value,
+          phone_number: refBody.phone_numberRef.current.value,
+          transaction_type: refBody.transaction_typeRef.current.value,
+          email: refBody.emailRef.current.value,
         };
 
         try {
-          const store = await postApiData("employees", dataBody);
+          const store = await postApiData(param, dataBody);
           if (store.status === 201) {
+            setPath(param)
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -709,16 +653,42 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
         }
-      } else if (param === "employee-categories") {
+      } else if (param === "vendor-contacts") {
         dataBody = {
+          vendors_id: refBody.vendors_idRef.current.value,
           name: refBody.nameRef.current.value,
-          description: refBody.descriptionRef.current.value,
+          position: refBody.positionRef.current.value,
+          phone_number: refBody.phone_numberRef.current.value
         };
 
         try {
-          const store = await postApiData("employee-categories", dataBody);
+          const store = await postApiData(param, dataBody);
           if (store.status === 201) {
-            setRefresh(!refresh);
+            setPath(() => param)
+            setRefresh(prevRevresh => !prevRevresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "vendor-transactions") {
+        dataBody = {
+          vendors_id: refBody.vendors_idRef.current.value,
+          amount: refBody.amountRef.current.value,
+          product_id: refBody.product_idRef.current.value,
+          unit_price: refBody.unit_priceRef.current.value,
+          total_price: refBody.total_priceRef.current.value,
+          taxes: refBody.taxesRef.current.value,
+          shipping_cost: refBody.shipping_costRef.current.value
+        };
+
+        try {
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(() => param)
+            setRefresh(prevRevresh => !prevRevresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
@@ -729,30 +699,14 @@ export const CRUD = () => {
       } else {
         dataBody = {
           name: refBody.nameRef.current.value,
-          email: refBody.emailRef.current.value,
-          phone_number: refBody.phone_numberRef.current.value,
-          company_id: refBody.company_idRef.current.value,
-          job_title: refBody.job_titleRef.current.value,
-          date_of_birth: refBody.date_of_birthRef.current.value,
-          employment_status: refBody.employment_statusRef.current.value,
-          hire_date: refBody.hire_dateRef.current.value,
-          termination_date: refBody.termination_dateRef.current.value,
           address: refBody.addressRef.current.value,
-          city: refBody.cityRef.current.value,
-          province: refBody.provinceRef.current.value,
-          postal_code: refBody.postal_codeRef.current.value,
-          country: refBody.countryRef.current.value,
-          emergency_contact_name:
-            refBody.emergency_contact_nameRef.current.value,
-          emergency_contact_phone_number:
-            refBody.emergency_contact_phone_numberRef.current.value,
-          notes: refBody.notesRef.current.value,
-          department_id: refBody.department_idRef.current.value,
-          category_id: refBody.category_idRef.current.value,
+          phone_number: refBody.phone_numberRef.current.value,
+          transaction_type: refBody.transaction_typeRef.current.value,
+          email: refBody.emailRef.current.value,
         };
 
         try {
-          const store = await postApiData("employees", dataBody);
+          const store = await postApiData("vendors", dataBody);
           if (store.status === 201) {
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
@@ -917,11 +871,11 @@ export const CRUD = () => {
   };
 
   const inputBody = (param) => {
-    if (param === "employees") {
+    if (param === "vendors") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-3">
-            {inputEmployes.map((item, index) => (
+          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+            {inputVendors.map((item, index) => (
               <FormInput
                 key={item.id}
                 element={item.element}
@@ -939,23 +893,14 @@ export const CRUD = () => {
                 validationError={validationError}
               />
             ))}
-            <TextArea
-              span={`col-span-3`}
-              label={"Notes"}
-              htmlFor={"notes"}
-              id={"notes"}
-              name={"notes"}
-              referens={refBody.notesRef}
-              placeholder={"Write notes here"}
-            />
           </div>
         </>
       );
-    } else if (param === "employee-categories") {
+    } else if (param === "vendor-contacts") {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1">
-            {inputEmployesCategory.map((item, index) => (
+            {inputVendorContact.map((item, index) => (
               <FormInput
                 key={item.id}
                 element={item.element}
@@ -973,19 +918,35 @@ export const CRUD = () => {
                 validationError={validationError}
               />
             ))}
-            <TextArea
-              span={`col-span-1`}
-              label={"Description"}
-              htmlFor={"description"}
-              id={"description"}
-              name={"description"}
-              referens={refBody.descriptionRef}
-              placeholder={"Write notes here"}
-            />
           </div>
         </>
       );
-    }
+    }  else if (param === "vendor-transactions") {
+      return (
+        <>
+          <div className="grid gap-4 mb-4 grid-cols-1 xl:grid-cols-2">
+            {inputVendorTransaction.map((item, index) => (
+              <FormInput
+                key={item.id}
+                element={item.element}
+                htmlFor={item.htmlFor}
+                label={item.label}
+                type={item.type}
+                name={item.name}
+                referens={item.ref}
+                value={item.value}
+                id={item.id}
+                onChange={(event) => item.onchange(event)}
+                placeholder={item.placeholder}
+                dataSelect={item.dataSelect}
+                uniqueId={index}
+                validationError={validationError}
+              />
+            ))}
+          </div>
+        </>
+      );
+    } 
   };
 
   const { data, handleClickHeading } = READ();
@@ -998,8 +959,6 @@ export const CRUD = () => {
     handelCreate,
     openModal,
     dataModal,
-    inputEmployes,
-    inputEmployesCategory,
     refBody,
     handelEdit,
     dataEdit,
@@ -1014,5 +973,6 @@ export const CRUD = () => {
     inputBody,
     loading,
     skeleton,
+    path
   };
 };
