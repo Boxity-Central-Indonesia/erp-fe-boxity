@@ -35,7 +35,7 @@ const TabelComponentTest = ({data, dataHeading, handelEdit, setOpenModal, skelet
     if (!data || !data[0]) return []; // Pastikan data ada dan tidak kosong
     
     const keys = Object.keys(data[0]); // Ambil kunci dari objek pertama
-    const filteredKeys = keys.filter(key => key !== 'id' && data[0][key] !== null); // Filter kunci yang valid
+    const filteredKeys = keys.filter(key => data[0][key] !== null); // Filter kunci yang valid
     
     return filteredKeys.map((key) => {
       return columnHelper.accessor((row) => row[key], {
@@ -196,7 +196,7 @@ const TabelComponentTest = ({data, dataHeading, handelEdit, setOpenModal, skelet
             <Table hoverable className={`${skeleton ? `hidden` : ``}`}>
               <Table.Head>
                 {table.getHeaderGroups()[0].headers.map((header) => (
-                <Table.HeadCell key={header.id} className="">
+                <Table.HeadCell className={`${header.id === 'id' ? `hidden` : ``}`} key={header.id}>
                   <span className="">{header.id === 'Employment Status' ? `` : header.id}</span>
                   {header.column.getCanFilter() && header.id === 'Employment Status' && (
                   <div>
@@ -211,21 +211,38 @@ const TabelComponentTest = ({data, dataHeading, handelEdit, setOpenModal, skelet
               </Table.Head>
               <Table.Body className="divide-y">
                 {table.getRowModel().rows.map((row) => (
-                <Table.Row key={row.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  {row.getVisibleCells().map((cell) => (
-                  < Table.Cell key={cell.id} className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </Table.Cell>
-                    ))}
-                    <Table.Cell className={`text-right`}>
-                      <button style={{color: globalColor}}
-                        className="font-medium text-cyan-600 hover:underline dark:text-cyan-500" onClick={()=>
-                        handleEditClick(item.id, item.company_id)}
-                        >
-                        Edit
-                      </button>
-                    </Table.Cell>
-                </Table.Row>
+                  <Table.Row key={row.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                    {row.getVisibleCells().map((cell) => {
+                      // Check if the cell's column ID matches the one you want to hide
+                      if (cell.column.columnDef.id === 'id') {
+                        return null; // Skip rendering this cell
+                      }
+                      return (
+                        <Table.Cell key={cell.id} className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </Table.Cell>
+                      );
+                    })}
+                    {row.getVisibleCells().map((cell) => {
+                      // Check if the cell's column ID matches the one you want to hide
+                      if (cell.column.columnDef.id === 'id') {
+                        return (
+                          <Table.Cell className={`text-right`}>
+                            <button style={{ color: globalColor }}
+                              className="font-medium text-cyan-600 hover:underline dark:text-cyan-500" onClick={(e)=>
+                              handleEditClick(e.target)} // Pass row.id as
+                              parameter
+                              >
+                              <span className='hidden'>{flexRender(cell.column.columnDef.cell, cell.getContext())}</span>
+                              Edit
+                            </button>
+                          </Table.Cell>
+                        ); // Skip rendering this cell
+                      }else{
+                        return null
+                      }
+                    })}
+                  </Table.Row>
                 ))}
               </Table.Body>
             </Table>

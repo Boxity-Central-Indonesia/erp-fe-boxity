@@ -68,6 +68,7 @@ export const Warehouses = () => {
         dataHeading={dataHeading}
         skeleton={skeleton}
         setOpenModal={handelCreate}
+        handelEdit={handelEdit}
         />
        </>
     )

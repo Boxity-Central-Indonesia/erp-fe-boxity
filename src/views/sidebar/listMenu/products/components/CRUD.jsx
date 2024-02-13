@@ -498,9 +498,9 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add products",
+                label: "Add category",
                 icon: IconAdd(),
-                heading: "Product list",
+                heading: "Categoires list",
                 eventToggleModal: handelCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -518,9 +518,9 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add products",
+                label: "Add price",
                 icon: IconAdd(),
-                heading: "Product list",
+                heading: "Prices list",
                 eventToggleModal: handelCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -538,9 +538,9 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add products",
+                label: "Add movement",
                 icon: IconAdd(),
-                heading: "Product list",
+                heading: "Movements list",
                 eventToggleModal: handelCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,

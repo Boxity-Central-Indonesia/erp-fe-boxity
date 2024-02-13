@@ -11,64 +11,48 @@ export const CRUD = () => {
     const [idDelete, setIdDelete] = useState()
     const [dataModal, setDataModal] = useState({})
     const [inputEmployes, setInputEmployes] = useState([])
-    const [inputEmployesCategory, setInputEmployesCategory] = useState([])
+    const [inputInvoices, setInputInvoices] = useState([])
+    const [inputPayments, setInputPayments] = useState([])
     const [responseError, setResponseError] = useState()
     const [validationError, setValidationError] = useState()
     const [dataCompanies, setDataCompanies] = useState();
     const [dataDepartments, setDataDepartments] = useState();
+    const [dataOrdersSelect, setDataOrdersSelect] = useState([]);
+    const [dataInvoicesSelect, setDataInvoicesSelect] = useState([]);
     const [loading, setLoading] = useState(true)
     const [dataCategoryEmployes, setDataCategoryEmployes] = useState()
     const [skeleton, setSkeleton] = useState(false)
     const [dataHeading, setDataHeading] = useState([{}])
-
-    // EmployesList
+    const [path, setPath] = useState('orders')
 
     const [refBody, setRefBody] = useState( {
-        nameRef: useRef(),
-        emailRef: useRef(),
-        phone_numberRef: useRef(),
-        company_idRef: useRef(),
-        job_titleRef: useRef(),
-        date_of_birthRef: useRef(),
-        employment_statusRef: useRef(),
-        hire_dateRef: useRef(),
-        termination_dateRef: useRef(),
-        addressRef: useRef(),
-        cityRef: useRef(),
-        provinceRef: useRef(),
-        postal_codeRef: useRef(),
-        countryRef: useRef(),
-        emergency_contact_nameRef: useRef(),
-        emergency_contact_phone_numberRef: useRef(),
-        notesRef: useRef(),
-        department_idRef: useRef(),
-        category_idRef: useRef(),
-        idRef: useRef(),
-        notesRef: useRef(),
-        descriptionRef: useRef(),
+        vendor_idRef: useRef(),
+        warehouse_idRef: useRef(),
+        product_idRef: useRef(),
+        statusRef: useRef(),
+        detailsRef: useRef(),
+        price_per_unitRef: useRef(),
+        total_priceRef: useRef(),
+        quantityRef: useRef(),
+        taxesRef: useRef(),
+        shipping_costRef: useRef(),
+        order_typeRef: useRef(),
+
+        //invoices
+        order_idRef: useRef(),
+        total_amountRef: useRef(),
+        balance_dueRef: useRef(),
+        invoice_dateRef: useRef(),
+        due_dateRef: useRef(),
+
+        // payments
+        invpice_idRef: useRef(),
+        amount_paidRef: useRef(),
+        payment_methodRef: useRef(),
+        payment_dateRef: useRef(),
+
     })
-    const [dataEdit, setDataEdit] = useState({
-        name: '',
-        email: '',
-        phone_number: '',
-        company_id: '',
-        job_title: '',
-        date_of_birth: '',
-        employment_status:'',
-        hire_date: '',
-        termination_date:'',
-        address: '',
-        city: '',
-        province: '',
-        postal_code: '',
-        country: '',
-        emergency_contact_name: '',
-        emergency_contact_phone_number: '',
-        notes: '',
-        department_id: '',
-        category_id: '',
-        id: ''
-    })
+    const [dataEdit, setDataEdit] = useState({})
 
 
     const handleChangeAndGetDepartment = async (event) => {
@@ -117,24 +101,16 @@ export const CRUD = () => {
         if(!!responseError){
             setValidationError(
                 {
-                    name: responseError?.name?.[0] || '',
-                    email: responseError?.email?.[0] || '',
-                    phone_number: !!responseError.phone_number ? responseError.phone_number[0] : '',
-                    company_id:!!responseError.company_id ? responseError.company_id[0] : '',
-                    job_title:!!responseError.job_title ? responseError.job_title[0] : '',
-                    date_of_birth:!!responseError.date_of_birth ? responseError.date_of_birth[0] : '',
-                    employment_status:!!responseError.employment_status ? responseError.employment_status[0] : '',
-                    hire_date:!!responseError.hire_date ? responseError.hire_date[0] : '',
-                    termination_date:!!responseError.termination_date ? responseError.termination_date[0] : '',
-                    address:!!responseError.address ? responseError.address[0] : '',
-                    city:!!responseError.city ? responseError.city[0] : '',
-                    province:!!responseError.province ? responseError.province[0] : '',
-                    postal_code:!!responseError.postal_code ? responseError.postal_code[0] : '',
-                    country:!!responseError.country ? responseError.country[0] : '',
-                    emergency_contact_name:!!responseError.emergency_contact_name ? responseError.emergency_contact_name[0] : '',
-                    emergency_contact_phone_number:!!responseError.emergency_contact_phone_number ? responseError.emergency_contact_phone_number[0] : '',
-                    notes:!!responseError.notes ? responseError.notes[0] : '',
-                    department_id:!!responseError.department_id ? responseError.department_id[0] : '',
+                    order_id: responseError?.order_id?.[0] || '',
+                    total_amount: responseError?.total_amount?.[0] || '',
+                    balance_due: responseError?.balance_due?.[0] || '',
+                    invoice_date: responseError?.invoice_date?.[0] || '',
+                    due_date: responseError?.due_date?.[0] || '',
+                    status: responseError?.status?.[0] || '',
+                    invoice_id: responseError?.invoice_id?.[0] || '',
+                    amount_paid: responseError?.amount_paid?.[0] || '',
+                    payment_method: responseError?.payment_method?.[0] || '',
+                    payment_date: responseError?.payment_date?.[0] || '',
                 }
             )
         }
@@ -395,20 +371,138 @@ export const CRUD = () => {
             },
             
         ])
-        setInputEmployesCategory( [
+
+        setInputInvoices([
+            {
+                element: 'select',
+                name: 'order_id',
+                ref: refBody.order_idRef,
+                value: dataEdit.order_id,
+                label: 'Order',
+                htmlFor: 'order_id',
+                id: 'order_id',
+                dataSelect: dataOrdersSelect,
+                onchange: handleChange
+            },
             {
                 element: 'input',
-                type: 'text',
-                name: 'name',
-                ref: refBody.nameRef,
-                value: dataEdit.name,
-                label: 'Name',
-                htmlFor: 'name',
-                id: 'name',
+                type: 'number',
+                name: 'total_amount',
+                ref: refBody.total_amountRef,
+                value: dataEdit.total_amount,
+                label: 'Total amount',
+                htmlFor: 'total_amount',
+                id: 'total_amount',
                 onchange: handleChange,
-                placeholder: 'Name',
+                placeholder: 'Total amount',
+            },
+            {
+                element: 'input',
+                type: 'date',
+                name: 'balance_due',
+                ref: refBody.balance_dueRef,
+                value: dataEdit.balance_due,
+                label: 'Balance due',
+                htmlFor: 'balance_due',
+                id: 'balance_due',
+                onchange: handleChange,
+                placeholder: 'Balance due',
+            },
+            {
+                element: 'input',
+                type: 'date',
+                name: 'invoice_date',
+                ref: refBody.invoice_dateRef,
+                value: dataEdit.invoice_date,
+                label: 'Invoice date',
+                htmlFor: 'invoice_date',
+                id: 'invoice_date',
+                onchange: handleChange,
+                placeholder: 'Invoice date',
+            },
+            {
+                element: 'input',
+                type: 'date',
+                name: 'due_date',
+                ref: refBody.due_dateRef,
+                value: dataEdit.due_date,
+                label: 'Due date',
+                htmlFor: 'due_date',
+                id: 'due_date',
+                onchange: handleChange,
+                placeholder: 'Due date',
+            },
+            {
+                element: 'select',
+                name: 'status',
+                ref: refBody.statusRef,
+                value: dataEdit.status,
+                label: 'Status',
+                htmlFor: 'status',
+                id: 'status',
+                dataSelect: [
+                    {value: 'unpaid', name: 'unpaid'},
+                    {value: 'partial', name: 'partial'},
+                    {value: 'paid', name: 'paid'},
+                ],
+                onchange: handleChange
             },
         ])
+
+        setInputPayments([
+            {
+                element: 'select',
+                name: 'invoice_id',
+                ref: refBody.invoice_dateRef,
+                value: dataEdit.invoice_id,
+                label: 'Invoice',
+                htmlFor: 'invoice_id',
+                id: 'invoice_id',
+                dataSelect: dataInvoicesSelect,
+                onchange: handleChange
+            },
+            {
+                element: 'input',
+                type: 'number',
+                name: 'amount_paid',
+                ref: refBody.amount_paidRef,
+                value: dataEdit.amount_paid,
+                label: 'Amount paid',
+                htmlFor: 'amount_paid',
+                id: 'amount_paid',
+                onchange: handleChange,
+                placeholder: 'Amount paid',
+            },
+            {
+                element: 'select',
+                name: 'payment_method',
+                ref: refBody.payment_methodRef,
+                value: dataEdit.payment_method,
+                label: 'Payment methode',
+                htmlFor: 'payment_method',
+                id: 'payment_method',
+                dataSelect: [
+                    {value: 'cash', name: 'cash'},
+                    {value: 'credit', name: 'credit'},
+                    {value: 'online', name: 'online'},
+                    {value: 'other', name: 'other'},
+                ],
+                onchange: handleChange
+            },
+            {
+                element: 'input',
+                type: 'date',
+                name: 'payment_date',
+                ref: refBody.payment_dateRef,
+                value: dataEdit.payment_date,
+                label: 'Payment date',
+                htmlFor: 'payment_date',
+                id: 'payment_date',
+                onchange: handleChange,
+                placeholder: 'Payment date',
+            },
+        ])
+      
     }, [dataEdit])
 
 
@@ -461,25 +555,65 @@ export const CRUD = () => {
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const { data } = await getApiData('orders');
-                    const newData = dataOrders(data)
-                    setData(newData);
-                    setDataHeading([
-                        {
-                            label: 'Add orders',
-                            icon: IconAdd(),
-                            heading: 'Orders list',
-                            eventToggleModal: handelCreate,
-                            onclick: handleClickHeading,
-                            showNavHeading: true,
-                            dataNavHeading: [
-                                {path: 'orders', label: 'Orders'},
-                                {path: 'invoices', label: 'Invoices'},
-                                {path: 'payments', label: 'Payments'},
-                            ],
-                            activeButton: 'orders',
-                        }
-                    ])
+                    const { data } = await getApiData(path);
+                    if(path === 'orders'){
+                        const newData = dataOrders(data)
+                        setData(newData);
+                        setDataHeading([
+                            {
+                                label: 'Add orders',
+                                icon: IconAdd(),
+                                heading: 'Orders list',
+                                eventToggleModal: handelCreate,
+                                onclick: handleClickHeading,
+                                showNavHeading: true,
+                                dataNavHeading: [
+                                    {path: 'orders', label: 'Orders'},
+                                    {path: 'invoices', label: 'Invoices'},
+                                    {path: 'payments', label: 'Payments'},
+                                ],
+                                activeButton: 'orders',
+                            }
+                        ])
+                    }else if(path === 'invoices'){
+                        const newData = dataInvoices(data)
+                        setData(newData);
+                        setDataHeading([
+                            {
+                                label: 'Add invoice',
+                                icon: IconAdd(),
+                                heading: 'Invoices list',
+                                eventToggleModal: handelCreate,
+                                onclick: handleClickHeading,
+                                showNavHeading: true,
+                                dataNavHeading: [
+                                    {path: 'orders', label: 'Orders'},
+                                    {path: 'invoices', label: 'Invoices'},
+                                    {path: 'payments', label: 'Payments'},
+                                ],
+                                activeButton: 'orders',
+                            }
+                        ])
+                    }else if(path === 'payments'){
+                        const newData = dataInvoices(data)
+                        setData(newData);
+                        setDataHeading([
+                            {
+                                label: 'Add payment',
+                                icon: IconAdd(),
+                                heading: 'Payments list',
+                                eventToggleModal: handelCreate,
+                                onclick: handleClickHeading,
+                                showNavHeading: true,
+                                dataNavHeading: [
+                                    {path: 'orders', label: 'Orders'},
+                                    {path: 'invoices', label: 'Invoices'},
+                                    {path: 'payments', label: 'Payments'},
+                                ],
+                                activeButton: 'orders',
+                            }
+                        ])
+                    }
                 } catch (error) {
                     console.error(error);
                 }
@@ -487,7 +621,42 @@ export const CRUD = () => {
             getData()
         }, [refresh])
 
+        useEffect(() => {
+            const getDataOrders = async () => {
+                try {
+                    const {data, status} = await getApiData(path)
+                    if(status === 200) {
+                        const newData = data.map(item => ({
+                            id: item.id,
+                            name: item.name,
+                        }))
+                        setDataOrdersSelect(newData)
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            getDataOrders()
+
+            const getDataInvoice = async () => {
+                try {
+                    const {data, status} = await getApiData(path)
+                    if(status === 200) {
+                        const newData = data.map(item => ({
+                            id: item.id,
+                            name: item.name,
+                        }))
+                        setDataInvoicesSelect(newData)
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }, [])
+
+
         const handleClickHeading = async (param) => {
+            setPath(param)
             setDataHeading([
                 {
                     label: param === 'orders' ? 'Add orders' : param === 'invoices' ? 'Add invoices' : 'Add payments',
@@ -593,25 +762,57 @@ export const CRUD = () => {
                 labelBtnSecondaryModal: 'Back',
                 handelBtn: create,
             })
-           }else if(param === 'employee-categories'){
+           }else if(param === 'invoices'){
             setDataEdit(
                 {
-                    name: '',
-                    description: '',
-                    id: '',
+                    order_id: '',
+                    total_amount: '',
+                    balance_due: '',
+                    invoice_date: '',
+                    due_date: '',
+                    status: '',
                 }
             )
             setValidationError(
                 {
-                    name: '',
-                    description: '',
+                    order_id: '',
+                    total_amount: '',
+                    balance_due: '',
+                    invoice_date: '',
+                    due_date: '',
+                    status: '',
                 }
             )
             setOpenModal(prevOpenModal => !prevOpenModal)
             setDataModal({
-                size: 'md',
-                labelModal: 'Add category',
-                labelBtnModal: 'Add new category',
+                size: '2xl',
+                labelModal: 'Add invoices',
+                labelBtnModal: 'Add new invoices',
+                labelBtnSecondaryModal: 'Back',
+                handelBtn: create,
+            })
+           }else if(param === 'payments'){
+            setDataEdit(
+                {
+                    invoice_id: '',
+                    amount_paid: '',
+                    payment_method: '',
+                    payment_date: ''
+                }
+            )
+            setValidationError(
+                {
+                    invoice_id: '',
+                    amount_paid: '',
+                    payment_method: '',
+                    payment_date: ''
+                }
+            )
+            setOpenModal(prevOpenModal => !prevOpenModal)
+            setDataModal({
+                size: '2xl',
+                labelModal: 'Add invoices',
+                labelBtnModal: 'Add new invoices',
                 labelBtnSecondaryModal: 'Back',
                 handelBtn: create,
             })
@@ -676,7 +877,7 @@ export const CRUD = () => {
         const create = async (param) => {
             setLoading(prevLoading => !prevLoading)
             let dataBody = {}
-            if(param === 'employees'){
+            if(param === 'orders'){
                 dataBody = {
                     name: refBody.nameRef.current.value,
                     email: refBody.emailRef.current.value,
@@ -700,8 +901,9 @@ export const CRUD = () => {
                 }
     
                 try {
-                    const store = await postApiData('employees', dataBody)
+                    const store = await postApiData(param, dataBody)
                     if(store.status === 201) {
+                        setPath(param)
                         setRefresh(!refresh)
                         setLoading(prevLoading => !prevLoading)
                         setOpenModal(prevOpenModal => !prevOpenModal)
@@ -710,15 +912,40 @@ export const CRUD = () => {
                     setLoading(prevLoading => !prevLoading)
                     setResponseError(error.response.data.errors)
                 }
-            }else if(param === 'employee-categories'){
+            }else if(param === 'invoices'){
                 dataBody = {
-                    name: refBody.nameRef.current.value,
-                    description: refBody.descriptionRef.current.value
+                    order_id: refBody.order_idRef.current.value,
+                    total_amount: refBody.total_amountRef.current.value,
+                    balance_due: refBody.balance_dueRef.current.value,
+                    invoice_date: refBody.invoice_dateRef.current.value,
+                    due_date: refBody.due_dateRef.current.value,
+                    status: refBody.statusRef.current.value,
                 }
     
                 try {
-                    const store = await postApiData('employee-categories', dataBody)
+                    const store = await postApiData(param, dataBody)
                     if(store.status === 201) {
+                        setPath(param)
+                        setRefresh(!refresh)
+                        setLoading(prevLoading => !prevLoading)
+                        setOpenModal(prevOpenModal => !prevOpenModal)
+                    }
+                } catch (error) { 
+                    setLoading(prevLoading => !prevLoading)
+                    setResponseError(error.response.data.errors)
+                }
+            }else if(param === 'payments'){
+                dataBody = {
+                    invoice_id: refBody.invoice_dateRef.current.value,
+                    amount_paid: refBody.amount_paidRef.current.value,
+                    payment_method: refBody.payment_methodRef.current.value,
+                    payment_date: refBody.payment_dateRef.current.value
+                }
+    
+                try {
+                    const store = await postApiData(param, dataBody)
+                    if(store.status === 201) {
+                        setPath(param)
                         setRefresh(!refresh)
                         setLoading(prevLoading => !prevLoading)
                         setOpenModal(prevOpenModal => !prevOpenModal)
@@ -924,7 +1151,7 @@ export const CRUD = () => {
 
 
     const inputBody = (param) => {
-        if(param === 'employees'){
+        if(param === 'orders'){
             return (
                 <>
                  <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-3">
@@ -958,11 +1185,11 @@ export const CRUD = () => {
                     </div>
                 </>
             )
-        }else if(param === 'employee-categories'){
+        }else if(param === 'invoices'){
             return (
                 <>
-                 <div className="grid gap-4 mb-4 grid-cols-1">
-                            {inputEmployesCategory.map( (item, index) => (
+                 <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+                            {inputInvoices.map( (item, index) => (
                                 < FormInput
                                 key={item.id}
                                 element={item.element}
@@ -980,15 +1207,31 @@ export const CRUD = () => {
                                 validationError={validationError}
                                 />
                             ) )}
-                            < TextArea 
-                            span={`col-span-1`}
-                            label={'Description'}
-                            htmlFor={'description'}
-                            id={'description'}
-                            name={'description'}
-                            referens={refBody.descriptionRef}
-                            placeholder={'Write notes here'}
-                            />
+                    </div>
+                </>
+            )
+        }else if(param === 'payments'){
+            return (
+                <>
+                 <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+                            {inputPayments.map( (item, index) => (
+                                < FormInput
+                                key={item.id}
+                                element={item.element}
+                                htmlFor={item.htmlFor}
+                                label={item.label}
+                                type={item.type}
+                                name={item.name}
+                                referens={item.ref}
+                                value={item.value}
+                                id={item.id}
+                                onChange={(event) => item.onchange(event)}
+                                placeholder={item.placeholder} 
+                                dataSelect={item.dataSelect}
+                                uniqueId={index}
+                                validationError={validationError}
+                                />
+                            ) )}
                     </div>
                 </>
             )
@@ -1007,7 +1250,6 @@ export const CRUD = () => {
         openModal,
         dataModal,
         inputEmployes,
-        inputEmployesCategory,
         refBody,
         handelEdit,
         dataEdit,
@@ -1022,6 +1264,7 @@ export const CRUD = () => {
         inputBody,
         loading,
         skeleton,
+        path,
     }
 
 }

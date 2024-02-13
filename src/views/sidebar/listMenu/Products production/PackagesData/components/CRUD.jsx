@@ -327,13 +327,6 @@ export const CRUD = () => {
 
     const CREATE = () => {
         const handleCreate = (param) => {
-            setDataModal({
-                size: 'md',
-                labelModal: 'Add packaging',
-                labelBtnModal: 'Add new packaging',
-                labelBtnSecondaryModal: 'Back',
-                handelBtn: create
-            })
             setDataEdit({
                 package_name: '',
                 package_weight: '',
@@ -350,7 +343,34 @@ export const CRUD = () => {
                     package_type: '',
                 }
             )
-            setOpenModal(prevOpenModal => !prevOpenModal)
+            if(param === 'packages'){
+                setDataModal({
+                    size: 'lg',
+                    labelModal: 'Add packages',
+                    labelBtnModal: 'Add new packages',
+                    labelBtnSecondaryModal: 'Back',
+                    handelBtn: create
+                })
+                setOpenModal(prevOpenModal => !prevOpenModal)
+            }else if(param === 'packaging'){
+                setDataModal({
+                    size: 'lg',
+                    labelModal: 'Add packaging',
+                    labelBtnModal: 'Add new packaging',
+                    labelBtnSecondaryModal: 'Back',
+                    handelBtn: create
+                })
+                setOpenModal(prevOpenModal => !prevOpenModal)
+            }else if(param === 'packages-product'){
+                setDataModal({
+                    size: 'lg',
+                    labelModal: 'Add package product',
+                    labelBtnModal: 'Add new package product',
+                    labelBtnSecondaryModal: 'Back',
+                    handelBtn: create
+                })
+                setOpenModal(prevOpenModal => !prevOpenModal)
+            }
         }
 
         const create = async (param) => {
