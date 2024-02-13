@@ -20,6 +20,7 @@ export const CRUD = () => {
   const [inputVendorTransaction, setInputVendorTransaction] = useState([])
   const [responseError, setResponseError] = useState();
   const [dataVendorsSelect, setDataVendorsSelect] = useState([])
+  const [dataProductsSelect, setDataProductsSelect] = useState([])
   const [validationError, setValidationError] = useState();
   const [dataCompanies, setDataCompanies] = useState();
   const [dataDepartments, setDataDepartments] = useState();
@@ -271,7 +272,7 @@ export const CRUD = () => {
         label: "Vendors",
         htmlFor: "vendors-id",
         id: "vendors-id",
-        // dataSelect: dataCompanies,
+        dataSelect: dataVendorsSelect,
         value: dataEdit.vendors_id,
         onchange: handleChange,
       },
@@ -282,7 +283,7 @@ export const CRUD = () => {
         label: "Products",
         htmlFor: "product-id",
         id: "product-id",
-        // dataSelect: dataCompanies,
+        dataSelect: dataProductsSelect,
         value: dataEdit.product_id,
         onchange: handleChange,
       },
@@ -365,14 +366,14 @@ export const CRUD = () => {
   const dataVendorsTransactions = (data) => {
     return data.map((item) => ({
       id: item.id,
-      vendor: item.vendor.name,
+      vendor: item.vendor?.name || '--',
       amount: item.amount,
-      product: item.product.name,
-      "unit price": item.unit_price,
-      "total price": item.total_price,
-      taxes: item.taxes,
-      "shipping cost": item.shipping_cost,
-      "unit of measure": item.product.unit_of_measure ?? "--",
+      product: item.product?.name  || '--',
+      "unit price": item.unit_price || '--',
+      "total price": item.total_price || '--',
+      taxes: item.taxes || '--',
+      "shipping cost": item.shipping_cost || '--',
+      "unit of measure": item.product?.unit_of_measure || "--",
     }));
   };
 
@@ -391,10 +392,10 @@ export const CRUD = () => {
     useEffect(() => {
       const getData = async () => {
         try {
-          const { data } = await getApiData("vendors");
+          const { data } = await getApiData(path);
           if(path === 'vendors'){
             const newData = dataVendors(data);
-            setData(newData);
+            setData(() => newData);
             setDataHeading([
               {
                 label: "Add vendors",
@@ -413,7 +414,7 @@ export const CRUD = () => {
             ]);
           }else if(path === 'vendor-contacts'){
             const newData = dataVendorsContact(data);
-            setData(newData);
+            setData(() => newData)
             setDataHeading([
               {
                 label: "Add vendors",
@@ -432,7 +433,7 @@ export const CRUD = () => {
             ]);
           }else if(path === 'vendor-transactions'){
             const newData = dataVendorsTransactions(data);
-            setData(newData);
+            setData(() => newData);
             setDataHeading([
               {
                 label: "Add vendors",
@@ -470,6 +471,19 @@ export const CRUD = () => {
       }
       getDataVendor()
 
+
+      const getDataProducts = async () => {
+        const {data, status} = await getApiData('products')
+        if(status === 200) {
+            const newData = data.map(item => ({
+                id: item.id,
+                name: item.name
+            }))
+            setDataProductsSelect(newData)
+        }
+    }
+    getDataProducts()
+     
     }, [])
 
     const handleClickHeading = async (param) => {
