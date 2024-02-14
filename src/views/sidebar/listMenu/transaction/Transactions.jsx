@@ -68,6 +68,7 @@ export const Transactions = () => {
         dataHeading={dataHeading}
         skeleton={skeleton}
         setOpenModal={handelCreate}
+        handelEdit={handelEdit}
         />
        </>
     )

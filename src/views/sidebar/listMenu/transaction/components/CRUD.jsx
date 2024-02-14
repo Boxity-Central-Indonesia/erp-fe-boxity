@@ -1000,41 +1000,10 @@ export const CRUD = () => {
 
 
     const EDIT = () => {
-        const edit = async () => {
-            const dataBody = {
-                name: refBody.nameRef.current.value,
-                email: refBody.emailRef.current.value,
-                phone_number: refBody.phone_numberRef.current.value,
-                company_id: refBody.company_idRef.current.value,
-                job_title: refBody.job_titleRef.current.value,
-                date_of_birth: refBody.date_of_birthRef.current.value,
-                employment_status: refBody.employment_statusRef.current.value,
-                hire_date: refBody.hire_dateRef.current.value,
-                termination_date: refBody.termination_dateRef.current.value,
-                address: refBody.addressRef.current.value,
-                city: refBody.cityRef.current.value,
-                province: refBody.provinceRef.current.value,
-                postal_code: refBody.postal_codeRef.current.value,
-                country: refBody.countryRef.current.value,
-                emergency_contact_name: refBody.emergency_contact_nameRef.current.value,
-                emergency_contact_phone_number: refBody.emergency_contact_phone_numberRef.current.value,
-                notes: refBody.notesRef.current.value,
-                department_id: refBody.department_idRef.current.value
-            }
-    
-            try {
-                const response = await putApiData('employees/' + refBody.idRef.current.value, dataBody)
-                console.log(response);
-                if(response.status === 201) {
-                    setRefresh(!refresh)
-                    setOpenModal((prevOpenModal) => !prevOpenModal)
-                }
-            } catch (error) {
-                setResponseError(error.response.data)
-            }
-        }
 
         const handelEdit  = async (param) => {
+            const id = param.querySelector('span.hidden').textContent
+            if(path === '')
             setDataModal({
                 labelModal: 'Detail & edit employes',
                 labelBtnModal: 'Save',
@@ -1064,18 +1033,6 @@ export const CRUD = () => {
                 }
             )
             setOpenModal(prevOpenModal => !prevOpenModal)
-            try {
-                const response = await getApiData('companies/7/departments')
-                const newData = response.data.map(item => ({
-                    id: item.id,
-                    name: item.name
-                }))
-     
-                setDataDepartments(() => newData)
-     
-            } catch (error) {
-                console.log(error);
-            }
             try {
                 const response = await getApiData('employees/' + param)
                 if(response.status === 200) {
@@ -1110,6 +1067,40 @@ export const CRUD = () => {
                 console.log(error);
             }
 
+        }
+
+        const edit = async () => {
+            const dataBody = {
+                name: refBody.nameRef.current.value,
+                email: refBody.emailRef.current.value,
+                phone_number: refBody.phone_numberRef.current.value,
+                company_id: refBody.company_idRef.current.value,
+                job_title: refBody.job_titleRef.current.value,
+                date_of_birth: refBody.date_of_birthRef.current.value,
+                employment_status: refBody.employment_statusRef.current.value,
+                hire_date: refBody.hire_dateRef.current.value,
+                termination_date: refBody.termination_dateRef.current.value,
+                address: refBody.addressRef.current.value,
+                city: refBody.cityRef.current.value,
+                province: refBody.provinceRef.current.value,
+                postal_code: refBody.postal_codeRef.current.value,
+                country: refBody.countryRef.current.value,
+                emergency_contact_name: refBody.emergency_contact_nameRef.current.value,
+                emergency_contact_phone_number: refBody.emergency_contact_phone_numberRef.current.value,
+                notes: refBody.notesRef.current.value,
+                department_id: refBody.department_idRef.current.value
+            }
+    
+            try {
+                const response = await putApiData('employees/' + refBody.idRef.current.value, dataBody)
+                console.log(response);
+                if(response.status === 201) {
+                    setRefresh(!refresh)
+                    setOpenModal((prevOpenModal) => !prevOpenModal)
+                }
+            } catch (error) {
+                setResponseError(error.response.data)
+            }
         }
 
         return {
