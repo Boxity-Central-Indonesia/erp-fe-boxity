@@ -18,7 +18,7 @@ export const PackagesData = () => {
         inputEmployes,
         inputEmployesCategory, 
         refBody,
-        handelEdit,
+        handleEdit,
         dataEdit,
         openModalDelete,
         closeModalDelete,
@@ -29,6 +29,7 @@ export const PackagesData = () => {
         dataHeading,
         inputBody,
         loading,
+        skeleton
     } = CRUD()
     // const [dataHeading, setDataHeading] = useState([
     //     {
@@ -78,6 +79,9 @@ export const PackagesData = () => {
         < TabelComponentTest 
         data={data}
         dataHeading={dataHeading}
+        skeleton={skeleton}
+        setOpenModal={handelCreate}
+        handelEdit={handleEdit}
         />
        </>
     )

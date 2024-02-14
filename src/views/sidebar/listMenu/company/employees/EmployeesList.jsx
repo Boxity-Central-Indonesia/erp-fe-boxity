@@ -21,7 +21,8 @@ export const EmployesList = () => {
         inputBody,
         loading,
         handelCreate,
-        skeleton
+        skeleton,
+        path
     } = CRUD()
 
     const dataModalBody = () => {
@@ -29,7 +30,7 @@ export const EmployesList = () => {
             <>
                 <form className="">
                     <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id} />
-                    {dataHeading[0].parameter === 'employees' ? inputBody('employees') : dataHeading[0].parameter === 'employee-categories' ? inputBody('employee-categories') : inputBody('employees')}
+                    {inputBody(path)}
                 </form>
 
             </>
@@ -64,6 +65,7 @@ export const EmployesList = () => {
         dataHeading={dataHeading}
         skeleton={skeleton}
         setOpenModal={handelCreate}
+        handelEdit={handelEdit}
         />
        </>
     )

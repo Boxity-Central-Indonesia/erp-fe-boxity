@@ -15,7 +15,9 @@ export const CRUD = () => {
     const [modalDelete, setModalDelete] = useState()
     const [idDelete, setIdDelete] = useState()
     const [loading, setLoading] = useState(true)
+    const [skeleton, setSkeleton] = useState(false)
     const [dataOrder, setDataOrder] = useState()
+    const [path, setPath] = useState('packages')
     const [dataHeading, setDataHeading] = useState([
         {
             label: 'Add Packagest',
@@ -42,6 +44,7 @@ export const CRUD = () => {
     })
 
     const [refBody, setRefBody] = useState({
+        idRef: useRef(),
         package_nameRef: useRef(),
         package_weightRef: useRef(),
         product_idRef: useRef(),
@@ -173,26 +176,66 @@ export const CRUD = () => {
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const {data, status} = await getApiData('packages') 
+                    const {data, status} = await getApiData(path) 
                     if(status === 200) {
-                        const newData = dataPackages(data)
+                       if(path === 'packages'){
+                            const newData = dataPackages(data)
+                            setData(() => newData)
+                            setDataHeading([
+                                {
+                                    label: 'Add Packagest',
+                                    icon: IconAdd(),
+                                    heading: 'Packages list',
+                                    showNavHeading: true,
+                                    dataNavHeading: [
+                                        {path: 'packages', label: 'Packages'},
+                                        {path: 'packaging', label: 'Packaging'},
+                                        {path: 'packages-product', label: 'Packages product'},
+                                    ],
+                                    activeButton: path,
+                                    onclick: handleClickHeading,
+                                    eventToggleModal: handleCreate,
+                                }
+                            ])
+                       }else if(path === 'packaging'){
+                        const newData = dataPackaging(data)
                         setData(() => newData)
                         setDataHeading([
                             {
-                                label: 'Add Packagest',
+                                label: 'Add packaging',
                                 icon: IconAdd(),
-                                heading: 'Packages list',
+                                heading: 'Packaging list',
                                 showNavHeading: true,
                                 dataNavHeading: [
                                     {path: 'packages', label: 'Packages'},
                                     {path: 'packaging', label: 'Packaging'},
                                     {path: 'packages-product', label: 'Packages product'},
                                 ],
-                                activeButton: 'packages',
+                                activeButton: path,
                                 onclick: handleClickHeading,
                                 eventToggleModal: handleCreate,
                             }
                         ])
+                       }else if(path === 'packages-product'){
+                        const newData = dataPackaging(data)
+                        setData(() => newData)
+                        setDataHeading([
+                            {
+                                label: 'Add packages product',
+                                icon: IconAdd(),
+                                heading: 'Packages product list',
+                                showNavHeading: true,
+                                dataNavHeading: [
+                                    {path: 'packages', label: 'Packages'},
+                                    {path: 'packaging', label: 'Packaging'},
+                                    {path: 'packages-product', label: 'Packages product'},
+                                ],
+                                activeButton: path,
+                                onclick: handleClickHeading,
+                                eventToggleModal: handleCreate,
+                            }
+                        ])
+                       }
                     }
                 } catch (error) {
                     console.log(error);
@@ -248,70 +291,44 @@ export const CRUD = () => {
 
 
         const handleClickHeading = async (param) => {
+            setPath(param)
+            setDataHeading([
+                {
+                    label: param === 'packages' ? 'Add package' : param === 'packaging' ? 'Add packaging' : 'Add package product',
+                    icon: IconAdd(),
+                    heading:  param === 'packages' ? 'Package list' : param === 'packaging' ? 'Packaging list' : 'Package product list',
+                    eventToggleModal: handleCreate,
+                    onclick: handleClickHeading,
+                    parameter: param,
+                    showNavHeading: true,
+                    activeButton: param,
+                    dataNavHeading: [
+                        {path: 'packages', label: 'Packages'},
+                        {path: 'packaging', label: 'Packaging'},
+                        {path: 'packages-product', label: 'Packages product'},
+                    ],
+                }
+            ])
+            setData([1])
+            setSkeleton(prevSkeleton => !prevSkeleton)
             try {
                 const {data,status} = await getApiData(param)
                 if(status === 200) {
                     if(param === 'packages'){
+                        setPath(param)
                         const newData = dataPackages(data)
+                        setSkeleton(prevSkeleton => !prevSkeleton)
                         setData(newData)
-                        setDataHeading([
-                            {
-                                label: 'Add packagest',
-                                icon: IconAdd(),
-                                heading: 'Packaging list',
-                                eventToggleModal: handleCreate,
-                                onclick: handleClickHeading,
-                                parameter: 'packages',
-                                showNavHeading: true,
-                                activeButton: param,
-                                dataNavHeading: [
-                                    {path: 'packages', label: 'Packages'},
-                                    {path: 'packaging', label: 'Packaging'},
-                                    {path: 'packages-product', label: 'Packages product'},
-                                ],
-                            }
-                        ])
                     }else if(param === 'packaging') {
+                        setPath(param)
                         const newData = dataPackaging(data)
+                        setSkeleton(prevSkeleton => !prevSkeleton)
                         setData(newData)
-                        setDataHeading([
-                            {
-                                label: 'Add packaging',
-                                icon: IconAdd(),
-                                heading: 'Packaging list',
-                                eventToggleModal: handleCreate,
-                                onclick: handleClickHeading,
-                                parameter: 'packaging',
-                                showNavHeading: true,
-                                activeButton: param,
-                                dataNavHeading: [
-                                    {path: 'packages', label: 'Packages'},
-                                    {path: 'packaging', label: 'Packaging'},
-                                    {path: 'packages-product', label: 'Packages product'},
-                                ],
-                            }
-                        ])
                     }else if(param === 'packages-product'){
+                        setPath(param)
                         const newData = dataPackagesProduct(data)
+                        setSkeleton(prevSkeleton => !prevSkeleton)
                         setData(newData)
-                        setDataHeading([
-                            {
-                                label: 'Add packages product',
-                                icon: IconAdd(),
-                                heading: 'Packages product list',
-                                eventToggleModal: handleCreate,
-                                onclick: handleClickHeading,
-                                parameter: 'packages-product',
-                                showNavHeading: true,
-                                activeButton: param,
-                                dataNavHeading: [
-                                    {path: 'packages', label: 'Packages'},
-                                    {path: 'packaging', label: 'Packaging'},
-                                    {path: 'packages-product', label: 'Packages product'},
-                                ],
-                            }
-                        ])
-
                     }
                 }
             } catch (error) {
@@ -384,6 +401,7 @@ export const CRUD = () => {
                 try {
                     const {status} = await postApiData(param, dataBody)
                     if(status === 201) {
+                        setPath(param)
                         setRefresh(!refresh)
                         setOpenModal(prevOpenModal => !prevOpenModal)
                         setLoading(prevLoading => !prevLoading)
@@ -401,6 +419,7 @@ export const CRUD = () => {
                 try {
                     const {status} = await postApiData(param, dataBody)
                     if(status === 201) {
+                        setPath(param)
                         setRefresh(!refresh)
                         setOpenModal(prevOpenModal => !prevOpenModal)
                         setLoading(prevLoading => !prevLoading)
@@ -417,6 +436,7 @@ export const CRUD = () => {
                 try {
                     const {status} = await postApiData(param, dataBody)
                     if(status === 201) {
+                        setPath(param)
                         setRefresh(!refresh)
                         setOpenModal(prevOpenModal => !prevOpenModal)
                         setLoading(prevLoading => !prevLoading)
@@ -452,71 +472,173 @@ export const CRUD = () => {
     }
 
     const EDIT = () => {
-        const handleEdit = async (param) => {
-            setDataModal({
-                labelModal: 'Detail & edit transaction',
-                labelBtnModal: 'Save',
-                labelBtnSecondaryModal: 'Delete',
-                handelBtn: edit
-            })
+        const handleEdit  = async (param) => {
+            const id = param.querySelector('span.hidden').textContent
+            if(path === 'packages'){
+                setDataModal({
+                    size: 'lg',
+                    labelModal: 'Detail & edit packages',
+                    labelBtnModal: 'Save',
+                    labelBtnSecondaryModal: 'Delete',
+                    handelBtn: edit
+                })
+                setValidationError(
+                    {
+                        package_name: '',
+                        package_weight: '',
+                    }
+                )
 
-            setValidationError(
-                {
-                    type: '',
-                    date: '',
-                    account_id: '',
-                    amount: ''
+                setOpenModal(prevOpenModal => !prevOpenModal)
+                try {
+                    const {data, status} = await getApiData(path + '/' + id)
+                    if(status === 200) {
+                        setDataEdit(
+                            {
+                                package_name: data.package_name,
+                                package_weight: data.package_weight,
+                                id: data.id
+                            }
+                        )
+        
+                        setIdDelete(data.id)
+                    }
+                } catch (error) {
+                    console.log(error);
                 }
-            )
+    
+            }else if(path === 'packaging'){
+                setDataModal({
+                    size: 'lg',
+                    labelModal: 'Detail & edit packaging',
+                    labelBtnModal: 'Save',
+                    labelBtnSecondaryModal: 'Delete',
+                    handelBtn: edit
+                })
+                setValidationError(
+                    {
+                        product_id: '',
+                        weight: '',
+                        package_type: ''
+                    }
+                )
 
-
-            setOpenModal(prevOpenModal => !prevOpenModal)
-            try {
-                const {data, status} = await getApiData('accounts-transactions/' + param)
-                if(status === 200) {
-                    setDataEdit(
-                        {
-                            type: data.type,
-                            date: data.date,
-                            account_id: data.account_id,
-                            amount: data.amount,
-                            id: data.id
-                        }
-                    )
-                    setIdDelete(data.id)
+                setOpenModal(prevOpenModal => !prevOpenModal)
+                try {
+                    const {data, status} = await getApiData(path + '/' + id)
+                    if(status === 200) {
+                        setDataEdit(
+                            {
+                                product_id: data.product_id,
+                                weight: data.weight,
+                                package_type: data.package_type,
+                                id: data.id
+                            }
+                        )
+        
+                        setIdDelete(data.id)
+                    }
+                } catch (error) {
+                    console.log(error);
                 }
-            } catch (error) {
-                console.log(error);
+            }else if(path === 'packages-product'){
+                setDataModal({
+                    size: 'lg',
+                    labelModal: 'Detail & edit packages product',
+                    labelBtnModal: 'Save',
+                    labelBtnSecondaryModal: 'Delete',
+                    handelBtn: edit
+                })
+                setValidationError(
+                    {
+                        product_id: '',
+                        package_id: '',
+                    }
+                )
+
+                setOpenModal(prevOpenModal => !prevOpenModal)
+                try {
+                    const {data, status} = await getApiData(path + '/' + id)
+                    if(status === 200) {
+                        setDataEdit(
+                            {
+                                product_id: data,product_id,
+                                package_id: data.package_id,
+                                id: data.id
+                            }
+                        )
+        
+                        setIdDelete(data.id)
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
             }
         }
 
+
         const edit = async () => {
             setLoading(prevLoading => !prevLoading)
-            const dataBody = {
-                type: refBody.typeRef.current.value,
-                date: refBody.dateRef.current.value,
-                account_id: refBody.account_idRef.current.value,
-                amount: refBody.amountRef.current.value,
-            }
-            try {
-                const {status} = await putApiData('accounts-transactions/' + refBody.idRef.current.value, dataBody)
-                if(status === 201) {
-                    setRefresh(!refresh)
-                    setOpenModal(prevOpenModal => !prevOpenModal)
+            let dataBody = {}
+           if(path === 'packages'){
+                dataBody = {
+                    package_name: refBody.package_nameRef.current.value,
+                    package_weight: refBody.package_weightRef.current.value,
+                }
+        
+                try {
+                    const response = await putApiData(path + '/' + refBody.idRef.current.value, dataBody)
+                    if(response.status === 201) {
+                        setLoading(prevLoading => !prevLoading)
+                        setRefresh(!refresh)
+                        setOpenModal((prevOpenModal) => !prevOpenModal)
+                    }
+                } catch (error) {
+                    setResponseError(error.response.data.errors)
                     setLoading(prevLoading => !prevLoading)
                 }
-            } catch (error) {
-                setLoading(prevLoading => !prevLoading)
-                setResponseError(error.response.data.errors)
+           }else if(path === 'packaging'){
+                dataBody = {
+                    product_id: refBody.product_idRef.current.value,
+                    weight: refBody.product_idRef.current.value,
+                    package_type: refBody.package_typeRef.current.value
+                }
+        
+                try {
+                    const response = await putApiData(path + '/' + refBody.idRef.current.value, dataBody)
+                    if(response.status === 201) {
+                        setLoading(prevLoading => !prevLoading)
+                        setRefresh(!refresh)
+                        setOpenModal((prevOpenModal) => !prevOpenModal)
+                    }
+                } catch (error) {
+                    setResponseError(error.response.data.errors)
+                    setLoading(prevLoading => !prevLoading)
+                }
+           }else if(path === 'packages-product'){
+            dataBody = {
+                product_id: refBody.product_idRef.current.value,
+                package_id: refBody.package_idRef.current.value
             }
+            try {
+                const response = await putApiData(path + '/' + refBody.idRef.current.value, dataBody)
+                if(response.status === 201) {
+                    setLoading(prevLoading => !prevLoading)
+                    setRefresh(!refresh)
+                    setOpenModal((prevOpenModal) => !prevOpenModal)
+                }
+            } catch (error) {
+                setResponseError(error.response.data.errors)
+                setLoading(prevLoading => !prevLoading)
+            }
+       }
         }
 
         return {
             handleEdit,
-            edit
+            edit,
         }
     }
-
 
     const DELETE = () => {
         const openModalDelete = () => {
@@ -656,5 +778,7 @@ export const CRUD = () => {
         dataHeading,
         setOpenModal,
         inputBody,
+        skeleton,
+        handleEdit
     }
 }

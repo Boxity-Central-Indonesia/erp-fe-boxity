@@ -1003,103 +1003,224 @@ export const CRUD = () => {
 
         const handelEdit  = async (param) => {
             const id = param.querySelector('span.hidden').textContent
-            if(path === '')
-            setDataModal({
-                labelModal: 'Detail & edit employes',
-                labelBtnModal: 'Save',
-                labelBtnSecondaryModal: 'Delete',
-                handelBtn: edit
-            })
-            setValidationError(
-                {
-                    name: '',
-                    email: '',
-                    phone_number: '',
-                    company_id: '',
-                    job_title: '',
-                    date_of_birth: '',
-                    employment_status: '',
-                    hire_date: '',
-                    termination_date: '',
-                    address: '',
-                    city: '',
-                    province: '',
-                    postal_code: '',
-                    country: '',
-                    emergency_contact_name: '',
-                    emergency_contact_phone_number: '',
-                    notes: '',
-                    department_id: '',
+            // orders di skip dulu
+            if(path === 'orders'){
+                setDataModal({
+                    labelModal: 'Detail & edit employes',
+                    labelBtnModal: 'Save',
+                    labelBtnSecondaryModal: 'Delete',
+                    handelBtn: edit
+                })
+                setValidationError(
+                    {
+                        name: '',
+                        email: '',
+                        phone_number: '',
+                        company_id: '',
+                        job_title: '',
+                        date_of_birth: '',
+                        employment_status: '',
+                        hire_date: '',
+                        termination_date: '',
+                        address: '',
+                        city: '',
+                        province: '',
+                        postal_code: '',
+                        country: '',
+                        emergency_contact_name: '',
+                        emergency_contact_phone_number: '',
+                        notes: '',
+                        department_id: '',
+                    }
+                )
+                setOpenModal(prevOpenModal => !prevOpenModal)
+                try {
+                    const response = await getApiData('employees/' + param)
+                    if(response.status === 200) {
+                        setDataEdit(
+                            {
+                                name: response.data.name,
+                                email: response.data.email,
+                                phone_number: response.data.phone_number,
+                                company_id: response.data.company_id,
+                                job_title: response.data.job_title,
+                                date_of_birth: response.data.date_of_birth,
+                                employment_status: response.data.employment_status,
+                                hire_date: response.data.hire_date,
+                                termination_date: response.data.termination_date ?? '',
+                                address: response.data.address,
+                                city: response.data.city,
+                                province: response.data.province,
+                                postal_code: response.data.postal_code,
+                                country: response.data.country,
+                                emergency_contact_name: response.data.emergency_contact_name,
+                                emergency_contact_phone_number: response.data.emergency_contact_phone_number,
+                                notes: response.data.notes,
+                                department_id: response.data.department_id,
+                                company_id:response.data.company_id,
+                                id: response.data.id
+                            }
+                        )
+        
+                        setIdDelete(response.data.id)
+                    }
+                } catch (error) {
+                    console.log(error);
                 }
-            )
-            setOpenModal(prevOpenModal => !prevOpenModal)
-            try {
-                const response = await getApiData('employees/' + param)
-                if(response.status === 200) {
-                    setDataEdit(
-                        {
-                            name: response.data.name,
-                            email: response.data.email,
-                            phone_number: response.data.phone_number,
-                            company_id: response.data.company_id,
-                            job_title: response.data.job_title,
-                            date_of_birth: response.data.date_of_birth,
-                            employment_status: response.data.employment_status,
-                            hire_date: response.data.hire_date,
-                            termination_date: response.data.termination_date ?? '',
-                            address: response.data.address,
-                            city: response.data.city,
-                            province: response.data.province,
-                            postal_code: response.data.postal_code,
-                            country: response.data.country,
-                            emergency_contact_name: response.data.emergency_contact_name,
-                            emergency_contact_phone_number: response.data.emergency_contact_phone_number,
-                            notes: response.data.notes,
-                            department_id: response.data.department_id,
-                            company_id:response.data.company_id,
-                            id: response.data.id
-                        }
-                    )
-    
-                    setIdDelete(response.data.id)
+            }else if(path === 'invoices'){
+                setDataModal({
+                    labelModal: 'Detail & edit invoice',
+                    labelBtnModal: 'Save',
+                    labelBtnSecondaryModal: 'Delete',
+                    handelBtn: edit
+                })
+                setValidationError(
+                    {
+                        order_id: '',
+                        total_amount: '',
+                        balance_due: '',
+                        invoice_date: '',
+                        due_date: '',
+                        status: '',
+                    }
+                )
+                setOpenModal(prevOpenModal => !prevOpenModal)
+                try {
+                    const {data, status} = await getApiData(path + '/' + param)
+                    if(status === 200) {
+                        setDataEdit(
+                            {
+                                id: data.id,
+                                order_id: data.order_id,
+                                total_amount: data.total_amount,
+                                balance_due: data.balance_due,
+                                invoice_date: data.invoice_date,
+                                due_date: data.due_date,
+                                status: data.status,
+                            }
+                        )
+        
+                        setIdDelete(data.id)
+                    }
+                } catch (error) {
+                    console.log(error);
                 }
-            } catch (error) {
-                console.log(error);
+            }else if(path === 'payments'){
+                setDataModal({
+                    labelModal: 'Detail & edit payments',
+                    labelBtnModal: 'Save',
+                    labelBtnSecondaryModal: 'Delete',
+                    handelBtn: edit
+                })
+                setValidationError(
+                    {
+                        invoice_id: '',
+                        amount_paid: '',
+                        payment_method: '',
+                        payment_date: ''
+                    }
+                )
+                setOpenModal(prevOpenModal => !prevOpenModal)
+                try {
+                    const {data, status} = await getApiData(path + '/' + param)
+                    if(status === 200) {
+                        setDataEdit(
+                            {
+                                id: data.id,
+                                invoice_id: data.invoice_id,
+                                amount_paid: data.amount_paid,
+                                payment_method: data.payment_method,
+                                payment_date: data.payment_date
+                            }
+                        )
+        
+                        setIdDelete(data.id)
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
             }
+
 
         }
 
         const edit = async () => {
-            const dataBody = {
-                name: refBody.nameRef.current.value,
-                email: refBody.emailRef.current.value,
-                phone_number: refBody.phone_numberRef.current.value,
-                company_id: refBody.company_idRef.current.value,
-                job_title: refBody.job_titleRef.current.value,
-                date_of_birth: refBody.date_of_birthRef.current.value,
-                employment_status: refBody.employment_statusRef.current.value,
-                hire_date: refBody.hire_dateRef.current.value,
-                termination_date: refBody.termination_dateRef.current.value,
-                address: refBody.addressRef.current.value,
-                city: refBody.cityRef.current.value,
-                province: refBody.provinceRef.current.value,
-                postal_code: refBody.postal_codeRef.current.value,
-                country: refBody.countryRef.current.value,
-                emergency_contact_name: refBody.emergency_contact_nameRef.current.value,
-                emergency_contact_phone_number: refBody.emergency_contact_phone_numberRef.current.value,
-                notes: refBody.notesRef.current.value,
-                department_id: refBody.department_idRef.current.value
-            }
-    
-            try {
-                const response = await putApiData('employees/' + refBody.idRef.current.value, dataBody)
-                console.log(response);
-                if(response.status === 201) {
-                    setRefresh(!refresh)
-                    setOpenModal((prevOpenModal) => !prevOpenModal)
+            let dataBody = {}
+            setLoading(prevLoading => !prevLoading)
+            if(path === 'orders'){
+                dataBody = {
+                    name: refBody.nameRef.current.value,
+                    email: refBody.emailRef.current.value,
+                    phone_number: refBody.phone_numberRef.current.value,
+                    company_id: refBody.company_idRef.current.value,
+                    job_title: refBody.job_titleRef.current.value,
+                    date_of_birth: refBody.date_of_birthRef.current.value,
+                    employment_status: refBody.employment_statusRef.current.value,
+                    hire_date: refBody.hire_dateRef.current.value,
+                    termination_date: refBody.termination_dateRef.current.value,
+                    address: refBody.addressRef.current.value,
+                    city: refBody.cityRef.current.value,
+                    province: refBody.provinceRef.current.value,
+                    postal_code: refBody.postal_codeRef.current.value,
+                    country: refBody.countryRef.current.value,
+                    emergency_contact_name: refBody.emergency_contact_nameRef.current.value,
+                    emergency_contact_phone_number: refBody.emergency_contact_phone_numberRef.current.value,
+                    notes: refBody.notesRef.current.value,
+                    department_id: refBody.department_idRef.current.value,
+                    category_id: refBody.category_idRef.current.value
                 }
-            } catch (error) {
-                setResponseError(error.response.data)
+
+                try {
+                    const {data, status} = await putApiData(path + '/' + refBody.idRef.current.value, dataBody)
+                    if(status === 201) {
+                        setLoading(prevLoading => !prevLoading)
+                        setRefresh(!refresh)
+                        setOpenModal((prevOpenModal) => !prevOpenModal)
+                    }
+                } catch (error) {
+                    setLoading(prevLoading => !prevLoading)
+                    setResponseError(error.response.data)
+                }
+            }else if(path === 'invoices'){
+                dataBody = {
+                    order_id: refBody.order_idRef.current.value,
+                    total_amount: refBody.total_amountRef.current.value,
+                    balance_due: refBody.balance_dueRef.current.value,
+                    invoice_date: refBody.invoice_dateRef.current.value,
+                    due_date: refBody.due_dateRef.current.value,
+                    status: refBody.statusRef.current.value,
+                }
+
+                try {
+                    const {data, status} = await putApiData(path + '/' + refBody.idRef.current.value, dataBody)
+                    if(status === 201) {
+                        setLoading(prevLoading => !prevLoading)
+                        setRefresh(!refresh)
+                        setOpenModal((prevOpenModal) => !prevOpenModal)
+                    }
+                } catch (error) {
+                    setLoading(prevLoading => !prevLoading)
+                    setResponseError(error.response.data)
+                }
+            }else if(path === 'payments'){
+                dataBody = {
+                    invoice_id: refBody.invoice_dateRef.current.value,
+                    amount_paid: refBody.amount_paidRef.current.value,
+                    payment_method: refBody.payment_methodRef.current.value,
+                    payment_date: refBody.payment_dateRef.current.value
+                }
+
+                try {
+                    const {data, status} = await putApiData(path + '/' + refBody.idRef.current.value, dataBody)
+                    if(status === 201) {
+                        setLoading(prevLoading => !prevLoading)
+                        setRefresh(!refresh)
+                        setOpenModal((prevOpenModal) => !prevOpenModal)
+                    }
+                } catch (error) {
+                    setLoading(prevLoading => !prevLoading)
+                    setResponseError(error.response.data)
+                }
             }
         }
 
