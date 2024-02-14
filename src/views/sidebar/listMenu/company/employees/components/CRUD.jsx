@@ -20,6 +20,7 @@ export const CRUD = () => {
     const [dataCategoryEmployes, setDataCategoryEmployes] = useState()
     const [skeleton, setSkeleton] = useState(false)
     const [dataHeading, setDataHeading] = useState([{}])
+    const [path, setPath] = useState('employees') 
 
     // EmployesList
 
@@ -48,26 +49,26 @@ export const CRUD = () => {
         descriptionRef: useRef(),
     })
     const [dataEdit, setDataEdit] = useState({
-        name: '',
-        email: '',
-        phone_number: '',
-        company_id: '',
-        job_title: '',
-        date_of_birth: '',
-        employment_status:'',
-        hire_date: '',
-        termination_date:'',
-        address: '',
-        city: '',
-        province: '',
-        postal_code: '',
-        country: '',
-        emergency_contact_name: '',
-        emergency_contact_phone_number: '',
-        notes: '',
-        department_id: '',
-        category_id: '',
-        id: ''
+        // name: '',
+        // email: '',
+        // phone_number: '',
+        // company_id: '',
+        // job_title: '',
+        // date_of_birth: '',
+        // employment_status:'',
+        // hire_date: '',
+        // termination_date:'',
+        // address: '',
+        // city: '',
+        // province: '',
+        // postal_code: '',
+        // country: '',
+        // emergency_contact_name: '',
+        // emergency_contact_phone_number: '',
+        // notes: '',
+        // department_id: '',
+        // category_id: '',
+        // id: ''
     })
 
 
@@ -439,32 +440,53 @@ export const CRUD = () => {
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const { data } = await getApiData('employees');
-                    const newData = dataEmployes(data)
-                    setData(newData);
-                    setDataHeading([
-                        {
-                            label: 'Add Employes',
-                            icon: IconAdd(),
-                            heading: 'Employes list',
-                            eventToggleModal: handelCreate,
-                            onclick: handleClickHeading,
-                            showNavHeading: true,
-                            dataNavHeading: [
-                                {path: 'employees', label: 'Employess'},
-                                {path: 'employee-categories', label: 'Employee categories'},
-                            ],
-                            activeButton: 'employees',
+                    const { data } = await getApiData(path);
+                    if(path === 'employees'){
+                        const newData = dataEmployes(data)
+                        setData(newData);
+                        setDataHeading([
+                            {
+                                label: 'Add Employes',
+                                icon: IconAdd(),
+                                heading: 'Employes list',
+                                eventToggleModal: handelCreate,
+                                onclick: handleClickHeading,
+                                showNavHeading: true,
+                                dataNavHeading: [
+                                    {path: 'employees', label: 'Employess'},
+                                    {path: 'employee-categories', label: 'Employee categories'},
+                                ],
+                                activeButton: path,
+                            }
+                        ])
+                    }else if(path === 'employee-categories'){
+                        const newData = dataEmployes(data)
+                        setData(newData);
+                        setDataHeading([
+                            {
+                                label: 'Add category',
+                                icon: IconAdd(),
+                                heading: 'Categories list',
+                                eventToggleModal: handelCreate,
+                                onclick: handleClickHeading,
+                                showNavHeading: true,
+                                dataNavHeading: [
+                                    {path: 'employees', label: 'Employess'},
+                                    {path: 'employee-categories', label: 'Employee categories'},
+                                ],
+                                activeButton: path,
+                            }
+                        ])
                         }
-                    ])
-                } catch (error) {
-                    console.error(error);
-                }
+                    } catch (error) {
+                        console.error(error);
+                    }
             }
             getData()
         }, [refresh])
 
         const handleClickHeading = async (param) => {
+            setPath(param)
             setDataHeading([
                 {
                     label: param === 'employees' ? 'Add employees' : 'Add category',
@@ -674,6 +696,7 @@ export const CRUD = () => {
                 try {
                     const store = await postApiData('employees', dataBody)
                     if(store.status === 201) {
+                        setPath(param)
                         setRefresh(!refresh)
                         setLoading(prevLoading => !prevLoading)
                         setOpenModal(prevOpenModal => !prevOpenModal)
@@ -691,7 +714,8 @@ export const CRUD = () => {
                 try {
                     const store = await postApiData('employee-categories', dataBody)
                     if(store.status === 201) {
-                        setRefresh(!refresh)
+                        setPath(() => param)
+                        setRefresh(prevRefresh => !prevRefresh)
                         setLoading(prevLoading => !prevLoading)
                         setOpenModal(prevOpenModal => !prevOpenModal)
                     }
@@ -725,6 +749,7 @@ export const CRUD = () => {
                 try {
                     const store = await postApiData('employees', dataBody)
                     if(store.status === 201) {
+                        setPath(() => param)
                         setRefresh(!refresh)
                         setLoading(prevLoading => !prevLoading)
                         setOpenModal(prevOpenModal => !prevOpenModal)

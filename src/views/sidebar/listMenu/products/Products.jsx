@@ -68,6 +68,7 @@ export const Products = () => {
         dataHeading={dataHeading}
         skeleton={skeleton}
         setOpenModal={handelCreate}
+        handelEdit={handelEdit}
         />
        </>
     )
