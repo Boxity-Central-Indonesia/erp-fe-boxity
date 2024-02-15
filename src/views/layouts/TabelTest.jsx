@@ -19,7 +19,7 @@ import {
 
 const columnHelper = createColumnHelper();
 
-const TabelComponentTest = ({data, dataHeading, handelEdit, setOpenModal, skeleton })  => {
+const TabelComponentTest = ({data, dataHeading, handleEdit, setOpenModal, skeleton })  => {
 
   const { globalColor, changeColor } = useColor();
   const [sorting, setSorting] = useState([]);
@@ -28,7 +28,7 @@ const TabelComponentTest = ({data, dataHeading, handelEdit, setOpenModal, skelet
   const [columnFilters, setColumnFilters] = useState([]);
 
   const handleEditClick = (param, param2) => {
-    handelEdit(param, param2)
+    handleEdit(param, param2)
   }
 
   const columns = useMemo(() => {

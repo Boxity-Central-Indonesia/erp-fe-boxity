@@ -449,11 +449,11 @@ export const CRUD = () => {
                                 label: 'Add Employes',
                                 icon: IconAdd(),
                                 heading: 'Employes list',
-                                eventToggleModal: handelCreate,
+                                eventToggleModal: handleCreate,
                                 onclick: handleClickHeading,
                                 showNavHeading: true,
                                 dataNavHeading: [
-                                    {path: 'employees', label: 'Employess'},
+                                    {path: 'employees', label: 'Employees'},
                                     {path: 'employee-categories', label: 'Employee categories'},
                                 ],
                                 activeButton: path,
@@ -467,11 +467,11 @@ export const CRUD = () => {
                                 label: 'Add category',
                                 icon: IconAdd(),
                                 heading: 'Categories list',
-                                eventToggleModal: handelCreate,
+                                eventToggleModal: handleCreate,
                                 onclick: handleClickHeading,
                                 showNavHeading: true,
                                 dataNavHeading: [
-                                    {path: 'employees', label: 'Employess'},
+                                    {path: 'employees', label: 'Employees'},
                                     {path: 'employee-categories', label: 'Employee categories'},
                                 ],
                                 activeButton: path,
@@ -492,12 +492,12 @@ export const CRUD = () => {
                     label: param === 'employees' ? 'Add employees' : 'Add category',
                     icon: IconAdd(),
                     heading: param === 'employees' ? 'Employees' : 'Category employes' +' list',
-                    eventToggleModal: handelCreate,
+                    eventToggleModal: handleCreate,
                     onclick: handleClickHeading,
                     parameter: param === 'employees' ? 'employees' : 'employee-categories',
                     showNavHeading: true,
                     dataNavHeading: [
-                        {path: 'employees', label: 'Employess'},
+                        {path: 'employees', label: 'Employees'},
                         {path: 'employee-categories', label: 'Employee categories'},
                     ],
                     activeButton: param,
@@ -531,7 +531,7 @@ export const CRUD = () => {
 
     const CREATE = () => {
 
-        const handelCreate  = (param) => {
+        const handleCreate  = (param) => {
            if(param === 'employees'){
             setDataEdit(
                 {
@@ -585,7 +585,7 @@ export const CRUD = () => {
                 labelModal: 'Add employes',
                 labelBtnModal: 'Add new employes',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: create,
+                handleBtn: create,
             })
            }else if(param === 'employee-categories'){
             setDataEdit(
@@ -607,7 +607,7 @@ export const CRUD = () => {
                 labelModal: 'Add category',
                 labelBtnModal: 'Add new category',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: create,
+                handleBtn: create,
             })
            }else {
             setDataEdit(
@@ -662,7 +662,7 @@ export const CRUD = () => {
                 labelModal: 'Add employes',
                 labelBtnModal: 'Add new employes',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: create,
+                handleBtn: create,
             })
            }
         }
@@ -762,7 +762,7 @@ export const CRUD = () => {
         }
 
         return {
-            handelCreate,
+            handleCreate,
             create,
         }
 
@@ -770,7 +770,7 @@ export const CRUD = () => {
 
 
     const EDIT = () => {
-        const handelEdit  = async (param) => {
+        const handleEdit  = async (param) => {
             const id = param.querySelector('span.hidden').textContent
             if(path === 'employees'){
                 setDataModal({
@@ -778,7 +778,7 @@ export const CRUD = () => {
                     labelModal: 'Detail & edit employees',
                     labelBtnModal: 'Save',
                     labelBtnSecondaryModal: 'Delete',
-                    handelBtn: edit
+                    handleBtn: edit
                 })
                 setValidationError(
                     {
@@ -858,7 +858,7 @@ export const CRUD = () => {
                     labelModal: 'Detail & edit employee category',
                     labelBtnModal: 'Save',
                     labelBtnSecondaryModal: 'Delete',
-                    handelBtn: edit
+                    handleBtn: edit
                 })
                 setValidationError(
                     {
@@ -945,7 +945,7 @@ export const CRUD = () => {
         }
 
         return {
-            handelEdit,
+            handleEdit,
             edit,
         }
     }
@@ -963,9 +963,9 @@ export const CRUD = () => {
           }
     
     
-          const handelDelete = async () => {
+          const handleDelete = async () => {
             try {
-              await deleteApiData('employees/' + idDelete)
+              await deleteApiData(path + '/' + idDelete)
               setRefresh(!refresh)
                 closeModalDelete()
             } catch (error) {
@@ -977,7 +977,7 @@ export const CRUD = () => {
         return {
             openModalDelete,
             closeModalDelete,
-            handelDelete
+            handleDelete
         }
     }
 
@@ -1048,7 +1048,8 @@ export const CRUD = () => {
                             name={'description'}
                             referens={refBody.descriptionRef}
                             value={dataEdit.description}
-                            placeholder={'Write notes here'}
+                            onChange={handleChange}
+                            placeholder={'Write description here'}
                             />
                     </div>
                 </>
@@ -1057,24 +1058,24 @@ export const CRUD = () => {
     }
 
     const {data, handleClickHeading} = READ()
-    const {handelCreate} = CREATE()
-    const {handelEdit} = EDIT()
-    const {openModalDelete, closeModalDelete, handelDelete} = DELETE()
+    const {handleCreate} = CREATE()
+    const {handleEdit} = EDIT()
+    const {openModalDelete, closeModalDelete, handleDelete} = DELETE()
 
 
     return {
         data,
-        handelCreate,
+        handleCreate,
         openModal,
         dataModal,
         inputEmployes,
         inputEmployesCategory,
         refBody,
-        handelEdit,
+        handleEdit,
         dataEdit,
         openModalDelete,
         closeModalDelete,
-        handelDelete,
+        handleDelete,
         modalDelete,
         validationError,
         handleClickHeading,

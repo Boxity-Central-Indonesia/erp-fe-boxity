@@ -11,7 +11,7 @@ import { Spinner } from "../../../../layouts/Spinner"
 export const PackagesData = () => {
     const {
         data,
-        handelCreate, 
+        handleCreate, 
         openModal, 
         setOpenModal,
         dataModal, 
@@ -22,21 +22,22 @@ export const PackagesData = () => {
         dataEdit,
         openModalDelete,
         closeModalDelete,
-        handelDelete,
+        handleDelete,
         modalDelete,
         validationError,
         handleClickHeading,
         dataHeading,
         inputBody,
         loading,
-        skeleton
+        skeleton,
+        path
     } = CRUD()
     // const [dataHeading, setDataHeading] = useState([
     //     {
     //         label: 'Add Employes',
     //         icon: IconAdd(),
     //         heading: 'Employes list',
-    //         eventToggleModal: handelCreate,
+    //         eventToggleModal: handleCreate,
     //         onclick: handleClickHeading
     //     }
     // ])
@@ -46,7 +47,7 @@ export const PackagesData = () => {
             <>
                 <form className="">
                     <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id} />
-                    {dataHeading[0].parameter === 'packages' ? inputBody('packages') : dataHeading[0].parameter === 'packaging' ? inputBody('packaging') : dataHeading[0].parameter === 'packages-product' ? inputBody('packages-product') : inputBody('packages')}
+                    {inputBody(path)}
                 </form>
 
             </>
@@ -63,7 +64,7 @@ export const PackagesData = () => {
         labelModal={dataModal.labelModal}
         labelBtnModal={dataModal.labelBtnModal}
         labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
-        handelBtnModal={dataModal.handelBtn}
+        handleBtnModal={dataModal.handleBtn}
         parameter={dataHeading[0].parameter}
         openModalDelete={openModalDelete}
         />
@@ -73,15 +74,15 @@ export const PackagesData = () => {
         < ModalConfirmDelete 
         modalDelete={modalDelete}
         closeModalDelete={closeModalDelete}
-        handelDelete={handelDelete}
+        handleDelete={handleDelete}
         />
 
         < TabelComponentTest 
         data={data}
         dataHeading={dataHeading}
         skeleton={skeleton}
-        setOpenModal={handelCreate}
-        handelEdit={handleEdit}
+        setOpenModal={handleCreate}
+        handleEdit={handleEdit}
         />
        </>
     )

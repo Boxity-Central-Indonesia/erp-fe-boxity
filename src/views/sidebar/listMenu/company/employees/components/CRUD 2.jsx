@@ -596,7 +596,7 @@ export const CRUD = () => {
 
     const CREATE = () => {
 
-        const handelCreate  = () => {
+        const handleCreate  = () => {
             setDataEdit(
                 {
                     name: '',
@@ -647,7 +647,7 @@ export const CRUD = () => {
                 labelModal: 'Add employes',
                 labelBtnModal: 'Add new employes',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: () => create()
+                handleBtn: () => create()
             })
         }
 
@@ -685,7 +685,7 @@ export const CRUD = () => {
         }
 
         return {
-            handelCreate,
+            handleCreate,
             create,
         }
 
@@ -727,12 +727,12 @@ export const CRUD = () => {
             }
         }
 
-        const handelEdit  = async (param) => {
+        const handleEdit  = async (param) => {
             setDataModal({
                 labelModal: 'Detail & edit employes',
                 labelBtnModal: 'Save',
                 labelBtnSecondaryModal: 'Delete',
-                handelBtn: edit
+                handleBtn: edit
             })
             setValidationError(
                 {
@@ -806,7 +806,7 @@ export const CRUD = () => {
         }
 
         return {
-            handelEdit,
+            handleEdit,
             edit,
         }
     }
@@ -824,7 +824,7 @@ export const CRUD = () => {
           }
     
     
-          const handelDelete = async () => {
+          const handleDelete = async () => {
             try {
               await deleteApiData('employees/' + idDelete)
               setRefresh(!refresh)
@@ -838,28 +838,28 @@ export const CRUD = () => {
         return {
             openModalDelete,
             closeModalDelete,
-            handelDelete
+            handleDelete
         }
     }
 
     const {data} = READ()
-    const {handelCreate, create} = CREATE()
-    const {handelEdit, edit} = EDIT()
-    const {openModalDelete, closeModalDelete, handelDelete} = DELETE()
+    const {handleCreate, create} = CREATE()
+    const {handleEdit, edit} = EDIT()
+    const {openModalDelete, closeModalDelete, handleDelete} = DELETE()
 
 
     return {
         data,
-        handelCreate,
+        handleCreate,
         openModal,
         dataModal,
         input,
         refBody,
-        handelEdit,
+        handleEdit,
         dataEdit,
         openModalDelete,
         closeModalDelete,
-        handelDelete,
+        handleDelete,
         modalDelete,
         validationError,
     }

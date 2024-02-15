@@ -164,7 +164,7 @@ export const CRUD = () => {
                 labelModal: 'Add leads',
                 labelBtnModal: 'Add new leads',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: () => create()
+                handleBtn: () => create()
             })
             setDataEdit({
                 nama_prospek: '',
@@ -220,7 +220,7 @@ export const CRUD = () => {
                 labelModal: 'Detail & edit transaction',
                 labelBtnModal: 'Save',
                 labelBtnSecondaryModal: 'Delete',
-                handelBtn: edit
+                handleBtn: edit
             })
 
             setValidationError(

@@ -78,14 +78,14 @@ export const ProccesActifity = () => {
         labelModal={dataModal.labelModal}
         labelBtnModal={dataModal.labelBtnModal}
         labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
-        handelBtnModal={dataModal.handelBtn}
+        handleBtnModal={dataModal.handleBtn}
         openModalDelete={openModalDelete}
       />
 
       <ModalConfirmDelete
         modalDelete={modalDelete}
         closeModalDelete={closeModalDelete}
-        handelDelete={handleDelete}
+        handleDelete={handleDelete}
       />
 
       <Spinner loading={loading} />
@@ -93,7 +93,7 @@ export const ProccesActifity = () => {
       <TabelComponent
         data={data}
         dataHeading={dataHeading}
-        handelEdit={handleEdit}
+        handleEdit={handleEdit}
       />
     </>
   );

@@ -47,7 +47,7 @@ function Navbar({onToggleSidebar, setAuth}) {
                     Ganti database
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item className="flex item-center gap-2" onClick={handelLogout}>
+                <Dropdown.Item className="flex item-center gap-2" onClick={handleLogout}>
                     <svg className="w-4 h-4 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"/>
                     </svg>
@@ -58,7 +58,7 @@ function Navbar({onToggleSidebar, setAuth}) {
       }
 
 
-      const handelLogout = () => {
+      const handleLogout = () => {
         Cookies.remove('token')
         setAuth(false)
         navigate('/login')

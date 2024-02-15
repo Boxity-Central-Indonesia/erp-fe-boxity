@@ -31,7 +31,7 @@ export const CRUD = () => {
             ],
             activeButton: 'packages'
             // onclick: handleClickHeading,
-            // eventToggleModal: handelCreate,
+            // eventToggleModal: handleCreate,
         }
     ])
     const [dataEdit, setDataEdit] = useState({
@@ -366,7 +366,7 @@ export const CRUD = () => {
                     labelModal: 'Add packages',
                     labelBtnModal: 'Add new packages',
                     labelBtnSecondaryModal: 'Back',
-                    handelBtn: create
+                    handleBtn: create
                 })
                 setOpenModal(prevOpenModal => !prevOpenModal)
             }else if(param === 'packaging'){
@@ -375,7 +375,7 @@ export const CRUD = () => {
                     labelModal: 'Add packaging',
                     labelBtnModal: 'Add new packaging',
                     labelBtnSecondaryModal: 'Back',
-                    handelBtn: create
+                    handleBtn: create
                 })
                 setOpenModal(prevOpenModal => !prevOpenModal)
             }else if(param === 'packages-product'){
@@ -384,7 +384,7 @@ export const CRUD = () => {
                     labelModal: 'Add package product',
                     labelBtnModal: 'Add new package product',
                     labelBtnSecondaryModal: 'Back',
-                    handelBtn: create
+                    handleBtn: create
                 })
                 setOpenModal(prevOpenModal => !prevOpenModal)
             }
@@ -480,7 +480,7 @@ export const CRUD = () => {
                     labelModal: 'Detail & edit packages',
                     labelBtnModal: 'Save',
                     labelBtnSecondaryModal: 'Delete',
-                    handelBtn: edit
+                    handleBtn: edit
                 })
                 setValidationError(
                     {
@@ -513,7 +513,7 @@ export const CRUD = () => {
                     labelModal: 'Detail & edit packaging',
                     labelBtnModal: 'Save',
                     labelBtnSecondaryModal: 'Delete',
-                    handelBtn: edit
+                    handleBtn: edit
                 })
                 setValidationError(
                     {
@@ -547,7 +547,7 @@ export const CRUD = () => {
                     labelModal: 'Detail & edit packages product',
                     labelBtnModal: 'Save',
                     labelBtnSecondaryModal: 'Delete',
-                    handelBtn: edit
+                    handleBtn: edit
                 })
                 setValidationError(
                     {
@@ -655,7 +655,7 @@ export const CRUD = () => {
           const handleDelete = async () => {
             setLoading(prevLoading => !prevLoading)
             try {
-              await deleteApiData('accounts-transactions/' + idDelete)
+              await deleteApiData(path + '/' + idDelete)
               setRefresh(!refresh)
                 setLoading(prevLoading => !prevLoading)
                 closeModalDelete()
@@ -779,6 +779,7 @@ export const CRUD = () => {
         setOpenModal,
         inputBody,
         skeleton,
-        handleEdit
+        handleEdit,
+        path,
     }
 }

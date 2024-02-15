@@ -33,7 +33,7 @@ const Register = ({setAuth}) => {
 
     const navigate = useNavigate()
 
-    const handelRegister = async (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault()
         setLoading(!loading);
 
@@ -130,7 +130,7 @@ const Register = ({setAuth}) => {
                                   
                             </div>
                             < Button 
-                            event={handelRegister}
+                            event={handleRegister}
                             label={'Create account'} 
                             bgColour={'primary'}
                             paddingY={2.5}

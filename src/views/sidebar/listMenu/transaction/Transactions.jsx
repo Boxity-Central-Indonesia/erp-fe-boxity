@@ -14,16 +14,16 @@ export const Transactions = () => {
         setOpenModal,
         dataModal, 
         refBody,
-        handelEdit,
+        handleEdit,
         dataEdit,
         openModalDelete,
         closeModalDelete,
-        handelDelete,
+        handleDelete,
         modalDelete,
         dataHeading,
         inputBody,
         loading,
-        handelCreate,
+        handleCreate,
         skeleton,
         path
     } = CRUD()
@@ -50,7 +50,7 @@ export const Transactions = () => {
         labelModal={dataModal.labelModal}
         labelBtnModal={dataModal.labelBtnModal}
         labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
-        handelBtnModal={dataModal.handelBtn}
+        handleBtnModal={dataModal.handleBtn}
         parameter={dataHeading[0].parameter}
         openModalDelete={openModalDelete}
         />
@@ -60,15 +60,15 @@ export const Transactions = () => {
         < ModalConfirmDelete 
         modalDelete={modalDelete}
         closeModalDelete={closeModalDelete}
-        handelDelete={handelDelete}
+        handleDelete={handleDelete}
         />
 
         < TabelComponentTest 
         data={data}
         dataHeading={dataHeading}
         skeleton={skeleton}
-        setOpenModal={handelCreate}
-        handelEdit={handelEdit}
+        setOpenModal={handleCreate}
+        handleEdit={handleEdit}
         />
        </>
     )

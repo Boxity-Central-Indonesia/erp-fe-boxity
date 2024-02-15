@@ -192,7 +192,7 @@ export const CRUD = () => {
                 labelModal: 'Add invoices',
                 labelBtnModal: 'Add new invoices',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: () => create()
+                handleBtn: () => create()
             })
             setDataEdit({
                 order_id: '',
@@ -252,7 +252,7 @@ export const CRUD = () => {
                 labelModal: 'Detail & edit transaction',
                 labelBtnModal: 'Save',
                 labelBtnSecondaryModal: 'Delete',
-                handelBtn: edit
+                handleBtn: edit
             })
 
             setValidationError(

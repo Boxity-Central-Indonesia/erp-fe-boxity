@@ -72,19 +72,19 @@ export const Hutang = () => {
             labelModal={dataModal.labelModal}
             labelBtnModal={dataModal.labelBtnModal}
             labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
-            handelBtnModal={dataModal.handelBtn}
+            handleBtnModal={dataModal.handleBtn}
             openModalDelete={openModalDelete}
             />
 
             < ModalConfirmDelete 
             modalDelete={modalDelete}
             closeModalDelete={closeModalDelete}
-            handelDelete={handleDelete}
+            handleDelete={handleDelete}
             />
 
             < Spinner loading={loading} />
 
-        < TabelComponent data={data}  dataHeading={dataHeading} handelEdit={handleEdit}/>
+        < TabelComponent data={data}  dataHeading={dataHeading} handleEdit={handleEdit}/>
         </>
     )
 

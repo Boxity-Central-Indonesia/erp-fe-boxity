@@ -564,7 +564,7 @@ export const CRUD = () => {
                                 label: 'Add orders',
                                 icon: IconAdd(),
                                 heading: 'Orders list',
-                                eventToggleModal: handelCreate,
+                                eventToggleModal: handleCreate,
                                 onclick: handleClickHeading,
                                 showNavHeading: true,
                                 dataNavHeading: [
@@ -583,7 +583,7 @@ export const CRUD = () => {
                                 label: 'Add invoice',
                                 icon: IconAdd(),
                                 heading: 'Invoices list',
-                                eventToggleModal: handelCreate,
+                                eventToggleModal: handleCreate,
                                 onclick: handleClickHeading,
                                 showNavHeading: true,
                                 dataNavHeading: [
@@ -602,7 +602,7 @@ export const CRUD = () => {
                                 label: 'Add payment',
                                 icon: IconAdd(),
                                 heading: 'Payments list',
-                                eventToggleModal: handelCreate,
+                                eventToggleModal: handleCreate,
                                 onclick: handleClickHeading,
                                 showNavHeading: true,
                                 dataNavHeading: [
@@ -662,7 +662,7 @@ export const CRUD = () => {
                     label: param === 'orders' ? 'Add orders' : param === 'invoices' ? 'Add invoices' : 'Add payments',
                     icon: IconAdd(),
                     heading: param === 'orders' ? 'Orders list' : param === 'invoices' ? 'Invoices list' : 'Payments list',
-                    eventToggleModal: handelCreate,
+                    eventToggleModal: handleCreate,
                     onclick: handleClickHeading,
                     parameter: param,
                     showNavHeading: true,
@@ -706,7 +706,7 @@ export const CRUD = () => {
 
     const CREATE = () => {
 
-        const handelCreate  = (param) => {
+        const handleCreate  = (param) => {
            if(param === 'employees'){
             setDataEdit(
                 {
@@ -760,7 +760,7 @@ export const CRUD = () => {
                 labelModal: 'Add employes',
                 labelBtnModal: 'Add new employes',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: create,
+                handleBtn: create,
             })
            }else if(param === 'invoices'){
             setDataEdit(
@@ -789,7 +789,7 @@ export const CRUD = () => {
                 labelModal: 'Add invoices',
                 labelBtnModal: 'Add new invoices',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: create,
+                handleBtn: create,
             })
            }else if(param === 'payments'){
             setDataEdit(
@@ -814,7 +814,7 @@ export const CRUD = () => {
                 labelModal: 'Add invoices',
                 labelBtnModal: 'Add new invoices',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: create,
+                handleBtn: create,
             })
            }else {
             setDataEdit(
@@ -869,7 +869,7 @@ export const CRUD = () => {
                 labelModal: 'Add employes',
                 labelBtnModal: 'Add new employes',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: create,
+                handleBtn: create,
             })
            }
         }
@@ -992,7 +992,7 @@ export const CRUD = () => {
         }
 
         return {
-            handelCreate,
+            handleCreate,
             create,
         }
 
@@ -1001,7 +1001,7 @@ export const CRUD = () => {
 
     const EDIT = () => {
 
-        const handelEdit  = async (param) => {
+        const handleEdit  = async (param) => {
             const id = param.querySelector('span.hidden').textContent
             // orders di skip dulu
             if(path === 'orders'){
@@ -1009,7 +1009,7 @@ export const CRUD = () => {
                     labelModal: 'Detail & edit employes',
                     labelBtnModal: 'Save',
                     labelBtnSecondaryModal: 'Delete',
-                    handelBtn: edit
+                    handleBtn: edit
                 })
                 setValidationError(
                     {
@@ -1072,7 +1072,7 @@ export const CRUD = () => {
                     labelModal: 'Detail & edit invoice',
                     labelBtnModal: 'Save',
                     labelBtnSecondaryModal: 'Delete',
-                    handelBtn: edit
+                    handleBtn: edit
                 })
                 setValidationError(
                     {
@@ -1110,7 +1110,7 @@ export const CRUD = () => {
                     labelModal: 'Detail & edit payments',
                     labelBtnModal: 'Save',
                     labelBtnSecondaryModal: 'Delete',
-                    handelBtn: edit
+                    handleBtn: edit
                 })
                 setValidationError(
                     {
@@ -1225,7 +1225,7 @@ export const CRUD = () => {
         }
 
         return {
-            handelEdit,
+            handleEdit,
             edit,
         }
     }
@@ -1243,9 +1243,9 @@ export const CRUD = () => {
           }
     
     
-          const handelDelete = async () => {
+          const handleDelete = async () => {
             try {
-              await deleteApiData('employees/' + idDelete)
+              await deleteApiData(path + '/' + idDelete)
               setRefresh(!refresh)
                 closeModalDelete()
             } catch (error) {
@@ -1257,7 +1257,7 @@ export const CRUD = () => {
         return {
             openModalDelete,
             closeModalDelete,
-            handelDelete
+            handleDelete
         }
     }
 
@@ -1351,23 +1351,23 @@ export const CRUD = () => {
     }
 
     const {data, handleClickHeading} = READ()
-    const {handelCreate} = CREATE()
-    const {handelEdit} = EDIT()
-    const {openModalDelete, closeModalDelete, handelDelete} = DELETE()
+    const {handleCreate} = CREATE()
+    const {handleEdit} = EDIT()
+    const {openModalDelete, closeModalDelete, handleDelete} = DELETE()
 
 
     return {
         data,
-        handelCreate,
+        handleCreate,
         openModal,
         dataModal,
         inputEmployes,
         refBody,
-        handelEdit,
+        handleEdit,
         dataEdit,
         openModalDelete,
         closeModalDelete,
-        handelDelete,
+        handleDelete,
         modalDelete,
         validationError,
         handleClickHeading,

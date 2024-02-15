@@ -160,7 +160,7 @@ export const CRUD = () => {
                 labelModal: 'Add transaction',
                 labelBtnModal: 'Add new transaction',
                 labelBtnSecondaryModal: 'Back',
-                handelBtn: () => create()
+                handleBtn: () => create()
             })
             setDataEdit({
                 type: '',
@@ -213,7 +213,7 @@ export const CRUD = () => {
                 labelModal: 'Detail & edit transaction',
                 labelBtnModal: 'Save',
                 labelBtnSecondaryModal: 'Delete',
-                handelBtn: edit
+                handleBtn: edit
             })
 
             setValidationError(

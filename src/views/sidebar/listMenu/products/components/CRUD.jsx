@@ -29,8 +29,6 @@ export const CRUD = () => {
   const [dataHeading, setDataHeading] = useState([{}]);
   const [path, setPath] = useState('products')
 
-  // EmployesList
-
   const [refBody, setRefBody] = useState({
     idRef: useRef(),
     nameRef: useRef(),
@@ -454,7 +452,7 @@ export const CRUD = () => {
                 label: "Add products",
                 icon: IconAdd(),
                 heading: "Product list",
-                eventToggleModal: handelCreate,
+                eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
@@ -474,7 +472,7 @@ export const CRUD = () => {
                 label: "Add category",
                 icon: IconAdd(),
                 heading: "Categoires list",
-                eventToggleModal: handelCreate,
+                eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
@@ -494,7 +492,7 @@ export const CRUD = () => {
                 label: "Add price",
                 icon: IconAdd(),
                 heading: "Prices list",
-                eventToggleModal: handelCreate,
+                eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
@@ -514,7 +512,7 @@ export const CRUD = () => {
                 label: "Add movement",
                 icon: IconAdd(),
                 heading: "Movements list",
-                eventToggleModal: handelCreate,
+                eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
@@ -584,7 +582,7 @@ export const CRUD = () => {
               : param === "Product-prices"
               ? "product prices"
               : "Product movement" + " list",
-          eventToggleModal: handelCreate,
+          eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,
           showNavHeading: true,
@@ -629,7 +627,7 @@ export const CRUD = () => {
   };
 
   const CREATE = () => {
-    const handelCreate = (param) => {
+    const handleCreate = (param) => {
       if (param === "products") {
         setDataEdit({
           name: "",
@@ -669,7 +667,7 @@ export const CRUD = () => {
           labelModal: "Add products",
           labelBtnModal: "Add new products",
           labelBtnSecondaryModal: "Back",
-          handelBtn: create,
+          handleBtn: create,
         });
       } else if (param === "product-categories") {
         setDataEdit({
@@ -687,7 +685,7 @@ export const CRUD = () => {
           labelModal: "Add category",
           labelBtnModal: "Add new category",
           labelBtnSecondaryModal: "Back",
-          handelBtn: create,
+          handleBtn: create,
         });
       } else if (param === "product-movements") {
         setDataEdit({
@@ -710,7 +708,7 @@ export const CRUD = () => {
           labelModal: "Add movements",
           labelBtnModal: "Add new movements",
           labelBtnSecondaryModal: "Back",
-          handelBtn: create,
+          handleBtn: create,
         });
       } else if (param === "product-prices") {
         setDataEdit({
@@ -731,7 +729,7 @@ export const CRUD = () => {
           labelModal: "Add prices",
           labelBtnModal: "Add new prices",
           labelBtnSecondaryModal: "Back",
-          handelBtn: create,
+          handleBtn: create,
         });
       } else {
         setDataEdit({
@@ -772,7 +770,7 @@ export const CRUD = () => {
           labelModal: "Add products",
           labelBtnModal: "Add new products",
           labelBtnSecondaryModal: "Back",
-          handelBtn: create,
+          handleBtn: create,
         });
       }
     };
@@ -900,13 +898,13 @@ export const CRUD = () => {
     };
 
     return {
-      handelCreate,
+      handleCreate,
       create,
     };
   };
 
   const EDIT = () => {
-    const handelEdit = async (param) => {
+    const handleEdit = async (param) => {
       const id = param.querySelector('span.hidden').textContent
       if(path === 'products'){
         setDataModal({
@@ -914,7 +912,7 @@ export const CRUD = () => {
           labelModal: "Detail & edit products",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
-          handelBtn: edit,
+          handleBtn: edit,
         });
         setValidationError({
           name: '',
@@ -965,7 +963,7 @@ export const CRUD = () => {
           labelModal: "Detail & edit category",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
-          handelBtn: edit,
+          handleBtn: edit,
         });
         setValidationError({
           name: "",
@@ -993,7 +991,7 @@ export const CRUD = () => {
           labelModal: "Detail & edit price",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
-          handelBtn: edit,
+          handleBtn: edit,
         });
         setValidationError({
           product_id: '',
@@ -1024,7 +1022,7 @@ export const CRUD = () => {
           labelModal: "Detail & edit movement",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
-          handelBtn: edit,
+          handleBtn: edit,
         });
         setValidationError({
           product_id: '',
@@ -1144,7 +1142,7 @@ export const CRUD = () => {
     };
 
     return {
-      handelEdit,
+      handleEdit,
       edit,
     };
   };
@@ -1159,9 +1157,9 @@ export const CRUD = () => {
       setModalDelete(!modalDelete);
     };
 
-    const handelDelete = async () => {
+    const handleDelete = async () => {
       try {
-        await deleteApiData("employees/" + idDelete);
+        await deleteApiData(path + "/" + idDelete);
         setRefresh(!refresh);
         closeModalDelete();
       } catch (error) {
@@ -1172,7 +1170,7 @@ export const CRUD = () => {
     return {
       openModalDelete,
       closeModalDelete,
-      handelDelete,
+      handleDelete,
     };
   };
 
@@ -1321,21 +1319,21 @@ export const CRUD = () => {
   };
 
   const { data, handleClickHeading } = READ();
-  const { handelCreate } = CREATE();
-  const { handelEdit } = EDIT();
-  const { openModalDelete, closeModalDelete, handelDelete } = DELETE();
+  const { handleCreate } = CREATE();
+  const { handleEdit } = EDIT();
+  const { openModalDelete, closeModalDelete, handleDelete } = DELETE();
 
   return {
     data,
-    handelCreate,
+    handleCreate,
     openModal,
     dataModal,
     refBody,
-    handelEdit,
+    handleEdit,
     dataEdit,
     openModalDelete,
     closeModalDelete,
-    handelDelete,
+    handleDelete,
     modalDelete,
     validationError,
     handleClickHeading,

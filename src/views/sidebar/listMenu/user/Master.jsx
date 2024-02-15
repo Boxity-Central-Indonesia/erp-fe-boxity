@@ -23,7 +23,7 @@ const Master = () => {
   const [dataModal, setDataModal] = useState({})
   const [showEdit, setShowEdit] = useState(true)
   const [dataEdit, setDataEdit] = useState({})
-  const [handelBtn, setHandelBtn] = useState()
+  const [handleBtn, sethandleBtn] = useState()
   const [input, setInput] = useState([]);
   // const [id, setId] = useState(null)
   
@@ -40,7 +40,7 @@ const Master = () => {
     setOpenModal(!openModal);
   };
 
-  const handelCreateMaster = () => {
+  const handleCreateMaster = () => {
     setDataEdit({
       name: '',
       username: '',
@@ -49,7 +49,7 @@ const Master = () => {
       gender: '',
     });
     setShowEdit(true);
-    setHandelBtn(() => createUserMaster)
+    sethandleBtn(() => createUserMaster)
     setDataModal({
       size: '2xl',
       labelModal: 'Add user',
@@ -77,7 +77,7 @@ const Master = () => {
       label: 'Add user',
       icon: IconAdd(),
       heading: 'Master user',
-      eventToggleModal:handelCreateMaster
+      eventToggleModal:handleCreateMaster
     }
   ]
   
@@ -199,7 +199,7 @@ const showEditUserMaster = async (param) => {
     });
 
     setShowEdit(false);
-    setHandelBtn(() => editUserMaster)
+    sethandleBtn(() => editUserMaster)
     toggleOpenModal();
   }
 };
@@ -367,10 +367,10 @@ const handleChange = (event) => {
         sizeModal={dataModal.size}
         labelModal={dataModal.labelModal}
         labelBtnModal={dataModal.labelBtnModal}
-        handelBtnModal={handelBtn}
+        handleBtnModal={handleBtn}
         labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
       />
-     < TabelComponent data={data} dataHeading={dataTabelHeading} handelEdit={showEditUserMaster}/>
+     < TabelComponent data={data} dataHeading={dataTabelHeading} handleEdit={showEditUserMaster}/>
     </>
   );
 };

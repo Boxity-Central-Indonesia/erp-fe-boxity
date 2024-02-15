@@ -17,7 +17,7 @@ export const ModalContainer = ({
   labelModal, 
   labelBtnModal,
   labelBtnSecondaryModal,
-  handelBtnModal,
+  handleBtnModal,
   openModalDelete,
   typeModal,
 }) => {
@@ -39,11 +39,11 @@ export const ModalContainer = ({
 
       const apiUrl = import.meta.env.VITE_API_URL;
       
-      const handelBtnSubmit = () => {
-        if (typeof handelBtnModal === 'function') {
-            handelBtnModal();
+      const handleBtnSubmit = () => {
+        if (typeof handleBtnModal === 'function') {
+            handleBtnModal();
         } else {
-            console.error("handelBtnModal is not a function");
+            console.error("handleBtnModal is not a function");
         }
     }
 
@@ -56,9 +56,9 @@ export const ModalContainer = ({
           {modalBody(response)}
         </Modal.Body>
         <Modal.Footer>
-          {/* <Button onClick={handelBtnSubmit}>{labelBtnModal}</Button> */}
+          {/* <Button onClick={handleBtnSubmit}>{labelBtnModal}</Button> */}
           < Button 
-          event={handelBtnModal} 
+          event={handleBtnModal} 
           label={labelBtnModal} 
           bgColour={'primary'} 
           icon={labelBtnModal == 'Save' ? IconSave() : IconAdd()} 
@@ -80,7 +80,7 @@ export const ModalContainer = ({
 }
 
 
-export const ModalConfirmDelete = ({handelDelete, modalDelete, closeModalDelete}, ) => {
+export const ModalConfirmDelete = ({handleDelete, modalDelete, closeModalDelete}, ) => {
   return(
    <>
     <div id="deleteModal" tabIndex="-1" aria-hidden="true" className={`${modalDelete ? 'flex' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full`}>
@@ -96,7 +96,7 @@ export const ModalConfirmDelete = ({handelDelete, modalDelete, closeModalDelete}
                     <button onClick={closeModalDelete}  data-modal-toggle="deleteModal" type="button" className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
                         No, cancel
                     </button>
-                    <button onClick={handelDelete} type="submit" className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                    <button onClick={handleDelete} type="submit" className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
                         Yes, I'm sure
                     </button>
                 </div>

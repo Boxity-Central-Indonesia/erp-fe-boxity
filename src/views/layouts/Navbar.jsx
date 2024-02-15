@@ -103,7 +103,7 @@ function Navbar({ onToggleSidebar, setAuth }) {
         <Dropdown.Divider />
         <Dropdown.Item
           className="flex item-center gap-2"
-          onClick={handelLogout}
+          onClick={handleLogout}
         >
           <svg
             className="w-4 h-4 text-gray-500 dark:text-white"
@@ -126,7 +126,7 @@ function Navbar({ onToggleSidebar, setAuth }) {
     );
   };
 
-  const handelLogout = () => {
+  const handleLogout = () => {
     Cookies.remove("token");
     setAuth(false);
     navigate("/login");

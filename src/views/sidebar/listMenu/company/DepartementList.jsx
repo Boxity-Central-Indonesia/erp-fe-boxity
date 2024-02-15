@@ -78,13 +78,13 @@ const Departement = () => {
 
     // create departemen
 
-    const handelCreate = () => {
+    const handleCreate = () => {
         setDataModal({
           size: 'md',
           labelModal: 'Add Company',
           labelBtnModal: 'Add new company',
           labelBtnSecondaryModal: 'Back',
-          handelBtn: () => create()
+          handleBtn: () => create()
         })
 
         setValidationError(
@@ -108,7 +108,7 @@ const Departement = () => {
         label: 'Add Departement',
         icon: IconAdd(),
         heading: 'Departement list',
-        eventToggleModal: handelCreate,
+        eventToggleModal: handleCreate,
     }]
 
     const refBody = {
@@ -174,13 +174,13 @@ const Departement = () => {
 
     }
 
-    const handelEdit =  async (param, param2) => {
+    const handleEdit =  async (param, param2) => {
         setDataModal({
             size: 'md',
             labelModal: 'Edit Departmen',
             labelBtnModal: 'Save',
             labelBtnSecondaryModal: 'Delete',
-            handelBtn: edit
+            handleBtn: edit
         })
 
         setValidationError(
@@ -224,7 +224,7 @@ const Departement = () => {
       }
 
 
-      const handelDelete = async () => {
+      const handleDelete = async () => {
         try {
           await deleteApiData('companies/2/departments/' + idDelete)
           setRefresh(!refresh)
@@ -313,19 +313,19 @@ const Departement = () => {
         <>
             < ModalContainer 
                 openModal={openModal}
-                onToggleModal={handelCreate}
+                onToggleModal={handleCreate}
                 modalBody={dataModalBody}
                 sizeModal={'md'}
                 labelModal={dataModal.labelModal}
                 labelBtnModal={dataModal.labelBtnModal}
                 labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
-                handelBtnModal={dataModal.handelBtn}
+                handleBtnModal={dataModal.handleBtn}
                 openModalDelete={openModalDelete}
             />
 
-            < ModalConfirmDelete modalDelete={modalDelete} closeModalDelete={closeModalDelete} handelDelete={handelDelete}/>
+            < ModalConfirmDelete modalDelete={modalDelete} closeModalDelete={closeModalDelete} handleDelete={handleDelete}/>
 
-            <  TabelComponent data={data} dataHeading={dataHeading} handelEdit={handelEdit}/>
+            <  TabelComponent data={data} dataHeading={dataHeading} handleEdit={handleEdit}/>
         </>
     )
 }

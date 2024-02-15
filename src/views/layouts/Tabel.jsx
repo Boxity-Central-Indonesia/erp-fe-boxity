@@ -5,11 +5,11 @@ import Paginate from "./Paginate";
 import TabelHeading from "./TabelHeading";
 import { useColor } from "../conifg/GlobalColour";
 
-const TabelComponent = ({ data, dataHeading, handelEdit }) => {
+const TabelComponent = ({ data, dataHeading, handleEdit }) => {
   const { globalColor, changeColor } = useColor();
 
   const handleEditClick = (param, param2) => {
-    handelEdit(param, param2);
+    handleEdit(param, param2);
   };
 
   if (!data) {
