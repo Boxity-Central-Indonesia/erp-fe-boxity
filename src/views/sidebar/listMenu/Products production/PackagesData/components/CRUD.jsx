@@ -18,6 +18,7 @@ export const CRUD = () => {
     const [skeleton, setSkeleton] = useState(false)
     const [dataOrder, setDataOrder] = useState()
     const [path, setPath] = useState('packages')
+    const [dataProductSelect, setDataProducstSelect] = useState()
     const [dataHeading, setDataHeading] = useState([
         {
             label: 'Add Packagest',
@@ -101,9 +102,9 @@ export const CRUD = () => {
                 label: 'Product',
                 htmlFor: 'product-id',
                 id: 'product-id',
-                // dataSelect: dataCompanies,
+                dataSelect: dataProductSelect,
                 value: dataEdit.product_id,
-                // onchange: handleChangeAndGetDepartment
+                onchange: handleChange
             },
             {
                 element: 'input',
@@ -245,23 +246,23 @@ export const CRUD = () => {
         }, [refresh])
 
         useEffect(() => {
-            const getDataForSelec = async (endpoint, state) => {
+            const getDataForSelec = async () => {
                 try {
-                    const {data, status} = await getApiData(endpoint)
+                    const {data, status} = await getApiData('products')
                     if(status === 200){
                         const newData = data.map(item => ({
                             id: item.id,
                             name: item.name
                         }))
-                        state(() => newData)
+                        setDataProducstSelect(() => newData)
                     } 
                 } catch (error) {
                     console.log(error);
                 }
             }
 
-            getDataForSelec('orders', setDataOrder)
-        },[])
+            getDataForSelec()
+        },[path])
 
 
         const dataPackages = (data) => {
