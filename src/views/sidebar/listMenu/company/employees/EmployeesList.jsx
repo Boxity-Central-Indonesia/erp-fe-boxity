@@ -48,7 +48,7 @@ export const EmployesList = () => {
         labelBtnModal={dataModal.labelBtnModal}
         labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
         handleBtnModal={dataModal.handleBtn}
-        parameter={dataHeading[0].parameter}
+        parameter={path}
         openModalDelete={openModalDelete}
         />
 
