@@ -1,10 +1,9 @@
-import FormInput from "../../../../layouts/FormInput"
-import { ModalConfirmDelete, ModalContainer } from "../../../../layouts/ModalContainer"
+import { ModalConfirmDelete, ModalContainer } from "../../../layouts/ModalContainer"
 import {CRUD} from "./components/CRUD"
-import TabelComponentTest from "../../../../layouts/TabelTest"
-import { Spinner } from "../../../../layouts/Spinner"
+import TabelComponentTest from "../../../layouts/TabelTest"
+import { Spinner } from "../../../layouts/Spinner"
 
-export const ProccesActifity = () => {
+export const User = () => {
     const {
         data,
         openModal, 

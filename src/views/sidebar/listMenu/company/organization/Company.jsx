@@ -4,7 +4,7 @@ import {CRUD} from "./components/CRUD"
 import TabelComponentTest from "../../../../layouts/TabelTest"
 import { Spinner } from "../../../../layouts/Spinner"
 
-export const ProccesActifity = () => {
+export const Company = () => {
     const {
         data,
         openModal, 

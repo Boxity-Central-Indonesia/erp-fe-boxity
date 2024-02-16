@@ -7,25 +7,19 @@ import {
 } from "react-router-dom";
 import Sidebar from "./views/layouts/Sidebar";
 import Navbar from "./views/layouts/Navbar";
-import Master from "./views/sidebar/listMenu/user/Master";
 import Profile from "./views/profile/Profile";
 import Footer from "./views/layouts/Footer";
-import CompanyList from "./views/sidebar/listMenu/company/CompanyList";
 import Login from "./views/autentikasi/Login";
 import Register from "./views/autentikasi/Register";
 import Auth from "./function/Auth";
 import Dashboard from "./views/sidebar/listMenu/dashboard/Dashboard";
 import Cookies from "js-cookie";
-import Departement from "./views/sidebar/listMenu/company/DepartementList";
-import BranchList from "./views/sidebar/listMenu/company/BranchList";
 import { EmployesList } from "./views/sidebar/listMenu/company/employees/EmployeesList";
 import { Products } from "./views/sidebar/listMenu/products/Products";
 import { Warehouses } from "./views/sidebar/listMenu/warehouses/Warehouses";
 import { ColorProvider } from "./views/conifg/GlobalColour";
 import RoleAndPermission from "./views/sidebar/listMenu/user/Role&Permission";
-import { Account } from "./views/sidebar/listMenu/account/list/Account";
 import { Test } from "./views/sidebar/listMenu/user/test";
-import { AccountTransaction } from "./views/sidebar/listMenu/account/transaction/AccountTransactions";
 import { Penjualan } from "./views/sidebar/listMenu/reports/penjualan/Penjualan";
 import { Pembelian } from "./views/sidebar/listMenu/reports/pembelian/Pembelian";
 import { ArusKas } from "./views/sidebar/listMenu/reports/arusKas/ArusKas";
@@ -44,6 +38,9 @@ import { ProccesActifity } from "./views/sidebar/listMenu/Products production/Pr
 import { PackagesData } from "./views/sidebar/listMenu/Products production/PackagesData/PackagesData";
 import { Vendors } from "./views/sidebar/listMenu/vendors/Vendors";
 import { Transactions } from "./views/sidebar/listMenu/transaction/Transactions";
+import { Company } from "./views/sidebar/listMenu/company/organization/Company";
+import { Account } from "./views/sidebar/listMenu/account/Account";
+import { User } from "./views/sidebar/listMenu/user/User";
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -88,10 +85,10 @@ function App() {
                     }
                   />
                   <Route
-                    path="/user/master"
+                    path="/user"
                     element={
                       <Auth.ProtectedRoute>
-                        <Master />
+                        <User />
                       </Auth.ProtectedRoute>
                     }
                   />
@@ -120,34 +117,18 @@ function App() {
                     }
                   />
                   <Route
-                    path="/company/list"
+                    path="/company"
                     element={
                       <Auth.ProtectedRoute>
-                        <CompanyList />
+                        <Company />
                       </Auth.ProtectedRoute>
                     }
                   />
                   <Route
-                    path="/departement/list"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Departement />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/employees/list"
+                    path="/employees"
                     element={
                       <Auth.ProtectedRoute>
                         <EmployesList />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/branch/list"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <BranchList />
                       </Auth.ProtectedRoute>
                     }
                   />
@@ -184,18 +165,10 @@ function App() {
                     }
                   />
                   <Route
-                    path="accounts/list"
+                    path="accounts"
                     element={
                       <Auth.ProtectedRoute>
                         <Account />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="accounts/transaction"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <AccountTransaction />
                       </Auth.ProtectedRoute>
                     }
                   />

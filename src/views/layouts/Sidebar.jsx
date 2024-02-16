@@ -60,11 +60,9 @@ function Sidebar() {
         </svg>
       ),
       subMenu: [
-        { path: "/user/master", label: "Users" },
-        { path: "/company/list", label: "Companies" },
-        { path: "/departement/list", label: "Departments" },
-        { path: "/branch/list", label: "Branches" },
-        { path: "/employees/list", label: "Employees" },
+        { path: "/user", label: "Users" },
+        { path: "/company", label: "Companies" },
+        { path: "/employees", label: "Employees" },
         { path: "/leads/list", label: "Leads Prospect" },
         { label: "Role & Permission", path: "/user/role" },
         { label: "Test", path: "/user/test" },
@@ -90,8 +88,7 @@ function Sidebar() {
         </svg>
       ),
       subMenu: [
-        { path: "accounts/list", label: "Accounting Data" },
-        { path: "accounts/transaction", label: "Account Transaction" },
+        { path: "accounts", label: "Accounting" },
       ],
     },
     {
