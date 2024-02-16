@@ -19,6 +19,7 @@ export const CRUD = () => {
     const [dataOrder, setDataOrder] = useState()
     const [path, setPath] = useState('packages')
     const [dataProductSelect, setDataProducstSelect] = useState()
+    const [dataPackagesSelect, setDataPackagesSelect] = useState()
     const [dataHeading, setDataHeading] = useState([
         {
             label: 'Add Packagest',
@@ -139,9 +140,9 @@ export const CRUD = () => {
                 label: 'Package',
                 htmlFor: 'package-id',
                 id: 'package-id',
-                // dataSelect: dataCompanies,
+                dataSelect: dataProductSelect,
                 value: dataEdit.package_id,
-                // onchange: handleChangeAndGetDepartment
+                onchange: handleChange
             },
             {
                 element: 'select',
@@ -150,9 +151,9 @@ export const CRUD = () => {
                 label: 'Product',
                 htmlFor: 'product-id',
                 id: 'product-id',
-                // dataSelect: dataCompanies,
+                dataSelect: dataPackagesSelect,
                 value: dataEdit.product_id,
-                // onchange: handleChangeAndGetDepartment
+                onchange: handleChange
             },
         ])
     }, [dataEdit])
@@ -259,9 +260,22 @@ export const CRUD = () => {
                 } catch (error) {
                     console.log(error);
                 }
+                try {
+                    const {data, status} = await getApiData('packages')
+                    if(status === 200){
+                        const newData = data.map(item => ({
+                            id: item.id,
+                            name: item.name
+                        }))
+                        setDataPackagesSelect(() => newData)
+                    } 
+                } catch (error) {
+                    
+                }
             }
 
             getDataForSelec()
+            
         },[path])
 
 
