@@ -1241,6 +1241,7 @@ export const CRUD = () => {
               name={"description"}
               referens={refBody.descriptionRef}
               value={dataEdit.description}
+              onChange={handleChange}
               placeholder={"Write notes here"}
             />
           </div>
