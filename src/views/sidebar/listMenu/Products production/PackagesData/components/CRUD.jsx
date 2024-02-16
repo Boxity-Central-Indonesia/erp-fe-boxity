@@ -140,7 +140,7 @@ export const CRUD = () => {
                 label: 'Package',
                 htmlFor: 'package-id',
                 id: 'package-id',
-                dataSelect: dataProductSelect,
+                dataSelect: dataPackagesSelect,
                 value: dataEdit.package_id,
                 onchange: handleChange
             },
@@ -151,7 +151,7 @@ export const CRUD = () => {
                 label: 'Product',
                 htmlFor: 'product-id',
                 id: 'product-id',
-                dataSelect: dataPackagesSelect,
+                dataSelect: dataProductSelect,
                 value: dataEdit.product_id,
                 onchange: handleChange
             },
@@ -265,7 +265,7 @@ export const CRUD = () => {
                     if(status === 200){
                         const newData = data.map(item => ({
                             id: item.id,
-                            name: item.name
+                            name: item.package_name
                         }))
                         setDataPackagesSelect(() => newData)
                     } 
