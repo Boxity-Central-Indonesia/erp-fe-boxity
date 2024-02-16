@@ -1206,6 +1206,7 @@ export const CRUD = () => {
               referens={refBody.descriptionRef}
               placeholder={"Write description here"}
               value={dataEdit.description}
+              onChange={handleChange}
               validationError={validationError}
             />
           </div>
