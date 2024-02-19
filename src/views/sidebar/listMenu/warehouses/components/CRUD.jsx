@@ -44,32 +44,6 @@ export const CRUD = () => {
     })
 
 
-    const handleChangeAndGetDepartment = async (event) => {
-        // Mendapatkan nama dan nilai input yang berubah
-        const { name, value } = event.target;
-       
-        try {
-           const response = await getApiData('companies/7/departments')
-           const newData = response.data.map(item => ({
-               id: item.id,
-               name: item.name
-           }))
-
-           setDataDepartments(() => newData)
-
-       } catch (error) {
-           console.log(error);
-       }
-
-        // Memperbarui state sesuai dengan nilai input yang berubah
-        setDataEdit((prevDataEdit) => ({
-            ...prevDataEdit,
-            [name]: value,
-        }));
-      
-      
-       };
-
     const handleChange = (event) => {
         // Mendapatkan nama dan nilai input yang berubah
         const { name, value } = event.target;
@@ -164,7 +138,7 @@ export const CRUD = () => {
             },
             {
                 element: 'input',
-                type: 'text',
+                type: 'number',
                 name: 'capacity',
                 ref: refBody.capacityRef,
                 value: dataEdit.capacity,
@@ -690,6 +664,8 @@ export const CRUD = () => {
                             id={'description'}
                             name={'description'}
                             referens={refBody.descriptionRef}
+                            value={dataEdit.description}
+                            onChange={handleChange}
                             placeholder={'Write description here'}
                             />
                     </div>

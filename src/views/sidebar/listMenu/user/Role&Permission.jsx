@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Table } from 'flowbite-react';
 import { Dropdown } from 'flowbite-react';
 import IconAdd from '../../../layouts/icons/IconAdd';
-import TabelComponentTest from '../../../layouts/TabelTest';
+import TabelComponent from '../../../layouts/Tabel';
 import TabelHeading from '../../../layouts/TabelHeading';
 import {
   createColumnHelper,
@@ -13,7 +13,6 @@ import {
   // SortingFns,
   getPaginationRowModel,
 } from '@tanstack/react-table';
-import TabelComponent from '../../../layouts/Tabel';
 
 const columnHelper = createColumnHelper();
 
@@ -168,7 +167,7 @@ export default function RoleAndPermission() {
 
   return (
    <>
-   < TabelComponentTest 
+   < TabelComponent 
    data={table}
    dataHeading={dataHeading}
    />

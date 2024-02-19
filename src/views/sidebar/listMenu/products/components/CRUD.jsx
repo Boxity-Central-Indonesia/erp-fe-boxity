@@ -314,7 +314,7 @@ export const CRUD = () => {
         dataSelect: [
           { value: "purchase", name: "purchase" },
           { value: "sale", name: "sale" },
-          { value: "transafer", name: "transafer" },
+          { value: "transfer", name: "transfer" },
         ],
         onchange: handleChange,
       },
@@ -557,7 +557,7 @@ export const CRUD = () => {
     }
     getSelectWarehousees()
 
-    }, [])
+    }, [path])
 
     const handleClickHeading = async (param) => {
       setPath(param)

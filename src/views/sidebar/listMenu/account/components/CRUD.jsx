@@ -23,9 +23,6 @@ export const CRUD = () => {
     const [path, setPath] = useState('accounts') 
     const [dataAccounSelect, setDataAccountSelect] = useState([])
 
-
-    // EmployesList
-
     const [refBody, setRefBody] = useState( {
         nameRef: useRef(),
         typeRef: useRef(),

@@ -1,8 +1,9 @@
 import FormInput from "../../../../layouts/FormInput"
 import { ModalConfirmDelete, ModalContainer } from "../../../../layouts/ModalContainer"
 import {CRUD} from "./components/CRUD"
-import TabelComponentTest from "../../../../layouts/TabelTest"
+import TabelComponent from "../../../../layouts/Tabel"
 import { Spinner } from "../../../../layouts/Spinner"
+import { CompanyDetail } from "./components/companyDetail"
 
 export const Company = () => {
     const {
@@ -22,7 +23,10 @@ export const Company = () => {
         loading,
         handleCreate,
         skeleton,
-        path
+        path,
+        dataDetailCompany,
+        defaultEdit,
+        setDefaultEdit
     } = CRUD()
 
     const dataModalBody = () => {
@@ -33,6 +37,39 @@ export const Company = () => {
                     {inputBody(path)}
                 </form>
 
+            </>
+        )
+    }
+
+    if(!defaultEdit && dataDetailCompany){
+        return(
+            <>
+                <ModalContainer 
+                    openModal={openModal}
+                    onToggleModal={setOpenModal}
+                    modalBody={dataModalBody}
+                    sizeModal={'6xl'}
+                    labelModal={'Edit company'}
+                    labelBtnModal={'Save'}
+                    labelBtnSecondaryModal={'Delete'}
+                    handleBtnModal={dataModal.handleBtn}
+                    parameter={path}
+                    openModalDelete={openModalDelete}
+                />
+
+                <Spinner loading={loading} />
+
+                < ModalConfirmDelete 
+                modalDelete={modalDelete}
+                closeModalDelete={closeModalDelete}
+                handleDelete={handleDelete}
+                />
+
+                <CompanyDetail
+                    data={dataDetailCompany}
+                    defaultEdit={setDefaultEdit}
+                    showModal={setOpenModal}
+                />
             </>
         )
     }
@@ -60,7 +97,7 @@ export const Company = () => {
         handleDelete={handleDelete}
         />
 
-        < TabelComponentTest 
+        < TabelComponent 
         data={data}
         dataHeading={dataHeading}
         skeleton={skeleton}

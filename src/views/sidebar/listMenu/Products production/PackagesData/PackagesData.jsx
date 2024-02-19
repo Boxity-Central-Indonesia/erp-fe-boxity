@@ -1,11 +1,10 @@
 import FormInput from "../../../../layouts/FormInput"
 import { ModalConfirmDelete, ModalContainer } from "../../../../layouts/ModalContainer"
-import TabelComponent from "../../../../layouts/Tabel"
 import IconAdd from "../../../../layouts/icons/IconAdd"
 import { useEffect, useState, useRef } from "react"
 import { TextArea } from "../../../../layouts/FormInput"
 import {CRUD} from "./components/CRUD"
-import TabelComponentTest from "../../../../layouts/TabelTest"
+import TabelComponent from "../../../../layouts/Tabel"
 import { Spinner } from "../../../../layouts/Spinner"
 
 export const PackagesData = () => {
@@ -77,7 +76,7 @@ export const PackagesData = () => {
         handleDelete={handleDelete}
         />
 
-        < TabelComponentTest 
+        < TabelComponent 
         data={data}
         dataHeading={dataHeading}
         skeleton={skeleton}

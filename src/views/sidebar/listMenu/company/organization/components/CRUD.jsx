@@ -3,6 +3,10 @@ import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../
 import IconAdd from "../../../../../layouts/icons/IconAdd"
 import { TextArea } from "../../../../../layouts/FormInput"
 import FormInput from "../../../../../layouts/FormInput"
+import { useNavigate } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
+import { CompanyDetail } from "./companyDetail"
+
 
 export const CRUD = () => {
     const [refresh, setRefresh] = useState(false)
@@ -10,8 +14,8 @@ export const CRUD = () => {
     const [modalDelete, setModalDelete] = useState();
     const [idDelete, setIdDelete] = useState()
     const [dataModal, setDataModal] = useState({})
-    const [inputEmployes, setInputEmployes] = useState([])
-    const [inputEmployesCategory, setInputEmployesCategory] = useState([])
+    const [inputCompanies, setInputCompanies] = useState([])
+    const [inputEmployesCategory, setInputCompaniesCategory] = useState([])
     const [responseError, setResponseError] = useState()
     const [validationError, setValidationError] = useState()
     const [dataCompanies, setDataCompanies] = useState();
@@ -21,32 +25,25 @@ export const CRUD = () => {
     const [skeleton, setSkeleton] = useState(false)
     const [dataHeading, setDataHeading] = useState([{}])
     const [path, setPath] = useState('companies') 
+    const [defaultEdit, setDefaultEdit] = useState(true)
+    const [dataDetailCompany, setDataDetailCompany] = useState({})
 
-    // EmployesList
+    const navigate = useNavigate();
 
     const [refBody, setRefBody] = useState( {
         nameRef: useRef(),
         emailRef: useRef(),
         phone_numberRef: useRef(),
-        company_idRef: useRef(),
-        job_titleRef: useRef(),
-        date_of_birthRef: useRef(),
-        employment_statusRef: useRef(),
-        hire_dateRef: useRef(),
-        termination_dateRef: useRef(),
+        websiteRef: useRef(),
         addressRef: useRef(),
         cityRef: useRef(),
         provinceRef: useRef(),
         postal_codeRef: useRef(),
         countryRef: useRef(),
-        emergency_contact_nameRef: useRef(),
-        emergency_contact_phone_numberRef: useRef(),
-        notesRef: useRef(),
-        department_idRef: useRef(),
-        category_idRef: useRef(),
         idRef: useRef(),
-        notesRef: useRef(),
+        industryRef: useRef(),
         descriptionRef: useRef(),
+        company_idRed: useRef()
     })
     const [dataEdit, setDataEdit] = useState({})
 
@@ -156,7 +153,7 @@ export const CRUD = () => {
     }, [])
 
     useEffect(() => {
-        setInputEmployes(  [
+        setInputCompanies(  [
             {
                 element: 'input',
                 type: 'text',
@@ -194,78 +191,28 @@ export const CRUD = () => {
                 onchange: handleChange,
                 placeholder: 'Phone number',
             },
-            {
-                element: 'select',
-                ref: refBody.company_idRef,
-                name: 'company_id',
-                label: 'Companies',
-                htmlFor: 'categori companies',
-                id: 'categori companies',
-                dataSelect: dataCompanies,
-                value: dataEdit.company_id,
-                onchange: handleChangeAndGetDepartment
-            },
+            // {
+            //     element: 'select',
+            //     ref: refBody.company_idRef,
+            //     name: 'company_id',
+            //     label: 'Companies',
+            //     htmlFor: 'categori companies',
+            //     id: 'categori companies',
+            //     dataSelect: dataCompanies,
+            //     value: dataEdit.company_id,
+            //     onchange: handleChangeAndGetDepartment
+            // },
             {
                 element: 'input',
                 type: 'text',
-                name: 'job_title',
-                ref: refBody.job_titleRef,
-                value: dataEdit.job_title,
-                label: 'Job title',
-                htmlFor: 'job_title',
-                id: 'job_title',
+                name: 'website',
+                ref: refBody.websiteRef,
+                value: dataEdit.website,
+                label: 'Website',
+                htmlFor: 'website',
+                id: 'website',
                 onchange: handleChange,
-                placeholder: 'Job title',
-            },
-            {
-                element: 'input',
-                type: 'date',
-                name: 'date_of_birth',
-                ref: refBody.date_of_birthRef,
-                value: dataEdit.date_of_birth,
-                label: 'Date of birth',
-                htmlFor: 'date_of_birth',
-                id: 'date_of_birth',
-                onchange: handleChange,
-                placeholder: 'Date of birth',
-            },
-            {
-                element: 'select',
-                name: 'employment_status',
-                ref: refBody.employment_statusRef,
-                value: dataEdit.employment_status,
-                label: 'satus',
-                htmlFor: 'employment_status',
-                id: 'employment_status',
-                dataSelect: [
-                    {value: 'active', name: 'Active'},
-                    {value: 'inactive', name: 'Inactive'},
-                ],
-                onchange: handleChange
-            },
-            {
-                element: 'input',
-                type: 'date',
-                name: 'hire_date',
-                ref: refBody.hire_dateRef,
-                value: dataEdit.hire_date,
-                label: 'Hire date',
-                htmlFor: 'hire_date',
-                id: 'hire_date',
-                onchange: handleChange,
-                placeholder: 'Hire date',
-            },
-            {
-                element: 'input',
-                type: 'date',
-                name: 'termination_date',
-                ref: refBody.termination_dateRef,
-                value: dataEdit.termination_date,
-                label: 'Termination date',
-                htmlFor: 'termination_date',
-                id: 'termination_date',
-                onchange: handleChange,
-                placeholder: 'Termination date',
+                placeholder: 'Website',
             },
             {
                 element: 'input',
@@ -328,66 +275,18 @@ export const CRUD = () => {
                 placeholder: 'Country',
             },
             {
-                element: 'select',
-                ref: refBody.department_idRef,
-                name: 'department_id',
-                label: 'Department',
-                htmlFor: 'department',
-                id: 'department',
-                dataSelect: dataDepartmentsSelect,
-                value: dataEdit.department_id,
-                onchange: handleChange
-            },
-            {
-                element: 'select',
-                ref: refBody.category_idRef,
-                name: 'category_id',
-                label: 'Category',
-                htmlFor: 'category_id',
-                id: 'category_id',
-                dataSelect: dataCategoryEmployes,
-                value: dataEdit.category_id,
-                onchange: handleChange
-            },
-            {
                 element: 'input',
                 type: 'text',
-                name: 'emergency_contact_name',
-                ref: refBody.emergency_contact_nameRef,
-                value: dataEdit.emergency_contact_name,
-                label: 'Emergency Contact Name',
-                htmlFor: 'emergency_contact_name',
-                id: 'emergency_contact_name',
+                name: 'industry',
+                ref: refBody.industryRef,
+                value: dataEdit.industry,
+                label: 'Industry',
+                htmlFor: 'industry',
+                id: 'industry',
                 onchange: handleChange,
-                placeholder: 'Emergency Contact Name',
-            },
-            {
-                element: 'input',
-                type: 'text',
-                name: 'emergency_contact_phone_number',
-                ref: refBody.emergency_contact_phone_numberRef,
-                value: dataEdit.emergency_contact_phone_number,
-                label: 'Emergency Contact Phone Number',
-                htmlFor: 'emergency_contact_phone_number',
-                id: 'emergency_contact_phone_number',
-                onchange: handleChange,
-                placeholder: 'Emergency Contact Phone Number',
+                placeholder: 'Industry',
             },
             
-        ])
-        setInputEmployesCategory( [
-            {
-                element: 'input',
-                type: 'text',
-                name: 'name',
-                ref: refBody.nameRef,
-                value: dataEdit.name,
-                label: 'Name',
-                htmlFor: 'name',
-                id: 'name',
-                onchange: handleChange,
-                placeholder: 'Name',
-            },
         ])
     }, [dataEdit])
 
@@ -449,20 +348,21 @@ export const CRUD = () => {
                                 activeButton: path,
                             }
                         ])
-                    }else if(path === 'employee-categories'){
-                        const newData = dataEmployesCategories(data)
+                    }else if(path === 'branch'){
+                        const newData = dataBranches(data)
                         setData(() => newData);
                         setDataHeading([
                             {
-                                label: 'Add category',
+                                label: 'Add branch',
                                 icon: IconAdd(),
-                                heading: 'Categories list',
+                                heading: 'Branch list',
                                 eventToggleModal: handleCreate,
                                 onclick: handleClickHeading,
                                 showNavHeading: true,
                                 dataNavHeading: [
-                                    {path: 'employees', label: 'Employees'},
-                                    {path: 'employee-categories', label: 'Employee categories'},
+                                    {path: 'companies', label: 'Company'},
+                                    {path: 'branch', label: 'Branches'},
+                                    {path: 'department', label: 'Departments'},
                                 ],
                                 activeButton: path,
                             }
@@ -479,16 +379,17 @@ export const CRUD = () => {
             setPath(param)
             setDataHeading([
                 {
-                    label: param === 'employees' ? 'Add employees' : 'Add category',
+                    label: param === 'companies' ? 'Add companies' : param === 'branches',
                     icon: IconAdd(),
-                    heading: param === 'employees' ? 'Employees' : 'Category employes' +' list',
+                    heading: param === 'companies' ? 'Employees' : 'Category employes' +' list',
                     eventToggleModal: handleCreate,
                     onclick: handleClickHeading,
-                    parameter: param === 'employees' ? 'employees' : 'employee-categories',
+                    parameter: param === 'companies' ? 'companies' : 'employee-categories',
                     showNavHeading: true,
                     dataNavHeading: [
-                        {path: 'employees', label: 'Employees'},
-                        {path: 'employee-categories', label: 'Employee categories'},
+                        {path: 'companies', label: 'Company'},
+                        {path: 'branch', label: 'Branches'},
+                        {path: 'department', label: 'Departments'},
                     ],
                     activeButton: param,
                 }
@@ -498,8 +399,8 @@ export const CRUD = () => {
             try {
                 const {data,status} = await getApiData(param)
                 if(status === 200) {
-                    if(param === 'employees'){
-                        const newData = dataEmployes(data)
+                    if(param === 'companies'){
+                        const newData = dataCompany(data)
                         setSkeleton(prevSkeleton => !prevSkeleton)
                         setData(newData)
                     }else if(param === 'employee-categories') {
@@ -522,28 +423,21 @@ export const CRUD = () => {
     const CREATE = () => {
 
         const handleCreate  = (param) => {
-           if(param === 'employees'){
+           if(param === 'companies'){
+            setDefaultEdit(true)
             setDataEdit(
                 {
                     name: '',
                     email: '',
                     phone_number: '',
-                    company_id: '',
-                    job_title: '',
-                    date_of_birth: '',
-                    employment_status:'',
-                    hire_date: '',
-                    termination_date:'',
+                    website: '',
                     address: '',
                     city: '',
                     province: '',
                     postal_code: '',
                     country: '',
-                    emergency_contact_name: '',
-                    emergency_contact_phone_number: '',
-                    notes: '',
-                    department_id: '',
-                    category_id: '',
+                    industry: '',
+                    description: '',
                     id: '',
                 }
             )
@@ -552,28 +446,22 @@ export const CRUD = () => {
                     name: '',
                     email: '',
                     phone_number: '',
-                    company_id: '',
-                    job_title: '',
-                    date_of_birth: '',
-                    employment_status: '',
-                    hire_date: '',
-                    termination_date: '',
+                    website: '',
                     address: '',
                     city: '',
                     province: '',
                     postal_code: '',
                     country: '',
-                    emergency_contact_name: '',
-                    emergency_contact_phone_number: '',
-                    notes: '',
-                    department_id: '',
+                    industry: '',
+                    description: '',
+                    id: '',
                 }
             )
             setOpenModal(prevOpenModal => !prevOpenModal)
             setDataModal({
                 size: '6xl',
-                labelModal: 'Add employes',
-                labelBtnModal: 'Add new employes',
+                labelModal: 'Add companies',
+                labelBtnModal: 'Add new companies',
                 labelBtnSecondaryModal: 'Back',
                 handleBtn: create,
             })
@@ -660,31 +548,24 @@ export const CRUD = () => {
         const create = async (param) => {
             setLoading(prevLoading => !prevLoading)
             let dataBody = {}
-            if(param === 'employees'){
+            if(param === 'companies'){
                 dataBody = {
                     name: refBody.nameRef.current.value,
                     email: refBody.emailRef.current.value,
                     phone_number: refBody.phone_numberRef.current.value,
-                    company_id: refBody.company_idRef.current.value,
-                    job_title: refBody.job_titleRef.current.value,
-                    date_of_birth: refBody.date_of_birthRef.current.value,
-                    employment_status: refBody.employment_statusRef.current.value,
-                    hire_date: refBody.hire_dateRef.current.value,
-                    termination_date: refBody.termination_dateRef.current.value,
+                    website: refBody.websiteRef.current.value,
                     address: refBody.addressRef.current.value,
                     city: refBody.cityRef.current.value,
                     province: refBody.provinceRef.current.value,
                     postal_code: refBody.postal_codeRef.current.value,
                     country: refBody.countryRef.current.value,
-                    emergency_contact_name: refBody.emergency_contact_nameRef.current.value,
-                    emergency_contact_phone_number: refBody.emergency_contact_phone_numberRef.current.value,
-                    notes: refBody.notesRef.current.value,
-                    department_id: refBody.department_idRef.current.value,
-                    category_id: refBody.category_idRef.current.value
+                    industry: refBody.industryRef.current.value,
+                    description: refBody.descriptionRef.current.value,
+                    id: refBody.idRef.current.value 
                 }
     
                 try {
-                    const store = await postApiData('employees', dataBody)
+                    const store = await postApiData('companies', dataBody)
                     if(store.status === 201) {
                         setRefresh(prevRefresh => !prevRefresh)
                         setPath(() => param)
@@ -737,9 +618,9 @@ export const CRUD = () => {
                 }
     
                 try {
-                    const store = await postApiData('employees', dataBody)
+                    const store = await postApiData('companies', dataBody)
                     if(store.status === 201) {
-                        setPath(() => 'employees')
+                        setPath(() => 'companies')
                         setRefresh(!refresh)
                         setLoading(prevLoading => !prevLoading)
                         setOpenModal(prevOpenModal => !prevOpenModal)
@@ -761,8 +642,8 @@ export const CRUD = () => {
 
     const EDIT = () => {
         const handleEdit  = async (param) => {
-            const id = param.querySelector('span.hidden').textContent
-            if(path === 'employees'){
+            const id = param?.querySelector?.('span.hidden').textContent
+            if(path === 'companies'){
                 setDataModal({
                     size: '6xl',
                     labelModal: 'Detail & edit employees',
@@ -770,44 +651,6 @@ export const CRUD = () => {
                     labelBtnSecondaryModal: 'Delete',
                     handleBtn: edit
                 })
-                setValidationError(
-                    {
-                        name: '',
-                        email: '',
-                        phone_number: '',
-                        company_id: '',
-                        job_title: '',
-                        date_of_birth: '',
-                        employment_status:'',
-                        hire_date: '',
-                        termination_date:'',
-                        address: '',
-                        city: '',
-                        province: '',
-                        postal_code: '',
-                        country: '',
-                        emergency_contact_name: '',
-                        emergency_contact_phone_number: '',
-                        notes: '',
-                        department_id: '',
-                        category_id: '',
-                        id: '',
-                    }
-                )
-
-                setOpenModal(prevOpenModal => !prevOpenModal)
-                try {
-                    const response = await getApiData('companies/7/departments')
-                    const newData = response.data.map(item => ({
-                        id: item.id,
-                        name: item.name
-                    }))
-         
-                    setDataDepartmentsSelect(() => newData)
-         
-                } catch (error) {
-                    console.log(error);
-                }
                 try {
                     const {data, status} = await getApiData(path + '/' + id)
                     if(status === 200) {
@@ -816,32 +659,24 @@ export const CRUD = () => {
                                 name: data.name,
                                 email: data.email,
                                 phone_number: data.phone_number,
-                                company_id: data.company_id,
-                                job_title: data.job_title,
-                                date_of_birth: data.date_of_birth,
-                                employment_status: data.employment_status,
-                                hire_date: data.hire_date,
-                                termination_date: data.termination_date,
+                                website: data.website ?? '--',
                                 address: data.address,
                                 city: data.city,
                                 province: data.province,
                                 postal_code: data.postal_code,
                                 country: data.country,
-                                emergency_contact_name: data.emergency_contact_name,
-                                emergency_contact_phone_number: data.emergency_contact_phone_number,
-                                notes: data.notes,
-                                department_id: data.department_id,
-                                category_id: data.category_id,
+                                industry: data.industry,
+                                description: data.description,
                                 id: data.id,
                             }
                         )
-        
                         setIdDelete(data.id)
+                        setDefaultEdit(false)
+                        setDataDetailCompany(() => data)
                     }
                 } catch (error) {
-                    console.log(error);
+                    
                 }
-    
             }else if(path === 'employee-categories'){
                 setDataModal({
                     size: 'lg',
@@ -881,27 +716,20 @@ export const CRUD = () => {
         const edit = async () => {
             setLoading(prevLoading => !prevLoading)
             let dataBody = {}
-           if(path === 'employees'){
+           if(path === 'companies'){
                 dataBody = {
                     name: refBody.nameRef.current.value,
                     email: refBody.emailRef.current.value,
                     phone_number: refBody.phone_numberRef.current.value,
-                    company_id: refBody.company_idRef.current.value,
-                    job_title: refBody.job_titleRef.current.value,
-                    date_of_birth: refBody.date_of_birthRef.current.value,
-                    employment_status: refBody.employment_statusRef.current.value,
-                    hire_date: refBody.hire_dateRef.current.value,
-                    termination_date: refBody.termination_dateRef.current.value,
+                    website: refBody.websiteRef.current.value,
                     address: refBody.addressRef.current.value,
                     city: refBody.cityRef.current.value,
                     province: refBody.provinceRef.current.value,
                     postal_code: refBody.postal_codeRef.current.value,
                     country: refBody.countryRef.current.value,
-                    emergency_contact_name: refBody.emergency_contact_nameRef.current.value,
-                    emergency_contact_phone_number: refBody.emergency_contact_phone_numberRef.current.value,
-                    notes: refBody.notesRef.current.value,
-                    department_id: refBody.department_idRef.current.value,
-                    category_id: refBody.category_idRef.current.value
+                    industry: refBody.industryRef.current.value,
+                    description: refBody.descriptionRef.current.value,
+                    id: refBody.idRef.current.value 
                 }
         
                 try {
@@ -909,6 +737,36 @@ export const CRUD = () => {
                     if(response.status === 201) {
                         setLoading(prevLoading => !prevLoading)
                         setRefresh(!refresh)
+                        setPath('companies')
+                        // pada bagian ini harap di refactor kemabali nanti yaa
+                        try {
+                            const {data, status} = await getApiData('companies/' + refBody.idRef.current.value)
+                            if(status === 200) {
+                                setDataEdit(
+                                    {
+                                        name: data.name,
+                                        email: data.email,
+                                        phone_number: data.phone_number,
+                                        website: data.website ?? '--',
+                                        address: data.address,
+                                        city: data.city,
+                                        province: data.province,
+                                        postal_code: data.postal_code,
+                                        country: data.country,
+                                        industry: data.industry,
+                                        description: data.description,
+                                        id: data.id,
+                                    }
+                                )
+                                // setDefaultEdit(false)
+                                setDataDetailCompany(() => data)
+                            }
+                        } catch (error) {
+                            
+                        }
+
+                        // pada bagian ini harap di refactor kemabali nanti yaa, Ennnddd
+
                         setOpenModal((prevOpenModal) => !prevOpenModal)
                     }
                 } catch (error) {
@@ -957,6 +815,9 @@ export const CRUD = () => {
             try {
               await deleteApiData(path + '/' + idDelete)
               setRefresh(!refresh)
+            setDefaultEdit(true)
+
+            // pada bagian ini harap di refactor kemabali nanti yaa, Ennnddd
                 closeModalDelete()
             } catch (error) {
               console.log(error.response);
@@ -973,11 +834,11 @@ export const CRUD = () => {
 
 
     const inputBody = (param) => {
-        if(param === 'employees'){
+        if(param === 'companies'){
             return (
                 <>
                  <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-3">
-                            {inputEmployes.map( (item, index) => (
+                            {inputCompanies.map( (item, index) => (
                                 < FormInput
                                 key={item.id}
                                 element={item.element}
@@ -997,13 +858,14 @@ export const CRUD = () => {
                             ) )}
                             < TextArea 
                             span={`col-span-3`}
-                            label={'Notes'}
-                            htmlFor={'notes'}
-                            id={'notes'}
-                            name={'notes'}
-                            referens={refBody.notesRef}
-                            value={dataEdit.notes}
-                            placeholder={'Write notes here'}
+                            label={'Description'}
+                            htmlFor={'description'}
+                            id={'description'}
+                            name={'description'}
+                            referens={refBody.descriptionRef}
+                            value={dataEdit.description}
+                            onChange={handleChange}
+                            placeholder={'Write description here'}
                             />
                     </div>
                 </>
@@ -1058,8 +920,6 @@ export const CRUD = () => {
         handleCreate,
         openModal,
         dataModal,
-        inputEmployes,
-        inputEmployesCategory,
         refBody,
         handleEdit,
         dataEdit,
@@ -1075,6 +935,9 @@ export const CRUD = () => {
         loading,
         skeleton,
         path,
+        dataDetailCompany,
+        defaultEdit,
+        setDefaultEdit,
     }
 
 }

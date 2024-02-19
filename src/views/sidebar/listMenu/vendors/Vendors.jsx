@@ -1,9 +1,8 @@
 import { ModalConfirmDelete, ModalContainer } from "../../../layouts/ModalContainer"
-import TabelComponent from "../../../layouts/Tabel"
 import IconAdd from "../../../layouts/icons/IconAdd"
 import { useEffect, useState, useRef } from "react"
 import { TextArea } from "../../../layouts/FormInput"
-import TabelComponentTest from "../../../layouts/TabelTest"
+import TabelComponent from "../../../layouts/Tabel"
 import { Spinner } from "../../../layouts/Spinner"
 import { CRUD } from "./components/CRUD"
 
@@ -63,7 +62,7 @@ export const Vendors = () => {
         handleDelete={handleDelete}
         />
 
-        < TabelComponentTest 
+        < TabelComponent 
         data={data}
         dataHeading={dataHeading}
         skeleton={skeleton}

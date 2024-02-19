@@ -41,6 +41,7 @@ import { Transactions } from "./views/sidebar/listMenu/transaction/Transactions"
 import { Company } from "./views/sidebar/listMenu/company/organization/Company";
 import { Account } from "./views/sidebar/listMenu/account/Account";
 import { User } from "./views/sidebar/listMenu/user/User";
+import { CompanyDetail } from "./views/sidebar/listMenu/company/organization/components/companyDetail";
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -121,6 +122,14 @@ function App() {
                     element={
                       <Auth.ProtectedRoute>
                         <Company />
+                      </Auth.ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/company-detail"
+                    element={
+                      <Auth.ProtectedRoute>
+                        <CompanyDetail />
                       </Auth.ProtectedRoute>
                     }
                   />

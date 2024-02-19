@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import FormInput, { TextArea } from "../../layouts/FormInput"
-import Button from "../../layouts/Button"
-import IconSave from "../../layouts/icons/IconSave"
+import FormInput, { TextArea } from "../../../layouts/FormInput"
+import Button from "../../../layouts/Button"
+import IconSave from "../../../layouts/icons/IconSave"
 
 
 export const InfoBisnsi = () => {

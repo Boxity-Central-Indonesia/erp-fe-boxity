@@ -1,6 +1,6 @@
 import { ModalConfirmDelete, ModalContainer } from "../../../layouts/ModalContainer"
 import {CRUD} from "./components/CRUD"
-import TabelComponentTest from "../../../layouts/TabelTest"
+import TabelComponent from "../../../layouts/Tabel"
 import { Spinner } from "../../../layouts/Spinner"
 
 export const Account = () => {
@@ -59,7 +59,7 @@ export const Account = () => {
         handleDelete={handleDelete}
         />
 
-        < TabelComponentTest 
+        < TabelComponent 
         data={data}
         dataHeading={dataHeading}
         skeleton={skeleton}

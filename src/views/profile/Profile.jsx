@@ -1,6 +1,6 @@
 import { FotoProfile } from "./components/fotoProfile";
-import { InfoBisnsi } from "./components/infoBisnis";
-import { InfoUser } from "./components/infoUser";
+import { InfoBisnsi } from "./components/infoBisnis/infoBisnis";
+import { InfoUser } from "./components/infoUser/infoUser";
 import { LogoBisnis } from "./components/logoBisnsi";
 
 function Profile() {
