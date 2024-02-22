@@ -18,7 +18,6 @@ import { EmployesList } from "./views/sidebar/listMenu/company/employees/Employe
 import { Products } from "./views/sidebar/listMenu/products/Products";
 import { Warehouses } from "./views/sidebar/listMenu/warehouses/Warehouses";
 import { ColorProvider } from "./views/conifg/GlobalColour";
-import RoleAndPermission from "./views/sidebar/listMenu/user/Role&Permission";
 import { Test } from "./views/sidebar/listMenu/user/test";
 import { Penjualan } from "./views/sidebar/listMenu/reports/penjualan/Penjualan";
 import { Pembelian } from "./views/sidebar/listMenu/reports/pembelian/Pembelian";
@@ -42,6 +41,8 @@ import { Company } from "./views/sidebar/listMenu/company/organization/Company";
 import { Account } from "./views/sidebar/listMenu/account/Account";
 import { User } from "./views/sidebar/listMenu/user/User";
 import { CompanyDetail } from "./views/sidebar/listMenu/company/organization/components/companyDetail";
+import { RoleAndPermission } from "./views/sidebar/listMenu/role&permission/role&permission";
+import { Asset } from "./views/sidebar/listMenu/asset/Asset"; 
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -94,7 +95,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/user/role"
+                    path="/role-permission"
                     element={
                       <Auth.ProtectedRoute>
                         <RoleAndPermission />
@@ -178,6 +179,14 @@ function App() {
                     element={
                       <Auth.ProtectedRoute>
                         <Account />
+                      </Auth.ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="asset"
+                    element={
+                      <Auth.ProtectedRoute>
+                        <Asset />
                       </Auth.ProtectedRoute>
                     }
                   />

@@ -721,7 +721,7 @@ export const CRUD = () => {
 
   const EDIT = () => {
     const handleEdit = async (param) => {
-      const id = param.querySelector('span.hidden').textContent
+      const id = param.textContent
       if(path === 'vendors'){
         setDataModal({
           labelModal: "Detail & edit vendors",

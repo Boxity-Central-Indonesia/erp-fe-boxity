@@ -295,7 +295,7 @@ export const CRUD = () => {
 
     const EDIT = () => {
         const handleEdit  = async (param) => {
-            const id = param.querySelector('span.hidden').textContent
+            const id = param.textContent
                 setDataModal({
                     size: 'lg',
                     labelModal: 'Detail & edit leads',

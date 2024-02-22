@@ -3,15 +3,15 @@ import { useEffect } from "react";
 import Button from "../../../../../layouts/Button";
 import { TabelForCompany } from "./TabelForCompany";
 
-export const CompanyDetail = ({data, defaultEdit, showModal}) => {
+export const CompanyDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
 
-    const dataDepartments = data.departments.map(item => ({
+    const dataDepartments = data.departments?.map(item => ({
         id: item.id,
         name: item.name,
         responsibilities: item.responsibilities,
     }))
 
-    const dataBranches = data.branches.map(item => ({
+    const dataBranches = data.branches?.map(item => ({
         id: item.id,
         name: item.name,
         email: item.email,
@@ -71,12 +71,12 @@ export const CompanyDetail = ({data, defaultEdit, showModal}) => {
             <hr className="my-7" />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                <div>
-                <h2 className="text-xl font-medium dark:text-white mb-4">Company branch</h2>
-               <TabelForCompany data={dataDepartments}/>
+               <h2 className="text-xl font-medium dark:text-white mb-4">Company branch</h2>
+               <TabelForCompany data={dataBranches} dataHeading={dataHeading} routes={'companies/{companyId}/branches'}/>
                </div>
                <div>
-               <h2 className="text-xl font-medium dark:text-white mb-4">Company departments</h2>
-               <TabelForCompany data={dataBranches} />
+                <h2 className="text-xl font-medium dark:text-white mb-4">Company department</h2>
+               <TabelForCompany data={dataDepartments} dataHeading={dataHeading} routes={'companies/1/departments'}/>
                </div>
             </div>
             <hr className="my-7" />
@@ -95,7 +95,7 @@ export const CompanyDetail = ({data, defaultEdit, showModal}) => {
                 bgColour={'primary'}
                 label={'Edit'}
                 paddingX={'4'}
-                event={() => showModal(prev => !prev)}
+                event={() => handleEdit('', 'companies')}
                 paddingY={'2.5'}
                 icon={<svg className="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.3 4.8 2.9 2.9M7 7H4a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h11c.6 0 1-.4 1-1v-4.5m2.4-10a2 2 0 0 1 0 3l-6.8 6.8L8 14l.7-3.6 6.9-6.8a2 2 0 0 1 2.8 0Z"/>

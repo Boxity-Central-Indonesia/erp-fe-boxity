@@ -48,10 +48,10 @@ export const Company = () => {
                     openModal={openModal}
                     onToggleModal={setOpenModal}
                     modalBody={dataModalBody}
-                    sizeModal={'6xl'}
-                    labelModal={'Edit company'}
-                    labelBtnModal={'Save'}
-                    labelBtnSecondaryModal={'Delete'}
+                    sizeModal={dataModal.size}
+                    labelModal={dataModal.labelModal}
+                    labelBtnModal={dataModal.labelBtnModal}
+                    labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
                     handleBtnModal={dataModal.handleBtn}
                     parameter={path}
                     openModalDelete={openModalDelete}
@@ -68,7 +68,8 @@ export const Company = () => {
                 <CompanyDetail
                     data={dataDetailCompany}
                     defaultEdit={setDefaultEdit}
-                    showModal={setOpenModal}
+                    handleEdit={handleEdit}
+                    dataHeading={dataHeading}
                 />
             </>
         )

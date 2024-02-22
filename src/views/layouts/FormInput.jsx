@@ -29,7 +29,7 @@ const FormInput = (
         <>
           <div key={uniqueId + 3} className="col-span-3 lg:col-span-1">
             <label 
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className={`${type === 'hidden' ? 'hidden' : ``} block mb-2 text-sm font-medium text-gray-900 dark:text-white`}
               htmlFor={htmlFor}
             >
               {label}

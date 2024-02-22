@@ -16,18 +16,14 @@ export const CRUD = () => {
     const [loading, setLoading] = useState(true)
     const [skeleton, setSkeleton] = useState(false)
     const [dataHeading, setDataHeading] = useState([{}])
-    const [path, setPath] = useState('users') 
+    const [path, setPath] = useState('roles') 
 
 
     const [refBody, setRefBody] = useState( {
-        emailRef: useRef(),
-        nameRef: useRef(),
-        usernameRef: useRef(),
-        no_handphoneRef: useRef(),
-        roleRef: useRef(),
-        genderRef: useRef(),
-        passwordRef: useRef(),
-        confirm_passwordRef: useRef(),
+        nama_prospekRef: useRef(),
+        email_prospekRef: useRef(),
+        nomor_telepon_prospekRef: useRef(),
+        tipe_prospekRef: useRef(),
         idRef: useRef()
     })
     const [dataEdit, setDataEdit] = useState({})
@@ -160,23 +156,25 @@ export const CRUD = () => {
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const { data } = await getApiData('users');
+                    const { data } = await getApiData(path);
                         const newData = data.map(item => ({
                             id: item.id,
                             name: item.name,
-                            username: item.username,
-                            email: item.email,
-                            'number phone': item.no_handphone
                         }))
                         setData(() => newData);
                         setDataHeading([
                             {
-                                label: 'Add User',
+                                label: 'Add role',
                                 icon: IconAdd(),
-                                heading: 'User list',
+                                heading: 'Role & permission',
                                 eventToggleModal: handleCreate,
                                 onclick: handleClickHeading,
                                 showNavHeading: false,
+                                // dataNavHeading: [
+                                //     {path: 'employees', label: 'Employees'},
+                                //     {path: 'employee-categories', label: 'Employee categories'},
+                                // ],
+                                // activeButton: path,
                             }
                         ])
                     } catch (error) {
@@ -185,6 +183,46 @@ export const CRUD = () => {
             }
             getData()
         }, [refresh])
+
+        // const handleClickHeading = async (param) => {
+        //     setPath(param)
+        //     setDataHeading([
+        //         {
+        //             label: param === 'employees' ? 'Add employees' : 'Add category',
+        //             icon: IconAdd(),
+        //             heading: param === 'employees' ? 'Employees' : 'Category employes' +' list',
+        //             eventToggleModal: handleCreate,
+        //             onclick: handleClickHeading,
+        //             parameter: param === 'employees' ? 'employees' : 'employee-categories',
+        //             showNavHeading: true,
+        //             dataNavHeading: [
+        //                 {path: 'employees', label: 'Employees'},
+        //                 {path: 'employee-categories', label: 'Employee categories'},
+        //             ],
+        //             activeButton: param,
+        //         }
+        //     ])
+        //     setData([1])
+        //     setSkeleton(prevSkeleton => !prevSkeleton)
+        //     try {
+        //         const {data,status} = await getApiData(param)
+        //         if(status === 200) {
+        //             if(param === 'employees'){
+        //                 const newData = dataEmployes(data)
+        //                 setSkeleton(prevSkeleton => !prevSkeleton)
+        //                 setData(newData)
+        //             }else if(param === 'employee-categories') {
+        //                 setSkeleton(prevSkeleton => !prevSkeleton)
+        //                 const newData = dataEmployesCategories(data)
+        //                 setData(newData)
+        //             }
+        //         }
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
+
+        // getDatEnd
 
         return {data}
     }

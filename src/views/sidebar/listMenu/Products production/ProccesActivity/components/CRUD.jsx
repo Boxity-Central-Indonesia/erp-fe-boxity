@@ -312,7 +312,7 @@ export const CRUD = () => {
 
     const EDIT = () => {
         const handleEdit  = async (param) => {
-            const id = param.querySelector('span.hidden').textContent
+            const id = param.textContent
             if(path === 'employees'){
                 setDataModal({
                     size: '6xl',

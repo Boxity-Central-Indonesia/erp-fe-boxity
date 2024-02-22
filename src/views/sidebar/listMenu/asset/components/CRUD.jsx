@@ -20,7 +20,7 @@ export const CRUD = () => {
     const [dataCategoryEmployes, setDataCategoryEmployes] = useState()
     const [skeleton, setSkeleton] = useState(false)
     const [dataHeading, setDataHeading] = useState([{}])
-    const [path, setPath] = useState('accounts') 
+    const [path, setPath] = useState('assets') 
     const [dataAccounSelect, setDataAccountSelect] = useState([])
 
     const [refBody, setRefBody] = useState( {
@@ -201,86 +201,153 @@ export const CRUD = () => {
 
 
 
-    const dataAccounts = (data) => {
+    const dataAsset = (data) => {
         return data.map(item => ({
             id: item.id,
+            code: item.code,
             name: item.name,
             type: item.type,
-            balance: item.balance
+            'acquisition date': item.acquisition_date,
+            'acquisition cost': item.acquisition_cost,
+            'book value': item.book_value,
+            'location': item.location.name,
+            condition: item.condition.condition,
+            description: item.description
         }))
     }
 
-    const dataAccountTransactions = (data) => {
+    const dataLocation = (data) => {
         return data.map(item => ({
-            'account name': item.account.name,
-            'account type': item.account.type,
             id: item.id,
-            type: item.type,
-            amount: item.amount,
-            'account balance': item.account.balance,
+            name: item.name,
+            address: item.address,
+
+        }))
+    }
+
+    const dataCondition = (data) => {
+        return data.map(item => ({
+            id: item.id,
+            condition: item.condition,
+
         }))
     }
 
     const READ = () => {
         const [data, setData] = useState()
         useEffect(() => {
-            const getData = async () => {
-                try {
-                    const { data } = await getApiData(path);
-                    if(path === 'accounts'){
-                        const newData = dataAccounts(data)
-                        setData(() => newData);
-                        setDataHeading([
+        const getData = async () => {
+            try {
+                const {data} = await getApiData(path);
+                if (path === 'assets') {
+                    const newData = dataAsset(data)
+                    setData(() => newData);
+                    setDataHeading([{
+                        label: 'Add asset',
+                        icon: IconAdd(),
+                        heading: 'Assets list',
+                        eventToggleModal: handleCreate,
+                        onclick: handleClickHeading,
+                        showNavHeading: true,
+                        dataNavHeading: [
                             {
-                                label: 'Add account',
-                                icon: IconAdd(),
-                                heading: 'Accounts list',
-                                eventToggleModal: handleCreate,
-                                onclick: handleClickHeading,
-                                showNavHeading: true,
-                                dataNavHeading: [
-                                    {path: 'accounts', label: 'Accounts'},
-                                    {path: 'accounts-transactions', label: 'Transactions'},
-                                ],
-                                activeButton: path,
-                            }
-                        ])
-                    }else if(path === 'accounts-transactions'){
-                        const newData = dataAccountTransactions(data)
-                        setData(() => newData);
-                        setDataHeading([
+                                path: 'asset-locations',
+                                label: 'Location'
+                            },
                             {
-                                label: 'Add category',
-                                icon: IconAdd(),
-                                heading: 'Categories list',
-                                eventToggleModal: handleCreate,
-                                onclick: handleClickHeading,
-                                showNavHeading: true,
-                                dataNavHeading: [
-                                    {path: 'employees', label: 'Employees'},
-                                    {path: 'accounts-transactions', label: 'Transactions'},
-                                ],
-                                activeButton: path,
-                            }
-                        ])
-                        }
-                    } catch (error) {
-                        console.error(error);
-                    }
-            }
-            getData()
+                                path: 'asset-conditions',
+                                label: 'Condition'
+                            },
+                            {
+                                path: 'assets',
+                                label: 'Assets'
+                            },
+                            {
+                                path: 'deperesiation',
+                                label: 'Depresiation'
+                            },
+                        ],
+                        activeButton: path,
+                    }])
+                } else if (path === 'asset-locations') {
+                    const newData = dataLocation(data)
+                    setData(() => newData);
+                    setDataHeading([{
+                        label: 'Add location',
+                        icon: IconAdd(),
+                        heading: 'Locations list',
+                        eventToggleModal: handleCreate,
+                        onclick: handleClickHeading,
+                        showNavHeading: true,
+                        dataNavHeading: [{
+                                path: 'asset-locations',
+                                label: 'Location'
+                            },
+                            {
+                                path: 'asset-conditions',
+                                label: 'Condition'
+                            },
+                            {
+                                path: 'assets',
+                                label: 'Assets'
+                            },
+                            {
+                                path: 'deperesiation',
+                                label: 'Depresiation'
+                            },
+                        ],
+                        activeButton: path,
+                    }])
+                } else if (path === 'asset-conditions') {
+                    const newData = dataLocation(data)
+                    setData(() => newData);
+                    setDataHeading([{
+                        label: 'Add location',
+                        icon: IconAdd(),
+                        heading: 'Locations list',
+                        eventToggleModal: handleCreate,
+                        onclick: handleClickHeading,
+                        showNavHeading: true,
+                        dataNavHeading: [{
+                                path: 'asset-locations',
+                                label: 'Location'
+                            },
+                            {
+                                path: 'asset-conditions',
+                                label: 'Condition'
+                            },
+                            {
+                                path: 'assets',
+                                label: 'Assets'
+                            },
+                            {
+                                path: 'deperesiation',
+                                label: 'Depresiation'
+                            },
+                        ],
+                        activeButton: path,
+                    }])
+                }
+            } catch (error) {
+                console.error(error);
+            }     
+        }
+        getData()
         }, [refresh])
 
         useEffect(() => {
             const getDataAccount = async () => {
                 try {
-                    const {data, status} = await getApiData('accounts')
-                    if(status === 200) {
-                       const newData =  data.map(item => ({
+                    const {
+                        data,
+                        status
+                    } = await getApiData('accounts')
+                    if (status === 200) {
+                        const newData = data.map(item => ({
                             id: item.id,
                             name: item.name
-                       }))
-                       setDataAccountSelect(() => newData)
+                        }))
+                        setDataAccountSelect(() => newData)
                     }
                 } catch (error) {
                     console.log(error);
@@ -291,34 +358,52 @@ export const CRUD = () => {
 
         const handleClickHeading = async (param) => {
             setPath(param)
-            setDataHeading([
-                {
-                    label: param === 'accounts' ? 'Add accounts' : 'Add transaction',
-                    icon: IconAdd(),
-                    heading: param === 'accounts' ? 'Accounts' : 'Transactions' +' list',
-                    eventToggleModal: handleCreate,
-                    onclick: handleClickHeading,
-                    parameter: param,
-                    showNavHeading: true,
-                    dataNavHeading: [
-                        {path: 'accounts', label: 'Accounts'},
-                        {path: 'accounts-transactions', label: 'Transactions'},
-                    ],
-                    activeButton: param,
-                }
-            ])
+            setDataHeading([{
+                label: param === 'accounts' ? 'Add accounts' : 'Add transaction',
+                icon: IconAdd(),
+                heading: param === 'accounts' ? 'Accounts' : 'Transactions' + ' list',
+                eventToggleModal: handleCreate,
+                onclick: handleClickHeading,
+                parameter: param,
+                showNavHeading: true,
+                dataNavHeading: [{
+                        path: 'asset-locations',
+                        label: 'Location'
+                    },
+                    {
+                        path: 'assets-conditions',
+                        label: 'Condition'
+                    },
+                    {
+                        path: 'assets',
+                        label: 'Assets'
+                    },
+                    {
+                        path: 'deperesiation',
+                        label: 'Depresiation'
+                    },
+                ],
+                activeButton: param,
+            }])
             setData([1])
             setSkeleton(prevSkeleton => !prevSkeleton)
             try {
-                const {data,status} = await getApiData(param)
-                if(status === 200) {
-                    if(param === 'accounts'){
-                        const newData = dataAccounts(data)
+                const {
+                    data,
+                    status
+                } = await getApiData(param)
+                if (status === 200) {
+                    if (param === 'assets') {
+                        const newData = dataAsset(data)
                         setSkeleton(prevSkeleton => !prevSkeleton)
                         setData(newData)
-                    }else if(param === 'accounts-transactions') {
+                    } else if (param === 'asset-locations') {
                         setSkeleton(prevSkeleton => !prevSkeleton)
-                        const newData = dataAccountTransactions(data)
+                        const newData = dataLocation(data)
+                        setData(newData)
+                    } else if (param === 'asset-conditions') {
+                        setSkeleton(prevSkeleton => !prevSkeleton)
+                        const newData = dataCondition(data)
                         setData(newData)
                     }
                 }
@@ -329,7 +414,10 @@ export const CRUD = () => {
 
         // getDatEnd
 
-        return {data , handleClickHeading}
+        return {
+            data,
+            handleClickHeading
+        }
     }
 
 

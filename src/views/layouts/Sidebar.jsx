@@ -64,7 +64,7 @@ function Sidebar() {
         { path: "/company", label: "Companies" },
         { path: "/employees", label: "Employees" },
         { path: "/leads/list", label: "Leads Prospect" },
-        { label: "Role & Permission", path: "/user/role" },
+        { label: "Role & Permission", path: "/role-permission" },
         { label: "Test", path: "/user/test" },
       ],
     },
@@ -89,6 +89,7 @@ function Sidebar() {
       ),
       subMenu: [
         { path: "accounts", label: "Accounting" },
+        { path: "asset", label: "Asset" },
       ],
     },
     {

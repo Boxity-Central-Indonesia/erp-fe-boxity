@@ -48,28 +48,7 @@ export const CRUD = () => {
         notesRef: useRef(),
         descriptionRef: useRef(),
     })
-    const [dataEdit, setDataEdit] = useState({
-        // name: '',
-        // email: '',
-        // phone_number: '',
-        // company_id: '',
-        // job_title: '',
-        // date_of_birth: '',
-        // employment_status:'',
-        // hire_date: '',
-        // termination_date:'',
-        // address: '',
-        // city: '',
-        // province: '',
-        // postal_code: '',
-        // country: '',
-        // emergency_contact_name: '',
-        // emergency_contact_phone_number: '',
-        // notes: '',
-        // department_id: '',
-        // category_id: '',
-        // id: ''
-    })
+    const [dataEdit, setDataEdit] = useState({})
 
 
     const handleChangeAndGetDepartment = async (event) => {
@@ -771,7 +750,8 @@ export const CRUD = () => {
 
     const EDIT = () => {
         const handleEdit  = async (param) => {
-            const id = param.querySelector('span.hidden').textContent
+            const id = param.textContent
+            console.log(param);
             if(path === 'employees'){
                 setDataModal({
                     size: '6xl',
