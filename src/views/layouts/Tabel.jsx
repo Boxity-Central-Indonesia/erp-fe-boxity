@@ -39,7 +39,7 @@ const TabelComponent = ({data, dataHeading, showHeading, handleEdit, setOpenModa
     return filteredKeys.map((key) => {
       return columnHelper.accessor((row) => row[key], {
         id: key, // Tambahkan 'col_' di depan kunci sebagai ID unik
-        cell: (info) => info.getValue(),
+        cell: (info) => <p className={`${info.getValue() === 'Active' ? `border py-0.5 px-4 rounded-full bg-green-200 w-fit text-green-800 text-sm` : info.getValue() === 'Inactive' ? `border py-0.5 px-4 rounded-full bg-red-200 w-fit text-red-800 text-sm` : ``}`}>{info.getValue()}</p>,
       });
     });
   }, [data]);
