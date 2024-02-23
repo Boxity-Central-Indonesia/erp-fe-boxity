@@ -25,10 +25,10 @@ export const CRUD = () => {
     const [inputDepartments, setInputDepartments] = useState()
     const [skeleton, setSkeleton] = useState(false)
     const [dataHeading, setDataHeading] = useState([{}])
-    const [path, setPath] = useState('companies') 
     const [defaultEdit, setDefaultEdit] = useState(true)
     const [dataDetailCompany, setDataDetailCompany] = useState({})
     const [idCompany, setIdCompany] = useState(null)
+    const [path, setPath] = useState('companies') 
 
     const [refBody, setRefBody] = useState( {
         nameRef: useRef(),
@@ -45,6 +45,7 @@ export const CRUD = () => {
         descriptionRef: useRef(),
         company_idRef: useRef(),
         responsibilitiesRef: useRef(),
+        idBranchRef: useRef()
     })
     const [dataEdit, setDataEdit] = useState({})
 
@@ -497,12 +498,17 @@ export const CRUD = () => {
 
 
     const EDIT = () => {
+        let endPoint = ''
         const handleEdit  = async (param, routes) => {
-            // console.log(routes);
-            setPath('companies')
-            setOpenModal(prevOpenModal => !prevOpenModal)
-            const id = param?.querySelector?.('span.hidden').textContent
-            if(path === 'companies'){
+            setDataEdit([{
+
+            }])
+            routes = routes || 'companies'
+            endPoint = routes
+            setPath(() => routes)
+            setOpenModal(prevOpenModal => defaultEdit === false ? !prevOpenModal : prevOpenModal)
+            const id = param.textContent
+            if(endPoint === 'companies'){
                 setDefaultEdit(false)
                 setDataModal({
                     size: '6xl',
@@ -528,7 +534,7 @@ export const CRUD = () => {
                     }
                 ])
                 try {
-                    const {data, status} = await getApiData(path + '/' + 1)
+                    const {data, status} = await getApiData('companies/' + 1)
                     if(status === 200) {
                         setDataEdit(
                             {
@@ -554,38 +560,29 @@ export const CRUD = () => {
                 } catch (error) {
                     
                 }
-            }else if(path === 'employee-categories'){
+            }else if (endPoint === 'companies/{companyId}/branches'){
                 setDataModal({
-                    size: 'lg',
-                    labelModal: 'Detail & edit employee category',
+                    size: '2xl',
+                    labelModal: 'Edit branch',
                     labelBtnModal: 'Save',
                     labelBtnSecondaryModal: 'Delete',
-                    handleBtn: edit
+                    handleBtn: edit,
                 })
-                setValidationError(
-                    {
-                        name: '',
-                        description: ''
-                    }
-                )
 
-                setOpenModal(prevOpenModal => !prevOpenModal)
                 try {
-                    const {data, status} = await getApiData(path + '/' + id)
+                    const {data, status} = await getApiData('companies/' + 1 + '/branches/' + param)
                     if(status === 200) {
-                        setDataEdit(
-                            {
-                               name: data.name,
-                               description: data.description,
-                               id: data.id
-                            }
-                        )
-        
-                        setIdDelete(data.id)
+                       setDataEdit({
+                        name: data.name,
+                        address: data.address,
+                        email: data.email,
+                        phone_number: data.phone_number
+                       })
                     }
                 } catch (error) {
                     console.log(error);
                 }
+
             }
         }
 
@@ -593,7 +590,7 @@ export const CRUD = () => {
         const edit = async () => {
             setLoading(prevLoading => !prevLoading)
             let dataBody = {}
-           if(path === 'companies'){
+           if(endPoint === 'companies'){
                 dataBody = {
                     name: refBody.nameRef.current.value,
                     email: refBody.emailRef.current.value,
@@ -612,14 +609,14 @@ export const CRUD = () => {
                 setIdCompany(refBody.idRef.current.value)
         
                 try {
-                    const response = await putApiData(path + '/' + idCompany, dataBody)
+                    const response = await putApiData(endPoint + '/' + 1, dataBody)
                     if(response.status === 201) {
                         setLoading(prevLoading => !prevLoading)
                         setRefresh(!refresh)
                         setPath('companies')
                         // pada bagian ini harap di refactor kemabali nanti yaa
                         try {
-                            const {data, status} = await getApiData('companies/' + idCompany)
+                            const {data, status} = await getApiData('companies/' + 1)
                             if(status === 200) {
                                 setDataEdit(
                                     {
@@ -652,13 +649,15 @@ export const CRUD = () => {
                     setResponseError(error.response.data.errors)
                     setLoading(prevLoading => !prevLoading)
                 }
-           }else if(path === 'employee-categories'){
+           }else if(endPoint === 'companies/{companyId}/branches'){
                 dataBody = {
                     name: refBody.nameRef.current.value,
-                    description: refBody.descriptionRef.current.value
+                    email: refBody.emailRef.current.value,
+                    address: refBody.addressRef.current.value,
+                    phone_number: refBody.phone_numberRef.current.value
                 }
                 try {
-                    const response = await putApiData(path + '/' + refBody.idRef.current.value, dataBody)
+                    const response = await putApiData('companies/' + 1 + '/branches/4' )
                     if(response.status === 201) {
                         setLoading(prevLoading => !prevLoading)
                         setRefresh(!refresh)
@@ -752,7 +751,7 @@ export const CRUD = () => {
                 labelBtnSecondaryModal: 'Back',
                 handleBtn: create,
             })
-           }else if(param === 'companies/1/departments') {
+           }else if(param === 'companies/{companyId}/departments') {
             setPath(param)
             setDataEdit(
                 {
@@ -822,6 +821,51 @@ export const CRUD = () => {
                 }
                 try {
                     const store = await postApiData('companies/' + refBody.company_idRef.current.value + '/branches', dataBody)
+                    if(store.status === 201) {
+                        setRefresh(prevRefresh => !prevRefresh)
+                        setPath(() => param)
+                        setLoading(prevLoading => !prevLoading)
+                        setOpenModal(prevOpenModal => !prevOpenModal)
+                        
+                        try {
+                            const {data, status} = await getApiData('companies/' + refBody.company_idRef.current.value)
+                            if(status === 200) {
+                                setDataEdit(
+                                    {
+                                        name: data.name,
+                                        email: data.email,
+                                        phone_number: data.phone_number,
+                                        website: data.website ?? '--',
+                                        address: data.address,
+                                        city: data.city,
+                                        province: data.province,
+                                        postal_code: data.postal_code,
+                                        country: data.country,
+                                        industry: data.industry,
+                                        description: data.description,
+                                        id: data.id,
+                                    }
+                                )
+                                // setDefaultEdit(false)
+                                setDataDetailCompany(() => data)
+                            }
+                        } catch (error) {
+                            
+                        }
+
+                    }
+                } catch (error) { 
+                    setLoading(prevLoading => !prevLoading)
+                    setResponseError(error.response.data.errors)
+                }
+            }else if(param === 'companies/{companyId}/departments'){
+                dataBody = {
+                    name: refBody.nameRef.current.value,
+                    responsibilities: refBody.responsibilitiesRef.current.value,
+                    company_id: refBody.company_idRef.current.value
+                }
+                try {
+                    const store = await postApiData('companies/' + refBody.company_idRef.current.value + '/departments', dataBody)
                     if(store.status === 201) {
                         setRefresh(prevRefresh => !prevRefresh)
                         setPath(() => param)
@@ -975,6 +1019,7 @@ export const CRUD = () => {
             return (
                 <>
                 <input type="hidden" name="company_id" value={idDelete} ref={refBody.company_idRef}/>
+                <input type="hidden" name="id" value={dataEdit.idBranch} ref={refBody.idBranchRef}/>
                  <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
                             {inputBranch.map( (item, index) => (
                                 < FormInput
@@ -997,9 +1042,10 @@ export const CRUD = () => {
                     </div>
                 </>
             )
-        }else if(defaultEdit == false && param === 'companies/1/departments'){
+        }else if(defaultEdit == false && param === 'companies/{companyId}/departments'){
             return (
                 <>
+                <input type="hidden" name="company_id" value={idDelete} ref={refBody.company_idRef}/>
                  <div className="grid gap-4 mb-4 grid-cols-1">
                             {inputDepartments.map( (item, index) => (
                                 < FormInput

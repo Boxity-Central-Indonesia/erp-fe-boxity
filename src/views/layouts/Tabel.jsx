@@ -30,6 +30,19 @@ const TabelComponent = ({data, dataHeading, showHeading, handleEdit, setOpenModa
     handleEdit(param, param2)
   }
 
+  function formatToRupiah(value) {
+    // Check if the value is a number
+    if (typeof value === 'number') {
+      // Format as rupiah with two decimal places
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value);
+    } else {
+      // Return the original value if it's not a number
+      return value;
+    }
+  }
+  
+  
+
   const columns = useMemo(() => {
     if (!data || !data[0]) return []; // Pastikan data ada dan tidak kosong
     
@@ -38,11 +51,47 @@ const TabelComponent = ({data, dataHeading, showHeading, handleEdit, setOpenModa
     
     return filteredKeys.map((key) => {
       return columnHelper.accessor((row) => row[key], {
-        id: key, // Tambahkan 'col_' di depan kunci sebagai ID unik
-        cell: (info) => <p className={`${info.getValue() === 'Active' ? `border py-0.5 px-4 rounded-full bg-green-200 w-fit text-green-800 text-sm` : info.getValue() === 'Inactive' ? `border py-0.5 px-4 rounded-full bg-red-200 w-fit text-red-800 text-sm` : ``}`}>{info.getValue()}</p>,
+        id: key,
+        cell: (info) => {
+          let className = '';
+          let icon = ''
+  
+          // Cek apakah nilai adalah 'Active' atau 'Inactive'
+          if (info.getValue() === 'Active') {
+            className = 'border py-0.5 px-4 rounded-full bg-green-600 w-fit text-white text-sm';
+          } else if (info.getValue() === 'Inactive') {
+            className = 'border py-0.5 px-4 rounded-full bg-red-600 w-fit text-white text-sm';
+          }
+  
+          if(info.getValue() === 'purchase' || info.getValue() === 'inbound') {
+            className = 'border py-0.5 px-2 rounded-full bg-green-600 w-fit text-white text-sm flex items-center justify-center capitalize'
+            icon = <svg className="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19V5m0 14-4-4m4 4 4-4"/>
+          </svg>
+          }else if(info.getValue() === 'sale' || info.getValue() === 'outbound'){
+            className = 'border py-0.5 px-2 rounded-full bg-red-600 w-fit text-white text-sm flex items-center justify-center capitalize'
+            icon = <svg className="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
+          </svg>
+          }else if(info.getValue() === 'transfer') {
+            className = 'border py-0.5 px-2 rounded-full bg-blue-600 w-fit text-white text-sm flex items-center justify-center capitalize'
+            icon = <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 20V7m0 13-4-4m4 4 4-4m4-12v13m0-13 4 4m-4-4-4 4"/>
+          </svg>
+          }
+          // Cek apakah nilai adalah angka desimal atau nominal
+          const value = info.getValue();
+          const formattedValue = typeof value === 'number' && key != 'id' && key != 'stock' && key != 'amount' ? formatToRupiah(value) : value;
+  
+          return <p className={`${className}capitalize`}>
+            {icon}
+            {key === 'amount' ? formattedValue + ` kg` : formattedValue}
+            </p>;
+        },
       });
     });
   }, [data]);
+  
   
   const table = useReactTable({
     data,

@@ -1,11 +1,11 @@
 // TabelHeading.jsx
 import React from "react";
-import Button from "./Button";
-import { useColor } from "../conifg/GlobalColour";
+import { useColor } from "../../../../../conifg/GlobalColour";
 import { useState, useEffect } from "react";
 import { Dropdown } from "flowbite-react";
+import Button from "../../../../../layouts/Button";
 
-const TabelHeading = ({ 
+export const TabelHeadingForCompany = ({ 
   toggleOpenModal, 
   icon, 
   label, 
@@ -146,4 +146,3 @@ function DebouncedInput({
   );
 }
 
-export default TabelHeading;

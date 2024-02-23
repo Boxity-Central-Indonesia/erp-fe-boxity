@@ -229,6 +229,7 @@ export const CRUD = () => {
                     const { data } = await getApiData(path);
                     if(path === 'accounts'){
                         const newData = dataAccounts(data)
+                        console.log(data);
                         setData(() => newData);
                         setDataHeading([
                             {
@@ -248,6 +249,7 @@ export const CRUD = () => {
                     }else if(path === 'accounts-transactions'){
                         const newData = dataAccountTransactions(data)
                         setData(() => newData);
+                        console.log(data);
                         setDataHeading([
                             {
                                 label: 'Add category',
@@ -319,6 +321,7 @@ export const CRUD = () => {
                     }else if(param === 'accounts-transactions') {
                         setSkeleton(prevSkeleton => !prevSkeleton)
                         const newData = dataAccountTransactions(data)
+                        console.log(data);
                         setData(newData)
                     }
                 }
