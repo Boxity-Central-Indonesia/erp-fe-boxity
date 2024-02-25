@@ -14,7 +14,7 @@ export const CompanyDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
     : []; // Use an empty array if data.departments is null
   
 
-    const dataBranches = data?.branches? data.departments.map(item => ({
+    const dataBranches = data?.branches? data.branches.map(item => ({
         id: item.id,
         name: item.name,
         email: item.email,
