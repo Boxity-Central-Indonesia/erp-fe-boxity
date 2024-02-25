@@ -40,7 +40,7 @@ import { Transactions } from "./views/sidebar/listMenu/transaction/Transactions"
 import { Company } from "./views/sidebar/listMenu/company/organization/Company";
 import { Account } from "./views/sidebar/listMenu/account/Account";
 import { User } from "./views/sidebar/listMenu/user/User";
-import { CompanyDetail } from "./views/sidebar/listMenu/company/organization/components/companyDetail";
+// import { CompanyDetail } from "./views/sidebar/listMenu/company/organization/components/companyDetail";
 import { RoleAndPermission } from "./views/sidebar/listMenu/role&permission/role&permission";
 import { Asset } from "./views/sidebar/listMenu/asset/Asset"; 
 
@@ -126,14 +126,14 @@ function App() {
                       </Auth.ProtectedRoute>
                     }
                   />
-                  <Route
+                  {/* <Route
                     path="/company-detail"
                     element={
                       <Auth.ProtectedRoute>
                         <CompanyDetail />
                       </Auth.ProtectedRoute>
                     }
-                  />
+                  /> */}
                   <Route
                     path="/employees"
                     element={

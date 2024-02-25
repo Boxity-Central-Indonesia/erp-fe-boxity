@@ -1,7 +1,7 @@
 import { CRUD } from "./CRUD"
 import { useEffect } from "react";
 import Button from "../../../../../layouts/Button";
-import { TabelForCompany } from "./TabelForCompany";
+import { TabelForDetail } from "../../../../../layouts/TabelForDetail";
 
 export const CompanyDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
 
@@ -138,11 +138,11 @@ export const CompanyDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                <div>
                <h2 className="text-xl font-medium dark:text-white mb-4">Company branch</h2>
-               <TabelForCompany data={dataBranches} dataHeading={dataHeading} handleEdit={handleEdit} routes={'companies/{companyId}/branches'}/>
+               <TabelForDetail data={dataBranches} dataHeading={dataHeading} handleEdit={handleEdit} routes={'companies/{companyId}/branches'}/>
                </div>
                <div>
                 <h2 className="text-xl font-medium dark:text-white mb-4">Company department</h2>
-               <TabelForCompany data={dataDepartments} dataHeading={dataHeading} handleEdit={handleEdit} routes={'companies/{companyId}/departments'}/>
+               <TabelForDetail data={dataDepartments} dataHeading={dataHeading} handleEdit={handleEdit} routes={'companies/{companyId}/departments'}/>
                </div>
             </div>
             <hr className="my-7" />

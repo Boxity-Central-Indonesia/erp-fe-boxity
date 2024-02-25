@@ -1,9 +1,8 @@
 import { Table } from "flowbite-react"
-import { useColor } from '../../../../../conifg/GlobalColour';
-import { TabelHeadingForCompany } from "./TabelHeadingForCompany";
+import { useColor } from '../conifg/GlobalColour';
+import { TabelHeadingForDetail } from "./TabelHeadingForDetail";
 
-
-export const TabelForCompany = ({data, dataHeading, routes, handleEdit}) => {
+export const TabelForDetail = ({data, dataHeading, routes, handleEdit}) => {
   const { globalColor, changeColor } = useColor();
 
     if (!data) {
@@ -54,7 +53,7 @@ export const TabelForCompany = ({data, dataHeading, routes, handleEdit}) => {
     return (
         <>
         <div className="overflow-x-auto">
-        < TabelHeadingForCompany toggleOpenModal={dataHeading && dataHeading[0].eventToggleModal} icon={dataHeading && dataHeading[0].icon}
+        < TabelHeadingForDetail toggleOpenModal={dataHeading && dataHeading[0].eventToggleModal} icon={dataHeading && dataHeading[0].icon}
             label={dataHeading && dataHeading[0].label}
             handleClickHeading={dataHeading && dataHeading[0].onclick} showNavHeading={dataHeading && dataHeading[0].showNavHeading}
             dataNavHeading={dataHeading && dataHeading[0].dataNavHeading} routes={routes}/>

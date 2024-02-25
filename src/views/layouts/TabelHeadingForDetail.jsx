@@ -1,11 +1,11 @@
 // TabelHeading.jsx
 import React from "react";
-import { useColor } from "../../../../../conifg/GlobalColour";
+import { useColor } from "../conifg/GlobalColour";
 import { useState, useEffect } from "react";
 import { Dropdown } from "flowbite-react";
-import Button from "../../../../../layouts/Button";
+import Button from "./Button";
 
-export const TabelHeadingForCompany = ({ 
+export const TabelHeadingForDetail = ({ 
   toggleOpenModal, 
   icon, 
   label, 
@@ -23,7 +23,7 @@ export const TabelHeadingForCompany = ({
   return (
     <>
       <section>
-        <div className={`flex relative mb-8 mt-3 ${showNavHeading ? `` : `hidden`}`}>
+        {/* <div className={`flex relative mb-8 mt-3 ${showNavHeading ? `` : `hidden`}`}>
           {dataNavHeading && dataNavHeading.map(item => (
             <button
             style={{
@@ -35,13 +35,13 @@ export const TabelHeadingForCompany = ({
               {item.label}
             </button>
           ))}
-          {/* <button className={`btn_akses px-8 pb-3 ${activeButton==='employee-categories' ? 'border-b-4 border-[#9345a3] z-10'
+          <button className={`btn_akses px-8 pb-3 ${activeButton==='employee-categories' ? 'border-b-4 border-[#9345a3] z-10'
             : 'border-b-2' }`} onClick={()=> handleClick('employee-categories')}
             >
             Employes category
-          </button> */}
+          </button>
           <hr className="w-full absolute bottom-0 z-0 border-2" />
-        </div>
+        </div> */}
         <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
           <div className="w-full md:w-1/2">
             <form className="flex items-center">

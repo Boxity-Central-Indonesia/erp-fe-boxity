@@ -5,6 +5,7 @@ import { TextArea } from "../../../layouts/FormInput"
 import TabelComponent from "../../../layouts/Tabel"
 import { Spinner } from "../../../layouts/Spinner"
 import { CRUD } from "./components/CRUD"
+import { OrderDetail } from "./components/OrderDetail"
 
 export const Transactions = () => {
     const {
@@ -24,7 +25,10 @@ export const Transactions = () => {
         loading,
         handleCreate,
         skeleton,
-        path
+        path,
+        defaultEdit,
+        setDefaultEdit,
+        dataDetailOrders
     } = CRUD()
 
     const dataModalBody = () => {
@@ -39,7 +43,41 @@ export const Transactions = () => {
         )
     }
 
-    return(
+
+    if(!defaultEdit) {
+        return (
+            <>
+                <ModalContainer 
+                    openModal={openModal}
+                    onToggleModal={setOpenModal}
+                    modalBody={dataModalBody}
+                    sizeModal={dataModal.size}
+                    labelModal={dataModal.labelModal}
+                    labelBtnModal={dataModal.labelBtnModal}
+                    labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
+                    handleBtnModal={dataModal.handleBtn}
+                    parameter={path}
+                    openModalDelete={openModalDelete}
+                />
+
+                <Spinner loading={loading} />
+
+                < ModalConfirmDelete 
+                    modalDelete={modalDelete}
+                    closeModalDelete={closeModalDelete}
+                    handleDelete={handleDelete}
+                />
+
+                <OrderDetail
+                    data={dataDetailOrders}
+                    defaultEdit={setDefaultEdit}
+                    handleEdit={handleEdit}
+                    dataHeading={dataHeading}
+                />
+        </>
+        )
+    }else {
+ return(
        <>
         <ModalContainer 
         openModal={openModal}
@@ -71,4 +109,7 @@ export const Transactions = () => {
         />
        </>
     )
+    }
+
+   
 }

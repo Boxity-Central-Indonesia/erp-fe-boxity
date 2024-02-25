@@ -383,7 +383,7 @@ export const CRUD = () => {
                         setData(() => newData);
                         setDataHeading([
                             {
-                                label: 'Add company',
+                                label: defaultEdit === true ? 'Add company' : 'Add',
                                 icon: IconAdd(),
                                 heading: 'Company list',
                                 eventToggleModal: handleCreate,
@@ -398,48 +398,8 @@ export const CRUD = () => {
             getData()
         }, [refresh])
 
-        const handleClickHeading = async (param) => {
-            setPath(param)
-            setDataHeading([
-                {
-                    label: param === 'companies' ? 'Add companies' : param === 'branches',
-                    icon: IconAdd(),
-                    heading: param === 'companies' ? 'Employees' : 'Category employes' +' list',
-                    eventToggleModal: handleCreate,
-                    onclick: handleClickHeading,
-                    parameter: param === 'companies' ? 'companies' : 'employee-categories',
-                    showNavHeading: true,
-                    dataNavHeading: [
-                        {path: 'companies', label: 'Company'},
-                        {path: 'branch', label: 'Branches'},
-                        {path: 'department', label: 'Departments'},
-                    ],
-                    activeButton: param,
-                }
-            ])
-            setData([1])
-            setSkeleton(prevSkeleton => !prevSkeleton)
-            try {
-                const {data,status} = await getApiData(param)
-                if(status === 200) {
-                    if(param === 'companies'){
-                        const newData = dataCompany(data)
-                        setSkeleton(prevSkeleton => !prevSkeleton)
-                        setData(newData)
-                    }else if(param === 'employee-categories') {
-                        setSkeleton(prevSkeleton => !prevSkeleton)
-                        const newData = dataEmployesCategories(data)
-                        setData(newData)
-                    }
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
 
-        // getDatEnd
-
-        return {data , handleClickHeading}
+        return {data}
     }
 
 

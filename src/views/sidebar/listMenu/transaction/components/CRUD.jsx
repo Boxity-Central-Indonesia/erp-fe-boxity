@@ -24,6 +24,9 @@ export const CRUD = () => {
     const [skeleton, setSkeleton] = useState(false)
     const [dataHeading, setDataHeading] = useState([{}])
     const [path, setPath] = useState('orders')
+    const [defaultEdit, setDefaultEdit] = useState(true)
+    const [dataDetailOrders, setDataDetailOrders] = useState({})
+
 
     const [refBody, setRefBody] = useState( {
         vendor_idRef: useRef(),
@@ -509,17 +512,17 @@ export const CRUD = () => {
 
     const dataOrders = (data) => {
         return data.map(item => ({
+            'order code': item.kode_order,
             'vendor name': item.vendor.name,
-            'product name': item.product.name,
+            // 'product name': item.products.name,
             'warehouse name': item.warehouse.name,
-            status: item.status,
+            // status: item.status,
             'order status': item.order_status,
             'order type': item.order_type,
-            'taxes': item.taxes,
-            details: item.details,
-            quantity: item.quantity,
-            'price per unnit': item.price_per_unit,
-            'shipping_cost': item.shipping_cost,
+            'taxes': item.taxes ?? '--',
+            // quantity: item.quantity,
+            // 'price per unnit': item.price_per_unit,
+            'shipping_cost': item.shipping_cost ?? '--',
             'total price': item.total_price,
             id: item.id,
 
@@ -697,8 +700,6 @@ export const CRUD = () => {
                 console.log(error);
             }
         }
-
-        // getDatEnd
 
         return {data , handleClickHeading}
     }
@@ -1002,9 +1003,9 @@ export const CRUD = () => {
     const EDIT = () => {
 
         const handleEdit  = async (param) => {
-            const id = param.textContent
-            // orders di skip dulu
+            // const id = param.textContent
             if(path === 'orders'){
+                setDefaultEdit(false)
                 setDataModal({
                     labelModal: 'Detail & edit employes',
                     labelBtnModal: 'Save',
@@ -1033,36 +1034,21 @@ export const CRUD = () => {
                         department_id: '',
                     }
                 )
-                setOpenModal(prevOpenModal => !prevOpenModal)
+                // setOpenModal(prevOpenModal => !prevOpenModal)
                 try {
-                    const response = await getApiData('employees/' + param)
-                    if(response.status === 200) {
+                    const {data, status} = await getApiData('orders/4')
+                    if(status === 200) {
                         setDataEdit(
                             {
-                                name: response.data.name,
-                                email: response.data.email,
-                                phone_number: response.data.phone_number,
-                                company_id: response.data.company_id,
-                                job_title: response.data.job_title,
-                                date_of_birth: response.data.date_of_birth,
-                                employment_status: response.data.employment_status,
-                                hire_date: response.data.hire_date,
-                                termination_date: response.data.termination_date ?? '',
-                                address: response.data.address,
-                                city: response.data.city,
-                                province: response.data.province,
-                                postal_code: response.data.postal_code,
-                                country: response.data.country,
-                                emergency_contact_name: response.data.emergency_contact_name,
-                                emergency_contact_phone_number: response.data.emergency_contact_phone_number,
-                                notes: response.data.notes,
-                                department_id: response.data.department_id,
-                                company_id:response.data.company_id,
-                                id: response.data.id
+                                // vendor: data.vendor.name,
+                                // warehouse: data.warehouse.name,
+                                // 'order type': data.order_type,
+                                // 'taxes': data.taxes ?? '--',
+                                // 'shipping_cost': data.shipping_cost ?? '--'
                             }
                         )
-        
-                        setIdDelete(response.data.id)
+                        setDataDetailOrders(() => data)
+                        setIdDelete(data.id)
                     }
                 } catch (error) {
                     console.log(error);
@@ -1377,6 +1363,9 @@ export const CRUD = () => {
         loading,
         skeleton,
         path,
+        defaultEdit,
+        setDefaultEdit,
+        dataDetailOrders
     }
 
 }
