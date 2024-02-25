@@ -1,4 +1,3 @@
-import FormInput from "../../../../layouts/FormInput"
 import { ModalConfirmDelete, ModalContainer } from "../../../../layouts/ModalContainer"
 import {CRUD} from "./components/CRUD"
 import TabelComponent from "../../../../layouts/Tabel"
@@ -41,7 +40,7 @@ export const Company = () => {
         )
     }
 
-    if(!defaultEdit && dataDetailCompany){
+    if(!defaultEdit){
         return(
             <>
                 <ModalContainer 

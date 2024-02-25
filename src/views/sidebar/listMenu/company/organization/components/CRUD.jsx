@@ -3,9 +3,6 @@ import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../
 import IconAdd from "../../../../../layouts/icons/IconAdd"
 import { TextArea } from "../../../../../layouts/FormInput"
 import FormInput from "../../../../../layouts/FormInput"
-import { useNavigate } from 'react-router-dom';
-import { NavLink } from "react-router-dom";
-import { CompanyDetail } from "./companyDetail"
 
 
 export const CRUD = () => {
@@ -15,11 +12,8 @@ export const CRUD = () => {
     const [idDelete, setIdDelete] = useState()
     const [dataModal, setDataModal] = useState({})
     const [inputCompanies, setInputCompanies] = useState([])
-    const [inputEmployesCategory, setInputCompaniesCategory] = useState([])
     const [responseError, setResponseError] = useState()
     const [validationError, setValidationError] = useState()
-    const [dataCompanies, setDataCompanies] = useState();
-    const [dataDepartmentsSelect, setDataDepartmentsSelect] = useState();
     const [loading, setLoading] = useState(true)
     const [inputBranch, setInputBranch] = useState()
     const [inputDepartments, setInputDepartments] = useState()
@@ -27,7 +21,7 @@ export const CRUD = () => {
     const [dataHeading, setDataHeading] = useState([{}])
     const [defaultEdit, setDefaultEdit] = useState(true)
     const [dataDetailCompany, setDataDetailCompany] = useState({})
-    const [idCompany, setIdCompany] = useState()
+    const [idCompany, setIdCompany] = useState(null)
     const [path, setPath] = useState('companies') 
 
     const [refBody, setRefBody] = useState( {
@@ -94,40 +88,6 @@ export const CRUD = () => {
         }
     }, [responseError])
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await getApiData('companies')
-                const newData = response.data.map(item => ({
-                    id: item.id,
-                    name: item.name
-                 }))
-
-                 setDataCompanies(() => newData)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        fetchData()
-
-        const fetchDataCategory = async () => {
-            try {
-                const {data, status} = await getApiData('employee-categories')
-                if(status === 200) {
-                    const newData = data.map(item => ({
-                        id: item.id,
-                        name: item.name
-                    }))
-
-                    setDataCategoryEmployes(() => newData)
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchDataCategory()
-    }, [])
 
     useEffect(() => {
         setInputCompanies(  [
@@ -372,6 +332,7 @@ export const CRUD = () => {
     useEffect(() => {
         const getData = async () => {
             try {
+               if(idCompany !== null) {
                 const {data, status} = await getApiData('companies/' + idCompany)
                 if(status === 200) {
                     setDataEdit(
@@ -390,9 +351,9 @@ export const CRUD = () => {
                             id: data.id,
                         }
                     )
-                    // setDefaultEdit(false)
                     setDataDetailCompany(() => data)
                 }
+               }
             } catch (error) {
                 
             }
@@ -411,34 +372,13 @@ export const CRUD = () => {
         }))
     }
 
-    const dataBranches = (data) => {
-        return data.map(item => ({
-            id: item.id,
-            name: item.name,
-            email: item.email,
-            address: item.address,
-            phone_number: item.phone_number,
-            company: item.company.name
-        }))
-    }
-
-
-    const dataDepartments = (data) => {
-        return data.map(item => ({
-            id: item.id,
-            name: item.name,
-            responsibilities: item.responsibilities,
-            company: item.company.name
-        }))
-    }
-
     const READ = () => {
         const [data, setData] = useState()
         useEffect(() => {
             const getData = async () => {
                 try {
-                    const { data } = await getApiData(path);
                     if(path === 'companies'){
+                        const { data } = await getApiData(path);
                         const newData = dataCompany(data)
                         setData(() => newData);
                         setDataHeading([
@@ -506,15 +446,14 @@ export const CRUD = () => {
     const EDIT = () => {
         let endPoint = ''
         const handleEdit  = async (param, routes) => {
-            setDataEdit([{
-
-            }])
+            setDataEdit([{}])
             routes = routes || 'companies'
             endPoint = routes
             setPath(() => routes)
             setOpenModal(prevOpenModal => defaultEdit === false ? !prevOpenModal : prevOpenModal)
             if(endPoint === 'companies'){
-
+                setDefaultEdit(false)
+                setDataDetailCompany(null)
                 setDataModal({
                     size: '6xl',
                     labelModal: 'Edit companies',
@@ -553,7 +492,6 @@ export const CRUD = () => {
                             }
                         )
                         setIdDelete(data.id)
-                        setDefaultEdit(false)
                         setDataDetailCompany(() => data)
                         setIdCompany(data.id)
                     }
@@ -630,6 +568,8 @@ export const CRUD = () => {
                 }
 
                 setIdCompany(refBody.idRef.current.value)
+
+                console.log(dataBody);
         
                 try {
                     const response = await putApiData(endPoint + '/' + idCompany, dataBody)
@@ -742,7 +682,63 @@ export const CRUD = () => {
     const CREATE = () => {
 
         const handleCreate  = (param) => {
-           if(param === 'companies'){
+            if(param === 'companies/{companyId}/branches'){
+            setPath(param)
+            setDataEdit(
+                {
+                    // name: '',
+                    // address: '',
+                    // email: '',
+                    // phone_number: '',
+                    // // company_id: '',
+                    // id: '',
+                }
+            )
+            setValidationError(
+                {
+                    // name: '',
+                    // address: '',
+                    // email: '',
+                    // phone_number: '',
+                    // // company_id: '',
+                    // id: '',
+                }
+            )
+            setOpenModal(prevOpenModal => !prevOpenModal)
+            setDataModal({
+                size: '2xl',
+                labelModal: 'Add branch',
+                labelBtnModal: 'Add new branch',
+                labelBtnSecondaryModal: 'Back',
+                handleBtn: create,
+            })
+            }else if(param === 'companies/{companyId}/departments') {
+            setPath(param)
+            setDataEdit(
+                {
+                    name: '',
+                    responsibilities: '',
+                    company_id: '',
+                    id: ''
+                }
+            )
+            setValidationError(
+                {
+                    name: '',
+                    responsibilities: '',
+                    company_id: '',
+                    id: ''
+                }
+            )
+            setOpenModal(prevOpenModal => !prevOpenModal)
+            setDataModal({
+                size: 'lg',
+                labelModal: 'Add departments',
+                labelBtnModal: 'Add new departments',
+                labelBtnSecondaryModal: 'Back',
+                handleBtn: create,
+            })
+            }else {
             setDefaultEdit(true)
             setDataEdit(
                 {
@@ -784,63 +780,7 @@ export const CRUD = () => {
                 labelBtnSecondaryModal: 'Back',
                 handleBtn: create,
             })
-           }else if(param === 'companies/{companyId}/branches'){
-            setPath(param)
-            setDataEdit(
-                {
-                    // name: '',
-                    // address: '',
-                    // email: '',
-                    // phone_number: '',
-                    // // company_id: '',
-                    // id: '',
-                }
-            )
-            setValidationError(
-                {
-                    // name: '',
-                    // address: '',
-                    // email: '',
-                    // phone_number: '',
-                    // // company_id: '',
-                    // id: '',
-                }
-            )
-            setOpenModal(prevOpenModal => !prevOpenModal)
-            setDataModal({
-                size: '2xl',
-                labelModal: 'Add branch',
-                labelBtnModal: 'Add new branch',
-                labelBtnSecondaryModal: 'Back',
-                handleBtn: create,
-            })
-           }else if(param === 'companies/{companyId}/departments') {
-            setPath(param)
-            setDataEdit(
-                {
-                    name: '',
-                    responsibilities: '',
-                    company_id: '',
-                    id: ''
-                }
-            )
-            setValidationError(
-                {
-                    name: '',
-                    responsibilities: '',
-                    company_id: '',
-                    id: ''
-                }
-            )
-            setOpenModal(prevOpenModal => !prevOpenModal)
-            setDataModal({
-                size: 'lg',
-                labelModal: 'Add departments',
-                labelBtnModal: 'Add new departments',
-                labelBtnSecondaryModal: 'Back',
-                handleBtn: create,
-            })
-           }
+            }
         }
 
         const create = async (param) => {
@@ -861,6 +801,8 @@ export const CRUD = () => {
                     description: refBody.descriptionRef.current.value,
                     id: refBody.idRef.current.value 
                 }
+
+                console.log(dataBody);
     
                 try {
                     const store = await postApiData('companies', dataBody)
@@ -1130,9 +1072,6 @@ export const CRUD = () => {
         }
     }
 
-    const closeModal = () => {
-        setPath('companies')
-    }
 
     const {data, handleClickHeading} = READ()
     const {handleCreate} = CREATE()

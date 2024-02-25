@@ -24,7 +24,29 @@ export const CompanyDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
         <section className="bg-white dark:bg-gray-800 dark:text-white rounded-md shadow-md p-5 mb-16">
             <div className="grid lg:grid-cols-2 text-base">
                 <div className="col-span-1">
-                    <table className="w-full">
+                    {/* <table className={`w-full ${data.length == 0 ? `hidden` : ``}`} >
+                        <tr className="">
+                            <td className="py-3 ">Company name</td>
+                            <td className="flex items-center gap-3 py-3 "> : <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div></td>
+                        </tr>
+                        <tr className="">
+                            <td className="py-3 ">Number phone</td>
+                            <td className="flex items-center gap-3 py-3 "> : <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div></td>
+                        </tr>
+                        <tr className="">
+                            <td className="py-3 ">Address</td>
+                            <td className="flex items-center gap-3 py-3 "> : <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div></td>
+                        </tr>
+                        <tr className="">
+                            <td className="py-3 ">Email</td>
+                            <td className="flex items-center gap-3 py-3 "> : <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div></td>
+                        </tr>
+                        <tr className="">
+                            <td className="py-3 ">Website</td>
+                            <td className="flex items-center gap-3 py-3 "> : <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div></td>
+                        </tr>
+                    </table> */}
+                    <table className={`w-full`}>
                         <tr className="">
                             <td className="py-3">Company name</td>
                             <td> : <span className="ml-5">{data.name}</span></td>
@@ -48,6 +70,24 @@ export const CompanyDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
                     </table>
                 </div>
                 <div className="col-span-1">
+                    {/* <table className="w-full">
+                        <tr className="">
+                            <td className="py-3 ">City</td>
+                            <td className="flex items-center gap-3 py-3 "> : <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div></td>
+                        </tr>
+                        <tr className="">
+                            <td className="py-3 ">Country</td>
+                            <td className="flex items-center gap-3 py-3 "> : <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div></td>
+                        </tr>
+                        <tr className="">
+                            <td className="py-3 ">Industry</td>
+                            <td className="flex items-center gap-3 py-3 "> : <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div></td>
+                        </tr>
+                        <tr className="">
+                            <td className="py-3 ">Province</td>
+                            <td className="flex items-center gap-3 py-3 "> : <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div></td>
+                        </tr>
+                    </table> */}
                     <table className="w-full">
                         <tr className="">
                             <td className="py-3">City</td>
@@ -68,19 +108,7 @@ export const CompanyDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
                     </table>
                 </div>
             </div>
-            <hr className="my-7" />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-               <div>
-               <h2 className="text-xl font-medium dark:text-white mb-4">Company branch</h2>
-               <TabelForCompany data={dataBranches} dataHeading={dataHeading} handleEdit={handleEdit} routes={'companies/{companyId}/branches'}/>
-               </div>
-               <div>
-                <h2 className="text-xl font-medium dark:text-white mb-4">Company department</h2>
-               <TabelForCompany data={dataDepartments} dataHeading={dataHeading} handleEdit={handleEdit} routes={'companies/{companyId}/departments'}/>
-               </div>
-            </div>
-            <hr className="my-7" />
-            <div className="flex gap-3">
+            <div className="flex gap-3 mt-5">
                 <Button 
                 bgColour={''}
                 label={'Back'}
@@ -102,6 +130,18 @@ export const CompanyDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
               </svg>}
                 />
             </div>
+            <hr className="my-7" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+               <div>
+               <h2 className="text-xl font-medium dark:text-white mb-4">Company branch</h2>
+               <TabelForCompany data={dataBranches} dataHeading={dataHeading} handleEdit={handleEdit} routes={'companies/{companyId}/branches'}/>
+               </div>
+               <div>
+                <h2 className="text-xl font-medium dark:text-white mb-4">Company department</h2>
+               <TabelForCompany data={dataDepartments} dataHeading={dataHeading} handleEdit={handleEdit} routes={'companies/{companyId}/departments'}/>
+               </div>
+            </div>
+            <hr className="my-7" />
         </section>
         </>
     )
