@@ -5,18 +5,22 @@ import { TabelForCompany } from "./TabelForCompany";
 
 export const CompanyDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
 
-    const dataDepartments = data.departments?.map(item => ({
+    const dataDepartments = data?.departments
+    ? data.departments.map((item) => ({
         id: item.id,
         name: item.name,
         responsibilities: item.responsibilities,
-    }))
+      }))
+    : []; // Use an empty array if data.departments is null
+  
 
-    const dataBranches = data.branches?.map(item => ({
+    const dataBranches = data?.branches? data.departments.map(item => ({
         id: item.id,
         name: item.name,
         email: item.email,
         'phone number': item.phone_number 
     }))
+    :[]
 
     return(
         <>
@@ -49,23 +53,23 @@ export const CompanyDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
                     <table className={`w-full`}>
                         <tr className="">
                             <td className="py-3">Company name</td>
-                            <td> : <span className="ml-5">{data.name}</span></td>
+                            <td> : <span className="ml-5">{data?.name || '--'}</span></td>
                         </tr>
                         <tr>
                             <td className="py-3">Number phone</td>
-                            <td> : <span className="ml-5">{data.phone_number}</span></td>
+                            <td> : <span className="ml-5">{data?.phone_number || '--'}</span></td>
                         </tr>
                         <tr>
                             <td className="py-3">address</td>
-                            <td> : <span className="ml-5">{data.address}</span></td>
+                            <td> : <span className="ml-5">{data?.address || '--'}</span></td>
                         </tr>
                         <tr>
                             <td className="py-3">email</td>
-                            <td> : <span className="ml-5">{data.email}</span></td>
+                            <td> : <span className="ml-5">{data?.email || '--'}</span></td>
                         </tr>
                         <tr>
                             <td className="py-3">website</td>
-                            <td> : <span className="ml-5">{data.website ?? '--'}</span></td>
+                            <td> : <span className="ml-5">{data?.website || '--'}</span></td>
                         </tr>
                     </table>
                 </div>
@@ -91,19 +95,19 @@ export const CompanyDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
                     <table className="w-full">
                         <tr className="">
                             <td className="py-3">City</td>
-                            <td> : <span className="ml-5">{data.city ?? '--'}</span></td>
+                            <td> : <span className="ml-5">{data?.city ?? '--'}</span></td>
                         </tr>
                         <tr>
                             <td className="py-3">Country</td>
-                            <td> : <span className="ml-5">{data.country ?? '--'}</span></td>
+                            <td> : <span className="ml-5">{data?.country ?? '--'}</span></td>
                         </tr>
                         <tr>
                             <td className="py-3">Industry</td>
-                            <td> : <span className="ml-5">{data.industry ?? '--'}</span></td>
+                            <td> : <span className="ml-5">{data?.industry ?? '--'}</span></td>
                         </tr>
                         <tr>
                             <td className="py-3">Provience</td>
-                            <td> : <span className="ml-5">{data.province ?? '--'}</span></td>
+                            <td> : <span className="ml-5">{data?.province ?? '--'}</span></td>
                         </tr>
                     </table>
                 </div>
