@@ -100,7 +100,37 @@ const TabelComponent = ({
               "border py-0.5 px-4 rounded-full bg-green-600 w-fit text-white text-sm";
           }
 
-          if (info.getValue() === "purchase" || info.getValue() === "inbound") {
+          // cek nilai cash, credit, online, dan other
+          if (info.getValue() === "cash") {
+            className =
+              "border py-0.5 px-4 rounded-full bg-green-600 w-fit text-white text-sm";
+          } else if (info.getValue() === "credit") {
+            className =
+              "border py-0.5 px-4 rounded-full bg-yellow-600 w-fit text-white text-sm";
+          } else if (info.getValue() === "Online") {
+            className =
+              "border py-0.5 px-4 rounded-full bg-primary-600 w-fit text-white text-sm";
+          } else if (info.getValue() === "Other") {
+            className =
+              "border py-0.5 px-4 rounded-full bg-red-600 w-fit text-white text-sm";
+          }
+          // cek nilai unpaid,partial,paid
+          if (info.getValue() === "paid") {
+            className =
+              "border py-0.5 px-4 rounded-full bg-green-600 w-fit text-white text-sm";
+          } else if (info.getValue() === "partial") {
+            className =
+              "border py-0.5 px-4 rounded-full bg-yellow-600 w-fit text-white text-sm";
+          } else if (info.getValue() === "unpaid") {
+            className =
+              "border py-0.5 px-4 rounded-full bg-primary-600 w-fit text-white text-sm";
+          }
+
+          if (
+            info.getValue() === "purchase" ||
+            info.getValue() === "inbound" ||
+            info.getValue() === "supplier"
+          ) {
             className =
               "border py-0.5 px-2 rounded-full bg-green-600 w-fit text-white text-sm flex items-center justify-center";
             icon = (
@@ -122,7 +152,8 @@ const TabelComponent = ({
             );
           } else if (
             info.getValue() === "sale" ||
-            info.getValue() === "outbound"
+            info.getValue() === "outbound" ||
+            info.getValue() === "customer"
           ) {
             className =
               "border py-0.5 px-2 rounded-full bg-red-600 w-fit text-white text-sm flex items-center justify-center";
@@ -346,7 +377,7 @@ const TabelComponent = ({
                       className="flex items-center text-gray-700 text-sm"
                       onClick={() => setOpenModal(dataHeading[0].activeButton)}
                     >
-                      No data found, want to
+                      No data found, you should
                     </p>
                     <button
                       onClick={() => setOpenModal(dataHeading[0].activeButton)}
@@ -354,7 +385,7 @@ const TabelComponent = ({
                       style={{ color: globalColor }}
                     >
                       {" "}
-                      add new data
+                      add new data here.
                     </button>
                   </td>
                 </tr>

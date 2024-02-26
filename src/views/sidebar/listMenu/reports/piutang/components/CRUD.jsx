@@ -127,7 +127,7 @@ export const CRUD = () => {
   const CREATE = () => {
     const handleCreate = () => {
       setDataModal({
-        labelModal: "Add account",
+        labelModal: "Add New account",
         labelBtnModal: "Add new account",
         labelBtnSecondaryModal: "Back",
         handleBtn: () => create(),
@@ -174,7 +174,7 @@ export const CRUD = () => {
   const EDIT = () => {
     const handleEdit = async (param) => {
       setDataModal({
-        labelModal: "Detail & edit accounts",
+        labelModal: "Update accounts",
         labelBtnModal: "Save",
         labelBtnSecondaryModal: "Delete",
         handleBtn: edit,

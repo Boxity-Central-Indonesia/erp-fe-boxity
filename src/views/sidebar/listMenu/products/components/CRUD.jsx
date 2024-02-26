@@ -22,12 +22,12 @@ export const CRUD = () => {
   const [responseError, setResponseError] = useState();
   const [validationError, setValidationError] = useState();
   const [dataProductsSelect, setDataProducstSelect] = useState([]);
-  const [dataWarehouseesSelect, setDataWarehouseesSelect] = useState([])
+  const [dataWarehouseesSelect, setDataWarehouseesSelect] = useState([]);
   const [dataDepartments, setDataDepartments] = useState();
   const [loading, setLoading] = useState(true);
   const [skeleton, setSkeleton] = useState(false);
   const [dataHeading, setDataHeading] = useState([{}]);
-  const [path, setPath] = useState('products')
+  const [path, setPath] = useState("products");
 
   const [refBody, setRefBody] = useState({
     idRef: useRef(),
@@ -100,7 +100,6 @@ export const CRUD = () => {
   }, [responseError]);
 
   useEffect(() => {
-
     setInputProducts([
       {
         element: "input",
@@ -210,7 +209,7 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Stock",
       },
-      
+
       {
         element: "select",
         name: "category_id",
@@ -275,7 +274,7 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Name",
       },
-    ])
+    ]);
 
     setInputProductMovements([
       {
@@ -390,7 +389,6 @@ export const CRUD = () => {
         placeholder: "Discount price",
       },
     ]);
-
   }, [dataEdit]);
 
   const dataProducts = (data) => {
@@ -398,7 +396,7 @@ export const CRUD = () => {
       id: item.id,
       code: item.code,
       name: item.name,
-      warehouse: item.warehouse?.name || '--',
+      warehouse: item.warehouse?.name || "--",
       category: item.category?.name || "--",
       type: item.type,
       stock: item.stock,
@@ -441,12 +439,12 @@ export const CRUD = () => {
       const getData = async () => {
         try {
           const { data } = await getApiData(path);
-          if(path === 'products'){
+          if (path === "products") {
             const newData = dataProducts(data);
             setData(newData);
             setDataHeading([
               {
-                label: "Add products",
+                label: "Add new products",
                 icon: IconAdd(),
                 heading: "Product list",
                 eventToggleModal: handleCreate,
@@ -461,12 +459,12 @@ export const CRUD = () => {
                 activeButton: "products",
               },
             ]);
-          }else if(path === 'product-categories'){
+          } else if (path === "product-categories") {
             const newData = dataProductCategories(data);
             setData(newData);
             setDataHeading([
               {
-                label: "Add category",
+                label: "Add new category",
                 icon: IconAdd(),
                 heading: "Categoires list",
                 eventToggleModal: handleCreate,
@@ -481,12 +479,12 @@ export const CRUD = () => {
                 activeButton: path,
               },
             ]);
-          }else if(path === 'product-prices'){
+          } else if (path === "product-prices") {
             const newData = dataProductPrices(data);
             setData(newData);
             setDataHeading([
               {
-                label: "Add price",
+                label: "Add new price",
                 icon: IconAdd(),
                 heading: "Prices list",
                 eventToggleModal: handleCreate,
@@ -501,12 +499,12 @@ export const CRUD = () => {
                 activeButton: path,
               },
             ]);
-          }else if(path === 'product-movements'){
+          } else if (path === "product-movements") {
             const newData = dataProductMovements(data);
             setData(newData);
             setDataHeading([
               {
-                label: "Add movement",
+                label: "Add new movement",
                 icon: IconAdd(),
                 heading: "Movements list",
                 eventToggleModal: handleCreate,
@@ -531,33 +529,32 @@ export const CRUD = () => {
 
     useEffect(() => {
       const getSelectProducts = async () => {
-          const {data, status} = await getApiData('products')
-          if(status === 200) {
-              const newData = data.map(item => ({
-                  id: item.id,
-                  name: item.name
-              }))
-              setDataProducstSelect(newData)
-          }
-      }
-      getSelectProducts()
+        const { data, status } = await getApiData("products");
+        if (status === 200) {
+          const newData = data.map((item) => ({
+            id: item.id,
+            name: item.name,
+          }));
+          setDataProducstSelect(newData);
+        }
+      };
+      getSelectProducts();
 
       const getSelectWarehousees = async () => {
-        const {data, status} = await getApiData('warehouses')
-        if(status === 200) {
-            const newData = data.map(item => ({
-                id: item.id,
-                name: item.name
-            }))
-            setDataWarehouseesSelect(newData)
+        const { data, status } = await getApiData("warehouses");
+        if (status === 200) {
+          const newData = data.map((item) => ({
+            id: item.id,
+            name: item.name,
+          }));
+          setDataWarehouseesSelect(newData);
         }
-    }
-    getSelectWarehousees()
-
-    }, [path])
+      };
+      getSelectWarehousees();
+    }, [path]);
 
     const handleClickHeading = async (param) => {
-      setPath(param)
+      setPath(param);
       setDataHeading([
         {
           label:
@@ -628,40 +625,40 @@ export const CRUD = () => {
       if (param === "products") {
         setDataEdit({
           name: "",
-          code: '',
-          description: '',
-          price: '',
-          type: '',
-          animal_type: '',
-          age: '',
-          weight: '',
-          health_status: '',
-          stock: '',
-          category_id: '',
-          movement_type: '',
-          unit_of_measure: '',
-          raw_material: '',
+          code: "",
+          description: "",
+          price: "",
+          type: "",
+          animal_type: "",
+          age: "",
+          weight: "",
+          health_status: "",
+          stock: "",
+          category_id: "",
+          movement_type: "",
+          unit_of_measure: "",
+          raw_material: "",
         });
         setValidationError({
           name: "",
-          code: '',
-          description: '',
-          price: '',
-          type: '',
-          animal_type: '',
-          age: '',
-          weight: '',
-          health_status: '',
-          stock: '',
-          category_id: '',
-          movement_type: '',
-          unit_of_measure: '',
-          raw_material: '',
+          code: "",
+          description: "",
+          price: "",
+          type: "",
+          animal_type: "",
+          age: "",
+          weight: "",
+          health_status: "",
+          stock: "",
+          category_id: "",
+          movement_type: "",
+          unit_of_measure: "",
+          raw_material: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add products",
+          labelModal: "Add New products",
           labelBtnModal: "Add new products",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
@@ -679,51 +676,51 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "md",
-          labelModal: "Add category",
+          labelModal: "Add New category",
           labelBtnModal: "Add new category",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
       } else if (param === "product-movements") {
         setDataEdit({
-         product_id: '',
-         warehouse_id: '',
-         movement_type: '',
-         quantity: '',
-         price: ''
+          product_id: "",
+          warehouse_id: "",
+          movement_type: "",
+          quantity: "",
+          price: "",
         });
         setValidationError({
-          product_id: '',
-          warehouse_id: '',
-          movement_type: '',
-          quantity: '',
-          price: ''
+          product_id: "",
+          warehouse_id: "",
+          movement_type: "",
+          quantity: "",
+          price: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add movements",
+          labelModal: "Add New movements",
           labelBtnModal: "Add new movements",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
       } else if (param === "product-prices") {
         setDataEdit({
-          product_id: '',
-          selling_price: '',
-          buying_price: '',
-          discount_price: ''
+          product_id: "",
+          selling_price: "",
+          buying_price: "",
+          discount_price: "",
         });
         setValidationError({
-          product_id: '',
-          selling_price: '',
-          buying_price: '',
-          discount_price: ''
+          product_id: "",
+          selling_price: "",
+          buying_price: "",
+          discount_price: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Add prices",
+          labelModal: "Add New prices",
           labelBtnModal: "Add new prices",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
@@ -731,40 +728,40 @@ export const CRUD = () => {
       } else {
         setDataEdit({
           name: "",
-          code: '',
-          description: '',
-          price: '',
-          type: '',
-          animal_type: '',
-          age: '',
-          weight: '',
-          health_status: '',
-          stock: '',
-          category_id: '',
-          movement_type: '',
-          unit_of_measure: '',
-          raw_material: '',
+          code: "",
+          description: "",
+          price: "",
+          type: "",
+          animal_type: "",
+          age: "",
+          weight: "",
+          health_status: "",
+          stock: "",
+          category_id: "",
+          movement_type: "",
+          unit_of_measure: "",
+          raw_material: "",
         });
         setValidationError({
           name: "",
-          code: '',
-          description: '',
-          price: '',
-          type: '',
-          animal_type: '',
-          age: '',
-          weight: '',
-          health_status: '',
-          stock: '',
-          category_id: '',
-          movement_type: '',
-          unit_of_measure: '',
-          raw_material: '',
+          code: "",
+          description: "",
+          price: "",
+          type: "",
+          animal_type: "",
+          age: "",
+          weight: "",
+          health_status: "",
+          stock: "",
+          category_id: "",
+          movement_type: "",
+          unit_of_measure: "",
+          raw_material: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add products",
+          labelModal: "Add New products",
           labelBtnModal: "Add new products",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
@@ -795,7 +792,7 @@ export const CRUD = () => {
         try {
           const store = await postApiData(param, dataBody);
           if (store.status === 201) {
-            setPath(() => param)
+            setPath(() => param);
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -813,7 +810,7 @@ export const CRUD = () => {
         try {
           const store = await postApiData(param, dataBody);
           if (store.status === 201) {
-            setPath(param)
+            setPath(param);
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -828,13 +825,13 @@ export const CRUD = () => {
           warehouse_id: refBody.warehouse_idRef.current.value,
           movement_type: refBody.movement_typeRef.current.value,
           quantity: refBody.quantityRef.current.value,
-          price: refBody.priceRef.current.value
+          price: refBody.priceRef.current.value,
         };
 
         try {
           const store = await postApiData(param, dataBody);
           if (store.status === 201) {
-            setPath(() => param)
+            setPath(() => param);
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -848,13 +845,13 @@ export const CRUD = () => {
           product_id: refBody.product_idRef.current.value,
           selling_price: refBody.selling_priceRef.current.value,
           buying_price: refBody.buying_priceRef.current.value,
-          discount_price: refBody.discount_priceRef.current.value
+          discount_price: refBody.discount_priceRef.current.value,
         };
 
         try {
           const store = await postApiData(param, dataBody);
           if (store.status === 201) {
-            setPath(() => param)
+            setPath(() => param);
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -881,7 +878,7 @@ export const CRUD = () => {
         };
         console.log(dataBody);
         try {
-          const store = await postApiData('products', dataBody);
+          const store = await postApiData("products", dataBody);
           if (store.status === 201) {
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
@@ -902,34 +899,34 @@ export const CRUD = () => {
 
   const EDIT = () => {
     const handleEdit = async (param) => {
-      const id = param.textContent
-      if(path === 'products'){
+      const id = param.textContent;
+      if (path === "products") {
         setDataModal({
-          size: '6xl',
-          labelModal: "Detail & edit products",
+          size: "6xl",
+          labelModal: "Update products",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
         });
         setValidationError({
-          name: '',
-          code: '',
-          description: '',
-          price: '',
-          type: '',
-          animal_type: '',
-          age: '',
-          weight: '',
-          health_status: '',
-          stock: '',
-          category_id: '',
-          movement_type: '',
-          unit_of_measure: '',
-          raw_material: '',
+          name: "",
+          code: "",
+          description: "",
+          price: "",
+          type: "",
+          animal_type: "",
+          age: "",
+          weight: "",
+          health_status: "",
+          stock: "",
+          category_id: "",
+          movement_type: "",
+          unit_of_measure: "",
+          raw_material: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const {data, status} = await getApiData(path + '/' + id);
+          const { data, status } = await getApiData(path + "/" + id);
           if (status === 200) {
             setDataEdit({
               name: data.name,
@@ -946,18 +943,18 @@ export const CRUD = () => {
               movement_type: data.movement_type,
               unit_of_measure: data.unit_of_measure,
               raw_material: data.raw_material,
-              id: data.id
+              id: data.id,
             });
-  
+
             setIdDelete(data.id);
           }
         } catch (error) {
           console.log(error);
         }
-      }else if(path === 'product-categories'){
+      } else if (path === "product-categories") {
         setDataModal({
-          size: 'lg',
-          labelModal: "Detail & edit category",
+          size: "lg",
+          labelModal: "Update category",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
@@ -969,68 +966,68 @@ export const CRUD = () => {
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const {data, status} = await getApiData(path + '/' + id);
+          const { data, status } = await getApiData(path + "/" + id);
           if (status === 200) {
             setDataEdit({
               name: data.name,
               description: data.description,
               id: data.id,
             });
-  
+
             setIdDelete(data.id);
           }
         } catch (error) {
           console.log(error);
         }
-      }else if(path === 'product-prices'){
+      } else if (path === "product-prices") {
         setDataModal({
-          size: 'lg',
-          labelModal: "Detail & edit price",
+          size: "lg",
+          labelModal: "Update price",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
         });
         setValidationError({
-          product_id: '',
-          selling_price: '',
-          buying_price: '',
-          discount_price: ''
+          product_id: "",
+          selling_price: "",
+          buying_price: "",
+          discount_price: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const {data, status} = await getApiData(path + '/' + id);
+          const { data, status } = await getApiData(path + "/" + id);
           if (status === 200) {
             setDataEdit({
               product_id: data.product_id,
               selling_price: data.selling_price,
               buying_price: data.buying_price,
               discount_price: data.discount_price,
-              id: data.id
+              id: data.id,
             });
-  
+
             setIdDelete(data.id);
           }
         } catch (error) {
           console.log(error);
         }
-      }else if(path === 'product-movements'){
+      } else if (path === "product-movements") {
         setDataModal({
-          size: '2xl',
-          labelModal: "Detail & edit movement",
+          size: "2xl",
+          labelModal: "Update movement",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
         });
         setValidationError({
-          product_id: '',
-          warehouse_id: '',
-          movement_type: '',
-          quantity: '',
-          price: ''
+          product_id: "",
+          warehouse_id: "",
+          movement_type: "",
+          quantity: "",
+          price: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const {data, status} = await getApiData(path + '/' + id);
+          const { data, status } = await getApiData(path + "/" + id);
           if (status === 200) {
             setDataEdit({
               product_id: data.product_id,
@@ -1038,9 +1035,9 @@ export const CRUD = () => {
               movement_type: data.movement_type,
               quantity: data.quantity,
               price: data.price,
-              id: data.id
+              id: data.id,
             });
-  
+
             setIdDelete(data.id);
           }
         } catch (error) {
@@ -1050,10 +1047,10 @@ export const CRUD = () => {
     };
 
     const edit = async () => {
-      setLoading(prevLoading => !prevLoading)
+      setLoading((prevLoading) => !prevLoading);
       let dataBody = {};
 
-      if(path === 'products'){
+      if (path === "products") {
         dataBody = {
           name: refBody.nameRef.current.value,
           code: refBody.codeRef.current.value,
@@ -1070,72 +1067,83 @@ export const CRUD = () => {
           raw_material: refBody.raw_materialRef.current.value,
         };
         try {
-          const response = await putApiData(path + '/' + refBody.idRef.current.value, dataBody);
+          const response = await putApiData(
+            path + "/" + refBody.idRef.current.value,
+            dataBody
+          );
           if (response.status === 201) {
-            setLoading(prevLoading => !prevLoading)
+            setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
           setResponseError(error.response.data.errors);
-          setLoading(prevLoading => !prevLoading)
+          setLoading((prevLoading) => !prevLoading);
         }
-      }else if(path === 'product-categories'){
+      } else if (path === "product-categories") {
         dataBody = {
           name: refBody.nameRef.current.value,
           description: refBody.descriptionRef.current.value,
         };
         try {
-          const response = await putApiData(path + '/' + refBody.idRef.current.value, dataBody);
+          const response = await putApiData(
+            path + "/" + refBody.idRef.current.value,
+            dataBody
+          );
           if (response.status === 201) {
-            setLoading(prevLoading => !prevLoading)
+            setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
           setResponseError(error.response.data.errors);
-          setLoading(prevLoading => !prevLoading)
+          setLoading((prevLoading) => !prevLoading);
         }
-      }else if(path === 'product-prices'){
+      } else if (path === "product-prices") {
         dataBody = {
           product_id: refBody.product_idRef.current.value,
           selling_price: refBody.selling_priceRef.current.value,
           buying_price: refBody.buying_priceRef.current.value,
-          discount_price: refBody.discount_priceRef.current.value
+          discount_price: refBody.discount_priceRef.current.value,
         };
         try {
-          const response = await putApiData(path + '/' + refBody.idRef.current.value, dataBody);
+          const response = await putApiData(
+            path + "/" + refBody.idRef.current.value,
+            dataBody
+          );
           if (response.status === 201) {
-            setLoading(prevLoading => !prevLoading)
+            setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
           setResponseError(error.response.data.errors);
-          setLoading(prevLoading => !prevLoading)
+          setLoading((prevLoading) => !prevLoading);
         }
-      }else if(path === 'product-movements'){
+      } else if (path === "product-movements") {
         dataBody = {
           product_id: refBody.product_idRef.current.value,
           warehouse_id: refBody.warehouse_idRef.current.value,
           movement_type: refBody.movement_typeRef.current.value,
           quantity: refBody.quantityRef.current.value,
-          price: refBody.priceRef.current.value
+          price: refBody.priceRef.current.value,
         };
 
         try {
-          const response = await putApiData(path + '/' + refBody.idRef.current.value, dataBody);
+          const response = await putApiData(
+            path + "/" + refBody.idRef.current.value,
+            dataBody
+          );
           if (response.status === 201) {
-            setLoading(prevLoading => !prevLoading)
+            setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
           setResponseError(error.response.data.errors);
-          setLoading(prevLoading => !prevLoading)
+          setLoading((prevLoading) => !prevLoading);
         }
       }
-
     };
 
     return {
@@ -1245,7 +1253,7 @@ export const CRUD = () => {
           </div>
         </>
       );
-    }else if (param === "product-prices") {
+    } else if (param === "product-prices") {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1">
@@ -1279,7 +1287,7 @@ export const CRUD = () => {
           </div>
         </>
       );
-    }else if (param === "product-movements") {
+    } else if (param === "product-movements") {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
@@ -1341,6 +1349,6 @@ export const CRUD = () => {
     inputBody,
     loading,
     skeleton,
-    path
+    path,
   };
 };

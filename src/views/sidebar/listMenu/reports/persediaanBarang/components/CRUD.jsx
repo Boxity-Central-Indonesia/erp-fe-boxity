@@ -106,7 +106,7 @@ export const CRUD = () => {
               code: item.code,
               name: item.name,
               description: item.description,
-              weight: item.weight || 0.0 + item.unit_of_measure,
+              weight: (item.weight ?? 0.0) + " " + item.unit_of_measure,
               "type of animal": item.animal_type,
               quantity: item.stock,
               harga: item.price,
@@ -128,7 +128,7 @@ export const CRUD = () => {
   const CREATE = () => {
     const handleCreate = () => {
       setDataModal({
-        labelModal: "Add account",
+        labelModal: "Add New account",
         labelBtnModal: "Add new account",
         labelBtnSecondaryModal: "Back",
         handleBtn: () => create(),
@@ -175,7 +175,7 @@ export const CRUD = () => {
   const EDIT = () => {
     const handleEdit = async (param) => {
       setDataModal({
-        labelModal: "Detail & edit accounts",
+        labelModal: "Update accounts",
         labelBtnModal: "Save",
         labelBtnSecondaryModal: "Delete",
         handleBtn: edit,

@@ -15,12 +15,12 @@ export const CRUD = () => {
   const [modalDelete, setModalDelete] = useState();
   const [idDelete, setIdDelete] = useState();
   const [dataModal, setDataModal] = useState({});
-  const [inputVendors, setInputVendors] = useState([])
-  const [inputVendorContact, setInputVendorContact] = useState([])
-  const [inputVendorTransaction, setInputVendorTransaction] = useState([])
+  const [inputVendors, setInputVendors] = useState([]);
+  const [inputVendorContact, setInputVendorContact] = useState([]);
+  const [inputVendorTransaction, setInputVendorTransaction] = useState([]);
   const [responseError, setResponseError] = useState();
-  const [dataVendorsSelect, setDataVendorsSelect] = useState([])
-  const [dataProductsSelect, setDataProductsSelect] = useState([])
+  const [dataVendorsSelect, setDataVendorsSelect] = useState([]);
+  const [dataProductsSelect, setDataProductsSelect] = useState([]);
   const [validationError, setValidationError] = useState();
   const [dataCompanies, setDataCompanies] = useState();
   const [dataDepartments, setDataDepartments] = useState();
@@ -28,7 +28,7 @@ export const CRUD = () => {
   const [dataCategoryEmployes, setDataCategoryEmployes] = useState();
   const [skeleton, setSkeleton] = useState(false);
   const [dataHeading, setDataHeading] = useState([{}]);
-  const [path, setPath] =  useState('vendors')
+  const [path, setPath] = useState("vendors");
 
   // EmployesList
 
@@ -43,17 +43,16 @@ export const CRUD = () => {
     // contact
     vendors_idRef: useRef(),
     positionRef: useRef(),
-    
+
     // transactions
     amountRef: useRef(),
     product_idRef: useRef(),
     unit_priceRef: useRef(),
     total_priceRef: useRef(),
     taxesRef: useRef(),
-    shipping_costRef: useRef()
+    shipping_costRef: useRef(),
   });
   const [dataEdit, setDataEdit] = useState({});
-
 
   const handleChange = (event) => {
     // Mendapatkan nama dan nilai input yang berubah
@@ -184,8 +183,8 @@ export const CRUD = () => {
         htmlFor: "Transaction type",
         id: "Transaction type",
         dataSelect: [
-          {id: 'inbound', name: 'inbound'},
-          {id: 'outbound', name: 'outbound'},
+          { id: "inbound", name: "inbound" },
+          { id: "outbound", name: "outbound" },
         ],
         value: dataEdit.transaction_type,
         onchange: handleChange,
@@ -241,7 +240,6 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Phone number",
       },
-      
     ]);
 
     setInputVendorTransaction([
@@ -329,7 +327,6 @@ export const CRUD = () => {
         placeholder: "Shipping cost",
       },
     ]);
-
   }, [dataEdit]);
 
   const dataVendors = (data) => {
@@ -346,13 +343,13 @@ export const CRUD = () => {
   const dataVendorsTransactions = (data) => {
     return data.map((item) => ({
       id: item.id,
-      vendor: item.vendor?.name || '--',
+      vendor: item.vendor?.name || "--",
       amount: item.amount,
-      product: item.product?.name  || '--',
-      "unit price": item.unit_price || '--',
-      "total price": item.total_price || '--',
-      taxes: item.taxes || '--',
-      "shipping cost": item.shipping_cost || '--',
+      product: item.product?.name || "--",
+      "unit price": item.unit_price || "--",
+      "total price": item.total_price || "--",
+      taxes: item.taxes || "--",
+      "shipping cost": item.shipping_cost || "--",
       "unit of measure": item.product?.unit_of_measure || "--",
     }));
   };
@@ -373,12 +370,12 @@ export const CRUD = () => {
       const getData = async () => {
         try {
           const { data } = await getApiData(path);
-          if(path === 'vendors'){
+          if (path === "vendors") {
             const newData = dataVendors(data);
             setData(() => newData);
             setDataHeading([
               {
-                label: "Add vendors",
+                label: "Add new vendors",
                 icon: IconAdd(),
                 heading: "Vendors list",
                 eventToggleModal: handleCreate,
@@ -392,12 +389,12 @@ export const CRUD = () => {
                 activeButton: path,
               },
             ]);
-          }else if(path === 'vendor-contacts'){
+          } else if (path === "vendor-contacts") {
             const newData = dataVendorsContact(data);
-            setData(() => newData)
+            setData(() => newData);
             setDataHeading([
               {
-                label: "Add vendors",
+                label: "Add new vendors",
                 icon: IconAdd(),
                 heading: "Vendors list",
                 eventToggleModal: handleCreate,
@@ -411,12 +408,12 @@ export const CRUD = () => {
                 activeButton: path,
               },
             ]);
-          }else if(path === 'vendor-transactions'){
+          } else if (path === "vendor-transactions") {
             const newData = dataVendorsTransactions(data);
             setData(() => newData);
             setDataHeading([
               {
-                label: "Add vendors",
+                label: "Add new vendors",
                 icon: IconAdd(),
                 heading: "Vendors list",
                 eventToggleModal: handleCreate,
@@ -440,34 +437,32 @@ export const CRUD = () => {
 
     useEffect(() => {
       const getDataVendor = async () => {
-          const {data, status} = await getApiData('vendors')
-          if(status === 200) {
-              const newData = data.map(item => ({
-                  id: item.id,
-                  name: item.name
-              }))
-              setDataVendorsSelect(newData)
-          }
-      }
-      getDataVendor()
-
+        const { data, status } = await getApiData("vendors");
+        if (status === 200) {
+          const newData = data.map((item) => ({
+            id: item.id,
+            name: item.name,
+          }));
+          setDataVendorsSelect(newData);
+        }
+      };
+      getDataVendor();
 
       const getDataProducts = async () => {
-        const {data, status} = await getApiData('products')
-        if(status === 200) {
-            const newData = data.map(item => ({
-                id: item.id,
-                name: item.name
-            }))
-            setDataProductsSelect(newData)
+        const { data, status } = await getApiData("products");
+        if (status === 200) {
+          const newData = data.map((item) => ({
+            id: item.id,
+            name: item.name,
+          }));
+          setDataProductsSelect(newData);
         }
-    }
-    getDataProducts()
-     
-    }, [])
+      };
+      getDataProducts();
+    }, []);
 
     const handleClickHeading = async (param) => {
-      setPath(param)
+      setPath(param);
       setDataHeading([
         {
           label:
@@ -528,94 +523,94 @@ export const CRUD = () => {
     const handleCreate = (param) => {
       if (param === "vendors") {
         setDataEdit({
-          name: '',
-          address: '',
-          phone_number: '',
-          transaction_type: '',
-          email: '',
+          name: "",
+          address: "",
+          phone_number: "",
+          transaction_type: "",
+          email: "",
         });
         setValidationError({
-          name: '',
-          address: '',
-          phone_number: '',
-          transaction_type: '',
-          email: '',
+          name: "",
+          address: "",
+          phone_number: "",
+          transaction_type: "",
+          email: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add vendor",
+          labelModal: "Add New vendor",
           labelBtnModal: "Add new vendor",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
       } else if (param === "vendor-contacts") {
         setDataEdit({
-          vendors_id: '',
-          name: '',
-          position: '',
-          phone_number: '',
+          vendors_id: "",
+          name: "",
+          position: "",
+          phone_number: "",
         });
         setValidationError({
-          vendors_id: '',
-          name: '',
-          position: '',
-          phone_number: '',
+          vendors_id: "",
+          name: "",
+          position: "",
+          phone_number: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Add contact",
+          labelModal: "Add New contact",
           labelBtnModal: "Add new contact",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
-      }else if (param === "vendor-transactions") {
+      } else if (param === "vendor-transactions") {
         setDataEdit({
-          vendors_id: '',
-          amount: '',
-          product_id: '',
-          unit_price: '',
-          total_price: '',
-          taxes: '',
-          shipping_cost: '',
+          vendors_id: "",
+          amount: "",
+          product_id: "",
+          unit_price: "",
+          total_price: "",
+          taxes: "",
+          shipping_cost: "",
         });
         setValidationError({
-          vendors_id: '',
-          amount: '',
-          product_id: '',
-          unit_price: '',
-          total_price: '',
-          taxes: '',
-          shipping_cost: '',
+          vendors_id: "",
+          amount: "",
+          product_id: "",
+          unit_price: "",
+          total_price: "",
+          taxes: "",
+          shipping_cost: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add transactions",
+          labelModal: "Add New transactions",
           labelBtnModal: "Add new transactions",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
       } else {
         setDataEdit({
-          name: '',
-          address: '',
-          phone_number: '',
-          transaction_type: '',
-          email: '',
+          name: "",
+          address: "",
+          phone_number: "",
+          transaction_type: "",
+          email: "",
         });
         setValidationError({
-          name: '',
-          address: '',
-          phone_number: '',
-          transaction_type: '',
-          email: '',
+          name: "",
+          address: "",
+          phone_number: "",
+          transaction_type: "",
+          email: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add vendor",
+          labelModal: "Add New vendor",
           labelBtnModal: "Add new vendor",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
@@ -638,7 +633,7 @@ export const CRUD = () => {
         try {
           const store = await postApiData(param, dataBody);
           if (store.status === 201) {
-            setPath(param)
+            setPath(param);
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -652,14 +647,14 @@ export const CRUD = () => {
           vendors_id: refBody.vendors_idRef.current.value,
           name: refBody.nameRef.current.value,
           position: refBody.positionRef.current.value,
-          phone_number: refBody.phone_numberRef.current.value
+          phone_number: refBody.phone_numberRef.current.value,
         };
 
         try {
           const store = await postApiData(param, dataBody);
           if (store.status === 201) {
-            setPath(() => param)
-            setRefresh(prevRevresh => !prevRevresh);
+            setPath(() => param);
+            setRefresh((prevRevresh) => !prevRevresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
@@ -675,14 +670,14 @@ export const CRUD = () => {
           unit_price: refBody.unit_priceRef.current.value,
           total_price: refBody.total_priceRef.current.value,
           taxes: refBody.taxesRef.current.value,
-          shipping_cost: refBody.shipping_costRef.current.value
+          shipping_cost: refBody.shipping_costRef.current.value,
         };
 
         try {
           const store = await postApiData(param, dataBody);
           if (store.status === 201) {
-            setPath(() => param)
-            setRefresh(prevRevresh => !prevRevresh);
+            setPath(() => param);
+            setRefresh((prevRevresh) => !prevRevresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
@@ -721,24 +716,24 @@ export const CRUD = () => {
 
   const EDIT = () => {
     const handleEdit = async (param) => {
-      const id = param.textContent
-      if(path === 'vendors'){
+      const id = param.textContent;
+      if (path === "vendors") {
         setDataModal({
-          labelModal: "Detail & edit vendors",
+          labelModal: "Update vendors",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
         });
         setValidationError({
-          name: '',
-          address: '',
-          phone_number: '',
-          transaction_type: '',
-          email: '',
+          name: "",
+          address: "",
+          phone_number: "",
+          transaction_type: "",
+          email: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const {data, status} = await getApiData(path + '/' + id);
+          const { data, status } = await getApiData(path + "/" + id);
           if (status === 200) {
             setDataEdit({
               name: data.name,
@@ -746,63 +741,63 @@ export const CRUD = () => {
               phone_number: data.phone_number,
               transaction_type: data.transaction_type,
               email: data.email,
-              id: data.id
+              id: data.id,
             });
-  
+
             setIdDelete(data.id);
           }
         } catch (error) {
           console.log(error);
         }
-      }else if(path === 'vendor-contacts'){
+      } else if (path === "vendor-contacts") {
         setDataModal({
-          labelModal: "Detail & edit contact",
+          labelModal: "Update contact",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
         });
         setValidationError({
-          vendors_id: '',
-          name: '',
-          position: '',
-          phone_number: '',
+          vendors_id: "",
+          name: "",
+          position: "",
+          phone_number: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const {data, status} = await getApiData(path + '/' + id);
+          const { data, status } = await getApiData(path + "/" + id);
           if (status === 200) {
             setDataEdit({
               vendors_id: data.vendors_id,
               name: data.name,
               position: data.position,
               phone_number: data.phone_number,
-              id: data.id
+              id: data.id,
             });
-  
+
             setIdDelete(data.id);
           }
         } catch (error) {
           console.log(error);
         }
-      }else if(path === 'vendor-transactions'){
+      } else if (path === "vendor-transactions") {
         setDataModal({
-          labelModal: "Detail & edit transaction",
+          labelModal: "Update transaction",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
         });
         setValidationError({
-          vendors_id: '',
-          amount: '',
-          product_id: '',
-          unit_price: '',
-          total_price: '',
-          taxes: '',
-          shipping_cost: '',
+          vendors_id: "",
+          amount: "",
+          product_id: "",
+          unit_price: "",
+          total_price: "",
+          taxes: "",
+          shipping_cost: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const {data, status} = await getApiData(path + '/' + id);
+          const { data, status } = await getApiData(path + "/" + id);
           if (status === 200) {
             setDataEdit({
               vendors_id: data.vendors_id,
@@ -812,9 +807,9 @@ export const CRUD = () => {
               total_price: data.total_price,
               taxes: data.taxes,
               shipping_cost: data.shipping_cost,
-              id: data.id
+              id: data.id,
             });
-  
+
             setIdDelete(data.id);
           }
         } catch (error) {
@@ -823,12 +818,11 @@ export const CRUD = () => {
       }
     };
 
-
     const edit = async () => {
-      setLoading(prevLoading => !prevLoading)
+      setLoading((prevLoading) => !prevLoading);
       let dataBody = {};
 
-      if(path === 'vendors'){
+      if (path === "vendors") {
         dataBody = {
           name: refBody.nameRef.current.value,
           address: refBody.addressRef.current.value,
@@ -837,37 +831,43 @@ export const CRUD = () => {
           email: refBody.emailRef.current.value,
         };
         try {
-          const response = await putApiData(path + '/' + refBody.idRef.current.value, dataBody);
+          const response = await putApiData(
+            path + "/" + refBody.idRef.current.value,
+            dataBody
+          );
           console.log(response);
           if (response.status === 201) {
-            setLoading(prevLoading => !prevLoading)
+            setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
-          setLoading(prevLoading => !prevLoading)
+          setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
         }
-      }else if(path === 'vendor-contacts'){
+      } else if (path === "vendor-contacts") {
         dataBody = {
           vendors_id: refBody.vendors_idRef.current.value,
           name: refBody.nameRef.current.value,
           position: refBody.positionRef.current.value,
-          phone_number: refBody.phone_numberRef.current.value
+          phone_number: refBody.phone_numberRef.current.value,
         };
         try {
-          const response = await putApiData(path + '/' + refBody.idRef.current.value, dataBody);
+          const response = await putApiData(
+            path + "/" + refBody.idRef.current.value,
+            dataBody
+          );
           console.log(response);
           if (response.status === 201) {
-            setLoading(prevLoading => !prevLoading)
+            setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
-          setLoading(prevLoading => !prevLoading)
+          setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
         }
-      }else if(path === 'vendor-transactions'){
+      } else if (path === "vendor-transactions") {
         dataBody = {
           vendors_id: refBody.vendors_idRef.current.value,
           amount: refBody.amountRef.current.value,
@@ -875,22 +875,24 @@ export const CRUD = () => {
           unit_price: refBody.unit_priceRef.current.value,
           total_price: refBody.total_priceRef.current.value,
           taxes: refBody.taxesRef.current.value,
-          shipping_cost: refBody.shipping_costRef.current.value
+          shipping_cost: refBody.shipping_costRef.current.value,
         };
         try {
-          const response = await putApiData(path + '/' + refBody.idRef.current.value, dataBody);
+          const response = await putApiData(
+            path + "/" + refBody.idRef.current.value,
+            dataBody
+          );
           console.log(response);
           if (response.status === 201) {
-            setLoading(prevLoading => !prevLoading)
+            setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
-          setLoading(prevLoading => !prevLoading)
+          setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
         }
       }
-      
     };
 
     return {
@@ -977,7 +979,7 @@ export const CRUD = () => {
           </div>
         </>
       );
-    }  else if (param === "vendor-transactions") {
+    } else if (param === "vendor-transactions") {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 xl:grid-cols-2">
@@ -1002,7 +1004,7 @@ export const CRUD = () => {
           </div>
         </>
       );
-    } 
+    }
   };
 
   const { data, handleClickHeading } = READ();
@@ -1029,6 +1031,6 @@ export const CRUD = () => {
     inputBody,
     loading,
     skeleton,
-    path
+    path,
   };
 };
