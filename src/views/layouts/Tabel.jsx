@@ -29,6 +29,7 @@ const TabelComponent = ({data, dataHeading, showHeading, handleEdit, setOpenModa
   const handleEditClick = (param, param2) => {
     handleEdit(param, param2)
   }
+  
 
   function formatToRupiah(value) {
     // Check if the value is a number
@@ -40,7 +41,6 @@ const TabelComponent = ({data, dataHeading, showHeading, handleEdit, setOpenModa
       return value;
     }
   }
-  
   
 
   const columns = useMemo(() => {
@@ -81,7 +81,7 @@ const TabelComponent = ({data, dataHeading, showHeading, handleEdit, setOpenModa
           }
           // Cek apakah nilai adalah angka desimal atau nominal
           const value = info.getValue();
-          const formattedValue = typeof value === 'number' && key != 'id' && key != 'stock' && key != 'amount' ? formatToRupiah(value) : value;
+          const formattedValue = typeof value === 'number' && key != 'id' && key != 'stock' && key != 'amount' && key != 'quantity' ? formatToRupiah(value) : value;
   
           return <p className={`${className}capitalize`}>
             {icon}

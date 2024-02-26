@@ -3,6 +3,7 @@ import { getApiData, postApiData, putApiData, deleteApiData } from "../../../../
 import IconAdd from "../../../../layouts/icons/IconAdd"
 import { TextArea } from "../../../../layouts/FormInput"
 import FormInput from "../../../../layouts/FormInput"
+import { TabelForProducts } from "./TabelForProducts"
 
 export const CRUD = () => {
     const [refresh, setRefresh] = useState(false)
@@ -10,12 +11,11 @@ export const CRUD = () => {
     const [modalDelete, setModalDelete] = useState();
     const [idDelete, setIdDelete] = useState()
     const [dataModal, setDataModal] = useState({})
-    const [inputEmployes, setInputEmployes] = useState([])
+    const [inputOrder, setInputOrder] = useState([])
     const [inputInvoices, setInputInvoices] = useState([])
     const [inputPayments, setInputPayments] = useState([])
     const [responseError, setResponseError] = useState()
     const [validationError, setValidationError] = useState()
-    const [dataCompanies, setDataCompanies] = useState();
     const [dataDepartments, setDataDepartments] = useState();
     const [dataOrdersSelect, setDataOrdersSelect] = useState([]);
     const [dataInvoicesSelect, setDataInvoicesSelect] = useState([]);
@@ -26,6 +26,11 @@ export const CRUD = () => {
     const [path, setPath] = useState('orders')
     const [defaultEdit, setDefaultEdit] = useState(true)
     const [dataDetailOrders, setDataDetailOrders] = useState({})
+    const [inputProducts, setInputProducts] = useState()
+    const [dataSelectVendor, setDataSelectVendor] = useState()
+    const [dataSelectWarehouses, setDataSelectWarehouses] = useState()
+    const [dataSelectProducts, setDataSelectProducts] = useState()
+    const [dataTabelProducts, setDataTabelProducts] = useState([])
 
 
     const [refBody, setRefBody] = useState( {
@@ -40,6 +45,7 @@ export const CRUD = () => {
         taxesRef: useRef(),
         shipping_costRef: useRef(),
         order_typeRef: useRef(),
+        productsRef: useRef(),
 
         //invoices
         order_idRef: useRef(),
@@ -58,19 +64,21 @@ export const CRUD = () => {
     const [dataEdit, setDataEdit] = useState({})
 
 
-    const handleChangeAndGetDepartment = async (event) => {
+    const handleChangeAndPushProducts= async (event) => {
         // Mendapatkan nama dan nilai input yang berubah
         const { name, value } = event.target;
        
         try {
-           const response = await getApiData('companies/7/departments')
-           const newData = response.data.map(item => ({
-               id: item.id,
-               name: item.name
-           }))
-
-           setDataDepartments(() => newData)
-
+            const {data, status} = await getApiData('products/' + value)
+            if(status === 200 && value) {
+                const newData = {
+                    id: data.id, 
+                    name: data.name,
+                    qty: 0,
+                    price_per_unit: 10
+                }
+                setDataTabelProducts([...dataTabelProducts, newData])
+            }
        } catch (error) {
            console.log(error);
        }
@@ -120,21 +128,24 @@ export const CRUD = () => {
     }, [responseError])
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (param, state) => {
             try {
-                const response = await getApiData('companies')
-                const newData = response.data.map(item => ({
-                    id: item.id,
-                    name: item.name
-                 }))
-
-                 setDataCompanies(() => newData)
+                const {data, status} = await getApiData(param)
+                if(status === 200) {
+                    const newData = data.map(item => ({
+                        id: item.id,
+                        name: item.name
+                    }))
+                    state(newData)
+                }
             } catch (error) {
                 console.log(error);
             }
         }
 
-        fetchData()
+        fetchData('warehouses', setDataSelectWarehouses)
+        fetchData('vendors', setDataSelectVendor)
+        fetchData('products', setDataSelectProducts)
 
         const fetchDataCategory = async () => {
             try {
@@ -155,224 +166,68 @@ export const CRUD = () => {
     }, [])
 
     useEffect(() => {
-        setInputEmployes(  [
+        setInputOrder(  [
             {
-                element: 'input',
-                type: 'text',
-                name: 'name',
-                ref: refBody.nameRef,
-                value: dataEdit.name,
-                label: 'Name',
-                htmlFor: 'name',
-                id: 'name',
-                onchange: handleChange,
-                placeholder: 'Name',
-            },
-            {
-                element: 'input',
-                type: 'email',
-                name: 'email',
-                ref: refBody.emailRef,
-                value: dataEdit.email,
-                label: 'Email',
-                htmlFor: 'email',
-                id: 'email',
-                onchange: handleChange,
-                placeholder: 'Email',
-    
-            },
-            {
-                element: 'input',
-                type: 'text',
-                name: 'phone_number',
-                ref: refBody.phone_numberRef,
-                value: dataEdit.phone_number,
-                label: 'Phone number',
-                htmlFor: 'phone_number',
-                id: 'phone_number',
-                onchange: handleChange,
-                placeholder: 'Phone number',
+                element: 'select',
+                name: 'vendor_id',
+                ref: refBody.vendor_idRef,
+                value: dataEdit.vendor_id,
+                label: 'Vendor',
+                htmlFor: 'vendor_id',
+                id: 'vendor_id',
+                dataSelect: dataSelectVendor,
+                onchange: handleChange
             },
             {
                 element: 'select',
-                ref: refBody.company_idRef,
-                name: 'company_id',
-                label: 'Companies',
-                htmlFor: 'categori companies',
-                id: 'categori companies',
-                dataSelect: dataCompanies,
-                value: dataEdit.company_id,
-                onchange: handleChangeAndGetDepartment
+                name: 'warehouse_id',
+                ref: refBody.warehouse_idRef,
+                value: dataEdit.warehouse_id,
+                label: 'Warehouses',
+                htmlFor: 'warehouse_id',
+                id: 'warehouse_id',
+                dataSelect: dataSelectWarehouses,
+                onchange: handleChange
             },
             {
-                element: 'input',
-                type: 'text',
-                name: 'job_title',
-                ref: refBody.job_titleRef,
-                value: dataEdit.job_title,
-                label: 'Job title',
-                htmlFor: 'job_title',
-                id: 'job_title',
-                onchange: handleChange,
-                placeholder: 'Job title',
-            },
-            {
-                element: 'input',
-                type: 'date',
-                name: 'date_of_birth',
-                ref: refBody.date_of_birthRef,
-                value: dataEdit.date_of_birth,
-                label: 'Date of birth',
-                htmlFor: 'date_of_birth',
-                id: 'date_of_birth',
-                onchange: handleChange,
-                placeholder: 'Date of birth',
-            },
-            {
-                element: 'select',
-                name: 'employment_status',
-                ref: refBody.employment_statusRef,
-                value: dataEdit.employment_status,
-                label: 'satus',
-                htmlFor: 'employment_status',
-                id: 'employment_status',
+                element: 'radio',
+                name: 'order_type',
+                ref: refBody.order_typeRef,
+                value: dataEdit.order_type,
+                label: 'Order type',
+                htmlFor: 'order_type',
+                id: 'order_type',
                 dataSelect: [
-                    {value: 'active', name: 'Active'},
-                    {value: 'inactive', name: 'Inactive'},
+                    {id: 1, name: 'direct order'},
+                    {id: 2, name: 'production order'},
                 ],
                 onchange: handleChange
             },
-            {
-                element: 'input',
-                type: 'date',
-                name: 'hire_date',
-                ref: refBody.hire_dateRef,
-                value: dataEdit.hire_date,
-                label: 'Hire date',
-                htmlFor: 'hire_date',
-                id: 'hire_date',
-                onchange: handleChange,
-                placeholder: 'Hire date',
-            },
-            {
-                element: 'input',
-                type: 'date',
-                name: 'termination_date',
-                ref: refBody.termination_dateRef,
-                value: dataEdit.termination_date,
-                label: 'Termination date',
-                htmlFor: 'termination_date',
-                id: 'termination_date',
-                onchange: handleChange,
-                placeholder: 'Termination date',
-            },
-            {
-                element: 'input',
-                type: 'text',
-                name: 'address',
-                ref: refBody.addressRef,
-                value: dataEdit.address,
-                label: 'Address',
-                htmlFor: 'address',
-                id: 'address',
-                onchange: handleChange,
-                placeholder: 'Address',
-            },
-            {
-                element: 'input',
-                type: 'text',
-                name: 'city',
-                ref: refBody.cityRef,
-                value: dataEdit.city,
-                label: 'City',
-                htmlFor: 'city',
-                id: 'city',
-                onchange: handleChange,
-                placeholder: 'City',
-            },
-            {
-                element: 'input',
-                type: 'text',
-                name: 'province',
-                ref: refBody.provinceRef,
-                value: dataEdit.province,
-                label: 'Province',
-                htmlFor: 'province',
-                id: 'province',
-                onchange: handleChange,
-                placeholder: 'Province',
-            },
-            {
-                element: 'input',
-                type: 'number',
-                name: 'postal_code',
-                ref: refBody.postal_codeRef,
-                value: dataEdit.postal_code,
-                label: 'Postal Code',
-                htmlFor: 'postal_code',
-                id: 'postal_code',
-                onchange: handleChange,
-                placeholder: 'Postal Code',
-            },
-            {
-                element: 'input',
-                type: 'text',
-                name: 'country',
-                ref: refBody.countryRef,
-                value: dataEdit.country,
-                label: 'Country',
-                htmlFor: 'country',
-                id: 'country',
-                onchange: handleChange,
-                placeholder: 'Country',
-            },
+        ])
+
+        setInputProducts( [
             {
                 element: 'select',
-                ref: refBody.department_idRef,
-                name: 'department_id',
-                label: 'Department',
-                htmlFor: 'department',
-                id: 'department',
-                dataSelect: dataDepartments,
-                value: dataEdit.department_id,
-                onchange: handleChange
+                name: 'product_id',
+                ref: refBody.product_idRef,
+                value: dataEdit.product_id,
+                label: 'products',
+                htmlFor: 'product_id',
+                id: 'product_id',
+                dataSelect: dataSelectProducts,
+                onchange: handleChangeAndPushProducts
             },
-            {
-                element: 'select',
-                ref: refBody.category_idRef,
-                name: 'category_id',
-                label: 'Category',
-                htmlFor: 'category_id',
-                id: 'category_id',
-                dataSelect: dataCategoryEmployes,
-                value: dataEdit.category_id,
-                onchange: handleChange
-            },
-            {
-                element: 'input',
-                type: 'text',
-                name: 'emergency_contact_name',
-                ref: refBody.emergency_contact_nameRef,
-                value: dataEdit.emergency_contact_name,
-                label: 'Emergency Contact Name',
-                htmlFor: 'emergency_contact_name',
-                id: 'emergency_contact_name',
-                onchange: handleChange,
-                placeholder: 'Emergency Contact Name',
-            },
-            {
-                element: 'input',
-                type: 'text',
-                name: 'emergency_contact_phone_number',
-                ref: refBody.emergency_contact_phone_numberRef,
-                value: dataEdit.emergency_contact_phone_number,
-                label: 'Emergency Contact Phone Number',
-                htmlFor: 'emergency_contact_phone_number',
-                id: 'emergency_contact_phone_number',
-                onchange: handleChange,
-                placeholder: 'Emergency Contact Phone Number',
-            },
-            
+            // {
+            //     element: 'select',
+            //     name: 'products',
+            //     ref: refBody.productsRef,
+            //     value: dataEdit.products,
+            //     label: '',
+            //     htmlFor: 'products',
+            //     id: 'products',
+            //     dataSelect: [],
+            //     onchange: handleChange
+            // },
         ])
 
         setInputInvoices([
@@ -707,62 +562,36 @@ export const CRUD = () => {
 
     const CREATE = () => {
 
-        const handleCreate  = (param) => {
-           if(param === 'employees'){
+        const handleCreate  = async (param) => {
+           if(param === 'orders'){
             setDataEdit(
                 {
-                    name: '',
-                    email: '',
-                    phone_number: '',
-                    company_id: '',
-                    job_title: '',
-                    date_of_birth: '',
-                    employment_status:'',
-                    hire_date: '',
-                    termination_date:'',
-                    address: '',
-                    city: '',
-                    province: '',
-                    postal_code: '',
-                    country: '',
-                    emergency_contact_name: '',
-                    emergency_contact_phone_number: '',
-                    notes: '',
-                    department_id: '',
-                    category_id: '',
-                    id: '',
+                    customer_id: '',
+                    warehouse_id: '',
+                    status: '',
+                    details: '',
+                    order_type: '',
+                    products: '',
                 }
             )
             setValidationError(
                 {
-                    name: '',
-                    email: '',
-                    phone_number: '',
-                    company_id: '',
-                    job_title: '',
-                    date_of_birth: '',
-                    employment_status: '',
-                    hire_date: '',
-                    termination_date: '',
-                    address: '',
-                    city: '',
-                    province: '',
-                    postal_code: '',
-                    country: '',
-                    emergency_contact_name: '',
-                    emergency_contact_phone_number: '',
-                    notes: '',
-                    department_id: '',
+                    customer_id: '',
+                    warehouse_id: '',
+                    status: '',
+                    details: '',
+                    order_type: '',
+                    products: '',
                 }
             )
-            setOpenModal(prevOpenModal => !prevOpenModal)
             setDataModal({
-                size: '6xl',
-                labelModal: 'Add employes',
-                labelBtnModal: 'Add new employes',
+                size: '2xl',
+                labelModal: 'Add orders',
+                labelBtnModal: 'Add new orders',
                 labelBtnSecondaryModal: 'Back',
                 handleBtn: create,
             })
+            setOpenModal(prevOpenModal => !prevOpenModal)
            }else if(param === 'invoices'){
             setDataEdit(
                 {
@@ -1252,8 +1081,8 @@ export const CRUD = () => {
         if(param === 'orders'){
             return (
                 <>
-                 <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-3">
-                            {inputEmployes.map( (item, index) => (
+                 <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+                            {inputOrder.map( (item, index) => (
                                 < FormInput
                                 key={item.id}
                                 element={item.element}
@@ -1272,14 +1101,41 @@ export const CRUD = () => {
                                 />
                             ) )}
                             < TextArea 
-                            span={`col-span-3`}
-                            label={'Notes'}
-                            htmlFor={'notes'}
-                            id={'notes'}
-                            name={'notes'}
-                            referens={refBody.notesRef}
-                            placeholder={'Write notes here'}
+                            span={`col-span-2`}
+                            label={'Detail'}
+                            htmlFor={'detail'}
+                            id={'detail'}
+                            name={'detail'}
+                            referens={refBody.detailsRef}
+                            placeholder={'Write detail here'}
                             />
+
+                            {inputProducts && inputProducts.map( (item, index) => (
+                              <div className="col-span-2">
+                                  < FormInput
+                                    key={item.id}
+                                    element={item.element}
+                                    htmlFor={item.htmlFor}
+                                    label={item.label}
+                                    type={item.type}
+                                    name={item.name}
+                                    referens={item.ref}
+                                    value={item.value}
+                                    id={item.id}
+                                    onChange={(event) => item.onchange(event)}
+                                    placeholder={item.placeholder} 
+                                    dataSelect={item.dataSelect}
+                                    uniqueId={index}
+                                    validationError={validationError}
+                                />
+                              </div>
+                            ) )}
+
+                            <div className="col-span-2">
+                                <TabelForProducts
+                                    data={dataTabelProducts}
+                                />
+                            </div>
                     </div>
                 </>
             )
@@ -1347,7 +1203,6 @@ export const CRUD = () => {
         handleCreate,
         openModal,
         dataModal,
-        inputEmployes,
         refBody,
         handleEdit,
         dataEdit,

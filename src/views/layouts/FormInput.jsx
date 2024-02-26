@@ -25,9 +25,11 @@ const FormInput = (
 
     const classNameInputFile = `${element == 'file' ? `` : `hidden`} block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400`
 
+    const classNameInputRadio = `${element == 'radio' ? `` : `hidden`} w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600`
+
     return (
         <>
-          <div key={uniqueId + 3} className="col-span-3 lg:col-span-1">
+          <div key={uniqueId + 3} className="col-span-1">
             <label 
               className={`${type === 'hidden' ? 'hidden' : ``} block mb-2 text-sm font-medium text-gray-900 dark:text-white`}
               htmlFor={htmlFor}
@@ -53,8 +55,8 @@ const FormInput = (
                 </p>
               </>
             )}
-              {element === 'select' && (
-                <div key={uniqueId + 3} className="col-span-3 lg:col-span-1">
+            {element === 'select' && (
+                <div key={uniqueId + 3} className="col-span-1">
                   <select
                     key={`${uniqueId}-${id}`}
                     className={classNameSelect}
@@ -73,15 +75,9 @@ const FormInput = (
                     {!!validationError && validationError[name] ? validationError[name] : ''}
                   </p>
                 </div>
-              )}
+            )}
 
-{/*               
-              <label classname="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
-              <input classname="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
-              <p classname="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p> */}
-
-
-              {element === 'file' && (
+            {element === 'file' && (
                 <div key={uniqueId + 3} className="col-span-3 lg:col-span-1">
                   <input
                     key={`${uniqueId}-${id}`}
@@ -98,7 +94,29 @@ const FormInput = (
                     {!!validationError && validationError[name] ? validationError[name] : ''}
                   </p>
                 </div>
-              )}
+            )}
+
+            {element === 'radio' && (
+                <div key={uniqueId + 3} className="flex items-center gap-3">
+                  {dataSelect && dataSelect.map(item => (
+                    <div key={item.id} className="flex items-center">
+                    <input
+                     id={id} 
+                     type="radio" 
+                     value={value} 
+                     name= {name}
+                     className={classNameInputRadio} />
+                    <label
+                      for={id} 
+                      className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      {item.name}
+                     </label>
+                  </div>
+                  ))}
+                </div>
+            )}
+
+
           </div>
         </>
       );

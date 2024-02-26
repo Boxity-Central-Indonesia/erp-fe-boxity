@@ -233,10 +233,7 @@ export const CRUD = () => {
         label: "Warehouses",
         htmlFor: "warehouse_id",
         id: "warehouse_id",
-        dataSelect: [
-          { value: "active", name: "Active" },
-          { value: "inactive", name: "Inactive" },
-        ],
+        dataSelect: dataWarehouseesSelect,
         onchange: handleChange,
       },
       {

@@ -259,7 +259,7 @@ export const CRUD = () => {
                                 onclick: handleClickHeading,
                                 showNavHeading: true,
                                 dataNavHeading: [
-                                    {path: 'employees', label: 'Employees'},
+                                    {path: 'accounts', label: 'Accounts'},
                                     {path: 'accounts-transactions', label: 'Transactions'},
                                 ],
                                 activeButton: path,
