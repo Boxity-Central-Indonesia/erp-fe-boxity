@@ -106,8 +106,8 @@ export const CRUD = () => {
               code: item.code,
               name: item.name,
               description: item.description,
-              weight: item.weight + item.unit_of_measure,
-              'type of animal': item.animal_type,
+              weight: item.weight || 0.0 + item.unit_of_measure,
+              "type of animal": item.animal_type,
               quantity: item.stock,
               harga: item.price,
             }));

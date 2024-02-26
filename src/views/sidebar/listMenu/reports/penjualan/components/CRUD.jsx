@@ -103,15 +103,15 @@ export const CRUD = () => {
           const { data, status } = await getApiData("sales-report");
           if (status === 200) {
             const newData = data.map((item) => ({
-              kode_order: item.kode_order,
-              vendor_name: item.vendor_name,
-              "order type": item.order_type,
+              "order code": item.kode_order,
+              vendor: item.vendor_name,
+              "type of order": item.order_type,
               "production status": item.order_status,
-              product_name: item.product_name,
+              "product name": item.product_name,
               quantity: item.quantity,
-              price_per_unit: item.price_per_unit,
-              shipping_cost: item.shipping_cost,
-              total_price: item.total_price,
+              "price per unit": item.price_per_unit,
+              "shipping cost": item.shipping_cost,
+              "total price": item.total_price,
               "payment status": item.status,
             }));
             setData(() => newData);
