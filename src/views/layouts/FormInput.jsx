@@ -103,11 +103,13 @@ const FormInput = (
                     <input
                      id={id} 
                      type="radio" 
-                     value={value} 
+                     value={value}
+                    //  checked={value === item.name || ''}
                      name= {name}
+                     onChange={onChange}
                      className={classNameInputRadio} />
                     <label
-                      for={id} 
+                      htmlFor={id} 
                       className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                       {item.name}
                      </label>

@@ -197,16 +197,20 @@ const TabelComponent = ({
           }
           // Cek apakah nilai adalah angka desimal atau nominal
           const value = info.getValue();
-          const formattedValue =
+          let formattedValue;
+          if (
             typeof value === "number" &&
-            key != "id" &&
-            key != "stock" &&
-            key != "amount" &&
-            key != "quantity" &&
-            key != "capacity"
-              ? formatToRupiah(value)
-              : value;
-
+            key !== "id" &&
+            key !== "stock" &&
+            key !== "amount" &&
+            key !== "quantity" &&
+            key !== "capacity"
+          ) {
+            className=`text-right`
+            formattedValue = formatToRupiah(value);
+          } else {
+            formattedValue = value;
+          }
           return (
             <p className={`${className} capitalize`}>
               {icon}
@@ -396,7 +400,10 @@ const TabelComponent = ({
               <Table.Head>
                 {table.getHeaderGroups()[0].headers.map((header) => (
                   <Table.HeadCell
-                    className={`${header.id === "id" ? `hidden` : ``}`}
+                    className={`${header.id === "id" ? `hidden` : ``} 
+                    ${header.id === 'price per unit' 
+                    || header.id === 'shipping cost' 
+                    || header.id === 'total price' ? `text-right` : ``}`}
                     key={header.id}
                   >
                     <span className="">

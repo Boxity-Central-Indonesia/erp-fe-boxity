@@ -36,6 +36,7 @@ export const CRUD = () => {
   const [dataSelectWarehouses, setDataSelectWarehouses] = useState();
   const [dataSelectProducts, setDataSelectProducts] = useState();
   const [dataTabelProducts, setDataTabelProducts] = useState([]);
+  const [inputEditOrder, setInputEditOrder] = useState()
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -191,12 +192,37 @@ export const CRUD = () => {
         htmlFor: "order_type",
         id: "order_type",
         dataSelect: [
-          { id: 1, name: "direct order" },
-          { id: 2, name: "production order" },
+          { id: 1, name: "Direct Order" },
+          { id: 2, name: "Production Order" },
         ],
         onchange: handleChange,
       },
     ]);
+
+    setInputEditOrder([
+      {
+        element: "select",
+        name: "vendor_id",
+        ref: refBody.vendor_idRef,
+        value: dataEdit.vendor_id,
+        label: "Vendor",
+        htmlFor: "vendor_id",
+        id: "vendor_id",
+        dataSelect: dataSelectVendor,
+        onchange: handleChange,
+      },
+      {
+        element: "select",
+        name: "warehouse_id",
+        ref: refBody.warehouse_idRef,
+        value: dataEdit.warehouse_id,
+        label: "Warehouses",
+        htmlFor: "warehouse_id",
+        id: "warehouse_id",
+        dataSelect: dataSelectWarehouses,
+        onchange: handleChange,
+      },
+    ])
 
     setInputProducts([
       {
@@ -812,8 +838,9 @@ export const CRUD = () => {
 
   const EDIT = () => {
     const handleEdit = async (param) => {
+      console.log(path);
       // const id = param.textContent
-      if (path === "orders") {
+      if (path === "orders" && defaultEdit === true) {
         setDefaultEdit(false);
         setDataModal({
           labelModal: "Update employes",
@@ -858,6 +885,33 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
+      } else if(path === "orders" && defaultEdit === false) {
+        setDataModal({
+          labelModal: "Edit orders",
+          labelBtnModal: "Save",
+          labelBtnSecondaryModal: "Delete",
+          handleBtn: edit,
+        });
+
+        try {
+          const {data, status} = await getApiData('orders/4')
+          if(status === 200){
+            setDataEdit(
+              {
+                id: data.id,
+                vendor_id: data.vendor.id,
+                warehouse_id: data.warehouse.id,
+                'order_type': data.order_type,
+                invoice: data.invoice
+              }
+            )
+          }
+
+        } catch (error) {
+          
+        }
+
+        setOpenModal(prevOpenModal => !prevOpenModal)
       } else if (path === "invoices") {
         setDataModal({
           labelModal: "Update invoice",

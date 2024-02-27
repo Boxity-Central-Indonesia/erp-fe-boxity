@@ -25,8 +25,8 @@ export const PersediaanBarang = () => {
         loading
     } = CRUD()
     const [dataHeading, setDataHeading] = useState( [{
-        label: 'Add account',
-        icon: IconAdd(),
+        label: 'Dwonload',
+        // icon: IconAdd(),
         heading: 'Inventory Report',
         eventToggleModal: handleCreate,
     }]);
