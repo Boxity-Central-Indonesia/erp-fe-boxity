@@ -36,7 +36,7 @@ export const CRUD = () => {
   const [dataSelectWarehouses, setDataSelectWarehouses] = useState();
   const [dataSelectProducts, setDataSelectProducts] = useState();
   const [dataTabelProducts, setDataTabelProducts] = useState([]);
-  const [inputEditOrder, setInputEditOrder] = useState()
+  const [inputEditOrder, setInputEditOrder] = useState();
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -222,7 +222,7 @@ export const CRUD = () => {
         dataSelect: dataSelectWarehouses,
         onchange: handleChange,
       },
-    ])
+    ]);
 
     setInputProducts([
       {
@@ -383,41 +383,42 @@ export const CRUD = () => {
 
   const dataOrders = (data) => {
     return data.map((item) => ({
-      "order code": item.kode_order,
+      "kode transaksi": item.kode_order,
       "vendor name": item.vendor.name,
       // 'product name': item.products.name,
       "warehouse name": item.warehouse.name,
       // status: item.status,
       "order status": item.order_status,
       "order type": item.order_type,
-      taxes: item.taxes ?? "--",
+      "biaya pajak": item.taxes ?? "--",
       // quantity: item.quantity,
-      // 'price per unnit': item.price_per_unit,
-      shipping_cost: item.shipping_cost ?? "--",
-      "total price": item.total_price,
+      "biaya pengiriman": item.shipping_cost ?? "--",
+      "total tagihan": item.total_price,
       id: item.id,
     }));
   };
 
   const dataPayments = (data) => {
     return data.map((item) => ({
-      "kode payment": item.kode_payment,
-      "amount paid": item.amount_paid,
+      "kode transaksi": item.kode_payment,
       "kode invoice": item.invoice.kode_invoice,
-      "payment method": item.payment_method,
-      "payment date": item.payment_date,
+      "tagihan terbayar": item.amount_paid,
+      "metode pembayaran": item.payment_method,
+      "tanggal pembayaran": item.payment_date,
       id: item.id,
     }));
   };
 
   const dataInvoices = (data) => {
     return data.map((item) => ({
-      "kode invoices": item.kode_invoice,
-      "invoices data": item.invoice_date,
-      "due date": item.due_date,
+      "kode transaksi": item.kode_invoice,
+      "kode order": item.order.kode_order,
+      "tanggal invoice": item.invoice_date,
+      "tanggal jatuh tempo": item.due_date,
       status: item.status,
-      "balance due": item.balance_due,
-      "total amount": item.total_amount,
+      "tagihan terbayar": item.paid_amount,
+      "sisa tagihan": item.balance_due,
+      "total tagihan": item.total_amount,
       id: item.id,
     }));
   };
@@ -885,7 +886,7 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
-      } else if(path === "orders" && defaultEdit === false) {
+      } else if (path === "orders" && defaultEdit === false) {
         setDataModal({
           labelModal: "Edit orders",
           labelBtnModal: "Save",
@@ -894,24 +895,19 @@ export const CRUD = () => {
         });
 
         try {
-          const {data, status} = await getApiData('orders/4')
-          if(status === 200){
-            setDataEdit(
-              {
-                id: data.id,
-                vendor_id: data.vendor.id,
-                warehouse_id: data.warehouse.id,
-                'order_type': data.order_type,
-                invoice: data.invoice
-              }
-            )
+          const { data, status } = await getApiData("orders/4");
+          if (status === 200) {
+            setDataEdit({
+              id: data.id,
+              vendor_id: data.vendor.id,
+              warehouse_id: data.warehouse.id,
+              order_type: data.order_type,
+              invoice: data.invoice,
+            });
           }
+        } catch (error) {}
 
-        } catch (error) {
-          
-        }
-
-        setOpenModal(prevOpenModal => !prevOpenModal)
+        setOpenModal((prevOpenModal) => !prevOpenModal);
       } else if (path === "invoices") {
         setDataModal({
           labelModal: "Update invoice",

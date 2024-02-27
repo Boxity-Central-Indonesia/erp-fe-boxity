@@ -109,7 +109,7 @@ export const CRUD = () => {
               amount: item.amount,
               unit_price: item.unit_price,
               taxes: item.taxes ?? 0,
-              shipping_cost: item.shipping_cost ?? 0,
+              "harga pengiriman": item.shipping_cost ?? 0,
               total_price: item.total_price,
             }));
             setData(() => newData);

@@ -78,6 +78,9 @@ const TabelComponent = ({
           } else if (info.getValue() === "incompleted") {
             className =
               "border py-0.5 px-4 rounded-full bg-red-600 w-fit text-white text-sm";
+          } else if (info.getValue() === "pending") {
+            className =
+              "border py-0.5 px-4 rounded-full bg-yellow-600 w-fit text-white text-sm";
           }
           // cek nilai production status / order status apakah completed atau tidak
           if (info.getValue() === "Completed") {
@@ -206,7 +209,7 @@ const TabelComponent = ({
             key !== "quantity" &&
             key !== "capacity"
           ) {
-            className=`text-right`
+            className = `text-right`;
             formattedValue = formatToRupiah(value);
           } else {
             formattedValue = value;
@@ -401,9 +404,13 @@ const TabelComponent = ({
                 {table.getHeaderGroups()[0].headers.map((header) => (
                   <Table.HeadCell
                     className={`${header.id === "id" ? `hidden` : ``} 
-                    ${header.id === 'price per unit' 
-                    || header.id === 'shipping cost' 
-                    || header.id === 'total price' ? `text-right` : ``}`}
+                    ${
+                      header.id === "price per unit" ||
+                      header.id === "shipping cost" ||
+                      header.id === "total price"
+                        ? `text-right`
+                        : ``
+                    }`}
                     key={header.id}
                   >
                     <span className="">

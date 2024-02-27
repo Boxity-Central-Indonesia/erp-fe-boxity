@@ -347,9 +347,9 @@ export const CRUD = () => {
       amount: item.amount,
       product: item.product?.name || "--",
       "unit price": item.unit_price || "--",
-      "total price": item.total_price || "--",
+      "total harga": item.total_price || "--",
       taxes: item.taxes || "--",
-      "shipping cost": item.shipping_cost || "--",
+      "harga pengiriman": item.shipping_cost || "--",
       "unit of measure": item.product?.unit_of_measure || "--",
     }));
   };

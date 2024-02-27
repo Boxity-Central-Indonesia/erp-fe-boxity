@@ -104,14 +104,14 @@ export const CRUD = () => {
           if (status === 200) {
             const newData = data.map((item) => ({
               "order code": item.kode_order,
-              vendor: item.vendor_name,
+              customer: item.vendor_name,
               "type of order": item.order_type,
               "production status": item.order_status,
               "product name": item.product_name,
               quantity: item.quantity,
               "price per unit": item.price_per_unit,
-              "shipping cost": item.shipping_cost,
-              "total price": item.total_price,
+              "harga pengiriman": item.shipping_cost,
+              "total harga": item.total_price,
               "payment status": item.status,
             }));
             setData(() => newData);

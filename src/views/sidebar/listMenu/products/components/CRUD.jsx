@@ -394,13 +394,16 @@ export const CRUD = () => {
   const dataProducts = (data) => {
     return data.map((item) => ({
       id: item.id,
-      code: item.code,
+      "kode barang": item.code,
       name: item.name,
-      warehouse: item.warehouse?.name || "--",
+      description: item.description,
+      "lokasi gudang": item.warehouse?.name || "--",
       category: item.category?.name || "--",
       type: item.type,
-      stock: item.stock,
-      price: item.price,
+      weight: (item.weight ?? 0.0) + " " + item.unit_of_measure,
+      quantity: item.stock,
+      "harga rata-rata": item.price,
+      "HPP Balance": item.price * item.stock,
     }));
   };
 
