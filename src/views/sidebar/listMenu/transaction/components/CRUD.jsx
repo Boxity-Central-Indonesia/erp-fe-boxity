@@ -51,6 +51,7 @@ export const CRUD = () => {
     shipping_costRef: useRef(),
     order_typeRef: useRef(),
     productsRef: useRef(),
+    idRef: useRef(),
 
     //invoices
     order_idRef: useRef(),
@@ -60,7 +61,7 @@ export const CRUD = () => {
     due_dateRef: useRef(),
 
     // payments
-    invpice_idRef: useRef(),
+    invoice_idRef: useRef(),
     amount_paidRef: useRef(),
     payment_methodRef: useRef(),
     payment_dateRef: useRef(),
@@ -96,7 +97,6 @@ export const CRUD = () => {
   const handleChange = (event) => {
     // Mendapatkan nama dan nilai input yang berubah
     const { name, value } = event.target;
-
     // Memperbarui state sesuai dengan nilai input yang berubah
     setDataEdit((prevDataEdit) => ({
       ...prevDataEdit,
@@ -275,7 +275,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "date",
+        type: "number",
         name: "balance_due",
         ref: refBody.balance_dueRef,
         value: dataEdit.balance_due,
@@ -393,7 +393,7 @@ export const CRUD = () => {
       taxes: item.taxes ?? "--",
       // quantity: item.quantity,
       // 'price per unnit': item.price_per_unit,
-      shipping_cost: item.shipping_cost ?? "--",
+      'shipping cost': item.shipping_cost ?? "--",
       "total price": item.total_price,
       id: item.id,
     }));
@@ -401,17 +401,18 @@ export const CRUD = () => {
 
   const dataPayments = (data) => {
     return data.map((item) => ({
-      "kode payment": item.kode_payment,
-      "amount paid": item.amount_paid,
       "kode invoice": item.invoice.kode_invoice,
+      "kode payment": item.kode_payment,
       "payment method": item.payment_method,
       "payment date": item.payment_date,
+      "amount paid": item.amount_paid,
       id: item.id,
     }));
   };
 
   const dataInvoices = (data) => {
     return data.map((item) => ({
+      'kode order': item.order.kode_order,
       "kode invoices": item.kode_invoice,
       "invoices data": item.invoice_date,
       "due date": item.due_date,
@@ -463,11 +464,11 @@ export const CRUD = () => {
                   { path: "invoices", label: "Invoices" },
                   { path: "payments", label: "Payments" },
                 ],
-                activeButton: "orders",
+                activeButton: 'invoices',
               },
             ]);
           } else if (path === "payments") {
-            const newData = dataInvoices(data);
+            const newData = dataPayments(data);
             setData(newData);
             setDataHeading([
               {
@@ -482,7 +483,7 @@ export const CRUD = () => {
                   { path: "invoices", label: "Invoices" },
                   { path: "payments", label: "Payments" },
                 ],
-                activeButton: "orders",
+                activeButton: "payments",
               },
             ]);
           }
@@ -496,11 +497,11 @@ export const CRUD = () => {
     useEffect(() => {
       const getDataOrders = async () => {
         try {
-          const { data, status } = await getApiData(path);
+          const { data, status } = await getApiData('orders');
           if (status === 200) {
             const newData = data.map((item) => ({
               id: item.id,
-              name: item.name,
+              name: item.kode_order,
             }));
             setDataOrdersSelect(newData);
           }
@@ -512,11 +513,11 @@ export const CRUD = () => {
 
       const getDataInvoice = async () => {
         try {
-          const { data, status } = await getApiData(path);
+          const { data, status } = await getApiData('invoices');
           if (status === 200) {
             const newData = data.map((item) => ({
               id: item.id,
-              name: item.name,
+              name: item.kode_invoice,
             }));
             setDataInvoicesSelect(newData);
           }
@@ -524,6 +525,7 @@ export const CRUD = () => {
           console.log(error);
         }
       };
+      getDataInvoice()
     }, []);
 
     const handleClickHeading = async (param) => {
@@ -584,6 +586,7 @@ export const CRUD = () => {
 
   const CREATE = () => {
     const handleCreate = async (param) => {
+      console.log(param);
       if (param === "orders") {
         setDataEdit({
           customer_id: "",
@@ -650,8 +653,29 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New invoices",
-          labelBtnModal: "Add new invoices",
+          labelModal: "Add New payments",
+          labelBtnModal: "Add new payments",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "products") {
+        setDataEdit({
+          invoice_id: "",
+          amount_paid: "",
+          payment_method: "",
+          payment_date: "",
+        });
+        setValidationError({
+          invoice_id: "",
+          amount_paid: "",
+          payment_method: "",
+          payment_date: "",
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Add New payments",
+          labelBtnModal: "Add new payments",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -768,6 +792,7 @@ export const CRUD = () => {
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
+          console.log(error);
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
         }
@@ -838,8 +863,6 @@ export const CRUD = () => {
 
   const EDIT = () => {
     const handleEdit = async (param) => {
-      console.log(path);
-      // const id = param.textContent
       if (path === "orders" && defaultEdit === true) {
         setDefaultEdit(false);
         setDataModal({
@@ -870,7 +893,7 @@ export const CRUD = () => {
         });
         // setOpenModal(prevOpenModal => !prevOpenModal)
         try {
-          const { data, status } = await getApiData("orders/4");
+          const { data, status } = await getApiData("orders/" + param.textContent);
           if (status === 200) {
             setDataEdit({
               // vendor: data.vendor.name,
@@ -894,7 +917,7 @@ export const CRUD = () => {
         });
 
         try {
-          const {data, status} = await getApiData('orders/4')
+          const {data, status} = await getApiData('orders/' + param)
           if(status === 200){
             setDataEdit(
               {
@@ -919,17 +942,10 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
         });
-        setValidationError({
-          order_id: "",
-          total_amount: "",
-          balance_due: "",
-          invoice_date: "",
-          due_date: "",
-          status: "",
-        });
+        setValidationError({});
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const { data, status } = await getApiData(path + "/" + param);
+          const { data, status } = await getApiData(path + "/" + param.textContent);
           if (status === 200) {
             setDataEdit({
               id: data.id,
@@ -961,7 +977,7 @@ export const CRUD = () => {
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const { data, status } = await getApiData(path + "/" + param);
+          const { data, status } = await getApiData(path + "/" + param.textContent);
           if (status === 200) {
             setDataEdit({
               id: data.id,
@@ -1031,6 +1047,8 @@ export const CRUD = () => {
           status: refBody.statusRef.current.value,
         };
 
+        console.log(dataBody);
+
         try {
           const { data, status } = await putApiData(
             path + "/" + refBody.idRef.current.value,
@@ -1042,6 +1060,7 @@ export const CRUD = () => {
             setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
+          console.log(error);
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }

@@ -92,7 +92,7 @@ export const OrderDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
             <div className="grid grid-cols-1 gap-5">
                <div>
                <h2 className="text-xl font-medium dark:text-white mb-4">Products</h2>
-               <TabelForDetail data={dataProducts} dataHeading={dataHeading} handleEdit={handleEdit} routes={'companies/{companyId}/branches'}/>
+               <TabelForDetail data={dataProducts} dataHeading={dataHeading} handleEdit={handleEdit} routes={'products'}/>
                </div>
             </div>
             <hr className="my-7" />

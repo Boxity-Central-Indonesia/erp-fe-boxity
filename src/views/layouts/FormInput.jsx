@@ -103,9 +103,9 @@ const FormInput = (
                     <input
                      id={id} 
                      type="radio" 
-                     value={value}
-                    //  checked={value === item.name || ''}
+                     value={item.name}
                      name= {name}
+                     checked={value == item.name}
                      onChange={onChange}
                      className={classNameInputRadio} />
                     <label

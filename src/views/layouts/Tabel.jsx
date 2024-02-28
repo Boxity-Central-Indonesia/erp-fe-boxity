@@ -403,7 +403,19 @@ const TabelComponent = ({
                     className={`${header.id === "id" ? `hidden` : ``} 
                     ${header.id === 'price per unit' 
                     || header.id === 'shipping cost' 
-                    || header.id === 'total price' ? `text-right` : ``}`}
+                    || header.id === 'total price' 
+                    || header.id === 'balance'
+                    || header.id === 'account balance'
+                    || header.id === 'book value'
+                    || header.id === 'price'
+                    || header.id === 'buying price'
+                    || header.id === 'selling price'
+                    || header.id === 'unit price'
+                    || header.id === 'shipping cost'
+                    || header.id === 'balance due'
+                    || header.id === 'total amount'
+                    || header.id === 'amount paid'
+                    ? `text-right` : ``}`}
                     key={header.id}
                   >
                     <span className="">
