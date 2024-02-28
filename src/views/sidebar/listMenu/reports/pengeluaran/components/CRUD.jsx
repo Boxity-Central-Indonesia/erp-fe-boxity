@@ -103,14 +103,11 @@ export const CRUD = () => {
           const { data, status } = await getApiData("expenses-report");
           if (status === 200) {
             const newData = data.map((item) => ({
-              "data account": item.account.map((item) => ({
-                "nama akun": item.name,
-                "tipe akun": item.type,
-                "akun balance": item.balance,
-              })),
-              type: item.type,
-              tanggal: item.date,
-              amount: item.amount,
+              "nama akun": item.account.name,
+              "tipe akun": item.account.type,
+              "tanggal pembelian": item.date,
+              "jumlah biaya": item.amount,
+              "saldo akun": item.account.balance,
             }));
             setData(() => newData);
           }

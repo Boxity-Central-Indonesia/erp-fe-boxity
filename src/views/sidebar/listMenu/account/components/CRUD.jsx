@@ -212,8 +212,8 @@ export const CRUD = () => {
       "account type": item.account.type,
       id: item.id,
       type: item.type,
-      amount: item.amount,
-      "account balance": item.account.balance,
+      biaya: item.amount,
+      saldo: item.account.balance,
     }));
   };
 

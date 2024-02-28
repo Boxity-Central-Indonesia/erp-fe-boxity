@@ -103,14 +103,14 @@ export const CRUD = () => {
           const { data, status } = await getApiData("inventory-report");
           if (status === 200) {
             const newData = data.map((item) => ({
-              code: item.code,
+              "kode barang": item.code,
               name: item.name,
               description: item.description,
               weight: (item.weight ?? 0.0) + " " + item.unit_of_measure,
               "type of animal": item.animal_type,
               quantity: item.stock,
-              price: item.price,
-              'total price': item.total_price
+              "harga rata-rata": item.price,
+              "total harga": item.price * item.stock,
             }));
             setData(() => newData);
           }
