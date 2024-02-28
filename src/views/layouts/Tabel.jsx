@@ -401,11 +401,9 @@ const TabelComponent = ({
                 {table.getHeaderGroups()[0].headers.map((header) => (
                   <Table.HeadCell
                     className={`${header.id === "id" ? `hidden` : ``} 
-                    ${
-                      header.id === "price per unit" ||
-                      header.id === "shipping cost" ||
-                      header.id === "total price"
-                        
+                    ${header.id === 'price per unit' 
+                    || header.id === 'shipping cost' 
+                    || header.id === 'total price' 
                     || header.id === 'balance'
                     || header.id === 'account balance'
                     || header.id === 'book value'
@@ -417,9 +415,7 @@ const TabelComponent = ({
                     || header.id === 'balance due'
                     || header.id === 'total amount'
                     || header.id === 'amount paid'
-                    ? `text-right`
-                        : ``
-                    }`}
+                    ? `text-right` : ``}`}
                     key={header.id}
                   >
                     <span className="">
