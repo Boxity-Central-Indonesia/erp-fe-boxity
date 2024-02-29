@@ -2,37 +2,34 @@ import React, { useState, useRef } from 'react';
 import { Table } from 'flowbite-react';
 import { useColor } from '../../../../conifg/GlobalColour';
 
-export const TabelForProducts = ({ data }) => {
+export const TabelForProducts = ({ 
+    dataTabelProducts, 
+    refBody, 
+    onChange, 
+    setDataTabelProducts,
+    handleSaveClick,
+    saveDataToLocalStorage
+}) => {
     const { globalColor } = useColor();
-    const [editedData, setEditedData] = useState([]);
     const [editingItemId, setEditingItemId] = useState(null);
     const idInputRefs = useRef([]);
 
     const handleInputChange = (index, key, value) => {
-        let newData = [...editedData];
+        let newData = [...dataTabelProducts];
         if (value === '') {
             // Set the corresponding property to an empty string instead of removing the item
             newData[index] = { ...newData[index], [key]: '' };
         } else {
             newData[index] = { ...newData[index], [key]: value };
         }
-        setEditedData(newData);
+        setDataTabelProducts(newData); // Changed from setEditedData to setDataTabelProducts
+        // saveDataToLocalStorage(newData)
     };
-    
-    
 
-    const handleSaveClick = () => {
-        console.log('Edited data:', editedData);
-        setEditedData([]);
+    const Save = () => {
+        handleSaveClick()
         setEditingItemId(null);
     };
-
-    // const formatCurrency = (value) => {
-    //     return new Intl.NumberFormat('id-ID', {
-    //         style: 'currency',
-    //         currency: 'IDR'
-    //     }).format(value);
-    // };
 
     return (
         <div className="overflow-x-auto">
@@ -48,13 +45,13 @@ export const TabelForProducts = ({ data }) => {
                     </Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y text-black">
-                    {data && data.map((item, index) => (
+                    {dataTabelProducts && dataTabelProducts.map((item, index) => (
                         <Table.Row key={index} className="bg-white dark:border-gray-700 dark:bg-gray-800 border-b">
                             <Table.Cell>{item.name}</Table.Cell>
                             <Table.Cell>
                                 {editingItemId === index ? (
                                     <QtyInput
-                                        value={editedData[index]?.qty || item.qty}
+                                        value={item.qty}
                                         onChange={(e) => handleInputChange(index, 'qty', e.target.value)}
                                     />
                                 ) : (
@@ -64,7 +61,7 @@ export const TabelForProducts = ({ data }) => {
                             <Table.Cell>
                                 {editingItemId === index ? (
                                     <PriceInput
-                                        value={(editedData[index] && editedData[index].price_per_unit) || item.price_per_unit}
+                                        value={item.price_per_unit}
                                         onChange={(e) => handleInputChange(index, 'price_per_unit', e.target.value)}
                                     />
                                 ) : (
@@ -75,7 +72,7 @@ export const TabelForProducts = ({ data }) => {
                                 {editingItemId === index ? (
                                     <IdInput
                                         ref={ref => idInputRefs.current[index] = ref}
-                                        value={(editedData[index] && editedData[index].id) || item.id}
+                                        value={item.id}
                                         onChange={(e) => handleInputChange(index, 'id', e.target.value)}
                                     />
                                 ) : (
@@ -85,7 +82,7 @@ export const TabelForProducts = ({ data }) => {
                             <Table.Cell>
                                 <div className='flex items-center gap-2'>
                                     {editingItemId === index ? (
-                                        <button type='button' onClick={handleSaveClick}>
+                                        <button type='button' onClick={Save}>
                                             <svg style={{ color: globalColor }} className="w-6 h-6 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m5 12 4.7 4.5 9.3-9"/>
                                             </svg>
@@ -124,7 +121,7 @@ const PriceInput = ({ value, onChange }) => {
         <input
             type="number"
             value={value}
-            name="price_per_input"
+            name="price_per_unit" // Corrected the name attribute
             onChange={onChange}
             className='border-none w-20 h-7 px-0'
         />

@@ -77,7 +77,7 @@ export const Transactions = () => {
         </>
         )
     }else {
- return(
+    return(
        <>
         <ModalContainer 
         openModal={openModal}
