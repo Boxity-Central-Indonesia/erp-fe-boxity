@@ -568,7 +568,7 @@ export const CRUD = () => {
           if (status === 200) {
             setDataEdit({
               product_id: data,
-              product_id,
+              // product_id,
               package_id: data.package_id,
               id: data.id,
             });
