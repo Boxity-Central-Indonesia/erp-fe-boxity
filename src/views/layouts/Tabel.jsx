@@ -63,67 +63,71 @@ const TabelComponent = ({
           let className = "";
           let icon = "";
 
-          // Cek apakah nilai adalah 'Active' atau 'Inactive'
-          if (info.getValue() === "Active") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-green-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "Inactive") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-red-600 w-fit text-white text-sm";
-          }
-          // cek apakah nilai status pada order sama dengan completed atau tidak
-          if (info.getValue() === "completed") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-green-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "incompleted") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-red-600 w-fit text-white text-sm";
-          }
-          // cek nilai production status / order status apakah completed atau tidak
-          if (info.getValue() === "Completed") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-green-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "Pending Confirmation") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-yellow-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "In Production") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-yellow-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "Packaging") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-yellow-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "Cancelled") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-red-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "Shipped") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-green-600 w-fit text-white text-sm";
-          }
+          // Definisi objek pemetaan untuk status Active/Inactive
+          const statusMap = {
+            Active: "bg-green-600",
+            Inactive: "bg-red-600",
+          };
 
-          // cek nilai cash, credit, online, dan other
-          if (info.getValue() === "cash") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-green-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "credit") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-yellow-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "Online") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-primary-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "Other") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-red-600 w-fit text-white text-sm";
-          }
-          // cek nilai unpaid,partial,paid
-          if (info.getValue() === "paid") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-green-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "partial") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-yellow-600 w-fit text-white text-sm";
-          } else if (info.getValue() === "unpaid") {
-            className =
-              "border py-0.5 px-4 rounded-full bg-primary-600 w-fit text-white text-sm";
+          // Definisi objek pemetaan untuk status Completed/Incompleted
+          const orderStatusMap = {
+            completed: "bg-green-600",
+            incompleted: "bg-red-600",
+          };
+
+          // Definisi objek pemetaan untuk production status/order status
+          const productionStatusMap = {
+            Completed: "bg-green-600",
+            "Pending Confirmation": "bg-yellow-600",
+            "In Production": "bg-yellow-600",
+            Packaging: "bg-yellow-600",
+            Cancelled: "bg-red-600",
+            Shipped: "bg-green-600",
+          };
+
+          // Definisi objek pemetaan untuk metode pembayaran
+          const paymentMethodMap = {
+            cash: "bg-green-600",
+            credit: "bg-yellow-600",
+            Online: "bg-primary-600",
+            Other: "bg-red-600",
+          };
+
+          // Definisi objek pemetaan untuk status pembayaran
+          const paymentStatusMap = {
+            paid: "bg-green-600",
+            partial: "bg-yellow-600",
+            unpaid: "bg-primary-600",
+          };
+          // Definisi objek pemetaan untuk status transaksi penerimaan barang
+          const goodReceiptMap = {
+            received: "bg-green-600",
+          };
+
+          if (statusMap.hasOwnProperty(info.getValue())) {
+            className = `border py-0.5 px-4 rounded-full ${
+              statusMap[info.getValue()]
+            } w-fit text-white text-sm`;
+          } else if (orderStatusMap.hasOwnProperty(info.getValue())) {
+            className = `border py-0.5 px-4 rounded-full ${
+              orderStatusMap[info.getValue()]
+            } w-fit text-white text-sm`;
+          } else if (productionStatusMap.hasOwnProperty(info.getValue())) {
+            className = `border py-0.5 px-4 rounded-full ${
+              productionStatusMap[info.getValue()]
+            } w-fit text-white text-sm`;
+          } else if (paymentMethodMap.hasOwnProperty(info.getValue())) {
+            className = `border py-0.5 px-4 rounded-full ${
+              paymentMethodMap[info.getValue()]
+            } w-fit text-white text-sm`;
+          } else if (paymentStatusMap.hasOwnProperty(info.getValue())) {
+            className = `border py-0.5 px-4 rounded-full ${
+              paymentStatusMap[info.getValue()]
+            } w-fit text-white text-sm`;
+          } else if (goodReceiptMap.hasOwnProperty(info.getValue())) {
+            className = `border py-0.5 px-4 rounded-full ${
+              goodReceiptMap[info.getValue()]
+            } w-fit text-white text-sm`;
           }
 
           if (
@@ -206,7 +210,7 @@ const TabelComponent = ({
             key !== "quantity" &&
             key !== "capacity"
           ) {
-            className=`text-right`
+            className = `text-right`;
             formattedValue = formatToRupiah(value);
           } else {
             formattedValue = value;
@@ -401,21 +405,52 @@ const TabelComponent = ({
                 {table.getHeaderGroups()[0].headers.map((header) => (
                   <Table.HeadCell
                     className={`${header.id === "id" ? `hidden` : ``} 
-                    ${header.id === 'price per unit' 
-                    || header.id === 'shipping cost' 
-                    || header.id === 'total price' 
-                    || header.id === 'balance'
-                    || header.id === 'account balance'
-                    || header.id === 'book value'
-                    || header.id === 'price'
-                    || header.id === 'buying price'
-                    || header.id === 'selling price'
-                    || header.id === 'unit price'
-                    || header.id === 'shipping cost'
-                    || header.id === 'balance due'
-                    || header.id === 'total amount'
-                    || header.id === 'amount paid'
-                    ? `text-right` : ``}`}
+                    ${
+                      header.id === "price per unit"
+                        ? `text-right`
+                        : `` || header.id === "shipping cost"
+                        ? `text-right`
+                        : `` || header.id === "total price"
+                        ? `text-right`
+                        : `` || header.id === "balance"
+                        ? `text-right`
+                        : `` || header.id === "account balance"
+                        ? `text-right`
+                        : `` ||
+                          header.id === "book value" ||
+                          header.id === "price" ||
+                          header.id === "buying price"
+                        ? `text-right`
+                        : `` || header.id === "selling price"
+                        ? `text-right`
+                        : `` || header.id === "unit price"
+                        ? `text-right`
+                        : `` || header.id === "shipping cost"
+                        ? `text-right`
+                        : `` || header.id === "balance due"
+                        ? `text-right`
+                        : `` || header.id === "taxes"
+                        ? `text-right`
+                        : `` || header.id === "biaya"
+                        ? `text-right`
+                        : `` || header.id === "saldo"
+                        ? `text-right`
+                        : `` || header.id === "capacity"
+                        ? `text-right`
+                        : `` || header.id === "quantity"
+                        ? `text-right`
+                        : `` || header.id === "weight"
+                        ? `text-right`
+                        : `` || header.id === "hpp balance"
+                        ? `text-right`
+                        : `` || header.id === "harga rata-rata"
+                        ? `text-right`
+                        : `` ||
+                          header.id === "total amount" ||
+                          header.id === "amount paid"
+                        ? `text-right`
+                        : ``
+                    }`}
                     key={header.id}
                   >
                     <span className="">

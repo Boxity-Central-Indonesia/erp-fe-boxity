@@ -46,7 +46,6 @@ export const CRUD = () => {
     countryRef: useRef(),
     emergency_contact_nameRef: useRef(),
     emergency_contact_phone_numberRef: useRef(),
-    notesRef: useRef(),
     department_idRef: useRef(),
     category_idRef: useRef(),
     idRef: useRef(),

@@ -24,6 +24,7 @@ export const CRUD = () => {
   const [dataDepartments, setDataDepartments] = useState();
   const [dataOrdersSelect, setDataOrdersSelect] = useState([]);
   const [dataInvoicesSelect, setDataInvoicesSelect] = useState([]);
+  const [dataGoodReceiptsSelect, setDataGoodReceiptsSelect] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dataCategoryEmployes, setDataCategoryEmployes] = useState();
   const [skeleton, setSkeleton] = useState(false);
@@ -36,8 +37,8 @@ export const CRUD = () => {
   const [dataSelectWarehouses, setDataSelectWarehouses] = useState();
   const [dataSelectProducts, setDataSelectProducts] = useState();
   const [dataTabelProducts, setDataTabelProducts] = useState([]);
-  const [inputEditOrder, setInputEditOrder] = useState()
-  const [render, setRender] = useState(false)
+  const [inputEditOrder, setInputEditOrder] = useState();
+  const [render, setRender] = useState(false);
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -55,7 +56,6 @@ export const CRUD = () => {
     idRef: useRef(),
 
     //invoices
-    order_idRef: useRef(),
     total_amountRef: useRef(),
     balance_dueRef: useRef(),
     invoice_dateRef: useRef(),
@@ -66,22 +66,21 @@ export const CRUD = () => {
     amount_paidRef: useRef(),
     payment_methodRef: useRef(),
     payment_dateRef: useRef(),
-    order_idRef: useRef()
+    order_idRef: useRef(),
   });
   const [dataEdit, setDataEdit] = useState({});
 
-
-    // Fungsi untuk menyimpan dataTabelProducts dalam Local Storage
+  // Fungsi untuk menyimpan dataTabelProducts dalam Local Storage
   const saveDataToLocalStorage = (data) => {
-    localStorage.setItem('dataTabelProducts', JSON.stringify(data));
+    localStorage.setItem("dataTabelProducts", JSON.stringify(data));
   };
 
   // Fungsi untuk mengambil dataTabelProducts dari Local Storage saat komponen dimuat
   useEffect(() => {
-      const storedData = localStorage.getItem('dataTabelProducts');
-      if (storedData) {
-          setDataTabelProducts(JSON.parse(storedData));
-      }
+    const storedData = localStorage.getItem("dataTabelProducts");
+    if (storedData) {
+      setDataTabelProducts(JSON.parse(storedData));
+    }
   }, [render]);
 
   const handleChangeAndPushProducts = async (event) => {
@@ -91,29 +90,32 @@ export const CRUD = () => {
     try {
       const { data, status } = await getApiData("products/" + value);
       if (status === 200 && value) {
-           // Gunakan nilai dari Local Storage jika data dari API adalah null atau undefined
-           const qty = data.qty != null ? data.qty : dataTabelProducts.qty;
-           const pricePerUnit = data.price_per_unit != null ? data.price_per_unit : dataTabelProducts.price_per_unit;
+        // Gunakan nilai dari Local Storage jika data dari API adalah null atau undefined
+        const qty = data.qty != null ? data.qty : dataTabelProducts.qty;
+        const pricePerUnit =
+          data.price_per_unit != null
+            ? data.price_per_unit
+            : dataTabelProducts.price_per_unit;
 
-          const newData = {
-              id: data.id,
-              name: data.name,
-              qty: qty,
-              price_per_unit: pricePerUnit,
-          };
+        const newData = {
+          id: data.id,
+          name: data.name,
+          qty: qty,
+          price_per_unit: pricePerUnit,
+        };
 
-          // Perbarui dataTabelProducts dengan data baru
-          const updatedData = [...dataTabelProducts, newData];
-          setDataTabelProducts(updatedData);
+        // Perbarui dataTabelProducts dengan data baru
+        const updatedData = [...dataTabelProducts, newData];
+        setDataTabelProducts(updatedData);
 
-          // setRender(!render)
+        // setRender(!render)
 
-          // Simpan ke Local Storage setelah pembaruan state
-          // saveDataToLocalStorage(updatedData);
+        // Simpan ke Local Storage setelah pembaruan state
+        // saveDataToLocalStorage(updatedData);
       }
-  } catch (error) {
+    } catch (error) {
       console.log(error);
-  }
+    }
     // Memperbarui state sesuai dengan nilai input yang berubah
     setDataEdit((prevDataEdit) => ({
       ...prevDataEdit,
@@ -122,7 +124,7 @@ export const CRUD = () => {
   };
 
   const handleSaveClick = () => {
-    console.log('Edited dataTabelProducts:', dataTabelProducts);
+    console.log("Edited dataTabelProducts:", dataTabelProducts);
 
     // Simpan ke Local Storage sebelum pembaruan state
     saveDataToLocalStorage(dataTabelProducts);
@@ -131,7 +133,7 @@ export const CRUD = () => {
     setDataTabelProducts([...dataTabelProducts]);
     setRender(!render); // Hanya jika re-render diperlukan
     // setEditingItemId(null);
-};
+  };
 
   const handleChange = (event) => {
     // Mendapatkan nama dan nilai input yang berubah
@@ -261,7 +263,7 @@ export const CRUD = () => {
         dataSelect: dataSelectWarehouses,
         onchange: handleChange,
       },
-    ])
+    ]);
 
     setInputProducts([
       {
@@ -432,7 +434,7 @@ export const CRUD = () => {
       taxes: item.taxes ?? "--",
       // quantity: item.quantity,
       // 'price per unnit': item.price_per_unit,
-      'shipping cost': item.shipping_cost ?? "--",
+      "shipping cost": item.shipping_cost ?? "--",
       "total price": item.total_price,
       id: item.id,
     }));
@@ -451,7 +453,7 @@ export const CRUD = () => {
 
   const dataInvoices = (data) => {
     return data.map((item) => ({
-      'kode order': item.order.kode_order,
+      "kode order": item.order.kode_order,
       "kode invoices": item.kode_invoice,
       "invoices data": item.invoice_date,
       "due date": item.due_date,
@@ -462,13 +464,17 @@ export const CRUD = () => {
     }));
   };
 
-  const dataGoodReceive = (data) => {
-    return data.map(item => ({
-      id: item.id,
-      'kode order': item.order,
-      warehouse: item.warehouse
-    }))
-  }
+  const dataGoodReceipts = (data) => {
+    return data.map((item) => ({
+      "receipt code": item.kodeGoodsReceipt,
+      "receipt date": item.created_at,
+      "kode order": item.order.kode_order,
+      "purchase date": item.order.created_at,
+      status: item.status,
+      "gudang tujuan/asal": item.warehouse.name,
+      deskripsi: item.details,
+    }));
+  };
 
   const READ = () => {
     const [data, setData] = useState();
@@ -491,7 +497,7 @@ export const CRUD = () => {
                   { path: "orders", label: "Orders" },
                   { path: "invoices", label: "Invoices" },
                   { path: "payments", label: "Payments" },
-                  { path: "good-recive", label: "Good Recive" },
+                  { path: "goods-receipt", label: "Good Receipts" },
                 ],
                 activeButton: "orders",
               },
@@ -511,9 +517,9 @@ export const CRUD = () => {
                   { path: "orders", label: "Orders" },
                   { path: "invoices", label: "Invoices" },
                   { path: "payments", label: "Payments" },
-                  { path: "good-recive", label: "Good Recive" },
+                  { path: "goods-receipt", label: "Good Receipts" },
                 ],
-                activeButton: 'invoices',
+                activeButton: "invoices",
               },
             ]);
           } else if (path === "payments") {
@@ -531,9 +537,29 @@ export const CRUD = () => {
                   { path: "orders", label: "Orders" },
                   { path: "invoices", label: "Invoices" },
                   { path: "payments", label: "Payments" },
-                  { path: "good-recive", label: "Good Recive" },
+                  { path: "goods-receipt", label: "Good Receipts" },
                 ],
                 activeButton: "payments",
+              },
+            ]);
+          } else if (path === "goods-receipt") {
+            const newData = dataGoodReceipts(data);
+            setData(newData);
+            setDataHeading([
+              {
+                label: "Add new good receipts",
+                icon: IconAdd(),
+                heading: "Good Receipts list",
+                eventToggleModal: handleCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "orders", label: "Orders" },
+                  { path: "invoices", label: "Invoices" },
+                  { path: "payments", label: "Payments" },
+                  { path: "goods-receipt", label: "Good Receipts" },
+                ],
+                activeButton: "goods-receipt",
               },
             ]);
           }
@@ -547,7 +573,7 @@ export const CRUD = () => {
     useEffect(() => {
       const getDataOrders = async () => {
         try {
-          const { data, status } = await getApiData('orders');
+          const { data, status } = await getApiData("orders");
           if (status === 200) {
             const newData = data.map((item) => ({
               id: item.id,
@@ -563,7 +589,7 @@ export const CRUD = () => {
 
       const getDataInvoice = async () => {
         try {
-          const { data, status } = await getApiData('invoices');
+          const { data, status } = await getApiData("invoices");
           if (status === 200) {
             const newData = data.map((item) => ({
               id: item.id,
@@ -575,7 +601,24 @@ export const CRUD = () => {
           console.log(error);
         }
       };
-      getDataInvoice()
+      getDataInvoice();
+      const getDataGoodReceipts = async () => {
+        try {
+          const { data, status } = await getApiData("goods-receipt");
+          if (status === 200) {
+            const newData = data.map((item) => ({
+              "kode order": item.order.kode_order,
+              status: item.status,
+              "gudang tujuan/asal": item.warehouse.name,
+              deskripsi: item.details,
+            }));
+            setDataGoodReceiptsSelect(newData);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getDataGoodReceipts();
     }, [refresh]);
 
     const handleClickHeading = async (param) => {
@@ -587,8 +630,8 @@ export const CRUD = () => {
               ? "Add orders"
               : param === "invoices"
               ? "Add invoices"
-              : param === 'good-recive'
-              ? 'Add good recive'
+              : param === "goods-receipt"
+              ? "Add Goods Receipt"
               : "Add payments",
           icon: IconAdd(),
           heading:
@@ -596,8 +639,8 @@ export const CRUD = () => {
               ? "Orders list"
               : param === "invoices"
               ? "Invoices list"
-              : param === 'good recive'
-              ? 'Good recive list'
+              : param === "goods-receipt"
+              ? "Goods Receipt list"
               : "Payments list",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
@@ -607,7 +650,7 @@ export const CRUD = () => {
             { path: "orders", label: "Orders" },
             { path: "invoices", label: "Invoices" },
             { path: "payments", label: "Payments" },
-            { path: "good-recive", label: "Good Recive" },
+            { path: "goods-receipt", label: "Good Receipts" },
           ],
           activeButton: param,
         },
@@ -628,6 +671,10 @@ export const CRUD = () => {
           } else if (param === "payments") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataPayments(data);
+            setData(newData);
+          } else if (param === "goods-receipt") {
+            setSkeleton((prevSkeleton) => !prevSkeleton);
+            const newData = dataGoodReceipts(data);
             setData(newData);
           }
         }
@@ -896,7 +943,9 @@ export const CRUD = () => {
         });
         // setOpenModal(prevOpenModal => !prevOpenModal)
         try {
-          const { data, status } = await getApiData("orders/" + param.textContent);
+          const { data, status } = await getApiData(
+            "orders/" + param.textContent
+          );
           if (status === 200) {
             setDataEdit({
               // vendor: data.vendor.name,
@@ -911,7 +960,7 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
-      } else if(path === "orders" && defaultEdit === false) {
+      } else if (path === "orders" && defaultEdit === false) {
         setDataModal({
           labelModal: "Edit orders",
           labelBtnModal: "Save",
@@ -920,24 +969,19 @@ export const CRUD = () => {
         });
 
         try {
-          const {data, status} = await getApiData('orders/' + param)
-          if(status === 200){
-            setDataEdit(
-              {
-                id: data.id,
-                vendor_id: data.vendor.id,
-                warehouse_id: data.warehouse.id,
-                'order_type': data.order_type,
-                invoice: data.invoice
-              }
-            )
+          const { data, status } = await getApiData("orders/" + param);
+          if (status === 200) {
+            setDataEdit({
+              id: data.id,
+              vendor_id: data.vendor.id,
+              warehouse_id: data.warehouse.id,
+              order_type: data.order_type,
+              invoice: data.invoice,
+            });
           }
+        } catch (error) {}
 
-        } catch (error) {
-          
-        }
-
-        setOpenModal(prevOpenModal => !prevOpenModal)
+        setOpenModal((prevOpenModal) => !prevOpenModal);
       } else if (path === "invoices") {
         setDataModal({
           labelModal: "Update invoice",
@@ -948,7 +992,9 @@ export const CRUD = () => {
         setValidationError({});
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const { data, status } = await getApiData(path + "/" + param.textContent);
+          const { data, status } = await getApiData(
+            path + "/" + param.textContent
+          );
           if (status === 200) {
             setDataEdit({
               id: data.id,
@@ -980,7 +1026,9 @@ export const CRUD = () => {
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const { data, status } = await getApiData(path + "/" + param.textContent);
+          const { data, status } = await getApiData(
+            path + "/" + param.textContent
+          );
           if (status === 200) {
             setDataEdit({
               id: data.id,
@@ -1182,13 +1230,13 @@ export const CRUD = () => {
 
             <div className="col-span-2">
               <TabelForProducts
-               dataTabelProducts={dataTabelProducts} 
-               setDataTabelProducts={setDataTabelProducts} 
-               refBody={refBody} 
-               onChange={handleChange}
-               handleSaveClick={handleSaveClick}
-               saveDataToLocalStorage={saveDataToLocalStorage}
-               />
+                dataTabelProducts={dataTabelProducts}
+                setDataTabelProducts={setDataTabelProducts}
+                refBody={refBody}
+                onChange={handleChange}
+                handleSaveClick={handleSaveClick}
+                saveDataToLocalStorage={saveDataToLocalStorage}
+              />
             </div>
           </div>
         </>

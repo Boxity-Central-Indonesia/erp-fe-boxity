@@ -54,7 +54,6 @@ export const CRUD = () => {
     if (!!responseError) {
       setValidationError({
         name: responseError?.name?.[0] || "",
-        type: responseError?.type?.[0] || "",
         balance: responseError?.balance?.[0] || "",
         type: responseError?.type?.[0] || "",
         date: responseError?.date?.[0] || "",

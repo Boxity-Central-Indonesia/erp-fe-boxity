@@ -23,17 +23,16 @@ export const CRUD = () => {
   const [dataHeading, setDataHeading] = useState([{}]);
   const [path, setPath] = useState("assets");
   const [dataAccounSelect, setDataAccountSelect] = useState([]);
-  const [inputAssets, setInputAssets] = useState([{}])
-  const [inputLocations, setInputLocations] = useState()
-  const [inputCondition, setInputCondition] = useState()
-  const [inputDepresiations, setInputDepresiations] = useState()
-  const [dataSelectLocation, setDataSelectLocations] = useState()
-  const [dataSelectCondition, setDataSelectCondition] = useState()
+  const [inputAssets, setInputAssets] = useState([{}]);
+  const [inputLocations, setInputLocations] = useState();
+  const [inputCondition, setInputCondition] = useState();
+  const [inputDepresiations, setInputDepresiations] = useState();
+  const [dataSelectLocation, setDataSelectLocations] = useState();
+  const [dataSelectCondition, setDataSelectCondition] = useState();
 
   const [refBody, setRefBody] = useState({
     idRef: useRef(),
     nameRef: useRef(),
-    codeRef: useRef(),
     typeRef: useRef(),
     descriptionRef: useRef(),
     acquisition_dateRef: useRef(),
@@ -44,11 +43,10 @@ export const CRUD = () => {
     codeRef: useRef(),
 
     // location
-    nameRef: useRef(),
     addressRef: useRef(),
 
     // condition
-    conditionRef: useRef()
+    conditionRef: useRef(),
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -206,7 +204,7 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Address",
       },
-    ])
+    ]);
 
     setInputCondition([
       {
@@ -221,7 +219,7 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Condition",
       },
-    ])
+    ]);
   }, [dataEdit]);
 
   const dataAssets = (data) => {
@@ -243,14 +241,14 @@ export const CRUD = () => {
     return data.map((item) => ({
       id: item.id,
       name: item.name,
-      address: item.address
+      address: item.address,
     }));
   };
 
   const dataAssetsConditions = (data) => {
     return data.map((item) => ({
       id: item.id,
-      condition: item.condition
+      condition: item.condition,
     }));
   };
 
@@ -281,7 +279,7 @@ export const CRUD = () => {
                 showNavHeading: true,
                 dataNavHeading: [
                   { path: "asset-locations", label: "Location" },
-                  { path: "asset-conditions", label: "Condition"},
+                  { path: "asset-conditions", label: "Condition" },
                   { path: "assets", label: "Assets" },
                   { path: "asset-depreciations", label: "Depresiations" },
                 ],
@@ -302,7 +300,7 @@ export const CRUD = () => {
                 showNavHeading: true,
                 dataNavHeading: [
                   { path: "asset-locations", label: "Location" },
-                  { path: "asset-conditions", label: "Condition"},
+                  { path: "asset-conditions", label: "Condition" },
                   { path: "assets", label: "Assets" },
                   { path: "asset-depreciations", label: "Depresiations" },
                 ],
@@ -323,7 +321,7 @@ export const CRUD = () => {
                 showNavHeading: true,
                 dataNavHeading: [
                   { path: "asset-locations", label: "Location" },
-                  { path: "asset-conditions", label: "Condition"},
+                  { path: "asset-conditions", label: "Condition" },
                   { path: "assets", label: "Assets" },
                   { path: "asset-depreciations", label: "Depresiations" },
                 ],
@@ -344,7 +342,7 @@ export const CRUD = () => {
                 showNavHeading: true,
                 dataNavHeading: [
                   { path: "asset-locations", label: "Location" },
-                  { path: "asset-conditions", label: "Condition"},
+                  { path: "asset-conditions", label: "Condition" },
                   { path: "assets", label: "Assets" },
                   { path: "asset-depreciations", label: "Depresiations" },
                 ],
@@ -360,31 +358,31 @@ export const CRUD = () => {
 
       const getDataForSelect = async () => {
         try {
-          const {data, status} = await getApiData('asset-locations')
-          if(status === 200) {
-            const newData = data.map(item => ({
+          const { data, status } = await getApiData("asset-locations");
+          if (status === 200) {
+            const newData = data.map((item) => ({
               id: item.id,
-              name: item.name
-            }))
-            setDataSelectLocations(newData)
+              name: item.name,
+            }));
+            setDataSelectLocations(newData);
           }
         } catch (error) {
           console.log(error);
         }
         try {
-          const {data, status} = await getApiData('asset-conditions')
-          if(status === 200) {
-            const newData = data.map(item => ({
+          const { data, status } = await getApiData("asset-conditions");
+          if (status === 200) {
+            const newData = data.map((item) => ({
               id: item.id,
-              name: item.condition
-            }))
-            setDataSelectCondition(newData)
+              name: item.condition,
+            }));
+            setDataSelectCondition(newData);
           }
         } catch (error) {
           console.log(error);
         }
-      }
-      getDataForSelect()
+      };
+      getDataForSelect();
     }, [refresh]);
 
     useEffect(() => {
@@ -409,16 +407,30 @@ export const CRUD = () => {
       setPath(param);
       setDataHeading([
         {
-          label: param === "assets" ? "Add assets" : param === "asset-locations" ? 'Add locations' : param === 'asset-depreciations' ? 'Add depereciations' : "Add condition",
+          label:
+            param === "assets"
+              ? "Add assets"
+              : param === "asset-locations"
+              ? "Add locations"
+              : param === "asset-depreciations"
+              ? "Add depereciations"
+              : "Add condition",
           icon: IconAdd(),
-          heading: param === "assets" ? "Assets" : param === 'asset-locations' ? 'Locations' : param === 'asset-depreciations' ? 'Depresiatins' : 'Conditions' + " list",
+          heading:
+            param === "assets"
+              ? "Assets"
+              : param === "asset-locations"
+              ? "Locations"
+              : param === "asset-depreciations"
+              ? "Depresiatins"
+              : "Conditions" + " list",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,
           showNavHeading: true,
           dataNavHeading: [
             { path: "asset-locations", label: "Location" },
-            { path: "asset-conditions", label: "Condition"},
+            { path: "asset-conditions", label: "Condition" },
             { path: "assets", label: "Assets" },
             { path: "asset-depreciations", label: "Depresiations" },
           ],
@@ -438,11 +450,11 @@ export const CRUD = () => {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataAssetLocations(data);
             setData(newData);
-          }else if (param === "asset-conditions") {
+          } else if (param === "asset-conditions") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataAssetsConditions(data);
             setData(newData);
-          }else if (param === "asset-depreciations") {
+          } else if (param === "asset-depreciations") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataAssetsDepresiations(data);
             setData(newData);
@@ -462,10 +474,10 @@ export const CRUD = () => {
     const handleCreate = (param) => {
       if (param === "assets") {
         setDataEdit({
-          type:'',
-          location_id: '',
-          condition_id: '',
-          description: '',
+          type: "",
+          location_id: "",
+          condition_id: "",
+          description: "",
         });
         setValidationError({});
         setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -487,7 +499,7 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
-      }  else if (param === "asset-conditions") {
+      } else if (param === "asset-conditions") {
         setDataEdit({});
         setValidationError({});
         setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -514,7 +526,7 @@ export const CRUD = () => {
           acquisition_date: refBody.acquisition_dateRef.current.value,
           acquisition_cost: refBody.acquisition_costRef.current.value,
           book_value: refBody.book_valueRef.current.value,
-          code: refBody.codeRef.current.value
+          code: refBody.codeRef.current.value,
         };
 
         try {
@@ -532,7 +544,7 @@ export const CRUD = () => {
       } else if (param === "asset-locations") {
         dataBody = {
           name: refBody.nameRef.current.value,
-          address: refBody.addressRef.current.value
+          address: refBody.addressRef.current.value,
         };
 
         try {
@@ -549,7 +561,7 @@ export const CRUD = () => {
         }
       } else if (param === "asset-conditions") {
         dataBody = {
-          condition: refBody.conditionRef.current.value
+          condition: refBody.conditionRef.current.value,
         };
 
         try {
@@ -610,16 +622,16 @@ export const CRUD = () => {
           const { data, status } = await getApiData(path + "/" + id);
           if (status === 200) {
             setDataEdit({
-              code: data.code ?? '',
-              name: data.name ?? '',
-              type: data.type ?? '',
-              description: data.description ?? '',
-              acquisition_date: data.acquisition_date ?? '',
-              acquisition_cost: data.acquisition_cost ?? '',
-              book_value: data.book_value ?? '',
-              location_id: data.location_id ?? '',
-              condition_id: data.condition_id ?? '',
-              id: data.id ?? '',
+              code: data.code ?? "",
+              name: data.name ?? "",
+              type: data.type ?? "",
+              description: data.description ?? "",
+              acquisition_date: data.acquisition_date ?? "",
+              acquisition_cost: data.acquisition_cost ?? "",
+              book_value: data.book_value ?? "",
+              location_id: data.location_id ?? "",
+              condition_id: data.condition_id ?? "",
+              id: data.id ?? "",
             });
 
             setIdDelete(data.id);
@@ -644,7 +656,7 @@ export const CRUD = () => {
             setDataEdit({
               name: data.name,
               address: data.address,
-              id: data.id
+              id: data.id,
             });
 
             setIdDelete(data.id);
@@ -691,7 +703,7 @@ export const CRUD = () => {
           acquisition_date: refBody.acquisition_dateRef.current.value,
           acquisition_cost: refBody.acquisition_costRef.current.value,
           book_value: refBody.book_valueRef.current.value,
-          code: refBody.codeRef.current.value
+          code: refBody.codeRef.current.value,
         };
 
         try {
@@ -711,7 +723,7 @@ export const CRUD = () => {
       } else if (path === "asset-locations") {
         dataBody = {
           name: refBody.nameRef.current.value,
-          address: refBody.addressRef.current.value
+          address: refBody.addressRef.current.value,
         };
         try {
           const response = await putApiData(
@@ -729,7 +741,7 @@ export const CRUD = () => {
         }
       } else if (path === "asset-conditions") {
         dataBody = {
-          condition: refBody.conditionRef.current.value
+          condition: refBody.conditionRef.current.value,
         };
         try {
           const response = await putApiData(

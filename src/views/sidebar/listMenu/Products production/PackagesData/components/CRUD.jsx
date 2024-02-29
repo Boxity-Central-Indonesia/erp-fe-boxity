@@ -773,7 +773,6 @@ export const CRUD = () => {
     dataModal,
     inputPackages,
     validationError,
-    handleEdit,
     dataEdit,
     refBody,
     openModalDelete,
