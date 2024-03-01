@@ -19,6 +19,15 @@ const FormInput = (
     }
 ) => {
 
+  const [selectedRadio, setSelectedRadio] = useState(value); // State untuk menyimpan nilai radio yang dipilih
+
+  // Fungsi untuk mengubah nilai radio yang dipilih
+  const handleRadioChange = (event) => {
+      const { value } = event.target;
+      setSelectedRadio(value);
+      onChange(event); // Panggil onChange dari props untuk memperbarui state di atas
+  };
+
     const classNameInput = `${element == 'select' ? `hidden` : ``} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500`
 
     const classNameSelect = `${element == 'input' ? `hidden` : ``} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500`
@@ -95,30 +104,29 @@ const FormInput = (
                   </p>
                 </div>
             )}
-
             {element === 'radio' && (
                 <div key={uniqueId + 3} className="flex items-center gap-3">
-                  {dataSelect && dataSelect.map(item => (
-                    <div key={item.id} className="flex items-center">
-                    <input
-                     id={id} 
-                     type="radio" 
-                     value={item.name}
-                     name= {name}
-                     checked={value == item.name}
-                     onChange={onChange}
-                     className={classNameInputRadio} />
-                    <label
-                      htmlFor={id} 
-                      className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                      {item.name}
-                     </label>
-                  </div>
-                  ))}
+                    {dataSelect && dataSelect.map(item => (
+                        <div key={item.id} className="flex items-center">
+                            <input
+                                id={`${id}-${item.id}`} 
+                                type="radio" 
+                                value={item.name}
+                                name={name}
+                                ref={referens}
+                                checked={value == item.name}
+                                onChange={onChange}
+                                className={classNameInputRadio} 
+                            />
+                            <label
+                                htmlFor={`${id}-${item.id}`}
+                                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                {item.name}
+                            </label>
+                        </div>
+                    ))}
                 </div>
             )}
-
-
           </div>
         </>
       );

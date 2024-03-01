@@ -6,6 +6,7 @@ import TabelComponent from "../../../layouts/Tabel"
 import { Spinner } from "../../../layouts/Spinner"
 import { CRUD } from "./components/CRUD"
 import { OrderDetail } from "./components/OrderDetail"
+import { GoodReceiptDetail } from "./components/GoodReceiptDetail"
 
 export const Transactions = () => {
     const {
@@ -28,7 +29,8 @@ export const Transactions = () => {
         path,
         defaultEdit,
         setDefaultEdit,
-        dataDetailOrders
+        dataDetailOrders,
+        dataDetailGoodReceipt
     } = CRUD()
 
     const dataModalBody = () => {
@@ -44,7 +46,7 @@ export const Transactions = () => {
     }
 
 
-    if(!defaultEdit) {
+    if(!defaultEdit && path === 'orders') {
         return (
             <>
                 <ModalContainer 
@@ -70,6 +72,38 @@ export const Transactions = () => {
 
                 <OrderDetail
                     data={dataDetailOrders}
+                    defaultEdit={setDefaultEdit}
+                    handleEdit={handleEdit}
+                    dataHeading={dataHeading}
+                />
+        </>
+        )
+    } else if(!defaultEdit && path === 'goods-receipt') {
+        return (
+            <>
+                <ModalContainer 
+                    openModal={openModal}
+                    onToggleModal={setOpenModal}
+                    modalBody={dataModalBody}
+                    sizeModal={dataModal.size}
+                    labelModal={dataModal.labelModal}
+                    labelBtnModal={dataModal.labelBtnModal}
+                    labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
+                    handleBtnModal={dataModal.handleBtn}
+                    parameter={path}
+                    openModalDelete={openModalDelete}
+                />
+
+                <Spinner loading={loading} />
+
+                < ModalConfirmDelete 
+                    modalDelete={modalDelete}
+                    closeModalDelete={closeModalDelete}
+                    handleDelete={handleDelete}
+                />
+
+                <GoodReceiptDetail
+                    data={dataDetailGoodReceipt}
                     defaultEdit={setDefaultEdit}
                     handleEdit={handleEdit}
                     dataHeading={dataHeading}

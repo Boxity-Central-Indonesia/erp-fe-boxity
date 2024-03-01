@@ -39,6 +39,9 @@ export const CRUD = () => {
   const [dataTabelProducts, setDataTabelProducts] = useState([]);
   const [inputEditOrder, setInputEditOrder] = useState();
   const [render, setRender] = useState(false);
+  const [inputGoodReceipt, setInputGoodReceipt] = useState()
+  const [dataDetailGoodReceipt, setDataDetailGoodReceipt] = useState()
+  const [qty, setQty] = useState()
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -67,6 +70,9 @@ export const CRUD = () => {
     payment_methodRef: useRef(),
     payment_dateRef: useRef(),
     order_idRef: useRef(),
+
+    // good receipt
+    detailRef: useRef()
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -81,47 +87,41 @@ export const CRUD = () => {
     if (storedData) {
       setDataTabelProducts(JSON.parse(storedData));
     }
-  }, [render]);
+  }, []);
 
   const handleChangeAndPushProducts = async (event) => {
     // Mendapatkan nama dan nilai input yang berubah
     const { name, value } = event.target;
 
     try {
-      const { data, status } = await getApiData("products/" + value);
-      if (status === 200 && value) {
-        // Gunakan nilai dari Local Storage jika data dari API adalah null atau undefined
-        const qty = data.qty != null ? data.qty : dataTabelProducts.qty;
-        const pricePerUnit =
-          data.price_per_unit != null
-            ? data.price_per_unit
-            : dataTabelProducts.price_per_unit;
+        const { data, status } = await getApiData("products/" + value);
+        if (status === 200 && value) {
+            // Cari data sebelumnya berdasarkan id
+            const previousData = dataTabelProducts.find(item => item.id === data.id);
+            const newData = {
+                product_id: data.id,
+                name: data.name,
+                quantity: previousData ? previousData.quantity : 0, // Gunakan nilai qty dari data sebelumnya jika ditemukan
+                price_per_unit: data.price_per_unit || 0, // Gunakan harga dari API, jika tidak ada, gunakan nilai kosong
+            };
 
-        const newData = {
-          id: data.id,
-          name: data.name,
-          qty: qty,
-          price_per_unit: pricePerUnit,
-        };
+            // Tambahkan data baru ke dataTabelProducts
+            setDataTabelProducts(prevData => [...prevData, newData]);
 
-        // Perbarui dataTabelProducts dengan data baru
-        const updatedData = [...dataTabelProducts, newData];
-        setDataTabelProducts(updatedData);
-
-        // setRender(!render)
-
-        // Simpan ke Local Storage setelah pembaruan state
-        // saveDataToLocalStorage(updatedData);
-      }
+            // Simpan data baru ke Local Storage setelah pembaruan state
+            saveDataToLocalStorage([...dataTabelProducts, newData]);
+        }
     } catch (error) {
-      console.log(error);
+        console.log(error);
     }
+
     // Memperbarui state sesuai dengan nilai input yang berubah
     setDataEdit((prevDataEdit) => ({
-      ...prevDataEdit,
-      [name]: value,
+        ...prevDataEdit,
+        [name]: value,
     }));
-  };
+};
+
 
   const handleSaveClick = () => {
     console.log("Edited dataTabelProducts:", dataTabelProducts);
@@ -158,6 +158,8 @@ export const CRUD = () => {
         amount_paid: responseError?.amount_paid?.[0] || "",
         payment_method: responseError?.payment_method?.[0] || "",
         payment_date: responseError?.payment_date?.[0] || "",
+        warehouse_id: responseError?.warehouse_id?.[0] || "",
+        details: responseError?.details?.[0] || "",
       });
     }
   }, [responseError]);
@@ -420,6 +422,31 @@ export const CRUD = () => {
         placeholder: "Payment date",
       },
     ]);
+
+    setInputGoodReceipt([
+      {
+        element: "select",
+        name: "order_id",
+        ref: refBody.order_idRef,
+        value: dataEdit.order_id,
+        label: "Order",
+        htmlFor: "order_id",
+        id: "order_id",
+        dataSelect: dataOrdersSelect,
+        onchange: handleChange,
+      },
+      {
+        element: "select",
+        name: "warehouse_id",
+        ref: refBody.warehouse_idRef,
+        value: dataEdit.warehouse_id,
+        label: "Warehouses",
+        htmlFor: "warehouse_id",
+        id: "warehouse_id",
+        dataSelect: dataSelectWarehouses,
+        onchange: handleChange,
+      },
+    ])
   }, [dataEdit]);
 
   const dataOrders = (data) => {
@@ -466,13 +493,14 @@ export const CRUD = () => {
 
   const dataGoodReceipts = (data) => {
     return data.map((item) => ({
+      id: item.id,
       "receipt code": item.kodeGoodsReceipt,
+      "Order code": item.order.kode_order,
       "receipt date": item.created_at,
-      "kode order": item.order.kode_order,
       "purchase date": item.order.created_at,
       status: item.status,
-      "gudang tujuan/asal": item.warehouse.name,
-      deskripsi: item.details,
+      "Warehouses": item.warehouse.name,
+      description: item.details,
     }));
   };
 
@@ -780,49 +808,50 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
+      } else if (param === "goods-receipt") {
+        setDataEdit({
+          order_id: '',
+          warehouse_id: ''
+        });
+        setValidationError({});
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Add New good receipt",
+          labelBtnModal: "Add new good receipt",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
       }
     };
 
     const create = async (param) => {
-      setLoading((prevLoading) => !prevLoading);
+      console.log(param);
+      // setLoading((prevLoading) => !prevLoading);
       let dataBody = {};
       if (param === "orders") {
         dataBody = {
-          name: refBody.nameRef.current.value,
-          email: refBody.emailRef.current.value,
-          phone_number: refBody.phone_numberRef.current.value,
-          company_id: refBody.company_idRef.current.value,
-          job_title: refBody.job_titleRef.current.value,
-          date_of_birth: refBody.date_of_birthRef.current.value,
-          employment_status: refBody.employment_statusRef.current.value,
-          hire_date: refBody.hire_dateRef.current.value,
-          termination_date: refBody.termination_dateRef.current.value,
-          address: refBody.addressRef.current.value,
-          city: refBody.cityRef.current.value,
-          province: refBody.provinceRef.current.value,
-          postal_code: refBody.postal_codeRef.current.value,
-          country: refBody.countryRef.current.value,
-          emergency_contact_name:
-            refBody.emergency_contact_nameRef.current.value,
-          emergency_contact_phone_number:
-            refBody.emergency_contact_phone_numberRef.current.value,
-          notes: refBody.notesRef.current.value,
-          department_id: refBody.department_idRef.current.value,
-          category_id: refBody.category_idRef.current.value,
+          vendor_id: refBody.vendor_idRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          details: refBody.detailsRef.current.value,
+          order_type: refBody.order_typeRef.current.value,
+          products: dataTabelProducts
         };
 
-        try {
-          const store = await postApiData(param, dataBody);
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
+        console.log(dataBody);
+
+        // try {
+        //   const store = await postApiData(param, dataBody);
+        //   if (store.status === 201) {
+        //     setPath(param);
+        //     setRefresh(!refresh);
+        //     setLoading((prevLoading) => !prevLoading);
+        //     setOpenModal((prevOpenModal) => !prevOpenModal);
+        //   }
+        // } catch (error) {
+        //   setLoading((prevLoading) => !prevLoading);
+        //   setResponseError(error.response.data.errors);
+        // }
       } else if (param === "invoices") {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
@@ -852,6 +881,25 @@ export const CRUD = () => {
           amount_paid: refBody.amount_paidRef.current.value,
           payment_method: refBody.payment_methodRef.current.value,
           payment_date: refBody.payment_dateRef.current.value,
+        };
+
+        try {
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "goods-receipt") {
+        dataBody = {
+          order_id: refBody.order_idRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          details: refBody.detailsRef.current.value
         };
 
         try {
@@ -1043,7 +1091,70 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
-      }
+      } else if (path === "goods-receipt" && defaultEdit === true) {
+        setDefaultEdit(false);
+        setDataModal({
+          labelModal: "Update employes",
+          labelBtnModal: "Save",
+          labelBtnSecondaryModal: "Delete",
+          handleBtn: edit,
+        });
+        setValidationError({
+          name: "",
+          email: "",
+          phone_number: "",
+          company_id: "",
+          job_title: "",
+          date_of_birth: "",
+          employment_status: "",
+          hire_date: "",
+          termination_date: "",
+          address: "",
+          city: "",
+          province: "",
+          postal_code: "",
+          country: "",
+          emergency_contact_name: "",
+          emergency_contact_phone_number: "",
+          notes: "",
+          department_id: "",
+        });
+        // setOpenModal(prevOpenModal => !prevOpenModal)
+        try {
+          const { data, status } = await getApiData(
+            "goods-receipt/" + param.textContent
+          );
+          if (status === 200) {
+            setDataEdit({});
+            setDataDetailGoodReceipt(() => data);
+            setIdDelete(data.id);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      } else if (path === "goods-receipt" && defaultEdit === false) {
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Edit good receipt",
+          labelBtnModal: "Save",
+          labelBtnSecondaryModal: "Delete",
+          handleBtn: edit,
+        });
+        try {
+          const {data, status} = await getApiData('goods-receipt/' + param)
+          if(status === 200) {
+            setDataEdit({
+              id: data.id,
+              order_id: data.order_id,
+              warehouse_id: data.warehouse_id,
+              details: data.details
+            })
+          }
+        } catch (error) {
+          
+        }
+      } 
     };
 
     const edit = async () => {
@@ -1137,6 +1248,39 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }
+      } else if (path === "goods-receipt") {
+        dataBody = {
+          order_id: refBody.order_idRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          details: refBody.detailsRef.current.value
+        };
+
+        try {
+          const { data, status } = await putApiData(
+            path + "/" + refBody.idRef.current.value,
+            dataBody
+          );
+          if (status === 201) {
+            setLoading((prevLoading) => !prevLoading);
+            setRefresh(!refresh);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData(
+                "goods-receipt/" + idDelete
+              );
+              if (status === 200) {
+                setDataEdit({});
+                setDataDetailGoodReceipt(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data);
+        }
       }
     };
 
@@ -1160,6 +1304,7 @@ export const CRUD = () => {
       try {
         await deleteApiData(path + "/" + idDelete);
         setRefresh(!refresh);
+        setDefaultEdit(true)
         closeModalDelete();
       } catch (error) {
         console.log(error.response);
@@ -1291,6 +1436,44 @@ export const CRUD = () => {
           </div>
         </>
       );
+    } else if (param === "goods-receipt"){
+      return (
+        <>
+          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+            {inputGoodReceipt.map((item, index) => (
+              <FormInput
+                key={item.id}
+                element={item.element}
+                htmlFor={item.htmlFor}
+                label={item.label}
+                type={item.type}
+                name={item.name}
+                referens={item.ref}
+                value={item.value}
+                id={item.id}
+                onChange={(event) => item.onchange(event)}
+                placeholder={item.placeholder}
+                dataSelect={item.dataSelect}
+                uniqueId={index}
+                validationError={validationError}
+              />
+            ))}
+
+            <TextArea
+              span={`col-span-2`}
+              label={"Detail"}
+              htmlFor={"details"}
+              id={"details"}
+              name={"details"}
+              referens={refBody.detailsRef}
+              placeholder={"Write details here"}
+              value={dataEdit.details}
+              onChange={handleChange}
+              validationError={validationError}
+            />
+          </div>
+        </>
+      );
     }
   };
 
@@ -1322,5 +1505,6 @@ export const CRUD = () => {
     defaultEdit,
     setDefaultEdit,
     dataDetailOrders,
+    dataDetailGoodReceipt
   };
 };
