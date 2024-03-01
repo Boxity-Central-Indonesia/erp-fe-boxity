@@ -39,9 +39,9 @@ export const CRUD = () => {
   const [dataTabelProducts, setDataTabelProducts] = useState([]);
   const [inputEditOrder, setInputEditOrder] = useState();
   const [render, setRender] = useState(false);
-  const [inputGoodReceipt, setInputGoodReceipt] = useState()
-  const [dataDetailGoodReceipt, setDataDetailGoodReceipt] = useState()
-  const [qty, setQty] = useState()
+  const [inputGoodReceipt, setInputGoodReceipt] = useState();
+  const [dataDetailGoodReceipt, setDataDetailGoodReceipt] = useState();
+  const [qty, setQty] = useState();
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -72,7 +72,7 @@ export const CRUD = () => {
     order_idRef: useRef(),
 
     // good receipt
-    detailRef: useRef()
+    detailRef: useRef(),
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -94,34 +94,35 @@ export const CRUD = () => {
     const { name, value } = event.target;
 
     try {
-        const { data, status } = await getApiData("products/" + value);
-        if (status === 200 && value) {
-            // Cari data sebelumnya berdasarkan id
-            const previousData = dataTabelProducts.find(item => item.id === data.id);
-            const newData = {
-                product_id: data.id,
-                name: data.name,
-                quantity: previousData ? previousData.quantity : 0, // Gunakan nilai qty dari data sebelumnya jika ditemukan
-                price_per_unit: data.price_per_unit || 0, // Gunakan harga dari API, jika tidak ada, gunakan nilai kosong
-            };
+      const { data, status } = await getApiData("products/" + value);
+      if (status === 200 && value) {
+        // Cari data sebelumnya berdasarkan id
+        const previousData = dataTabelProducts.find(
+          (item) => item.id === data.id
+        );
+        const newData = {
+          product_id: data.id,
+          name: data.name,
+          quantity: previousData ? previousData.quantity : 0, // Gunakan nilai qty dari data sebelumnya jika ditemukan
+          price_per_unit: data.price_per_unit || 0, // Gunakan harga dari API, jika tidak ada, gunakan nilai kosong
+        };
 
-            // Tambahkan data baru ke dataTabelProducts
-            setDataTabelProducts(prevData => [...prevData, newData]);
+        // Tambahkan data baru ke dataTabelProducts
+        setDataTabelProducts((prevData) => [...prevData, newData]);
 
-            // Simpan data baru ke Local Storage setelah pembaruan state
-            saveDataToLocalStorage([...dataTabelProducts, newData]);
-        }
+        // Simpan data baru ke Local Storage setelah pembaruan state
+        saveDataToLocalStorage([...dataTabelProducts, newData]);
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
 
     // Memperbarui state sesuai dengan nilai input yang berubah
     setDataEdit((prevDataEdit) => ({
-        ...prevDataEdit,
-        [name]: value,
+      ...prevDataEdit,
+      [name]: value,
     }));
-};
-
+  };
 
   const handleSaveClick = () => {
     console.log("Edited dataTabelProducts:", dataTabelProducts);
@@ -446,7 +447,7 @@ export const CRUD = () => {
         dataSelect: dataSelectWarehouses,
         onchange: handleChange,
       },
-    ])
+    ]);
   }, [dataEdit]);
 
   const dataOrders = (data) => {
@@ -499,8 +500,8 @@ export const CRUD = () => {
       "receipt date": item.created_at,
       "purchase date": item.order.created_at,
       status: item.status,
-      "Warehouses": item.warehouse.name,
-      description: item.details,
+      Warehouses: item.warehouse.name,
+      description: item.details ?? item.order.details,
     }));
   };
 
@@ -810,8 +811,8 @@ export const CRUD = () => {
         });
       } else if (param === "goods-receipt") {
         setDataEdit({
-          order_id: '',
-          warehouse_id: ''
+          order_id: "",
+          warehouse_id: "",
         });
         setValidationError({});
         setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -835,7 +836,7 @@ export const CRUD = () => {
           warehouse_id: refBody.warehouse_idRef.current.value,
           details: refBody.detailsRef.current.value,
           order_type: refBody.order_typeRef.current.value,
-          products: dataTabelProducts
+          products: dataTabelProducts,
         };
 
         console.log(dataBody);
@@ -899,7 +900,7 @@ export const CRUD = () => {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
           warehouse_id: refBody.warehouse_idRef.current.value,
-          details: refBody.detailsRef.current.value
+          details: refBody.detailsRef.current.value,
         };
 
         try {
@@ -1142,19 +1143,17 @@ export const CRUD = () => {
           handleBtn: edit,
         });
         try {
-          const {data, status} = await getApiData('goods-receipt/' + param)
-          if(status === 200) {
+          const { data, status } = await getApiData("goods-receipt/" + param);
+          if (status === 200) {
             setDataEdit({
               id: data.id,
               order_id: data.order_id,
               warehouse_id: data.warehouse_id,
-              details: data.details
-            })
+              details: data.details,
+            });
           }
-        } catch (error) {
-          
-        }
-      } 
+        } catch (error) {}
+      }
     };
 
     const edit = async () => {
@@ -1252,7 +1251,7 @@ export const CRUD = () => {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
           warehouse_id: refBody.warehouse_idRef.current.value,
-          details: refBody.detailsRef.current.value
+          details: refBody.detailsRef.current.value,
         };
 
         try {
@@ -1304,7 +1303,7 @@ export const CRUD = () => {
       try {
         await deleteApiData(path + "/" + idDelete);
         setRefresh(!refresh);
-        setDefaultEdit(true)
+        setDefaultEdit(true);
         closeModalDelete();
       } catch (error) {
         console.log(error.response);
@@ -1436,7 +1435,7 @@ export const CRUD = () => {
           </div>
         </>
       );
-    } else if (param === "goods-receipt"){
+    } else if (param === "goods-receipt") {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
@@ -1505,6 +1504,6 @@ export const CRUD = () => {
     defaultEdit,
     setDefaultEdit,
     dataDetailOrders,
-    dataDetailGoodReceipt
+    dataDetailGoodReceipt,
   };
 };
