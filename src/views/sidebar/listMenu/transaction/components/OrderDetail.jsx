@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Button from "../../../../layouts/Button";
 import { TabelForDetail } from "../../../../layouts/TabelForDetail";
 
-export const OrderDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
+export const OrderDetail = ({data, defaultEdit, handleEdit, dataHeading, setPath}) => {
 
     const dataProducts = data?.products
     ? data.products.map((item) => ({
@@ -15,6 +15,11 @@ export const OrderDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
       }))
     : []; // Use an empty array if data.departments is null
   
+    const handleBack = () => {
+        defaultEdit(true)
+        setPath('orders')
+    }
+
     return(
         <>
         <h1 className="text-2xl my-5 dark:text-white font-semibold">Order detail</h1>
@@ -72,7 +77,7 @@ export const OrderDetail = ({data, defaultEdit, handleEdit, dataHeading}) => {
                 label={'Back'}
                 paddingX={'4'}
                 paddingY={'2.5'}
-                event={() => defaultEdit(true)}
+                event={() => handleBack()}
                 icon={<svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
               </svg>}

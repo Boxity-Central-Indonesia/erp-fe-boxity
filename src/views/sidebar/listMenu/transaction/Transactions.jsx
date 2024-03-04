@@ -30,7 +30,8 @@ export const Transactions = () => {
         defaultEdit,
         setDefaultEdit,
         dataDetailOrders,
-        dataDetailGoodReceipt
+        dataDetailGoodReceipt,
+        setPath
     } = CRUD()
 
     const dataModalBody = () => {
@@ -46,7 +47,7 @@ export const Transactions = () => {
     }
 
 
-    if(!defaultEdit && path === 'orders') {
+    if(defaultEdit === false && path === 'orders' || path === 'products') {
         return (
             <>
                 <ModalContainer 
@@ -75,10 +76,11 @@ export const Transactions = () => {
                     defaultEdit={setDefaultEdit}
                     handleEdit={handleEdit}
                     dataHeading={dataHeading}
+                    setPath={setPath}
                 />
         </>
         )
-    } else if(!defaultEdit && path === 'goods-receipt') {
+    } else if(defaultEdit === false && path === 'goods-receipt' || path === 'goods-receipt-items') {
         return (
             <>
                 <ModalContainer 
@@ -107,10 +109,15 @@ export const Transactions = () => {
                     defaultEdit={setDefaultEdit}
                     handleEdit={handleEdit}
                     dataHeading={dataHeading}
+                    setPath={setPath}
                 />
         </>
         )
-    }else {
+    }
+
+
+
+
     return(
        <>
         <ModalContainer 
@@ -143,7 +150,4 @@ export const Transactions = () => {
         />
        </>
     )
-    }
-
-   
 }

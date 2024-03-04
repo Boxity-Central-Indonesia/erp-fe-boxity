@@ -410,6 +410,7 @@ export const CRUD = () => {
   const EDIT = () => {
     let endPoint = "";
     const handleEdit = async (param, routes) => {
+      console.log(param);
       setDataEdit([{}]);
       routes = routes || "companies";
       endPoint = routes;

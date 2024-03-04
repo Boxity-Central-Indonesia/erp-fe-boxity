@@ -22,14 +22,13 @@ export const TabelForProducts = ({
         } else {
             newData[index] = { ...newData[index], [key]: value };
         }
-        setDataTabelProducts(newData); // Changed from setEditedData to setDataTabelProducts
-        // saveDataToLocalStorage(newData)
+        setDataTabelProducts(newData); // Changed from setEditedData to 
     };
 
     const handleDelete = (index) => {
         const newData = dataTabelProducts.filter((_, i) => i !== index);
         setDataTabelProducts(newData);
-        // saveDataToLocalStorage(newData);
+        saveDataToLocalStorage(newData);
     };
 
     const Save = () => {
@@ -123,6 +122,18 @@ export const TabelForProducts = ({
                 </Table.Body>
             </Table>
         </div>
+    );
+};
+
+const QtyInput = ({ value, onChange }) => {
+    return (
+        <input
+            type="number"
+            value={value}
+            name="quantity" // Corrected the name attribute
+            onChange={onChange}
+            className='border-none w-20 h-7 px-0'
+        />
     );
 };
 

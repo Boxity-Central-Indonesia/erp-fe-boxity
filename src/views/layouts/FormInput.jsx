@@ -21,13 +21,6 @@ const FormInput = (
 
   const [selectedRadio, setSelectedRadio] = useState(value); // State untuk menyimpan nilai radio yang dipilih
 
-  // Fungsi untuk mengubah nilai radio yang dipilih
-  const handleRadioChange = (event) => {
-      const { value } = event.target;
-      setSelectedRadio(value);
-      onChange(event); // Panggil onChange dari props untuk memperbarui state di atas
-  };
-
     const classNameInput = `${element == 'select' ? `hidden` : ``} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500`
 
     const classNameSelect = `${element == 'input' ? `hidden` : ``} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500`
@@ -113,7 +106,7 @@ const FormInput = (
                                 type="radio" 
                                 value={item.name}
                                 name={name}
-                                ref={referens}
+                                ref={item.ref}
                                 checked={value == item.name}
                                 onChange={onChange}
                                 className={classNameInputRadio} 
@@ -125,6 +118,41 @@ const FormInput = (
                             </label>
                         </div>
                     ))}
+                    {/* <div className="flex items-center">
+                      <input
+                          id={`${id}-productionOrder`} 
+                          type="radio" 
+                          value={'Production Order'}
+                          name={name}
+                          ref={referens}
+                          checked={value == 'Production Order'}
+                          onChange={onChange}
+                          className={classNameInputRadio} 
+                      />
+                      <label
+                          htmlFor={`${id}-productionOrder`}
+                          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                          {'Production Order'}
+                      </label>
+                  </div>
+                  <div className="flex items-center">
+                      <input
+                          id={`${id}-directOrder`} 
+                          type="radio" 
+                          value={'Direct Order'}
+                          name={name}
+                          ref={referens}
+                          checked={value == 'Direct Order'}
+                          onChange={onChange}
+                          className={classNameInputRadio} 
+                      />
+                      <label
+                          htmlFor={`${id}-directOrder`}
+                          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                          {'Direct Order'}
+                      </label>
+                  </div> */}
+
                 </div>
             )}
           </div>
@@ -148,5 +176,57 @@ export const TextArea = ({span, label, htmlFor, onChange, name,id, value, refere
         </>
     )
 }
+
+
+export function RadioButtons({ id, name, selectedOption, setSelectedOption, referens, onChange, classNameInputRadio }) {
+ 
+
+  const handleChange = (event) => {
+    const selectedValue = event.target.value
+    setSelectedOption(selectedValue);
+    onChange(event); // Propagating the change event to the parent component
+  };
+
+  return (
+    <form className="flex items-center gap-3">
+      <div className="flex items-center">
+        <input 
+          id={`${id}-productionOrder`}
+          type="radio" 
+          value={'Production Order'}
+          name={name}
+          ref={referens}
+          checked={selectedOption === 'Production Order'}
+          onChange={handleChange}
+          className={classNameInputRadio} 
+        />
+        <label
+          htmlFor={`${id}-productionOrder`}
+          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          {'Production Order'}
+        </label>
+      </div>
+      <div className="flex items-center">
+        <input 
+          id={`${id}-directOrder`}
+          type="radio" 
+          value={'Direct Order'}
+          name={name}
+          ref={referens}
+          checked={selectedOption === 'Direct Order'}
+          onChange={handleChange}
+          className={classNameInputRadio} 
+        />
+        <label
+          htmlFor={`${id}-directOrder`}
+          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          {'Direct Order'}
+        </label>
+      </div>
+    </form>
+  );
+}
+
+
 
 export default FormInput

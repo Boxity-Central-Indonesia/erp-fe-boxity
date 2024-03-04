@@ -8,16 +8,24 @@ export const GoodReceiptDetail = ({
   defaultEdit,
   handleEdit,
   dataHeading,
+  setPath
 }) => {
   const dataGoodReceiptItem = data?.goods_receipt_items
     ? data.goods_receipt_items.map((item) => ({
-        "kode product": item.product.code,
-        "nama product": item.product.name,
-        "quantity yang dipesan": item.quantity_ordered + " pcs",
-        "quantity diterima": item.quantity_received + " pcs",
-        "sisa quantity": item.quantity_due + " pcs",
+        id: item.id,
+        "product code": item.product.code,
+        "product name": item.product.name,
+        "quantity ordered": item.quantity_ordered + " pcs",
+        "quantity received": item.quantity_received + " pcs",
+        "quantity due": item.quantity_due + " pcs",
       }))
     : []; // Use an empty array if data.departments is null
+
+
+    const handleBack = () => {
+      defaultEdit(true)
+      setPath('goods-receipt')
+  }
 
   return (
     <>
@@ -29,7 +37,7 @@ export const GoodReceiptDetail = ({
           <div className="col-span-1">
             <table className={`w-full`}>
               <tr className="">
-                <td className="py-3">Kode Pemesanan</td>
+                <td className="py-3">Recived code</td>
                 <td>
                   {" "}
                   :{" "}
@@ -37,7 +45,7 @@ export const GoodReceiptDetail = ({
                 </td>
               </tr>
               <tr className="">
-                <td className="py-3">kode Transaksi</td>
+                <td className="py-3">Transaction code</td>
                 <td>
                   {" "}
                   :{" "}
@@ -45,14 +53,14 @@ export const GoodReceiptDetail = ({
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Tanggal Penerimaan</td>
+                <td className="py-3">Received date</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.created_at || "--"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Tanggal Pemesanan</td>
+                <td className="py-3">Ordered date</td>
                 <td>
                   {" "}
                   :{" "}
@@ -64,7 +72,7 @@ export const GoodReceiptDetail = ({
           <div className="col-span-1">
             <table className="w-full">
               <tr>
-                <td className="py-3">Status Penerimaan</td>
+                <td className="py-3">Received status</td>
                 <td>
                   {" "}
                   :{" "}
@@ -75,7 +83,7 @@ export const GoodReceiptDetail = ({
               </tr>
 
               <tr>
-                <td className="py-3">Tujuan/Asal Gudang</td>
+                <td className="py-3">Warehouses</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.warehouse.name || "--"}</span>
@@ -100,7 +108,7 @@ export const GoodReceiptDetail = ({
             label={"Back"}
             paddingX={"4"}
             paddingY={"2.5"}
-            event={() => defaultEdit(true)}
+            event={() => handleBack()}
             icon={
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
@@ -154,7 +162,7 @@ export const GoodReceiptDetail = ({
               data={dataGoodReceiptItem}
               dataHeading={dataHeading}
               handleEdit={handleEdit}
-              routes={"products"}
+              routes={"goods-receipt-items"}
             />
           </div>
         </div>
