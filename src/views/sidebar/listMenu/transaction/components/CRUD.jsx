@@ -44,7 +44,6 @@ export const CRUD = () => {
   const [selectedOption, setSelectedOption] = useState();
   const [inputEditGoodReceiptItem, setInputEditGoodReceiptItem] = useState([]);
 
-
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
     warehouse_idRef: useRef(),
@@ -81,7 +80,7 @@ export const CRUD = () => {
     // good receipt item
     quantity_orderedRef: useRef(),
     quantity_receivedRef: useRef(),
-    quantity_dueRef: useRef()
+    quantity_dueRef: useRef(),
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -149,11 +148,11 @@ export const CRUD = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-  
-    if (name === 'order_type') {
-      localStorage.setItem("order_type", value)
+
+    if (name === "order_type") {
+      localStorage.setItem("order_type", value);
     }
-  
+
     setDataEdit((prevDataEdit) => ({
       ...prevDataEdit,
       [name]: value,
@@ -234,7 +233,7 @@ export const CRUD = () => {
           handleBtn: create,
         });
       } else if (param === "products") {
-        setPath(param)
+        setPath(param);
         setDataEdit({
           invoice_id: "",
           amount_paid: "",
@@ -280,7 +279,7 @@ export const CRUD = () => {
           vendor_id: refBody.vendor_idRef.current.value,
           warehouse_id: refBody.warehouse_idRef.current.value,
           details: refBody.detailsRef.current.value,
-          status: 'pending',
+          status: "pending",
           order_type: localStorage.getItem("order_type"),
           products: JSON.parse(localStorage.getItem("dataTabelProducts")),
         };
@@ -292,8 +291,8 @@ export const CRUD = () => {
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
-            localStorage.removeItem("dataTabelProducts")
-            setDataTabelProducts([])
+            localStorage.removeItem("dataTabelProducts");
+            setDataTabelProducts([]);
           }
         } catch (error) {
           setLoading((prevLoading) => !prevLoading);
@@ -366,7 +365,7 @@ export const CRUD = () => {
           vendor_id: refBody.vendor_idRef.current.value,
           warehouse_id: refBody.warehouse_idRef.current.value,
           details: refBody.detailsRef.current.value,
-          status: 'pending',
+          status: "pending",
           order_type: localStorage.getItem("order_type"),
           products: JSON.parse(localStorage.getItem("dataTabelProducts")),
         };
@@ -374,7 +373,7 @@ export const CRUD = () => {
         console.log(dataBody);
 
         try {
-          const store = await postApiData('orders/', dataBody);
+          const store = await postApiData("orders/", dataBody);
           if (store.status === 201) {
             setPath(param);
             setRefresh(!refresh);
@@ -393,7 +392,6 @@ export const CRUD = () => {
       create,
     };
   };
-  
 
   useEffect(() => {
     if (!!responseError) {
@@ -451,7 +449,6 @@ export const CRUD = () => {
     };
     fetchDataCategory();
   }, []);
-
 
   useEffect(() => {
     setInputOrder([
@@ -747,15 +744,15 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Quantity due",
       },
-    ])
+    ]);
   }, [dataEdit]);
 
   const dataOrders = (data) => {
     return data.map((item) => ({
-      "order code": item.kode_order,
+      "kode transaksi": item.kode_order,
       "vendor name": item.vendor.name,
       // 'product name': item.products.name,
-      "warehouse name": item.warehouse.name,
+      "tujuan/asal gudang": item.warehouse.name,
       // status: item.status,
       "order status": item.order_status,
       "order type": item.order_type,
@@ -772,9 +769,9 @@ export const CRUD = () => {
     return data.map((item) => ({
       "kode invoice": item.invoice.kode_invoice,
       "kode payment": item.kode_payment,
-      "payment method": item.payment_method,
-      "payment date": item.payment_date,
-      "amount paid": item.amount_paid,
+      "Metode pembayaran": item.payment_method,
+      "Tanggal terbayar": item.payment_date,
+      "Tagihan terbayar": item.amount_paid,
       id: item.id,
     }));
   };
@@ -783,10 +780,10 @@ export const CRUD = () => {
     return data.map((item) => ({
       "kode order": item.order.kode_order,
       "kode invoices": item.kode_invoice,
-      "invoices data": item.invoice_date,
-      "due date": item.due_date,
+      "tanggal invoice": item.invoice_date,
+      "tanggal jatuh tempo": item.due_date,
       status: item.status,
-      "balance due": item.balance_due,
+      "sisa tagihan": item.balance_due,
       "total amount": item.total_amount,
       id: item.id,
     }));
@@ -1075,7 +1072,7 @@ export const CRUD = () => {
         try {
           const { data, status } = await getApiData("orders/" + param);
           if (status === 200) {
-            setSelectedOption(data.order_type)
+            setSelectedOption(data.order_type);
             setDataEdit({
               id: data.id,
               vendor_id: data.vendor.id,
@@ -1148,7 +1145,11 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
-      } else if (path === "goods-receipt" && defaultEdit === true && routes !== 'goods-receipt-items') {
+      } else if (
+        path === "goods-receipt" &&
+        defaultEdit === true &&
+        routes !== "goods-receipt-items"
+      ) {
         setDefaultEdit(false);
         // setDataModal({
         //   labelModal: "Update employes",
@@ -1189,7 +1190,11 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
-      } else if (path === "goods-receipt" && defaultEdit === false && routes !== 'goods-receipt-items') {
+      } else if (
+        path === "goods-receipt" &&
+        defaultEdit === false &&
+        routes !== "goods-receipt-items"
+      ) {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
@@ -1209,9 +1214,9 @@ export const CRUD = () => {
             });
           }
         } catch (error) {}
-      } else if (routes === 'goods-receipt-items') {
+      } else if (routes === "goods-receipt-items") {
         setDefaultEdit(() => false);
-        setPath(routes)
+        setPath(routes);
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
@@ -1221,13 +1226,15 @@ export const CRUD = () => {
           handleBtn: edit,
         });
         try {
-          const {data, status} = await getApiData('goods-receipts/' + idDelete +'/items/' + param)
-          if(status === 200){
+          const { data, status } = await getApiData(
+            "goods-receipts/" + idDelete + "/items/" + param
+          );
+          if (status === 200) {
             setDataEdit({
               quantity_ordered: data.quantity_ordered,
               quantity_received: data.quantity_received,
-              quantity_due: data.quantity_due
-            })
+              quantity_due: data.quantity_due,
+            });
           }
         } catch (error) {
           console.log(error);
@@ -1243,7 +1250,7 @@ export const CRUD = () => {
           vendor_id: refBody.vendor_idRef.current.value,
           warehouse_id: refBody.warehouse_idRef.current.value,
           details: refBody.detailsRef.current.value,
-          status: 'pending',
+          status: "pending",
           order_type: localStorage.getItem("order_type"),
           // products: JSON.parse(localStorage.getItem("dataTabelProducts")),
         };
@@ -1406,11 +1413,11 @@ export const CRUD = () => {
             ))}
 
             <RadioButtons
-            onChange={handleChange}
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-            referens={refBody.order_typeRef}
-            name={'order_type'}
+              onChange={handleChange}
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+              referens={refBody.order_typeRef}
+              name={"order_type"}
             />
 
             <TextArea
@@ -1425,7 +1432,11 @@ export const CRUD = () => {
 
             {inputProducts &&
               inputProducts.map((item, index) => (
-                <div className={`${defaultEdit === false ? `hidden ` : `col-span-2`}`}>
+                <div
+                  className={`${
+                    defaultEdit === false ? `hidden ` : `col-span-2`
+                  }`}
+                >
                   <FormInput
                     key={item.id}
                     element={item.element}
@@ -1445,7 +1456,9 @@ export const CRUD = () => {
                 </div>
               ))}
 
-            <div className={`${defaultEdit === false ? `hidden ` : `col-span-2`}`}>
+            <div
+              className={`${defaultEdit === false ? `hidden ` : `col-span-2`}`}
+            >
               <TabelForProducts
                 dataTabelProducts={dataTabelProducts}
                 setDataTabelProducts={setDataTabelProducts}
@@ -1590,26 +1603,26 @@ export const CRUD = () => {
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
             {inputEditGoodReceiptItem &&
-                inputEditGoodReceiptItem.map((item, index) => (
-                  <div className={`col-span-1`}>
-                    <FormInput
-                      key={item.id}
-                      element={item.element}
-                      htmlFor={item.htmlFor}
-                      label={item.label}
-                      type={item.type}
-                      name={item.name}
-                      referens={item.ref}
-                      value={item.value}
-                      id={item.id}
-                      onChange={(event) => item.onchange(event)}
-                      placeholder={item.placeholder}
-                      dataSelect={item.dataSelect}
-                      uniqueId={index}
-                      validationError={validationError}
-                    />
-                  </div>
-                ))}
+              inputEditGoodReceiptItem.map((item, index) => (
+                <div className={`col-span-1`}>
+                  <FormInput
+                    key={item.id}
+                    element={item.element}
+                    htmlFor={item.htmlFor}
+                    label={item.label}
+                    type={item.type}
+                    name={item.name}
+                    referens={item.ref}
+                    value={item.value}
+                    id={item.id}
+                    onChange={(event) => item.onchange(event)}
+                    placeholder={item.placeholder}
+                    dataSelect={item.dataSelect}
+                    uniqueId={index}
+                    validationError={validationError}
+                  />
+                </div>
+              ))}
           </div>
         </>
       );
@@ -1645,6 +1658,6 @@ export const CRUD = () => {
     setDefaultEdit,
     dataDetailOrders,
     dataDetailGoodReceipt,
-    setPath
+    setPath,
   };
 };

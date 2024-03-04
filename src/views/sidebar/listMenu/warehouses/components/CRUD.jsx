@@ -235,17 +235,18 @@ export const CRUD = () => {
     return data.map((item) => ({
       id: item.id,
       name: item.name,
-      address: item.address,
-      capacity: item.capacity,
+      description: item.description,
+      alamat: item.address,
+      kapasitas: item.capacity,
     }));
   };
 
   const dataWarehousesLocation = (data) => {
     return data.map((item) => ({
       id: item.id,
-      number: item.number,
-      capacity: item.capacity,
+      "Rak / Lokasi": item.number,
       warehouse: item.warehouse.name,
+      kapasitas: item.capacity,
     }));
   };
 
@@ -323,7 +324,9 @@ export const CRUD = () => {
               : "Add warehouse locations",
           icon: IconAdd(),
           heading:
-            param === "warehouses" ? "Warehouses list" : "Locations list",
+            param === "warehouses"
+              ? "Warehouses list"
+              : "Warehouse Locations list",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

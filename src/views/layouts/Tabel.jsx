@@ -208,10 +208,22 @@ const TabelComponent = ({
             key !== "stock" &&
             key !== "amount" &&
             key !== "quantity" &&
-            key !== "capacity"
+            key !== "kapasitas" &&
+            key !== "tagihan terbayar"
           ) {
-            className = `text-right`;
+            className = "text-right";
             formattedValue = formatToRupiah(value);
+          } else if (
+            (typeof value === "number" && key === "capacity") ||
+            key === "kapasitas"
+          ) {
+            // Handle capacity with decimal formatting
+            className = "text-right";
+            const formattedNumber = value.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            });
+            formattedValue = `${formattedNumber} ton`;
           } else {
             formattedValue = value;
           }
@@ -435,8 +447,6 @@ const TabelComponent = ({
                         ? `text-right`
                         : `` || header.id === "saldo"
                         ? `text-right`
-                        : `` || header.id === "capacity"
-                        ? `text-right`
                         : `` || header.id === "quantity"
                         ? `text-right`
                         : `` || header.id === "weight"
@@ -444,6 +454,10 @@ const TabelComponent = ({
                         : `` || header.id === "hpp balance"
                         ? `text-right`
                         : `` || header.id === "harga rata-rata"
+                        ? `text-right`
+                        : `` || header.id === "kapasitas"
+                        ? `text-right`
+                        : `` || header.id === "tagihan terbayar"
                         ? `text-right`
                         : `` ||
                           header.id === "total amount" ||
