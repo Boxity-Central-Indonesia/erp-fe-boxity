@@ -128,7 +128,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "text",
+        type: "number",
         name: "average_weight_per_package",
         ref: refBody.average_weight_per_packageRef,
         value: dataEdit.average_weight_per_package,
@@ -152,7 +152,7 @@ export const CRUD = () => {
               "activity type": item.activity_type,
               "status activities": item.status_activities,
               details: item.details.note,
-              'average weight per package': item.details.average_weight_per_package,
+              'average weight per package': item.details.average_weight_per_package + ' kg',
               'activity date': item.activity_date,
               id: item.id,
             }));
@@ -210,7 +210,7 @@ export const CRUD = () => {
         product_id: refBody.product_idRef.current.value,
         activity_type: refBody.activity_typeRef.current.value,
         details: {
-          average_weight_per_package: refBody.average_weight_per_packageRef.current.value + ' kg',
+          average_weight_per_package: refBody.average_weight_per_packageRef.current.value,
           note: refBody.noteRef.current.value
         }
       };
@@ -281,7 +281,7 @@ export const CRUD = () => {
         product_id: refBody.product_idRef.current.value,
         activity_type: refBody.activity_typeRef.current.value,
         details: {
-          average_weight_per_package: refBody.average_weight_per_packageRef.current.value + ' kg',
+          average_weight_per_package: refBody.average_weight_per_packageRef.current.value,
           note: refBody.noteRef.current.value
         }
       };
@@ -367,6 +367,7 @@ export const CRUD = () => {
               value={dataEdit.note}
               referens={refBody.noteRef}
               placeholder={"Write note here"}
+              onChange={handleChange}
             />
           </div>
         </>
