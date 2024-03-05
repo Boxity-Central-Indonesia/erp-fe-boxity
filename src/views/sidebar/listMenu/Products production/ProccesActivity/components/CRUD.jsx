@@ -17,23 +17,20 @@ export const CRUD = () => {
   const [dataModal, setDataModal] = useState({});
   const [responseError, setResponseError] = useState();
   const [validationError, setValidationError] = useState();
-  const [dataCompanies, setDataCompanies] = useState();
-  const [dataDepartments, setDataDepartments] = useState();
   const [loading, setLoading] = useState(true);
-  const [dataCategoryEmployes, setDataCategoryEmployes] = useState();
   const [skeleton, setSkeleton] = useState(false);
   const [dataHeading, setDataHeading] = useState([{}]);
   const [dataOrder, setDataOrder] = useState();
+  const [dataProduct, setDataProduct] = useState();
   const [path, setPath] = useState("processing-activities");
   const [input, setInput] = useState([]);
 
   const [refBody, setRefBody] = useState({
     order_idRef: useRef(),
-    total_amountRef: useRef(),
-    balance_dueRef: useRef(),
-    invoice_dateRef: useRef(),
-    due_dateRef: useRef(),
-    statusRef: useRef(),
+    product_idRef: useRef(),
+    activity_typeRef: useRef(),
+    average_weight_per_packageRef: useRef(),
+    noteRef: useRef()
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -49,6 +46,37 @@ export const CRUD = () => {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const {data, status} = await getApiData('orders/') 
+        if(status === 200) {
+          const newData = data.map(item => ({
+            id: item.id,
+            name: item.kode_order
+          }))
+          setDataOrder(newData)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        const {data, status} = await getApiData('products') 
+        if(status === 200) {
+          const newData = data.map(item => ({
+            id: item.id,
+            name: item.name
+          }))
+          setDataProduct(newData)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  useEffect(() => {
     if (!!responseError) {
       setValidationError({
         order_id: responseError?.order_id?.[0] || "",
@@ -60,41 +88,6 @@ export const CRUD = () => {
       });
     }
   }, [responseError]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getApiData("companies");
-        const newData = response.data.map((item) => ({
-          id: item.id,
-          name: item.name,
-        }));
-
-        setDataCompanies(() => newData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-
-    const fetchDataCategory = async () => {
-      try {
-        const { data, status } = await getApiData("employee-categories");
-        if (status === 200) {
-          const newData = data.map((item) => ({
-            id: item.id,
-            name: item.name,
-          }));
-
-          setDataCategoryEmployes(() => newData);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataCategory();
-  }, []);
 
   useEffect(() => {
     setInput([
@@ -111,90 +104,41 @@ export const CRUD = () => {
       },
       {
         element: "select",
-        name: "status",
-        ref: refBody.statusRef,
-        value: dataEdit.status,
-        label: "Staatus",
-        htmlFor: "status",
-        id: "status",
-        dataSelect: [
-          { value: "unpaid", name: "unpaid" },
-          { value: "paid", name: "paid" },
-          { value: "partial", name: "partial" },
-        ],
+        name: "product_id",
+        ref: refBody.product_idRef,
+        value: dataEdit.product_id,
+        label: "Product",
+        htmlFor: "product_id",
+        id: "product_id",
+        dataSelect: dataProduct,
         onchange: handleChange,
       },
       {
         element: "input",
-        type: "number",
-        name: "total_amount",
-        ref: refBody.total_amountRef,
-        value: dataEdit.total_amount,
-        label: "Total amount",
-        htmlFor: "total_amount",
-        id: "total_amount",
+        type: "text",
+        name: "activity_type",
+        ref: refBody.activity_typeRef,
+        value: dataEdit.activity_type,
+        label: "Activity type",
+        htmlFor: "activity_type",
+        id: "activity_type",
         onchange: handleChange,
-        placeholder: "Total amount",
+        placeholder: "Activity type",
       },
       {
         element: "input",
-        type: "number",
-        name: "balance_due",
-        ref: refBody.balance_dueRef,
-        value: dataEdit.balance_due,
-        label: "Balance due",
-        htmlFor: "balance_due",
-        id: "balance_due",
+        type: "text",
+        name: "average_weight_per_package",
+        ref: refBody.average_weight_per_packageRef,
+        value: dataEdit.average_weight_per_package,
+        label: "average weight per package",
+        htmlFor: "average_weight_per_package",
+        id: "average_weight_per_package",
         onchange: handleChange,
-        placeholder: "Balance due",
-      },
-      {
-        element: "input",
-        type: "date",
-        name: "invoice_date",
-        ref: refBody.invoice_dateRef,
-        value: dataEdit.invoice_date,
-        label: "Invocie date",
-        htmlFor: "invoice_date",
-        id: "invoice_date",
-        onchange: handleChange,
-        placeholder: "Invocie date",
-      },
-      {
-        element: "input",
-        type: "date",
-        name: "due_date",
-        ref: refBody.due_dateRef,
-        value: dataEdit.due_date,
-        label: "Due date",
-        htmlFor: "due_date",
-        id: "due_date",
-        onchange: handleChange,
-        placeholder: "Due date",
+        placeholder: "average weight per package (kg)",
       },
     ]);
   }, [dataEdit]);
-
-  const dataEmployes = (data) => {
-    return data.map((item) => ({
-      id: item.id,
-      name: item.name,
-      email: item.email,
-      phone_number: item.phone_number,
-      company: item.company.name,
-      "Job title": item.job_title,
-      "Employment Status": item.employment_status,
-      address: item.address,
-    }));
-  };
-
-  const dataEmployesCategories = (data) => {
-    return data.map((item) => ({
-      id: item.id,
-      name: item.name,
-      description: item.description,
-    }));
-  };
 
   const READ = () => {
     const [data, setData] = useState();
@@ -204,10 +148,11 @@ export const CRUD = () => {
           const { data } = await getApiData(path);
           if (path === "processing-activities") {
             const newData = data.map((item) => ({
-              "prospek name": item.nama_prospek,
-              "prospek email": item.email_prospek,
-              "prospek number phone": item.nomor_telepon_prospek,
-              prospek_type: item.tipe_prospek,
+              "activity type": item.activity_type,
+              "status activities": item.status_activities,
+              details: item.details.note,
+              'average weight per package': item.details.average_weight_per_package,
+              'activity date': item.activity_date,
               id: item.id,
             }));
             setData(() => newData);
@@ -241,26 +186,17 @@ export const CRUD = () => {
     const handleCreate = (param) => {
       setDataEdit({
         order_id: "",
-        total_amount: "",
-        balance_due: "",
-        invoice_date: "",
-        due_date: "",
-        status: "",
-        id: "",
+        ptoduct_id: "",
       });
       setValidationError({
         order_id: "",
-        total_amount: "",
-        balance_due: "",
-        invoice_date: "",
-        due_date: "",
-        status: "",
+        ptoduct_id: "",
       });
       setOpenModal((prevOpenModal) => !prevOpenModal);
       setDataModal({
         size: "2xl",
-        labelModal: "Add New invoices",
-        labelBtnModal: "Add new invoices",
+        labelModal: "Add New Procces activity",
+        labelBtnModal: "Add new Procces activity",
         labelBtnSecondaryModal: "Back",
         handleBtn: create,
       });
@@ -270,12 +206,14 @@ export const CRUD = () => {
       setLoading((prevLoading) => !prevLoading);
       const dataBody = {
         order_id: refBody.order_idRef.current.value,
-        total_amount: refBody.total_amountRef.current.value,
-        balance_due: refBody.balance_dueRef.current.value,
-        invoice_date: refBody.invoice_dateRef.current.value,
-        due_date: refBody.due_dateRef.current.value,
-        status: refBody.statusRef.current.value,
+        product_id: refBody.product_idRef.current.value,
+        activity_type: refBody.activity_typeRef.current.value,
+        details: {
+          average_weight_per_package: refBody.average_weight_per_packageRef.current.value + ' kg',
+          note: refBody.noteRef.current.value
+        }
       };
+
 
       try {
         const store = await postApiData(path, dataBody);
@@ -299,110 +237,38 @@ export const CRUD = () => {
 
   const EDIT = () => {
     const handleEdit = async (param) => {
-      const id = param.textContent;
-      if (path === "employees") {
-        setDataModal({
-          size: "6xl",
-          labelModal: "Update employees",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        setValidationError({
-          name: "",
-          email: "",
-          phone_number: "",
-          company_id: "",
-          job_title: "",
-          date_of_birth: "",
-          employment_status: "",
-          hire_date: "",
-          termination_date: "",
-          address: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country: "",
-          emergency_contact_name: "",
-          emergency_contact_phone_number: "",
-          notes: "",
-          department_id: "",
-          category_id: "",
-          id: "",
-        });
-
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        try {
-          const response = await getApiData("companies/7/departments");
-          const newData = response.data.map((item) => ({
-            id: item.id,
-            name: item.name,
-          }));
-
-          setDataDepartments(() => newData);
-        } catch (error) {
-          console.log(error);
+      console.log(param.textContent);
+      setDataEdit({
+        order_id: "",
+        product_id: "",
+      });
+      setValidationError({
+        order_id: "",
+        ptoduct_id: "",
+      });
+      setOpenModal((prevOpenModal) => !prevOpenModal);
+      setDataModal({
+        size: "2xl",
+        labelModal: "Detail & edit Procces activity",
+        labelBtnModal: "Save",
+        labelBtnSecondaryModal: "Delete",
+        handleBtn: edit,
+      });
+      try {
+        const {data, status} = await getApiData(path + '/' + param.textContent)
+        if(status === 200) {
+          setDataEdit({
+            order_id: data.order_id,
+            product_id: data.product_id,
+            status_activities: data.status_activities,
+            activity_type: data.activity_type,
+            average_weight_per_package: data.details.average_weight_per_package,
+            note: data.details.note
+          })
+          setIdDelete(data.id)
         }
-        try {
-          const { data, status } = await getApiData(path + "/" + id);
-          if (status === 200) {
-            setDataEdit({
-              name: data.name,
-              email: data.email,
-              phone_number: data.phone_number,
-              company_id: data.company_id,
-              job_title: data.job_title,
-              date_of_birth: data.date_of_birth,
-              employment_status: data.employment_status,
-              hire_date: data.hire_date,
-              termination_date: data.termination_date,
-              address: data.address,
-              city: data.city,
-              province: data.province,
-              postal_code: data.postal_code,
-              country: data.country,
-              emergency_contact_name: data.emergency_contact_name,
-              emergency_contact_phone_number:
-                data.emergency_contact_phone_number,
-              notes: data.notes,
-              department_id: data.department_id,
-              category_id: data.category_id,
-              id: data.id,
-            });
-
-            setIdDelete(data.id);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      } else if (path === "employee-categories") {
-        setDataModal({
-          size: "lg",
-          labelModal: "Update employee category",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        setValidationError({
-          name: "",
-          description: "",
-        });
-
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        try {
-          const { data, status } = await getApiData(path + "/" + id);
-          if (status === 200) {
-            setDataEdit({
-              name: data.name,
-              description: data.description,
-              id: data.id,
-            });
-
-            setIdDelete(data.id);
-          }
-        } catch (error) {
-          console.log(error);
-        }
+      } catch (error) {
+        console.log(error);
       }
     };
 
@@ -526,6 +392,17 @@ export const CRUD = () => {
                 validationError={validationError}
               />
             ))}
+
+            <TextArea
+              span={`col-span-2`}
+              label={"Note"}
+              htmlFor={"note"}
+              id={"note"}
+              name={"note"}
+              value={dataEdit.note}
+              referens={refBody.noteRef}
+              placeholder={"Write note here"}
+            />
           </div>
         </>
       );

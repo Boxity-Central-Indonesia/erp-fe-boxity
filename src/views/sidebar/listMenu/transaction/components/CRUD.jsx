@@ -43,6 +43,8 @@ export const CRUD = () => {
   const [dataDetailGoodReceipt, setDataDetailGoodReceipt] = useState();
   const [selectedOption, setSelectedOption] = useState();
   const [inputEditGoodReceiptItem, setInputEditGoodReceiptItem] = useState([]);
+  const [inputEditProducts, setInputEditProducts] = useState()
+  const [editProduct, setEditProduct] = useState(false)
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -157,240 +159,6 @@ export const CRUD = () => {
       ...prevDataEdit,
       [name]: value,
     }));
-  };
-
-  const CREATE = () => {
-    const handleCreate = async (param) => {
-      if (param === "orders") {
-        setDataEdit({
-          customer_id: "",
-          warehouse_id: "",
-          status: "",
-          details: "",
-          order_type: "",
-          products: "",
-        });
-        setValidationError({
-          customer_id: "",
-          warehouse_id: "",
-          status: "",
-          details: "",
-          order_type: "",
-          products: "",
-        });
-        setDataModal({
-          size: "2xl",
-          labelModal: "Add new orders",
-          labelBtnModal: "Add new orders",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-      } else if (param === "invoices") {
-        setDataEdit({
-          order_id: "",
-          total_amount: "",
-          balance_due: "",
-          invoice_date: "",
-          due_date: "",
-          status: "",
-        });
-        setValidationError({
-          order_id: "",
-          total_amount: "",
-          balance_due: "",
-          invoice_date: "",
-          due_date: "",
-          status: "",
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Add New invoices",
-          labelBtnModal: "Add new invoices",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      } else if (param === "payments") {
-        setDataEdit({
-          invoice_id: "",
-          amount_paid: "",
-          payment_method: "",
-          payment_date: "",
-        });
-        setValidationError({
-          invoice_id: "",
-          amount_paid: "",
-          payment_method: "",
-          payment_date: "",
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Add New payments",
-          labelBtnModal: "Add new payments",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      } else if (param === "products") {
-        setPath(param);
-        setDataEdit({
-          invoice_id: "",
-          amount_paid: "",
-          payment_method: "",
-          payment_date: "",
-        });
-        setValidationError({
-          invoice_id: "",
-          amount_paid: "",
-          payment_method: "",
-          payment_date: "",
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Add new products",
-          labelBtnModal: "Add new products",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      } else if (param === "goods-receipt") {
-        setDataEdit({
-          order_id: "",
-          warehouse_id: "",
-        });
-        setValidationError({});
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Add New good receipt",
-          labelBtnModal: "Add new good receipt",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      }
-    };
-
-    const create = async (param) => {
-      setLoading((prevLoading) => !prevLoading);
-      let dataBody = {};
-      if (param === "orders") {
-        dataBody = {
-          vendor_id: refBody.vendor_idRef.current.value,
-          warehouse_id: refBody.warehouse_idRef.current.value,
-          details: refBody.detailsRef.current.value,
-          status: "pending",
-          order_type: localStorage.getItem("order_type"),
-          products: JSON.parse(localStorage.getItem("dataTabelProducts")),
-        };
-
-        try {
-          const store = await postApiData(param, dataBody);
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-            localStorage.removeItem("dataTabelProducts");
-            setDataTabelProducts([]);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (param === "invoices") {
-        dataBody = {
-          order_id: refBody.order_idRef.current.value,
-          total_amount: refBody.total_amountRef.current.value,
-          balance_due: refBody.balance_dueRef.current.value,
-          invoice_date: refBody.invoice_dateRef.current.value,
-          due_date: refBody.due_dateRef.current.value,
-          status: refBody.statusRef.current.value,
-        };
-
-        try {
-          const store = await postApiData(param, dataBody);
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          console.log(error);
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (param === "payments") {
-        dataBody = {
-          invoice_id: refBody.invoice_dateRef.current.value,
-          amount_paid: refBody.amount_paidRef.current.value,
-          payment_method: refBody.payment_methodRef.current.value,
-          payment_date: refBody.payment_dateRef.current.value,
-        };
-
-        try {
-          const store = await postApiData(param, dataBody);
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (param === "goods-receipt") {
-        dataBody = {
-          order_id: refBody.order_idRef.current.value,
-          warehouse_id: refBody.warehouse_idRef.current.value,
-          details: refBody.detailsRef.current.value,
-        };
-
-        try {
-          const store = await postApiData(param, dataBody);
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else {
-        dataBody = {
-          vendor_id: refBody.vendor_idRef.current.value,
-          warehouse_id: refBody.warehouse_idRef.current.value,
-          details: refBody.detailsRef.current.value,
-          status: "pending",
-          order_type: localStorage.getItem("order_type"),
-          products: JSON.parse(localStorage.getItem("dataTabelProducts")),
-        };
-
-        console.log(dataBody);
-
-        try {
-          const store = await postApiData("orders/", dataBody);
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      }
-    };
-
-    return {
-      handleCreate,
-      create,
-    };
   };
 
   useEffect(() => {
@@ -745,6 +513,33 @@ export const CRUD = () => {
         placeholder: "Quantity due",
       },
     ]);
+
+    setInputEditProducts([
+      {
+        element: "input",
+        type: "number",
+        name: "quantity",
+        ref: refBody.quantityRef,
+        value: dataEdit.quantity,
+        label: "Quantity",
+        htmlFor: "quantity",
+        id: "quantity",
+        onchange: handleChange,
+        placeholder: "Quantity",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "price_per_unit",
+        ref: refBody.price_per_unitRef,
+        value: dataEdit.price_per_unit,
+        label: "Price per unit",
+        htmlFor: "price_per_unit",
+        id: "price_per_unit",
+        onchange: handleChange,
+        placeholder: "Price per unit",
+      },
+    ])
   }, [dataEdit]);
 
   const dataOrders = (data) => {
@@ -1048,20 +843,14 @@ export const CRUD = () => {
             "orders/" + param.textContent
           );
           if (status === 200) {
-            setDataEdit({
-              // vendor: data.vendor.name,
-              // warehouse: data.warehouse.name,
-              // 'order type': data.order_type,
-              // 'taxes': data.taxes ?? '--',
-              // 'shipping_cost': data.shipping_cost ?? '--'
-            });
             setDataDetailOrders(() => data);
+            // setDataEdit
             setIdDelete(data.id);
           }
         } catch (error) {
           console.log(error);
         }
-      } else if (path === "orders" && defaultEdit === false) {
+      } else if (path === "orders" && defaultEdit === false && routes !== 'products') {
         setDataModal({
           labelModal: "Edit orders",
           labelBtnModal: "Save",
@@ -1239,6 +1028,32 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
+      } else if (routes === "products") {
+        setEditProduct(true)
+        setDefaultEdit(() => false);
+        setPath(routes);
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "lg",
+          labelModal: "Edit products",
+          labelBtnModal: "Save",
+          labelBtnSecondaryModal: "Delete",
+          handleBtn: edit,
+        });
+        try {
+          const { data, status } = await getApiData(
+            "goods-receipts/" + idDelete + "/items/" + param
+          );
+          if (status === 200) {
+            setDataEdit({
+              quantity_ordered: data.quantity_ordered,
+              quantity_received: data.quantity_received,
+              quantity_due: data.quantity_due,
+            });
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
     };
 
@@ -1255,6 +1070,7 @@ export const CRUD = () => {
           // products: JSON.parse(localStorage.getItem("dataTabelProducts")),
         };
 
+        // gunakan componen terpisah
         try {
           const { data, status } = await putApiData(
             path + "/" + refBody.idRef.current.value,
@@ -1264,11 +1080,24 @@ export const CRUD = () => {
             setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData(
+                "orders/" + idDelete
+              );
+              if (status === 200) {
+                setDataDetailOrders(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
+            }
           }
         } catch (error) {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }
+        // gunakan componen terpisah
+        
       } else if (path === "invoices") {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
@@ -1385,6 +1214,270 @@ export const CRUD = () => {
       openModalDelete,
       closeModalDelete,
       handleDelete,
+    };
+  };
+
+  const CREATE = () => {
+    const handleCreate = async (param) => {
+      if (param === "orders") {
+        setDataEdit({
+          customer_id: "",
+          warehouse_id: "",
+          status: "",
+          details: "",
+          order_type: "",
+          products: "",
+        });
+        setValidationError({
+          customer_id: "",
+          warehouse_id: "",
+          status: "",
+          details: "",
+          order_type: "",
+          products: "",
+        });
+        setDataModal({
+          size: "2xl",
+          labelModal: "Add new orders",
+          labelBtnModal: "Add new orders",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+      } else if (param === "invoices") {
+        setDataEdit({
+          order_id: "",
+          total_amount: "",
+          balance_due: "",
+          invoice_date: "",
+          due_date: "",
+          status: "",
+        });
+        setValidationError({
+          order_id: "",
+          total_amount: "",
+          balance_due: "",
+          invoice_date: "",
+          due_date: "",
+          status: "",
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Add New invoices",
+          labelBtnModal: "Add new invoices",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "payments") {
+        setDataEdit({
+          invoice_id: "",
+          amount_paid: "",
+          payment_method: "",
+          payment_date: "",
+        });
+        setValidationError({
+          invoice_id: "",
+          amount_paid: "",
+          payment_method: "",
+          payment_date: "",
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Add New payments",
+          labelBtnModal: "Add new payments",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "products") {
+        setEditProduct(false)
+        setPath(param);
+        setDataEdit({
+          invoice_id: "",
+          amount_paid: "",
+          payment_method: "",
+          payment_date: "",
+        });
+        setValidationError({
+          invoice_id: "",
+          amount_paid: "",
+          payment_method: "",
+          payment_date: "",
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Add new products",
+          labelBtnModal: "Add new products",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "goods-receipt") {
+        setDataEdit({
+          order_id: "",
+          warehouse_id: "",
+        });
+        setValidationError({});
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Add New good receipt",
+          labelBtnModal: "Add new good receipt",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      }
+    };
+
+    const create = async (param) => {
+      setLoading((prevLoading) => !prevLoading);
+      let dataBody = {};
+      if (param === "orders") {
+        dataBody = {
+          vendor_id: refBody.vendor_idRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          details: refBody.detailsRef.current.value,
+          status: "pending",
+          order_type: localStorage.getItem("order_type"),
+          products: JSON.parse(localStorage.getItem("dataTabelProducts")),
+        };
+
+        try {
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            localStorage.removeItem("dataTabelProducts");
+            setDataTabelProducts([]);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "invoices") {
+        dataBody = {
+          order_id: refBody.order_idRef.current.value,
+          total_amount: refBody.total_amountRef.current.value,
+          balance_due: refBody.balance_dueRef.current.value,
+          invoice_date: refBody.invoice_dateRef.current.value,
+          due_date: refBody.due_dateRef.current.value,
+          status: refBody.statusRef.current.value,
+        };
+
+        try {
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          console.log(error);
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "payments") {
+        dataBody = {
+          invoice_id: refBody.invoice_dateRef.current.value,
+          amount_paid: refBody.amount_paidRef.current.value,
+          payment_method: refBody.payment_methodRef.current.value,
+          payment_date: refBody.payment_dateRef.current.value,
+        };
+
+        try {
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "goods-receipt") {
+        dataBody = {
+          order_id: refBody.order_idRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          details: refBody.detailsRef.current.value,
+        };
+
+        try {
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "products") {
+       
+        const product = JSON.parse(localStorage.getItem("dataTabelProducts"))
+
+        const dataBody = Object.fromEntries(product.map(obj => ['product', obj]))
+
+        try {
+          const store = await postApiData('orders/' + refBody.order_idRef.current.value +'/add-product', dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData(
+                "orders/" + refBody.order_idRef.current.value
+              );
+              if (status === 200) {
+                setDataDetailOrders(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else {
+        dataBody = {
+          vendor_id: refBody.vendor_idRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          details: refBody.detailsRef.current.value,
+          status: "pending",
+          order_type: localStorage.getItem("order_type"),
+          products: JSON.parse(localStorage.getItem("dataTabelProducts")),
+        };
+
+        console.log(dataBody);
+
+        try {
+          const store = await postApiData("orders/", dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      }
+    };
+
+    return {
+      handleCreate,
+      create,
     };
   };
 
@@ -1563,9 +1656,10 @@ export const CRUD = () => {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+            <input type="hidden" name="order_id" value={idDelete} ref={refBody.order_idRef}/>
             {inputProducts &&
               inputProducts.map((item, index) => (
-                <div className={`col-span-2`}>
+                <div className={`col-span-2 ${editProduct === false ? `` : `hidden`}`}>
                   <FormInput
                     key={item.id}
                     element={item.element}
@@ -1585,7 +1679,7 @@ export const CRUD = () => {
                 </div>
               ))}
 
-            <div className={`col-span-2`}>
+            <div className={`col-span-2 ${editProduct === false ? `` : `hidden`}`}>
               <TabelForProducts
                 dataTabelProducts={dataTabelProducts}
                 setDataTabelProducts={setDataTabelProducts}
@@ -1595,6 +1689,29 @@ export const CRUD = () => {
                 saveDataToLocalStorage={saveDataToLocalStorage}
               />
             </div>
+
+            {inputEditProducts &&
+              inputEditProducts.map((item, index) => (
+                <div className={`col-span-2 ${editProduct === false ? `hidden` : ``}`}>
+                  <FormInput
+                    key={item.id}
+                    element={item.element}
+                    htmlFor={item.htmlFor}
+                    label={item.label}
+                    type={item.type}
+                    name={item.name}
+                    referens={item.ref}
+                    value={item.value}
+                    id={item.id}
+                    onChange={(event) => item.onchange(event)}
+                    placeholder={item.placeholder}
+                    dataSelect={item.dataSelect}
+                    uniqueId={index}
+                    validationError={validationError}
+                  />
+                </div>
+              ))}
+
           </div>
         </>
       );
