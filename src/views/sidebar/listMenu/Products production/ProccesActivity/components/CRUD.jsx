@@ -30,7 +30,8 @@ export const CRUD = () => {
     product_idRef: useRef(),
     activity_typeRef: useRef(),
     average_weight_per_packageRef: useRef(),
-    noteRef: useRef()
+    noteRef: useRef(),
+    idRef: useRef(),
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -263,7 +264,8 @@ export const CRUD = () => {
             status_activities: data.status_activities,
             activity_type: data.activity_type,
             average_weight_per_package: data.details.average_weight_per_package,
-            note: data.details.note
+            note: data.details.note,
+            id: data.id
           })
           setIdDelete(data.id)
         }
@@ -274,66 +276,29 @@ export const CRUD = () => {
 
     const edit = async () => {
       setLoading((prevLoading) => !prevLoading);
-      let dataBody = {};
-      if (path === "employees") {
-        dataBody = {
-          name: refBody.nameRef.current.value,
-          email: refBody.emailRef.current.value,
-          phone_number: refBody.phone_numberRef.current.value,
-          company_id: refBody.company_idRef.current.value,
-          job_title: refBody.job_titleRef.current.value,
-          date_of_birth: refBody.date_of_birthRef.current.value,
-          employment_status: refBody.employment_statusRef.current.value,
-          hire_date: refBody.hire_dateRef.current.value,
-          termination_date: refBody.termination_dateRef.current.value,
-          address: refBody.addressRef.current.value,
-          city: refBody.cityRef.current.value,
-          province: refBody.provinceRef.current.value,
-          postal_code: refBody.postal_codeRef.current.value,
-          country: refBody.countryRef.current.value,
-          emergency_contact_name:
-            refBody.emergency_contact_nameRef.current.value,
-          emergency_contact_phone_number:
-            refBody.emergency_contact_phone_numberRef.current.value,
-          notes: refBody.notesRef.current.value,
-          department_id: refBody.department_idRef.current.value,
-          category_id: refBody.category_idRef.current.value,
-        };
+      const dataBody = {
+        order_id: refBody.order_idRef.current.value,
+        product_id: refBody.product_idRef.current.value,
+        activity_type: refBody.activity_typeRef.current.value,
+        details: {
+          average_weight_per_package: refBody.average_weight_per_packageRef.current.value + ' kg',
+          note: refBody.noteRef.current.value
+        }
+      };
 
-        try {
-          const response = await putApiData(
-            path + "/" + refBody.idRef.current.value,
-            dataBody
-          );
-          if (response.status === 201) {
-            setLoading((prevLoading) => !prevLoading);
-            setRefresh(!refresh);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setResponseError(error.response.data.errors);
+      try {
+        const store = await putApiData(path + '/' + refBody.idRef.current.value, dataBody);
+        if (store.status === 201) {
+          setRefresh((prevRefresh) => !prevRefresh);
+          // setPath(() => param);
           setLoading((prevLoading) => !prevLoading);
+          setOpenModal((prevOpenModal) => !prevOpenModal);
         }
-      } else if (path === "employee-categories") {
-        dataBody = {
-          name: refBody.nameRef.current.value,
-          description: refBody.descriptionRef.current.value,
-        };
-        try {
-          const response = await putApiData(
-            path + "/" + refBody.idRef.current.value,
-            dataBody
-          );
-          if (response.status === 201) {
-            setLoading((prevLoading) => !prevLoading);
-            setRefresh(!refresh);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setResponseError(error.response.data.errors);
-          setLoading((prevLoading) => !prevLoading);
-        }
+      } catch (error) {
+        setLoading((prevLoading) => !prevLoading);
+        setResponseError(error.response.data.errors);
       }
+     
     };
 
     return {
