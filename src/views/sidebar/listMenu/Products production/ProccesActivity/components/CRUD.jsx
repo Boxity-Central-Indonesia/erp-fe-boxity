@@ -49,7 +49,7 @@ export const CRUD = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const {data, status} = await getApiData('orders/') 
+        const {data, status} = await getApiData('orders') 
         if(status === 200) {
           const newData = data.map(item => ({
             id: item.id,
