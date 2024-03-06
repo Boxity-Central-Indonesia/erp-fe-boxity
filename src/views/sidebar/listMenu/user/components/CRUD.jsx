@@ -160,7 +160,7 @@ export const CRUD = () => {
             name: item.name,
             username: item.username,
             email: item.email,
-            "number phone": item.no_handphone,
+            "number phone": item.no_handphone ?? "+62 xxx xxxx xxxx",
           }));
           setData(() => newData);
           setDataHeading([

@@ -227,8 +227,19 @@ const TabelComponent = ({
           } else {
             formattedValue = value;
           }
+          // Tambahkan kondisi untuk tidak mengaplikasikan capitalize pada key tertentu
+          const shouldCapitalize = ![
+            "email",
+            "username",
+            "no_handphone",
+            "number phone",
+          ].includes(key);
+          const finalClassName = shouldCapitalize
+            ? `${className} capitalize`
+            : className;
+
           return (
-            <p className={`${className} capitalize`}>
+            <p className={finalClassName}>
               {icon}
               {key === "amount" ? formattedValue + ` kg` : formattedValue}
             </p>

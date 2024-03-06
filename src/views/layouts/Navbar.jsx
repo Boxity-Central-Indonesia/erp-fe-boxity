@@ -59,10 +59,14 @@ function Navbar({ onToggleSidebar, setAuth }) {
         }
       >
         <Dropdown.Header>
-          <span className="block text-sm">{profile.name}</span>
-          <span className="block truncate text-sm font-medium">
-            {profile.email}
-          </span>
+          <div className="flex items-center">
+            <div className="ml-2">
+              <span className="block text-sm">{profile.name}</span>
+              <span className="block truncate text-sm font-medium">
+                {profile.email}
+              </span>
+            </div>
+          </div>
         </Dropdown.Header>
         <Dropdown.Item className="flex items-center gap-2">
           <svg
@@ -190,6 +194,12 @@ function Navbar({ onToggleSidebar, setAuth }) {
         <div className="flex items-center lg:order-2">
           <div className="flex items-center gap-3">
             {darkMode()}
+            <div className="text-right">
+              <span className="block text-sm">{profile.name}</span>
+              <span className="block truncate text-sm font-medium">
+                {profile.email}
+              </span>
+            </div>
             {dropdown()}
           </div>
         </div>
