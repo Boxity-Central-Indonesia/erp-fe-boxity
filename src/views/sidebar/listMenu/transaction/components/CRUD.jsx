@@ -45,6 +45,7 @@ export const CRUD = () => {
   const [inputEditGoodReceiptItem, setInputEditGoodReceiptItem] = useState([]);
   const [inputEditProducts, setInputEditProducts] = useState()
   const [editProduct, setEditProduct] = useState(false)
+  const [orderId, setOrderId] = useState()
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -846,6 +847,7 @@ export const CRUD = () => {
             setDataDetailOrders(() => data);
             // setDataEdit
             setIdDelete(data.id);
+            setOrderId(data.id)
           }
         } catch (error) {
           console.log(error);
@@ -1029,9 +1031,9 @@ export const CRUD = () => {
           console.log(error);
         }
       } else if (routes === "products") {
+        setPath(() =>routes);
         setEditProduct(true)
         setDefaultEdit(() => false);
-        setPath(routes);
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
@@ -1040,25 +1042,30 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
         });
-        try {
-          const { data, status } = await getApiData(
-            "goods-receipts/" + idDelete + "/items/" + param
-          );
-          if (status === 200) {
-            setDataEdit({
-              quantity_ordered: data.quantity_ordered,
-              quantity_received: data.quantity_received,
-              quantity_due: data.quantity_due,
-            });
-          }
-        } catch (error) {
-          console.log(error);
-        }
+        setIdDelete(param)
+        setDataEdit({
+          id: param
+        })
+        // try {
+        //   const { data, status } = await getApiData(
+        //     "goods-receipts/" + idDelete + "/items/" + param
+        //   );
+        //   if (status === 200) {
+        //     setDataEdit({
+        //       quantity_ordered: data.quantity_ordered,
+        //       quantity_received: data.quantity_received,
+        //       quantity_due: data.quantity_due,
+        //     });
+        //   }
+        // } catch (error) {
+        //   console.log(error);
+        // }
       }
     };
 
     const edit = async () => {
       let dataBody = {};
+      console.log(path);
       setLoading((prevLoading) => !prevLoading);
       if (path === "orders") {
         dataBody = {
@@ -1180,6 +1187,38 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }
+      } else if (path === "products") {
+        dataBody = {
+          quantity: refBody.quantityRef.current.value,
+          price_per_unit: refBody.price_per_unitRef.current.value
+        };
+
+        try {
+          const { data, status } = await putApiData(
+            "orders/" + orderId + '/products/' + refBody.idRef.current.value,
+            dataBody
+          );
+          if (status === 201) {
+            setLoading((prevLoading) => !prevLoading);
+            setRefresh(!refresh);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            // try {
+            //   const { data, status } = await getApiData(
+            //     "goods-receipt/" + idDelete
+            //   );
+            //   if (status === 200) {
+            //     setDataEdit({});
+            //     setDataDetailGoodReceipt(() => data);
+            //     setIdDelete(data.id);
+            //   }
+            // } catch (error) {
+            //   console.log(error);
+            // }
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data);
+        }
       }
     };
 
@@ -1200,14 +1239,37 @@ export const CRUD = () => {
     };
 
     const handleDelete = async () => {
-      try {
-        await deleteApiData(path + "/" + idDelete);
-        setRefresh(!refresh);
-        setDefaultEdit(true);
-        closeModalDelete();
-      } catch (error) {
-        console.log(error.response);
+      if(path === 'products') {
+        try {
+          await deleteApiData("orders/" + orderId + '/remove-product/' + idDelete);
+          setRefresh(!refresh);
+          setDefaultEdit(true);
+          try {
+            const { data, status } = await getApiData(
+              "orders/" + orderId
+            );
+            if (status === 200) {
+              setDataDetailOrders(() => data);
+              setIdDelete(data.id);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+          closeModalDelete();
+        } catch (error) {
+          console.log(error.response);
+        }
+      } else {
+        try {
+          await deleteApiData(path + "/" + idDelete);
+          setRefresh(!refresh);
+          setDefaultEdit(true);
+          closeModalDelete();
+        } catch (error) {
+          console.log(error.response);
+        }
       }
+    
     };
 
     return {
