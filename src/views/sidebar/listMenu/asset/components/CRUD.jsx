@@ -273,6 +273,8 @@ export const CRUD = () => {
               {
                 label: "Add new asset",
                 icon: IconAdd(),
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 heading: "Asset list",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
@@ -294,6 +296,8 @@ export const CRUD = () => {
               {
                 label: "Add new category",
                 icon: IconAdd(),
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 heading: "Categories list",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
@@ -315,6 +319,8 @@ export const CRUD = () => {
               {
                 label: "Add new category",
                 icon: IconAdd(),
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 heading: "Categories list",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
@@ -336,6 +342,8 @@ export const CRUD = () => {
               {
                 label: "Add new category",
                 icon: IconAdd(),
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 heading: "Categories list",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
@@ -424,6 +432,8 @@ export const CRUD = () => {
               : param === "asset-depreciations"
               ? "Depresiatins"
               : "Conditions" + " list",
+          information:
+            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

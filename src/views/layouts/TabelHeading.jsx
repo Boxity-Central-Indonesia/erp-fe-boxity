@@ -5,36 +5,42 @@ import { useColor } from "../conifg/GlobalColour";
 import { useState, useEffect } from "react";
 import { Dropdown } from "flowbite-react";
 
-const TabelHeading = ({ 
-  toggleOpenModal, 
-  icon, 
-  label, 
-  globalFilter, 
-  setGlobalFilter, 
-  handleClickHeading, 
+const TabelHeading = ({
+  toggleOpenModal,
+  icon,
+  label,
+  globalFilter,
+  setGlobalFilter,
+  handleClickHeading,
   showNavHeading,
   dataNavHeading,
   activeButton,
   routes,
 }) => {
-
   const { globalColor, changeColor } = useColor();
 
   return (
     <>
       <section>
-        <div className={`flex relative mb-5 mt-3 ${showNavHeading ? `` : `hidden`}`}>
-          {dataNavHeading && dataNavHeading.map(item => (
-            <button
-            style={{
-              borderColor: globalColor
-            }}
-            className={`btn_akses px-8 pb-3 ${activeButton === item.path ? 'border-b-4 z-10'
-              : 'border-b-2' }`} onClick={()=> handleClickHeading(item.path)}
+        <div
+          className={`flex relative mb-5 mt-3 ${
+            showNavHeading ? `` : `hidden`
+          }`}
+        >
+          {dataNavHeading &&
+            dataNavHeading.map((item) => (
+              <button
+                style={{
+                  borderColor: globalColor,
+                }}
+                className={`btn_akses px-8 pb-3 ${
+                  activeButton === item.path ? "border-b-4 z-10" : "border-b-2"
+                }`}
+                onClick={() => handleClickHeading(item.path)}
               >
-              {item.label}
-            </button>
-          ))}
+                {item.label}
+              </button>
+            ))}
           {/* <button className={`btn_akses px-8 pb-3 ${activeButton==='employee-categories' ? 'border-b-4 border-[#9345a3] z-10'
             : 'border-b-2' }`} onClick={()=> handleClick('employee-categories')}
             >

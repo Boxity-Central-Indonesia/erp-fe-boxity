@@ -471,6 +471,8 @@ export const CRUD = () => {
                 label: "Add new products",
                 icon: IconAdd(),
                 heading: "Product list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -491,6 +493,8 @@ export const CRUD = () => {
                 label: "Add new category",
                 icon: IconAdd(),
                 heading: "Categoires list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -511,6 +515,8 @@ export const CRUD = () => {
                 label: "Add new price",
                 icon: IconAdd(),
                 heading: "Prices list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -531,6 +537,8 @@ export const CRUD = () => {
                 label: "Add new movement",
                 icon: IconAdd(),
                 heading: "Movements list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -600,6 +608,8 @@ export const CRUD = () => {
               : param === "Product-prices"
               ? "product prices"
               : "Product movement" + " list",
+          information:
+            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

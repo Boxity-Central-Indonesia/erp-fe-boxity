@@ -334,6 +334,12 @@ const TabelComponent = ({
       <h3 className="text-2xl font-semibold mb-3 dark:text-white">
         {dataHeading && dataHeading[0].heading}
       </h3>
+      <p
+        className="text-gray-600 dark:text-gray-300 mb-6"
+        style={{ paddingRight: "30rem" }}
+      >
+        {dataHeading && dataHeading[0].information}
+      </p>
       <div className="mx-auto">
         <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
           <div className={`${showHeading === false ? `hidden` : ``}`}>

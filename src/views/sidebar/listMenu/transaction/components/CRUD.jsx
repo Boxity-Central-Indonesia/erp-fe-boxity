@@ -44,11 +44,11 @@ export const CRUD = () => {
   const [dataDetailGoodReceipt, setDataDetailGoodReceipt] = useState();
   const [selectedOption, setSelectedOption] = useState();
   const [inputEditGoodReceiptItem, setInputEditGoodReceiptItem] = useState([]);
-  const [inputEditProducts, setInputEditProducts] = useState()
-  const [editProduct, setEditProduct] = useState(false)
-  const [orderId, setOrderId] = useState()
-  const [inputDeliveryNotes, setInputDeliveryNotes] = useState()
-  const [dataTabelDeliveryNotes, setDataTabelDeliveryNotes] = useState([])
+  const [inputEditProducts, setInputEditProducts] = useState();
+  const [editProduct, setEditProduct] = useState(false);
+  const [orderId, setOrderId] = useState();
+  const [inputDeliveryNotes, setInputDeliveryNotes] = useState();
+  const [dataTabelDeliveryNotes, setDataTabelDeliveryNotes] = useState([]);
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -91,8 +91,7 @@ export const CRUD = () => {
     // deliveryNotes
     numberRef: useRef(),
     dateRef: useRef(),
-    // detailsRef: useRef() 
-    
+    // detailsRef: useRef()
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -549,7 +548,7 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Price per unit",
       },
-    ])
+    ]);
 
     setInputDeliveryNotes([
       {
@@ -576,7 +575,7 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Date",
       },
-    ])
+    ]);
   }, [dataEdit]);
 
   const dataOrders = (data) => {
@@ -634,14 +633,13 @@ export const CRUD = () => {
     }));
   };
 
-
   const dataDeliveryNotes = (data) => {
     return data.map((item) => ({
       id: item.id,
       number: item.number,
       warehouse: item.warehouse.name,
       vendor: item.vendor.name,
-      date: item.date
+      date: item.date,
     }));
   };
 
@@ -659,6 +657,8 @@ export const CRUD = () => {
                 label: "Add new orders",
                 icon: IconAdd(),
                 heading: "Orders list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -680,6 +680,8 @@ export const CRUD = () => {
                 label: "Add new invoice",
                 icon: IconAdd(),
                 heading: "Invoices list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -701,6 +703,8 @@ export const CRUD = () => {
                 label: "Add new payment",
                 icon: IconAdd(),
                 heading: "Payments list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -722,6 +726,8 @@ export const CRUD = () => {
                 label: "Add new good receipts",
                 icon: IconAdd(),
                 heading: "Good Receipts list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -743,6 +749,8 @@ export const CRUD = () => {
                 label: "Add new good receipts",
                 icon: IconAdd(),
                 heading: "Good Receipts list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -829,7 +837,7 @@ export const CRUD = () => {
               : param === "delivery-notes"
               ? "Add delivery note"
               : "Add payments",
-              
+
           icon: IconAdd(),
           heading:
             param === "orders"
@@ -841,17 +849,19 @@ export const CRUD = () => {
               : param === "delivery-notes"
               ? "Delivery notes list"
               : "Payments list",
+          information:
+            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,
           showNavHeading: true,
           dataNavHeading: [
-                  { path: "orders", label: "Orders" },
-                  { path: "invoices", label: "Invoices" },
-                  { path: "payments", label: "Payments" },
-                  { path: "goods-receipt", label: "Good Receipts" },
-                  { path: "delivery-notes", label: "Delivery notes" },
-                ],
+            { path: "orders", label: "Orders" },
+            { path: "invoices", label: "Invoices" },
+            { path: "payments", label: "Payments" },
+            { path: "goods-receipt", label: "Good Receipts" },
+            { path: "delivery-notes", label: "Delivery notes" },
+          ],
           activeButton: param,
         },
       ]);
@@ -876,7 +886,7 @@ export const CRUD = () => {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataGoodReceipts(data);
             setData(newData);
-          }  else if (param === "delivery-notes") {
+          } else if (param === "delivery-notes") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataDeliveryNotes(data);
             setData(newData);
@@ -929,12 +939,16 @@ export const CRUD = () => {
             setDataDetailOrders(() => data);
             // setDataEdit
             setIdDelete(data.id);
-            setOrderId(data.id)
+            setOrderId(data.id);
           }
         } catch (error) {
           console.log(error);
         }
-      } else if (path === "orders" && defaultEdit === false && routes !== 'products') {
+      } else if (
+        path === "orders" &&
+        defaultEdit === false &&
+        routes !== "products"
+      ) {
         setDataModal({
           labelModal: "Edit orders",
           labelBtnModal: "Save",
@@ -1113,8 +1127,8 @@ export const CRUD = () => {
           console.log(error);
         }
       } else if (routes === "products") {
-        setPath(() =>routes);
-        setEditProduct(true)
+        setPath(() => routes);
+        setEditProduct(true);
         setDefaultEdit(() => false);
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
@@ -1124,10 +1138,10 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
         });
-        setIdDelete(param)
+        setIdDelete(param);
         setDataEdit({
-          id: param
-        })
+          id: param,
+        });
         // try {
         //   const { data, status } = await getApiData(
         //     "goods-receipts/" + idDelete + "/items/" + param
@@ -1170,9 +1184,7 @@ export const CRUD = () => {
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
             try {
-              const { data, status } = await getApiData(
-                "orders/" + idDelete
-              );
+              const { data, status } = await getApiData("orders/" + idDelete);
               if (status === 200) {
                 setDataDetailOrders(() => data);
                 setIdDelete(data.id);
@@ -1186,7 +1198,6 @@ export const CRUD = () => {
           setResponseError(error.response.data);
         }
         // gunakan componen terpisah
-        
       } else if (path === "invoices") {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
@@ -1272,12 +1283,12 @@ export const CRUD = () => {
       } else if (path === "products") {
         dataBody = {
           quantity: refBody.quantityRef.current.value,
-          price_per_unit: refBody.price_per_unitRef.current.value
+          price_per_unit: refBody.price_per_unitRef.current.value,
         };
 
         try {
           const { data, status } = await putApiData(
-            "orders/" + orderId + '/products/' + refBody.idRef.current.value,
+            "orders/" + orderId + "/products/" + refBody.idRef.current.value,
             dataBody
           );
           if (status === 201) {
@@ -1321,15 +1332,15 @@ export const CRUD = () => {
     };
 
     const handleDelete = async () => {
-      if(path === 'products') {
+      if (path === "products") {
         try {
-          await deleteApiData("orders/" + orderId + '/remove-product/' + idDelete);
+          await deleteApiData(
+            "orders/" + orderId + "/remove-product/" + idDelete
+          );
           setRefresh(!refresh);
           setDefaultEdit(true);
           try {
-            const { data, status } = await getApiData(
-              "orders/" + orderId
-            );
+            const { data, status } = await getApiData("orders/" + orderId);
             if (status === 200) {
               setDataDetailOrders(() => data);
               setIdDelete(data.id);
@@ -1351,7 +1362,6 @@ export const CRUD = () => {
           console.log(error.response);
         }
       }
-    
     };
 
     return {
@@ -1435,7 +1445,7 @@ export const CRUD = () => {
           handleBtn: create,
         });
       } else if (param === "products") {
-        setEditProduct(false)
+        setEditProduct(false);
         setPath(param);
         setDataEdit({
           invoice_id: "",
@@ -1579,13 +1589,17 @@ export const CRUD = () => {
           setResponseError(error.response.data.errors);
         }
       } else if (param === "products") {
-       
-        const product = JSON.parse(localStorage.getItem("dataTabelProducts"))
+        const product = JSON.parse(localStorage.getItem("dataTabelProducts"));
 
-        const dataBody = Object.fromEntries(product.map(obj => ['product', obj]))
+        const dataBody = Object.fromEntries(
+          product.map((obj) => ["product", obj])
+        );
 
         try {
-          const store = await postApiData('orders/' + refBody.order_idRef.current.value +'/add-product', dataBody);
+          const store = await postApiData(
+            "orders/" + refBody.order_idRef.current.value + "/add-product",
+            dataBody
+          );
           if (store.status === 201) {
             setPath(param);
             setRefresh(!refresh);
@@ -1815,10 +1829,19 @@ export const CRUD = () => {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
-            <input type="hidden" name="order_id" value={idDelete} ref={refBody.order_idRef}/>
+            <input
+              type="hidden"
+              name="order_id"
+              value={idDelete}
+              ref={refBody.order_idRef}
+            />
             {inputProducts &&
               inputProducts.map((item, index) => (
-                <div className={`col-span-2 ${editProduct === false ? `` : `hidden`}`}>
+                <div
+                  className={`col-span-2 ${
+                    editProduct === false ? `` : `hidden`
+                  }`}
+                >
                   <FormInput
                     key={item.id}
                     element={item.element}
@@ -1838,7 +1861,9 @@ export const CRUD = () => {
                 </div>
               ))}
 
-            <div className={`col-span-2 ${editProduct === false ? `` : `hidden`}`}>
+            <div
+              className={`col-span-2 ${editProduct === false ? `` : `hidden`}`}
+            >
               <TabelForProducts
                 dataTabelProducts={dataTabelProducts}
                 setDataTabelProducts={setDataTabelProducts}
@@ -1851,7 +1876,11 @@ export const CRUD = () => {
 
             {inputEditProducts &&
               inputEditProducts.map((item, index) => (
-                <div className={`col-span-2 ${editProduct === false ? `hidden` : ``}`}>
+                <div
+                  className={`col-span-2 ${
+                    editProduct === false ? `hidden` : ``
+                  }`}
+                >
                   <FormInput
                     key={item.id}
                     element={item.element}
@@ -1870,7 +1899,6 @@ export const CRUD = () => {
                   />
                 </div>
               ))}
-
           </div>
         </>
       );
@@ -1939,12 +1967,11 @@ export const CRUD = () => {
             />
 
             <div className="col-span-2">
-               <TabelForDeliveryNoteItem
+              <TabelForDeliveryNoteItem
                 dataTabelDeliveryNotes={dataTabelDeliveryNotes}
                 setDataTabelDeliveryNotes={setDataTabelDeliveryNotes}
               />
             </div>
-
           </div>
         </>
       );

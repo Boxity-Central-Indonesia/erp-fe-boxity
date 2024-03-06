@@ -49,33 +49,33 @@ export const CRUD = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const {data, status} = await getApiData('orders') 
-        if(status === 200) {
-          const newData = data.map(item => ({
+        const { data, status } = await getApiData("orders");
+        if (status === 200) {
+          const newData = data.map((item) => ({
             id: item.id,
-            name: item.kode_order
-          }))
-          setDataOrder(newData)
+            name: item.kode_order,
+          }));
+          setDataOrder(newData);
         }
       } catch (error) {
         console.log(error);
       }
       try {
-        const {data, status} = await getApiData('products') 
-        if(status === 200) {
-          const newData = data.map(item => ({
+        const { data, status } = await getApiData("products");
+        if (status === 200) {
+          const newData = data.map((item) => ({
             id: item.id,
-            name: item.name
-          }))
-          setDataProduct(newData)
+            name: item.name,
+          }));
+          setDataProduct(newData);
         }
       } catch (error) {
         console.log(error);
       }
-    }
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (!!responseError) {
@@ -152,8 +152,9 @@ export const CRUD = () => {
               "activity type": item.activity_type,
               "status activities": item.status_activities,
               details: item.details.note,
-              'average weight per package': item.details.average_weight_per_package + ' kg',
-              'activity date': item.activity_date,
+              "average weight per package":
+                item.details.average_weight_per_package + " kg",
+              "activity date": item.activity_date,
               id: item.id,
             }));
             setData(() => newData);
@@ -162,6 +163,8 @@ export const CRUD = () => {
                 label: "Add new procces activity",
                 icon: IconAdd(),
                 heading: "Procces activity list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: false,
@@ -210,11 +213,11 @@ export const CRUD = () => {
         product_id: refBody.product_idRef.current.value,
         activity_type: refBody.activity_typeRef.current.value,
         details: {
-          average_weight_per_package: refBody.average_weight_per_packageRef.current.value,
-          note: refBody.noteRef.current.value
-        }
+          average_weight_per_package:
+            refBody.average_weight_per_packageRef.current.value,
+          note: refBody.noteRef.current.value,
+        },
       };
-
 
       try {
         const store = await postApiData(path, dataBody);
@@ -256,8 +259,10 @@ export const CRUD = () => {
         handleBtn: edit,
       });
       try {
-        const {data, status} = await getApiData(path + '/' + param.textContent)
-        if(status === 200) {
+        const { data, status } = await getApiData(
+          path + "/" + param.textContent
+        );
+        if (status === 200) {
           setDataEdit({
             order_id: data.order_id,
             product_id: data.product_id,
@@ -265,9 +270,9 @@ export const CRUD = () => {
             activity_type: data.activity_type,
             average_weight_per_package: data.details.average_weight_per_package,
             note: data.details.note,
-            id: data.id
-          })
-          setIdDelete(data.id)
+            id: data.id,
+          });
+          setIdDelete(data.id);
         }
       } catch (error) {
         console.log(error);
@@ -281,13 +286,17 @@ export const CRUD = () => {
         product_id: refBody.product_idRef.current.value,
         activity_type: refBody.activity_typeRef.current.value,
         details: {
-          average_weight_per_package: refBody.average_weight_per_packageRef.current.value,
-          note: refBody.noteRef.current.value
-        }
+          average_weight_per_package:
+            refBody.average_weight_per_packageRef.current.value,
+          note: refBody.noteRef.current.value,
+        },
       };
 
       try {
-        const store = await putApiData(path + '/' + refBody.idRef.current.value, dataBody);
+        const store = await putApiData(
+          path + "/" + refBody.idRef.current.value,
+          dataBody
+        );
         if (store.status === 201) {
           setRefresh((prevRefresh) => !prevRefresh);
           // setPath(() => param);
@@ -298,7 +307,6 @@ export const CRUD = () => {
         setLoading((prevLoading) => !prevLoading);
         setResponseError(error.response.data.errors);
       }
-     
     };
 
     return {

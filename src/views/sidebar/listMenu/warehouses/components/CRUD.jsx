@@ -264,6 +264,8 @@ export const CRUD = () => {
                 label: "Add new warehouses",
                 icon: IconAdd(),
                 heading: "Warehouses list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -282,6 +284,8 @@ export const CRUD = () => {
                 label: "Add new warehouses",
                 icon: IconAdd(),
                 heading: "Warehouses list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -327,6 +331,8 @@ export const CRUD = () => {
             param === "warehouses"
               ? "Warehouses list"
               : "Warehouse Locations list",
+          information:
+            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

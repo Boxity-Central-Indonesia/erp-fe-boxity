@@ -188,6 +188,8 @@ export const CRUD = () => {
                   label: "Add new Packagest",
                   icon: IconAdd(),
                   heading: "Packages list",
+                  information:
+                    "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                   showNavHeading: true,
                   dataNavHeading: [
                     { path: "packages", label: "Packages" },
@@ -207,6 +209,8 @@ export const CRUD = () => {
                   label: "Add new packaging",
                   icon: IconAdd(),
                   heading: "Packaging list",
+                  information:
+                    "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                   showNavHeading: true,
                   dataNavHeading: [
                     { path: "packages", label: "Packages" },
@@ -226,6 +230,8 @@ export const CRUD = () => {
                   label: "Add new packages product",
                   icon: IconAdd(),
                   heading: "Packages product list",
+                  information:
+                    "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                   showNavHeading: true,
                   dataNavHeading: [
                     { path: "packages", label: "Packages" },
@@ -317,6 +323,8 @@ export const CRUD = () => {
               : param === "packaging"
               ? "Packaging list"
               : "Package product list",
+          information:
+            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,
