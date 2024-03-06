@@ -9,6 +9,7 @@ import IconAdd from "../../../../layouts/icons/IconAdd";
 import { TextArea, RadioButtons } from "../../../../layouts/FormInput";
 import FormInput from "../../../../layouts/FormInput";
 import { TabelForProducts } from "./TabelForProducts";
+import { TabelForDeliveryNoteItem } from "./TabelForDeliveryNotesItem";
 
 export const CRUD = () => {
   const [refresh, setRefresh] = useState(false);
@@ -46,6 +47,8 @@ export const CRUD = () => {
   const [inputEditProducts, setInputEditProducts] = useState()
   const [editProduct, setEditProduct] = useState(false)
   const [orderId, setOrderId] = useState()
+  const [inputDeliveryNotes, setInputDeliveryNotes] = useState()
+  const [dataTabelDeliveryNotes, setDataTabelDeliveryNotes] = useState([])
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -84,6 +87,12 @@ export const CRUD = () => {
     quantity_orderedRef: useRef(),
     quantity_receivedRef: useRef(),
     quantity_dueRef: useRef(),
+
+    // deliveryNotes
+    numberRef: useRef(),
+    dateRef: useRef(),
+    // detailsRef: useRef() 
+    
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -541,6 +550,33 @@ export const CRUD = () => {
         placeholder: "Price per unit",
       },
     ])
+
+    setInputDeliveryNotes([
+      {
+        element: "input",
+        type: "text",
+        name: "number",
+        ref: refBody.numberRef,
+        value: dataEdit.number,
+        label: "Number",
+        htmlFor: "number",
+        id: "number",
+        onchange: handleChange,
+        placeholder: "Number",
+      },
+      {
+        element: "input",
+        type: "date",
+        name: "date",
+        ref: refBody.dateRef,
+        value: dataEdit.date,
+        label: "Date",
+        htmlFor: "date",
+        id: "date",
+        onchange: handleChange,
+        placeholder: "Date",
+      },
+    ])
   }, [dataEdit]);
 
   const dataOrders = (data) => {
@@ -598,6 +634,17 @@ export const CRUD = () => {
     }));
   };
 
+
+  const dataDeliveryNotes = (data) => {
+    return data.map((item) => ({
+      id: item.id,
+      number: item.number,
+      warehouse: item.warehouse.name,
+      vendor: item.vendor.name,
+      date: item.date
+    }));
+  };
+
   const READ = () => {
     const [data, setData] = useState();
     useEffect(() => {
@@ -620,6 +667,7 @@ export const CRUD = () => {
                   { path: "invoices", label: "Invoices" },
                   { path: "payments", label: "Payments" },
                   { path: "goods-receipt", label: "Good Receipts" },
+                  { path: "delivery-notes", label: "Delivery notes" },
                 ],
                 activeButton: "orders",
               },
@@ -640,6 +688,7 @@ export const CRUD = () => {
                   { path: "invoices", label: "Invoices" },
                   { path: "payments", label: "Payments" },
                   { path: "goods-receipt", label: "Good Receipts" },
+                  { path: "delivery-notes", label: "Delivery notes" },
                 ],
                 activeButton: "invoices",
               },
@@ -660,6 +709,7 @@ export const CRUD = () => {
                   { path: "invoices", label: "Invoices" },
                   { path: "payments", label: "Payments" },
                   { path: "goods-receipt", label: "Good Receipts" },
+                  { path: "delivery-notes", label: "Delivery notes" },
                 ],
                 activeButton: "payments",
               },
@@ -680,6 +730,28 @@ export const CRUD = () => {
                   { path: "invoices", label: "Invoices" },
                   { path: "payments", label: "Payments" },
                   { path: "goods-receipt", label: "Good Receipts" },
+                  { path: "delivery-notes", label: "Delivery notes" },
+                ],
+                activeButton: "goods-receipt",
+              },
+            ]);
+          } else if (path === "delivery-notes") {
+            const newData = dataDeliveryNotes(data);
+            setData(newData);
+            setDataHeading([
+              {
+                label: "Add new good receipts",
+                icon: IconAdd(),
+                heading: "Good Receipts list",
+                eventToggleModal: handleCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "orders", label: "Orders" },
+                  { path: "invoices", label: "Invoices" },
+                  { path: "payments", label: "Payments" },
+                  { path: "goods-receipt", label: "Good Receipts" },
+                  { path: "delivery-notes", label: "Delivery notes" },
                 ],
                 activeButton: "goods-receipt",
               },
@@ -754,7 +826,10 @@ export const CRUD = () => {
               ? "Add invoices"
               : param === "goods-receipt"
               ? "Add Goods Receipt"
+              : param === "delivery-notes"
+              ? "Add delivery note"
               : "Add payments",
+              
           icon: IconAdd(),
           heading:
             param === "orders"
@@ -763,17 +838,20 @@ export const CRUD = () => {
               ? "Invoices list"
               : param === "goods-receipt"
               ? "Goods Receipt list"
+              : param === "delivery-notes"
+              ? "Delivery notes list"
               : "Payments list",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,
           showNavHeading: true,
           dataNavHeading: [
-            { path: "orders", label: "Orders" },
-            { path: "invoices", label: "Invoices" },
-            { path: "payments", label: "Payments" },
-            { path: "goods-receipt", label: "Good Receipts" },
-          ],
+                  { path: "orders", label: "Orders" },
+                  { path: "invoices", label: "Invoices" },
+                  { path: "payments", label: "Payments" },
+                  { path: "goods-receipt", label: "Good Receipts" },
+                  { path: "delivery-notes", label: "Delivery notes" },
+                ],
           activeButton: param,
         },
       ]);
@@ -797,6 +875,10 @@ export const CRUD = () => {
           } else if (param === "goods-receipt") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataGoodReceipts(data);
+            setData(newData);
+          }  else if (param === "delivery-notes") {
+            setSkeleton((prevSkeleton) => !prevSkeleton);
+            const newData = dataDeliveryNotes(data);
             setData(newData);
           }
         }
@@ -1389,6 +1471,21 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
+      } else if (param === "delivery-notes") {
+        setDataEdit({
+          order_id: "",
+          warehouse_id: "",
+          vendor_id: "",
+        });
+        setValidationError({});
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Add New delivery notes",
+          labelBtnModal: "Add new delivery notes",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
       }
     };
 
@@ -1802,6 +1899,52 @@ export const CRUD = () => {
                   />
                 </div>
               ))}
+          </div>
+        </>
+      );
+    } else if (param === "delivery-notes") {
+      return (
+        <>
+          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+            {inputDeliveryNotes &&
+              inputDeliveryNotes.map((item, index) => (
+                <div className={`col-span-1`}>
+                  <FormInput
+                    key={item.id}
+                    element={item.element}
+                    htmlFor={item.htmlFor}
+                    label={item.label}
+                    type={item.type}
+                    name={item.name}
+                    referens={item.ref}
+                    value={item.value}
+                    id={item.id}
+                    onChange={(event) => item.onchange(event)}
+                    placeholder={item.placeholder}
+                    dataSelect={item.dataSelect}
+                    uniqueId={index}
+                    validationError={validationError}
+                  />
+                </div>
+              ))}
+
+            <TextArea
+              span={`col-span-2`}
+              label={"Details"}
+              htmlFor={"details"}
+              id={"details"}
+              name={"details"}
+              referens={refBody.detailsRef}
+              placeholder={"Write details here"}
+            />
+
+            <div className="col-span-2">
+               <TabelForDeliveryNoteItem
+                dataTabelDeliveryNotes={dataTabelDeliveryNotes}
+                setDataTabelDeliveryNotes={setDataTabelDeliveryNotes}
+              />
+            </div>
+
           </div>
         </>
       );

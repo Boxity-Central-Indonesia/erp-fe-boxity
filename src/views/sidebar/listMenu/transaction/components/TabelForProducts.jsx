@@ -73,17 +73,6 @@ export const TabelForProducts = ({
                                     <span>{item.price_per_unit}</span>
                                 )}
                             </Table.Cell>
-                            {/* <Table.Cell>
-                                {editingItemId === index ? (
-                                    <IdInput
-                                        ref={ref => idInputRefs.current[index] = ref}
-                                        value={item.id}
-                                        onChange={(e) => handleInputChange(index, 'id', e.target.value)}
-                                    />
-                                ) : (
-                                    <span>{item.id}</span>
-                                )}
-                            </Table.Cell> */}
                             <Table.Cell>
                                 <div className='flex items-center gap-2'>
                                     {editingItemId === index ? (
@@ -110,13 +99,6 @@ export const TabelForProducts = ({
                                     )}
                                 </div>
                             </Table.Cell>
-                            {/* <Table.Cell>
-                                <button type='button' onClick={() => handleDelete(index)}>
-                                    <svg style={{ color: globalColor }} className="w-6 h-6 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
-                                </button>
-                            </Table.Cell> */}
                         </Table.Row>
                     ))}
                 </Table.Body>
@@ -149,15 +131,15 @@ const PriceInput = ({ value, onChange }) => {
     );
 };
 
-const IdInput = React.forwardRef(({ value, onChange }, ref) => {
-    return (
-        <input
-            type="text"
-            value={value}
-            name='id'
-            onChange={onChange}
-            ref={ref}
-            className='border-none w-20 h-7 px-0'
-        />
-    );
-});
+// const IdInput = React.forwardRef(({ value, onChange }, ref) => {
+//     return (
+//         <input
+//             type="text"
+//             value={value}
+//             name='id'
+//             onChange={onChange}
+//             ref={ref}
+//             className='border-none w-20 h-7 px-0'
+//         />
+//     );
+// });

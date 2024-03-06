@@ -23,7 +23,7 @@ const TabelHeading = ({
   return (
     <>
       <section>
-        <div className={`flex relative mb-8 mt-3 ${showNavHeading ? `` : `hidden`}`}>
+        <div className={`flex relative mb-5 mt-3 ${showNavHeading ? `` : `hidden`}`}>
           {dataNavHeading && dataNavHeading.map(item => (
             <button
             style={{
