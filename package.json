@@ -1,11 +1,11 @@
 {
   "name": "BoxityERP",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "NODE_ENV=development vite",
-    "build": "NODE_ENV=production npx tailwindcss -o flowbite.css vite build",
+    "build": "NODE_ENV=production npx tailwindcss -i src/styles/tailwind.css -o flowbite.css vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
