@@ -48,7 +48,9 @@ export const CRUD = () => {
   const [editProduct, setEditProduct] = useState(false)
   const [orderId, setOrderId] = useState()
   const [inputDeliveryNotes, setInputDeliveryNotes] = useState()
+  const [inputDeliveryNotesItem, setInputDeliveryNotesItem] = useState()
   const [dataTabelDeliveryNotes, setDataTabelDeliveryNotes] = useState([])
+  const [dataDetailDeliveryNotes, setDataDetailDeliveryNotes] = useState([])
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -91,6 +93,7 @@ export const CRUD = () => {
     // deliveryNotes
     numberRef: useRef(),
     dateRef: useRef(),
+    deliveryNoteItemsRef: useRef()
     // detailsRef: useRef() 
     
   });
@@ -107,6 +110,11 @@ export const CRUD = () => {
     if (storedData) {
       setDataTabelProducts(JSON.parse(storedData));
     }
+    const dataDeliveryNotesAtLocalStorage = localStorage.getItem("dataDeliveryNotesItem")
+    if(dataDeliveryNotesAtLocalStorage) {
+      setDataTabelDeliveryNotes(JSON.parse(dataDeliveryNotesAtLocalStorage))
+    }
+
   }, [render]);
 
   const handleChangeAndPushProducts = async (event) => {
@@ -576,6 +584,53 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Date",
       },
+      {
+        element: "select",
+        name: "vendor_id",
+        ref: refBody.vendor_idRef,
+        value: dataEdit.vendor_id,
+        label: "Vendor",
+        htmlFor: "vendor_id",
+        id: "vendor_id",
+        dataSelect: dataSelectVendor,
+        onchange: handleChange,
+      },
+      {
+        element: "select",
+        name: "warehouse_id",
+        ref: refBody.warehouse_idRef,
+        value: dataEdit.warehouse_id,
+        label: "Warehouses",
+        htmlFor: "warehouse_id",
+        id: "warehouse_id",
+        dataSelect: dataSelectWarehouses,
+        onchange: handleChange,
+      },
+    ])
+
+    setInputDeliveryNotesItem([
+      {
+        element: "select",
+        name: "order_id",
+        ref: refBody.order_idRef,
+        value: dataEdit.order_id,
+        label: "Order",
+        htmlFor: "order_id",
+        id: "order_id",
+        dataSelect: dataOrdersSelect,
+        onchange: handleChange,
+      },
+      {
+        element: "select",
+        name: "product_id",
+        ref: refBody.product_idRef,
+        value: dataEdit.product_id,
+        label: "products",
+        htmlFor: "product_id",
+        id: "product_id",
+        dataSelect: dataSelectProducts,
+        onchange: handleChange,
+      },
     ])
   }, [dataEdit]);
 
@@ -633,7 +688,6 @@ export const CRUD = () => {
       description: item.details ?? item.order.details,
     }));
   };
-
 
   const dataDeliveryNotes = (data) => {
     return data.map((item) => ({
@@ -740,9 +794,9 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new good receipts",
+                label: "Add new Delivery notes list",
                 icon: IconAdd(),
-                heading: "Good Receipts list",
+                heading: "Good Delivery notes list",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -753,7 +807,7 @@ export const CRUD = () => {
                   { path: "goods-receipt", label: "Good Receipts" },
                   { path: "delivery-notes", label: "Delivery notes" },
                 ],
-                activeButton: "goods-receipt",
+                activeButton: "delivery-notes",
               },
             ]);
           }
@@ -892,6 +946,7 @@ export const CRUD = () => {
 
   const EDIT = () => {
     const handleEdit = async (param, routes) => {
+    
       if (path === "orders" && defaultEdit === true) {
         setDefaultEdit(false);
         setDataModal({
@@ -1024,33 +1079,6 @@ export const CRUD = () => {
         routes !== "goods-receipt-items"
       ) {
         setDefaultEdit(false);
-        // setDataModal({
-        //   labelModal: "Update employes",
-        //   labelBtnModal: "Save",
-        //   labelBtnSecondaryModal: "Delete",
-        //   handleBtn: edit,
-        // });
-        // setValidationError({
-        //   name: "",
-        //   email: "",
-        //   phone_number: "",
-        //   company_id: "",
-        //   job_title: "",
-        //   date_of_birth: "",
-        //   employment_status: "",
-        //   hire_date: "",
-        //   termination_date: "",
-        //   address: "",
-        //   city: "",
-        //   province: "",
-        //   postal_code: "",
-        //   country: "",
-        //   emergency_contact_name: "",
-        //   emergency_contact_phone_number: "",
-        //   notes: "",
-        //   department_id: "",
-        // });
-        // setOpenModal(prevOpenModal => !prevOpenModal)
         try {
           const { data, status } = await getApiData(
             "goods-receipt/" + param.textContent
@@ -1142,12 +1170,51 @@ export const CRUD = () => {
         // } catch (error) {
         //   console.log(error);
         // }
+      } else if (path === "delivery-notes" && defaultEdit === true) {
+        setDefaultEdit(false)
+        try {
+          const { data, status } = await getApiData(
+            "delivery-notes/" + param.textContent
+          );
+          if (status === 200) {
+            setDataEdit({});
+            setDataDetailDeliveryNotes(() => data);
+            setIdDelete(data.id);
+            // perbaiki ini kedepannya
+            localStorage.setItem('idDeliveriyNotes', data.id)
+            // perbaiki ini kedepannya
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      } else if (path === "delivery-notes" && defaultEdit === false && routes !== 'products') {
+        setDataModal({
+          labelModal: "Edit delivery note",
+          labelBtnModal: "Save",
+          labelBtnSecondaryModal: "Delete",
+          handleBtn: edit,
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        try {
+          const { data, status } = await getApiData("delivery-notes/" + param);
+          if (status === 200) {
+            setDataEdit({
+              id: data.id,
+              vendor_id: data.vendor.id,
+              warehouse_id: data.warehouse.id,
+              details: data.details,
+              date: data.date,
+              number: data.number,
+              deliveryNoteItems: JSON.stringify(data.delivery_note_items)
+            });
+            // setDataTabelDeliveryNotes(() => data.deliveryNoteItems)
+          }
+        } catch (error) {}
       }
     };
 
     const edit = async () => {
       let dataBody = {};
-      console.log(path);
       setLoading((prevLoading) => !prevLoading);
       if (path === "orders") {
         dataBody = {
@@ -1196,8 +1263,6 @@ export const CRUD = () => {
           due_date: refBody.due_dateRef.current.value,
           status: refBody.statusRef.current.value,
         };
-
-        console.log(dataBody);
 
         try {
           const { data, status } = await putApiData(
@@ -1296,6 +1361,43 @@ export const CRUD = () => {
             // } catch (error) {
             //   console.log(error);
             // }
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data);
+        }
+      } else if (path === "delivery-notes") {
+        dataBody = {
+          number: refBody.numberRef.current.value,
+          date: refBody.dateRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          vendor_id: refBody.vendor_idRef.current.value,
+          details: refBody.detailsRef.current.value,
+          deliveryNoteItems: JSON.parse(refBody.deliveryNoteItemsRef.current.value)
+         }
+
+        try {
+          const { data, status } = await putApiData(
+            "delivery-notes/" +  
+            refBody.idRef.current.value ,
+            dataBody
+          );
+          if (status === 201) {
+            setLoading((prevLoading) => !prevLoading);
+            setRefresh(!refresh);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData(
+                "delivery-notes/" + refBody.idRef.current.value
+              );
+              if (status === 200) {
+                setDataEdit({});
+                setDataDetailDeliveryNotes(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
+            }
           }
         } catch (error) {
           setLoading((prevLoading) => !prevLoading);
@@ -1486,6 +1588,21 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
+      } else if (param === "delivery-notes-item") {
+        setPath(param)
+        setDataEdit({
+          order_id: "",
+          product_id: ""
+        });
+        setValidationError({});
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "lg",
+          labelModal: "Add New delivery notes item",
+          labelBtnModal: "Add new delivery notes item",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
       }
     };
 
@@ -1607,6 +1724,54 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
         }
+      } else if (param === "delivery-notes") {
+       dataBody = {
+        number: refBody.numberRef.current.value,
+        date: refBody.dateRef.current.value,
+        warehouse_id: refBody.warehouse_idRef.current.value,
+        vendor_id: refBody.vendor_idRef.current.value,
+        details: refBody.detailsRef.current.value,
+        deliveryNoteItems: JSON.parse(localStorage.getItem("dataDeliveryNotesItem"))
+       }
+       try {
+        const {data, status} = await postApiData('delivery-notes/', dataBody)
+        if(status === 201) {
+          setPath(param);
+          setRefresh(!refresh);
+          setLoading((prevLoading) => !prevLoading);
+          setOpenModal((prevOpenModal) => !prevOpenModal);
+        }
+       } catch (error) {
+        console.log(error);
+       }
+      } else if (param === "delivery-notes-item") {
+        dataBody = {
+          order_id: parseInt(refBody.order_idRef.current.value),
+          product_id: parseInt(refBody.product_idRef.current.value)
+        }
+        try {
+         const {data, status} = await postApiData('delivery-notes/' + localStorage.getItem('idDeliveriyNotes') + '/items', dataBody)
+         if(status === 201) {
+           setPath(param);
+           setRefresh(!refresh);
+           setLoading((prevLoading) => !prevLoading);
+           setOpenModal((prevOpenModal) => !prevOpenModal);
+           try {
+            const { data, status } = await getApiData(
+              "delivery-notes/" + localStorage.getItem('idDeliveriyNotes')
+            );
+            if (status === 200) {
+              setDataEdit({});
+              setDataDetailDeliveryNotes(() => data);
+              setIdDelete(data.id);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+         }
+        } catch (error) {
+         console.log(error);
+        }
       } else {
         dataBody = {
           vendor_id: refBody.vendor_idRef.current.value,
@@ -1641,6 +1806,7 @@ export const CRUD = () => {
   };
 
   const inputBody = (param) => {
+    console.log(param);
     if (param === "orders") {
       return (
         <>
@@ -1906,6 +2072,7 @@ export const CRUD = () => {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+            <input type="hidden" ref={refBody.deliveryNoteItemsRef} value={dataEdit.deliveryNoteItems} />
             {inputDeliveryNotes &&
               inputDeliveryNotes.map((item, index) => (
                 <div className={`col-span-1`}>
@@ -1935,16 +2102,49 @@ export const CRUD = () => {
               id={"details"}
               name={"details"}
               referens={refBody.detailsRef}
+              value={dataEdit.details}
+              onChange={handleChange}
               placeholder={"Write details here"}
             />
 
-            <div className="col-span-2">
+            <div className={`${
+                    defaultEdit === false ? `hidden ` : `col-span-2`
+                  }`}>
                <TabelForDeliveryNoteItem
                 dataTabelDeliveryNotes={dataTabelDeliveryNotes}
                 setDataTabelDeliveryNotes={setDataTabelDeliveryNotes}
               />
             </div>
 
+          </div>
+        </>
+      );
+    } else if (param === "delivery-notes-item") {
+      return (
+        <>
+          <div className="grid gap-4 mb-4 grid-cols-1">
+            <input type="hidden" ref={refBody.deliveryNoteItemsRef} value={dataEdit.deliveryNoteItems} />
+            {inputDeliveryNotesItem &&
+              inputDeliveryNotesItem.map((item, index) => (
+                <div className={`col-span-1`}>
+                  <FormInput
+                    key={item.id}
+                    element={item.element}
+                    htmlFor={item.htmlFor}
+                    label={item.label}
+                    type={item.type}
+                    name={item.name}
+                    referens={item.ref}
+                    value={item.value}
+                    id={item.id}
+                    onChange={(event) => item.onchange(event)}
+                    placeholder={item.placeholder}
+                    dataSelect={item.dataSelect}
+                    uniqueId={index}
+                    validationError={validationError}
+                  />
+                </div>
+              ))}
           </div>
         </>
       );
@@ -1981,5 +2181,7 @@ export const CRUD = () => {
     dataDetailOrders,
     dataDetailGoodReceipt,
     setPath,
+    dataDetailDeliveryNotes,
+    setDataDetailDeliveryNotes
   };
 };

@@ -7,6 +7,7 @@ import { Spinner } from "../../../layouts/Spinner"
 import { CRUD } from "./components/CRUD"
 import { OrderDetail } from "./components/OrderDetail"
 import { GoodReceiptDetail } from "./components/GoodReceiptDetail"
+import { DeliveryNotesDetail } from "./components/DeliveryNotesDetail"
 
 export const Transactions = () => {
     const {
@@ -31,7 +32,9 @@ export const Transactions = () => {
         setDefaultEdit,
         dataDetailOrders,
         dataDetailGoodReceipt,
-        setPath
+        setPath,
+        dataDetailDeliveryNotes,
+        setDataDetailDeliveryNotes
     } = CRUD()
 
     const dataModalBody = () => {
@@ -110,6 +113,40 @@ export const Transactions = () => {
                     handleEdit={handleEdit}
                     dataHeading={dataHeading}
                     setPath={setPath}
+                />
+        </>
+        )
+    } else if(defaultEdit === false && path === 'delivery-notes' || path === 'delivery-notes-item') {
+        return (
+            <>
+                <ModalContainer 
+                    openModal={openModal}
+                    onToggleModal={setOpenModal}
+                    modalBody={dataModalBody}
+                    sizeModal={dataModal.size}
+                    labelModal={dataModal.labelModal}
+                    labelBtnModal={dataModal.labelBtnModal}
+                    labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
+                    handleBtnModal={dataModal.handleBtn}
+                    parameter={path}
+                    openModalDelete={openModalDelete}
+                />
+
+                <Spinner loading={loading} />
+
+                < ModalConfirmDelete 
+                    modalDelete={modalDelete}
+                    closeModalDelete={closeModalDelete}
+                    handleDelete={handleDelete}
+                />
+
+                <DeliveryNotesDetail
+                    data={dataDetailDeliveryNotes}
+                    defaultEdit={setDefaultEdit}
+                    handleEdit={handleEdit}
+                    dataHeading={dataHeading}
+                    setPath={setPath}
+                    refBody={refBody}
                 />
         </>
         )
