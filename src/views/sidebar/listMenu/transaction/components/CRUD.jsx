@@ -1734,7 +1734,7 @@ export const CRUD = () => {
         deliveryNoteItems: JSON.parse(localStorage.getItem("dataDeliveryNotesItem"))
        }
        try {
-        const {data, status} = await postApiData('delivery-notes/', dataBody)
+        const {data, status} = await postApiData('delivery-notes', dataBody)
         if(status === 201) {
           setPath(param);
           setRefresh(!refresh);
