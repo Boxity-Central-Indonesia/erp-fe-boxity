@@ -378,6 +378,8 @@ export const CRUD = () => {
                 label: "Add new vendors",
                 icon: IconAdd(),
                 heading: "Vendors list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -397,6 +399,8 @@ export const CRUD = () => {
                 label: "Add new vendors",
                 icon: IconAdd(),
                 heading: "Vendors list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -416,6 +420,8 @@ export const CRUD = () => {
                 label: "Add new vendors",
                 icon: IconAdd(),
                 heading: "Vendors list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -478,6 +484,8 @@ export const CRUD = () => {
               : param === "vendor-transactions"
               ? "Transaction list"
               : "Contacts list",
+          information:
+            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

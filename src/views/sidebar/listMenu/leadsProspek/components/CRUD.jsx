@@ -164,6 +164,8 @@ export const CRUD = () => {
               label: "Add new leads",
               icon: IconAdd(),
               heading: "Leads list",
+              information:
+                "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
               eventToggleModal: handleCreate,
               onclick: handleClickHeading,
               showNavHeading: false,

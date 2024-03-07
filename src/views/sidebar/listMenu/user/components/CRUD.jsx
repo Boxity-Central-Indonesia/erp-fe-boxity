@@ -160,11 +160,13 @@ export const CRUD = () => {
             name: item.name,
             username: item.username,
             email: item.email,
-            "number phone": item.no_handphone,
+            "number phone": item.no_handphone ?? "+62 xxx xxxx xxxx",
           }));
           setData(() => newData);
           setDataHeading([
             {
+              information:
+                "A user list is a way to organize and manage groups of users on a website or platform. It helps you target specific messages, personalize experiences, streamline management tasks, and gain better insights into how different segments of your users behave. In the user list section, you can typically create new lists, view existing ones, add or remove users, and edit list details.",
               label: "Add new User",
               icon: IconAdd(),
               heading: "User list",

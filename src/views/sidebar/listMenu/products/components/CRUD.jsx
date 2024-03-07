@@ -45,6 +45,7 @@ export const CRUD = () => {
     warehouse_idRef: useRef(),
     unit_of_measureRef: useRef(),
     raw_materialRef: useRef(),
+    image_productRef: useRef(),
 
     // product price
 
@@ -89,6 +90,7 @@ export const CRUD = () => {
         warehouse_id: responseError?.warehouse_id?.[0] || "",
         unit_of_measure: responseError?.unit_of_measure?.[0] || "",
         raw_material: responseError?.raw_material?.[0] || "",
+        image_product: responseError?.image_product?.[0] || "",
         product_id: responseError?.product_id?.[0] || "",
         selling_price: responseError?.selling_price?.[0] || "",
         buying_price: responseError?.buying_price?.[0] || "",
@@ -124,6 +126,18 @@ export const CRUD = () => {
         id: "code",
         onchange: handleChange,
         placeholder: "Code",
+      },
+      {
+        element: "input",
+        type: "file",
+        name: "image_product",
+        ref: refBody.image_productRef,
+        value: dataEdit.image_product,
+        label: "Product Image",
+        htmlFor: "image_product",
+        id: "image_product",
+        onchange: handleChange,
+        placeholder: "Product Image",
       },
       {
         element: "input",
@@ -395,6 +409,13 @@ export const CRUD = () => {
     return data.map((item) => ({
       id: item.id,
       "kode barang": item.code,
+      image: (
+        <img
+          src={item.image_product}
+          alt={item.name}
+          className="h-8 w-8 rounded-full object-cover"
+        />
+      ),
       name: item.name,
       description: item.description,
       "lokasi gudang": item.warehouse?.name || "--",
@@ -450,6 +471,8 @@ export const CRUD = () => {
                 label: "Add new products",
                 icon: IconAdd(),
                 heading: "Product list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -470,6 +493,8 @@ export const CRUD = () => {
                 label: "Add new category",
                 icon: IconAdd(),
                 heading: "Categoires list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -490,6 +515,8 @@ export const CRUD = () => {
                 label: "Add new price",
                 icon: IconAdd(),
                 heading: "Prices list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -510,6 +537,8 @@ export const CRUD = () => {
                 label: "Add new movement",
                 icon: IconAdd(),
                 heading: "Movements list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -579,6 +608,8 @@ export const CRUD = () => {
               : param === "Product-prices"
               ? "product prices"
               : "Product movement" + " list",
+          information:
+            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,
@@ -641,6 +672,7 @@ export const CRUD = () => {
           movement_type: "",
           unit_of_measure: "",
           raw_material: "",
+          image_product: "",
         });
         setValidationError({
           name: "",
@@ -657,6 +689,7 @@ export const CRUD = () => {
           movement_type: "",
           unit_of_measure: "",
           raw_material: "",
+          image_product: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
@@ -744,6 +777,7 @@ export const CRUD = () => {
           movement_type: "",
           unit_of_measure: "",
           raw_material: "",
+          image_product: "",
         });
         setValidationError({
           name: "",
@@ -760,6 +794,7 @@ export const CRUD = () => {
           movement_type: "",
           unit_of_measure: "",
           raw_material: "",
+          image_product: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
@@ -790,6 +825,7 @@ export const CRUD = () => {
           category_id: refBody.category_idRef.current.value,
           unit_of_measure: refBody.unit_of_measureRef.current.value,
           raw_material: refBody.raw_materialRef.current.value,
+          image_product: refBody.image_productRef.current.value,
         };
 
         try {
@@ -878,6 +914,7 @@ export const CRUD = () => {
           category_id: refBody.category_idRef.current.value,
           unit_of_measure: refBody.unit_of_measureRef.current.value,
           raw_material: refBody.raw_materialRef.current.value,
+          image_product: refBody.image_productRef.current.value,
         };
         console.log(dataBody);
         try {
@@ -926,6 +963,7 @@ export const CRUD = () => {
           movement_type: "",
           unit_of_measure: "",
           raw_material: "",
+          image_product: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
@@ -946,6 +984,7 @@ export const CRUD = () => {
               movement_type: data.movement_type,
               unit_of_measure: data.unit_of_measure,
               raw_material: data.raw_material,
+              image_product: data.image_product,
               id: data.id,
             });
 
@@ -1068,6 +1107,7 @@ export const CRUD = () => {
           category_id: refBody.category_idRef.current.value,
           unit_of_measure: refBody.unit_of_measureRef.current.value,
           raw_material: refBody.raw_materialRef.current.value,
+          image_product: refBody.image_productRef.current.value,
         };
         try {
           const response = await putApiData(
@@ -1182,8 +1222,19 @@ export const CRUD = () => {
     };
   };
 
-  const inputBody = (param) => {
+  const inputBody = (param, response) => {
+    // Variabel response didefinisikan di luar blok kondisional
+    let imageProductElement = null;
+
     if (param === "products") {
+      imageProductElement = response?.image_product && (
+        <img
+          src={response.image_product}
+          alt={response.name}
+          className="h-8 w-8 rounded-full object-cover"
+        />
+      );
+
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-3">
@@ -1217,6 +1268,7 @@ export const CRUD = () => {
               onChange={handleChange}
               validationError={validationError}
             />
+            {imageProductElement}
           </div>
         </>
       );

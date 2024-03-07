@@ -161,6 +161,8 @@ export const CRUD = () => {
               label: "Add new role",
               icon: IconAdd(),
               heading: "Role & permission",
+              information:
+                "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
               eventToggleModal: handleCreate,
               onclick: handleClickHeading,
               showNavHeading: false,

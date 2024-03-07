@@ -231,6 +231,8 @@ export const CRUD = () => {
                 label: "Add new account",
                 icon: IconAdd(),
                 heading: "Accounts list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -250,6 +252,8 @@ export const CRUD = () => {
                 label: "Add new category",
                 icon: IconAdd(),
                 heading: "Categories list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -293,6 +297,8 @@ export const CRUD = () => {
           label: param === "accounts" ? "Add accounts" : "Add transaction",
           icon: IconAdd(),
           heading: param === "accounts" ? "Accounts" : "Transactions" + " list",
+          information:
+            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

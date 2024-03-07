@@ -3,6 +3,14 @@ import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/",
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "src/styles/tailwind.css";`,
+      },
+    },
+  },
   plugins: [react()],
   build: {
     rollupOptions: {
