@@ -15,6 +15,7 @@ export const TabelHeadingForDetail = ({
   showNavHeading,
   dataNavHeading,
   activeButton,
+  hidden,
   routes,
 }) => {
 
@@ -87,6 +88,7 @@ export const TabelHeadingForDetail = ({
               type={"button"}
               bgColour={"primary"}
               paddingY={"2.5"}
+              className={`${hidden ? `hidden` : ``}`}
             />
             {/* <DropdownComponent /> */}
             <div className="flex items-center space-x-3 w-full md:w-auto">

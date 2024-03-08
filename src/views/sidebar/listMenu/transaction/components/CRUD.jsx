@@ -51,6 +51,8 @@ export const CRUD = () => {
   const [inputDeliveryNotesItem, setInputDeliveryNotesItem] = useState()
   const [dataTabelDeliveryNotes, setDataTabelDeliveryNotes] = useState([])
   const [dataDetailDeliveryNotes, setDataDetailDeliveryNotes] = useState([])
+  const [idDeliveryNoteItem, setIdDeliveryNoteItem] = useState()
+  const [idGoodsReceiptItem, setIdGoodReceiptItem] = useState()
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -491,7 +493,7 @@ export const CRUD = () => {
         label: "Products",
         htmlFor: "product_id",
         id: "product_id",
-        dataSelect: [],
+        dataSelect: dataSelectProducts,
         onchange: handleChange,
       },
       {
@@ -518,18 +520,18 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Quantity received",
       },
-      {
-        element: "input",
-        type: "number",
-        name: "quantity_due",
-        ref: refBody.quantity_dueRef,
-        value: dataEdit.quantity_due,
-        label: "Quantity due",
-        htmlFor: "quantity_due",
-        id: "quantity_due",
-        onchange: handleChange,
-        placeholder: "Quantity due",
-      },
+      // {
+      //   element: "input",
+      //   type: "number",
+      //   name: "quantity_due",
+      //   ref: refBody.quantity_dueRef,
+      //   value: dataEdit.quantity_due,
+      //   label: "Quantity due",
+      //   htmlFor: "quantity_due",
+      //   id: "quantity_due",
+      //   onchange: handleChange,
+      //   placeholder: "Quantity due",
+      // },
     ]);
 
     setInputEditProducts([
@@ -638,6 +640,7 @@ export const CRUD = () => {
     return data.map((item) => ({
       "kode transaksi": item.kode_order,
       "vendor name": item.vendor.name,
+      'transaction type': item.vendor.transaction_type,
       // 'product name': item.products.name,
       "tujuan/asal gudang": item.warehouse.name,
       // status: item.status,
@@ -945,8 +948,7 @@ export const CRUD = () => {
   };
 
   const EDIT = () => {
-    const handleEdit = async (param, routes) => {
-    
+    const handleEdit = async (param, routes, param2) => {
       if (path === "orders" && defaultEdit === true) {
         setDefaultEdit(false);
         setDataModal({
@@ -1087,6 +1089,7 @@ export const CRUD = () => {
             setDataEdit({});
             setDataDetailGoodReceipt(() => data);
             setIdDelete(data.id);
+            localStorage.setItem("idGoodReceipt", data.id)
           }
         } catch (error) {
           console.log(error);
@@ -1118,9 +1121,10 @@ export const CRUD = () => {
       } else if (routes === "goods-receipt-items") {
         setDefaultEdit(() => false);
         setPath(routes);
+        localStorage.setItem("path", routes)
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
-          size: "2xl",
+          size: "lg",
           labelModal: "Edit good receipt item",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
@@ -1128,14 +1132,17 @@ export const CRUD = () => {
         });
         try {
           const { data, status } = await getApiData(
-            "goods-receipts/" + idDelete + "/items/" + param
+            "goods-receipts/" + idDelete + "/items/" + param2
           );
           if (status === 200) {
             setDataEdit({
+              id: data.id,
+              product_id: data.product_id,
               quantity_ordered: data.quantity_ordered,
               quantity_received: data.quantity_received,
               quantity_due: data.quantity_due,
             });
+            setIdGoodReceiptItem(data.id)
           }
         } catch (error) {
           console.log(error);
@@ -1187,7 +1194,7 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
-      } else if (path === "delivery-notes" && defaultEdit === false && routes !== 'products') {
+      } else if (path === "delivery-notes" && defaultEdit === false && routes !== 'delivery-notes-item') {
         setDataModal({
           labelModal: "Edit delivery note",
           labelBtnModal: "Save",
@@ -1210,6 +1217,35 @@ export const CRUD = () => {
             // setDataTabelDeliveryNotes(() => data.deliveryNoteItems)
           }
         } catch (error) {}
+      } else if (routes === 'delivery-notes-item') {
+        localStorage.setItem("path", routes)
+        setPath(routes)
+        setDataEdit({
+          order_id: "",
+          product_id: ""
+        });
+        setValidationError({});
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "lg",
+          labelModal: "Edit delivery notes item",
+          labelBtnModal: "Save",
+          labelBtnSecondaryModal: "Delete",
+          handleBtn: edit,
+        });
+        try {
+          const {data, status} = await getApiData('delivery-notes/' + localStorage.getItem("idDeliveriyNotes") + '/items/' + param)
+          if(status === 200) {
+            setDataEdit({
+              order_id: data.order_id,
+              product_id: data.product_id,
+              id: data.id
+            })
+            setIdDeliveryNoteItem(data.id)
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
     };
 
@@ -1334,6 +1370,41 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }
+      } else if (localStorage.getItem("path") === "goods-receipt-items") {
+        dataBody = {
+          product_id: refBody.product_idRef.current.value,
+          quantity_ordered: refBody.quantity_orderedRef.current.value,
+          quantity_received: refBody.quantity_receivedRef.current.value,
+          quantity_due: 0
+        };
+
+
+        try {
+          const { data, status } = await putApiData(
+            'goods-receipts/' + localStorage.getItem("idGoodReceipt") + '/items/' + refBody.idRef.current.value ,
+            dataBody
+          );
+          if (status === 201) {
+            setLoading((prevLoading) => !prevLoading);
+            setRefresh(!refresh);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData(
+                "goods-receipt/" + localStorage.getItem("idGoodReceipt")
+              );
+              if (status === 200) {
+                setDataEdit({});
+                setDataDetailGoodReceipt(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data);
+        }
       } else if (path === "products") {
         dataBody = {
           quantity: refBody.quantityRef.current.value,
@@ -1366,7 +1437,7 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }
-      } else if (path === "delivery-notes") {
+      } else if (path === "delivery-notes" && localStorage.getItem("path") !== "delivery-notes-item") {
         dataBody = {
           number: refBody.numberRef.current.value,
           date: refBody.dateRef.current.value,
@@ -1403,6 +1474,34 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }
+      } else if (localStorage.getItem("path") === "delivery-notes-item") {
+        dataBody = {
+          order_id: parseInt(refBody.order_idRef.current.value),
+          product_id: parseInt(refBody.product_idRef.current.value)
+        }
+        try {
+         const {data, status} = await putApiData('delivery-notes/' + localStorage.getItem('idDeliveriyNotes') + '/items/' + refBody.idRef.current.value, dataBody)
+         if(status === 201) {
+           setPath('delivery-notes');
+           setRefresh(!refresh);
+           setLoading((prevLoading) => !prevLoading);
+           setOpenModal((prevOpenModal) => !prevOpenModal);
+           try {
+            const { data, status } = await getApiData(
+              "delivery-notes/" + localStorage.getItem('idDeliveriyNotes')
+            );
+            if (status === 200) {
+              setDataEdit({});
+              setDataDetailDeliveryNotes(() => data);
+              setIdDelete(data.id);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+         }
+        } catch (error) {
+         console.log(error);
+        }
       }
     };
 
@@ -1434,6 +1533,48 @@ export const CRUD = () => {
             );
             if (status === 200) {
               setDataDetailOrders(() => data);
+              setIdDelete(data.id);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+          closeModalDelete();
+        } catch (error) {
+          console.log(error.response);
+        }
+      } else if(path === 'delivery-notes-item') {
+        try {
+          await deleteApiData("delivery-notes/" + localStorage.getItem("idDeliveriyNotes") + '/items/' + idDeliveryNoteItem);
+          setRefresh(!refresh);
+          setDefaultEdit(true);
+          try {
+            const { data, status } = await getApiData(
+              "delivery-notes/" + localStorage.getItem('idDeliveriyNotes')
+            );
+            if (status === 200) {
+              setDataEdit({});
+              setDataDetailDeliveryNotes(() => data);
+              setIdDelete(data.id);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+          closeModalDelete();
+        } catch (error) {
+          console.log(error.response);
+        }
+      } else if(path === 'goods-receipt-items') {
+        try {
+          await deleteApiData("goods-receipts/" + localStorage.getItem("idGoodReceipt") + '/items/' + idGoodsReceiptItem);
+          setRefresh(!refresh);
+          setDefaultEdit(true);
+          try {
+            const { data, status } = await getApiData(
+              "goods-receipt/" + localStorage.getItem("idGoodReceipt")
+            );
+            if (status === 200) {
+              setDataEdit({});
+              setDataDetailGoodReceipt(() => data);
               setIdDelete(data.id);
             }
           } catch (error) {
@@ -2043,7 +2184,7 @@ export const CRUD = () => {
     } else if (param === "goods-receipt-items") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+          <div className="grid gap-4 mb-4 grid-cols-1">
             {inputEditGoodReceiptItem &&
               inputEditGoodReceiptItem.map((item, index) => (
                 <div className={`col-span-1`}>

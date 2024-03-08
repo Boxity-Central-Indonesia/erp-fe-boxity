@@ -18,6 +18,7 @@ export const GoodReceiptDetail = ({
         "quantity ordered": item.quantity_ordered + " pcs",
         "quantity received": item.quantity_received + " pcs",
         "quantity due": item.quantity_due + " pcs",
+        product_id: item.product_id
       }))
     : []; // Use an empty array if data.departments is null
 
@@ -163,6 +164,7 @@ export const GoodReceiptDetail = ({
               dataHeading={dataHeading}
               handleEdit={handleEdit}
               routes={"goods-receipt-items"}
+              hidden={true}
             />
           </div>
         </div>
