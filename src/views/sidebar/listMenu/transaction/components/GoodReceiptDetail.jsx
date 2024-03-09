@@ -96,7 +96,7 @@ export const GoodReceiptDetail = ({
                   {" "}
                   :{" "}
                   <span className="ml-5">
-                    {data?.details || data?.order.details}
+                    {data?.details}
                   </span>
                 </td>
               </tr>
@@ -132,7 +132,7 @@ export const GoodReceiptDetail = ({
             bgColour={"primary"}
             label={"Edit"}
             paddingX={"4"}
-            event={() => handleEdit(data.id, "orders")}
+            event={() => handleEdit(data.id, "goods-receipt")}
             paddingY={"2.5"}
             icon={
               <svg

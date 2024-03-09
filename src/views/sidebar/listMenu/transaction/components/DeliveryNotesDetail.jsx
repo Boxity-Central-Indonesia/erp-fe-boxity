@@ -111,7 +111,7 @@ export const DeliveryNotesDetail = ({
             bgColour={"primary"}
             label={"Edit"}
             paddingX={"4"}
-            event={() => handleEdit(data.id, "orders")}
+            event={() => handleEdit(data.id, "delivery-notes")}
             paddingY={"2.5"}
             icon={
               <svg

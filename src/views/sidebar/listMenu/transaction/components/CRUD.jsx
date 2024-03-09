@@ -196,6 +196,10 @@ export const CRUD = () => {
         payment_date: responseError?.payment_date?.[0] || "",
         warehouse_id: responseError?.warehouse_id?.[0] || "",
         details: responseError?.details?.[0] || "",
+        vendor_id: responseError?.vendor_id?.[0] || "",
+        number: responseError?.number?.[0] || "",
+        date: responseError?.date?.[0] || "",
+        product_id: responseError?.product_id?.[0] || "",
       });
     }
   }, [responseError]);
@@ -688,7 +692,7 @@ export const CRUD = () => {
       "purchase date": item.order.created_at,
       status: item.status,
       Warehouses: item.warehouse.name,
-      description: item.details ?? item.order.details,
+      'details': item.details ?? '--',
     }));
   };
 
@@ -949,6 +953,7 @@ export const CRUD = () => {
 
   const EDIT = () => {
     const handleEdit = async (param, routes, param2) => {
+      console.log(path);
       if (path === "orders" && defaultEdit === true) {
         setDefaultEdit(false);
         setDataModal({
@@ -1095,11 +1100,13 @@ export const CRUD = () => {
           console.log(error);
         }
       } else if (
-        path === "goods-receipt" &&
+        routes === "goods-receipt" &&
         defaultEdit === false &&
         routes !== "goods-receipt-items"
       ) {
         setOpenModal((prevOpenModal) => !prevOpenModal);
+        localStorage.setItem('path', routes)
+        setPath(routes)
         setDataModal({
           size: "2xl",
           labelModal: "Edit good receipt",
@@ -1194,7 +1201,9 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
-      } else if (path === "delivery-notes" && defaultEdit === false && routes !== 'delivery-notes-item') {
+      } else if (routes === "delivery-notes" && defaultEdit === false && routes !== 'delivery-notes-item') {
+        setPath(routes)
+        localStorage.setItem('path', routes)
         setDataModal({
           labelModal: "Edit delivery note",
           labelBtnModal: "Save",
@@ -1251,6 +1260,7 @@ export const CRUD = () => {
 
     const edit = async () => {
       let dataBody = {};
+      console.log(path);
       setLoading((prevLoading) => !prevLoading);
       if (path === "orders") {
         dataBody = {
@@ -1337,7 +1347,7 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }
-      } else if (path === "goods-receipt") {
+      } else if (localStorage.getItem('path') === "goods-receipt") {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
           warehouse_id: refBody.warehouse_idRef.current.value,
@@ -1346,7 +1356,7 @@ export const CRUD = () => {
 
         try {
           const { data, status } = await putApiData(
-            path + "/" + refBody.idRef.current.value,
+            "goods-receipt/" + refBody.idRef.current.value,
             dataBody
           );
           if (status === 201) {
@@ -1437,7 +1447,7 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }
-      } else if (path === "delivery-notes" && localStorage.getItem("path") !== "delivery-notes-item") {
+      } else if (localStorage.getItem("path") === "delivery-notes") {
         dataBody = {
           number: refBody.numberRef.current.value,
           date: refBody.dateRef.current.value,
@@ -1883,7 +1893,8 @@ export const CRUD = () => {
           setOpenModal((prevOpenModal) => !prevOpenModal);
         }
        } catch (error) {
-        console.log(error);
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
        }
       } else if (param === "delivery-notes-item") {
         dataBody = {
@@ -1911,7 +1922,8 @@ export const CRUD = () => {
           }
          }
         } catch (error) {
-         console.log(error);
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
         }
       } else {
         dataBody = {
