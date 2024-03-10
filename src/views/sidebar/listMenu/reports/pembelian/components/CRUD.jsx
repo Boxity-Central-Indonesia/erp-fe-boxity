@@ -103,16 +103,12 @@ export const CRUD = () => {
           const { data, status } = await getApiData("purchase-report");
           if (status === 200) {
             const newData = data.map((item) => ({
-              "order code": item.kode_order,
+              "kode transaksi": item.kode_order,
               supplier: item.vendor_name,
-              "type of order": item.order_type,
-              "production status": item.order_status,
-              "product name": item.product_name,
-              quantity: item.quantity,
-              "price per unit": item.price_per_unit,
-              "harga pengiriman": item.shipping_cost,
-              "total harga": item.total_price,
-              "payment status": item.status,
+              "tanggal penjualan": item.invoice_date,
+              "total tagihan": item.total_price,
+              "tagihan dibayar": item.paid_amount,
+              "status tagihan": item.invoice_status,
             }));
             setData(() => newData);
           }

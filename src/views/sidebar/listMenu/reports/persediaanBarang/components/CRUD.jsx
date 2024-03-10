@@ -108,8 +108,8 @@ export const CRUD = () => {
               description: item.description,
               weight: (item.weight ?? 0.0) + " " + item.unit_of_measure,
               "type of animal": item.animal_type,
-              quantity: item.stock,
-              "harga rata-rata": item.price,
+              quantity: item.stock + " pcs",
+              "harga satuan": item.price,
               "total harga": item.price * item.stock,
             }));
             setData(() => newData);

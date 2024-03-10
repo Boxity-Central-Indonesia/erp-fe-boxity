@@ -422,8 +422,8 @@ export const CRUD = () => {
       category: item.category?.name || "--",
       type: item.type,
       weight: (item.weight ?? 0.0) + " " + item.unit_of_measure,
-      quantity: item.stock,
-      "harga rata-rata": item.price,
+      quantity: item.stock + " pcs",
+      "harga satuan": item.price,
       "HPP Balance": item.price * item.stock,
     }));
   };

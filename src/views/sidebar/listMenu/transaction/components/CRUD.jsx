@@ -44,15 +44,15 @@ export const CRUD = () => {
   const [dataDetailGoodReceipt, setDataDetailGoodReceipt] = useState();
   const [selectedOption, setSelectedOption] = useState();
   const [inputEditGoodReceiptItem, setInputEditGoodReceiptItem] = useState([]);
-  const [inputEditProducts, setInputEditProducts] = useState()
-  const [editProduct, setEditProduct] = useState(false)
-  const [orderId, setOrderId] = useState()
-  const [inputDeliveryNotes, setInputDeliveryNotes] = useState()
-  const [inputDeliveryNotesItem, setInputDeliveryNotesItem] = useState()
-  const [dataTabelDeliveryNotes, setDataTabelDeliveryNotes] = useState([])
-  const [dataDetailDeliveryNotes, setDataDetailDeliveryNotes] = useState([])
-  const [idDeliveryNoteItem, setIdDeliveryNoteItem] = useState()
-  const [idGoodsReceiptItem, setIdGoodReceiptItem] = useState()
+  const [inputEditProducts, setInputEditProducts] = useState();
+  const [editProduct, setEditProduct] = useState(false);
+  const [orderId, setOrderId] = useState();
+  const [inputDeliveryNotes, setInputDeliveryNotes] = useState();
+  const [inputDeliveryNotesItem, setInputDeliveryNotesItem] = useState();
+  const [dataTabelDeliveryNotes, setDataTabelDeliveryNotes] = useState([]);
+  const [dataDetailDeliveryNotes, setDataDetailDeliveryNotes] = useState([]);
+  const [idDeliveryNoteItem, setIdDeliveryNoteItem] = useState();
+  const [idGoodsReceiptItem, setIdGoodReceiptItem] = useState();
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -95,9 +95,8 @@ export const CRUD = () => {
     // deliveryNotes
     numberRef: useRef(),
     dateRef: useRef(),
-    deliveryNoteItemsRef: useRef()
-    // detailsRef: useRef() 
-    
+    deliveryNoteItemsRef: useRef(),
+    // detailsRef: useRef()
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -112,11 +111,12 @@ export const CRUD = () => {
     if (storedData) {
       setDataTabelProducts(JSON.parse(storedData));
     }
-    const dataDeliveryNotesAtLocalStorage = localStorage.getItem("dataDeliveryNotesItem")
-    if(dataDeliveryNotesAtLocalStorage) {
-      setDataTabelDeliveryNotes(JSON.parse(dataDeliveryNotesAtLocalStorage))
+    const dataDeliveryNotesAtLocalStorage = localStorage.getItem(
+      "dataDeliveryNotesItem"
+    );
+    if (dataDeliveryNotesAtLocalStorage) {
+      setDataTabelDeliveryNotes(JSON.parse(dataDeliveryNotesAtLocalStorage));
     }
-
   }, [render]);
 
   const handleChangeAndPushProducts = async (event) => {
@@ -563,7 +563,7 @@ export const CRUD = () => {
         onchange: handleChange,
         placeholder: "Price per unit",
       },
-    ])
+    ]);
 
     setInputDeliveryNotes([
       {
@@ -612,7 +612,7 @@ export const CRUD = () => {
         dataSelect: dataSelectWarehouses,
         onchange: handleChange,
       },
-    ])
+    ]);
 
     setInputDeliveryNotesItem([
       {
@@ -637,14 +637,14 @@ export const CRUD = () => {
         dataSelect: dataSelectProducts,
         onchange: handleChange,
       },
-    ])
+    ]);
   }, [dataEdit]);
 
   const dataOrders = (data) => {
     return data.map((item) => ({
       "kode transaksi": item.kode_order,
       "vendor name": item.vendor.name,
-      'transaction type': item.vendor.transaction_type,
+      "transaction type": item.vendor.transaction_type,
       // 'product name': item.products.name,
       "tujuan/asal gudang": item.warehouse.name,
       // status: item.status,
@@ -687,12 +687,12 @@ export const CRUD = () => {
     return data.map((item) => ({
       id: item.id,
       "receipt code": item.kodeGoodsReceipt,
-      "Order code": item.order.kode_order,
+      "kode transaksi": item.order.kode_order,
       "receipt date": item.created_at,
       "purchase date": item.order.created_at,
       status: item.status,
       Warehouses: item.warehouse.name,
-      'details': item.details ?? '--',
+      details: item.details ?? "--",
     }));
   };
 
@@ -702,7 +702,7 @@ export const CRUD = () => {
       number: item.number,
       warehouse: item.warehouse.name,
       vendor: item.vendor.name,
-      date: item.date
+      date: item.date,
     }));
   };
 
@@ -890,7 +890,7 @@ export const CRUD = () => {
               : param === "delivery-notes"
               ? "Add delivery note"
               : "Add payments",
-              
+
           icon: IconAdd(),
           heading:
             param === "orders"
@@ -907,12 +907,12 @@ export const CRUD = () => {
           parameter: param,
           showNavHeading: true,
           dataNavHeading: [
-                  { path: "orders", label: "Orders" },
-                  { path: "invoices", label: "Invoices" },
-                  { path: "payments", label: "Payments" },
-                  { path: "goods-receipt", label: "Good Receipts" },
-                  { path: "delivery-notes", label: "Delivery notes" },
-                ],
+            { path: "orders", label: "Orders" },
+            { path: "invoices", label: "Invoices" },
+            { path: "payments", label: "Payments" },
+            { path: "goods-receipt", label: "Good Receipts" },
+            { path: "delivery-notes", label: "Delivery notes" },
+          ],
           activeButton: param,
         },
       ]);
@@ -937,7 +937,7 @@ export const CRUD = () => {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataGoodReceipts(data);
             setData(newData);
-          }  else if (param === "delivery-notes") {
+          } else if (param === "delivery-notes") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataDeliveryNotes(data);
             setData(newData);
@@ -991,12 +991,16 @@ export const CRUD = () => {
             setDataDetailOrders(() => data);
             // setDataEdit
             setIdDelete(data.id);
-            setOrderId(data.id)
+            setOrderId(data.id);
           }
         } catch (error) {
           console.log(error);
         }
-      } else if (path === "orders" && defaultEdit === false && routes !== 'products') {
+      } else if (
+        path === "orders" &&
+        defaultEdit === false &&
+        routes !== "products"
+      ) {
         setDataModal({
           labelModal: "Edit orders",
           labelBtnModal: "Save",
@@ -1094,7 +1098,7 @@ export const CRUD = () => {
             setDataEdit({});
             setDataDetailGoodReceipt(() => data);
             setIdDelete(data.id);
-            localStorage.setItem("idGoodReceipt", data.id)
+            localStorage.setItem("idGoodReceipt", data.id);
           }
         } catch (error) {
           console.log(error);
@@ -1105,8 +1109,8 @@ export const CRUD = () => {
         routes !== "goods-receipt-items"
       ) {
         setOpenModal((prevOpenModal) => !prevOpenModal);
-        localStorage.setItem('path', routes)
-        setPath(routes)
+        localStorage.setItem("path", routes);
+        setPath(routes);
         setDataModal({
           size: "2xl",
           labelModal: "Edit good receipt",
@@ -1128,7 +1132,7 @@ export const CRUD = () => {
       } else if (routes === "goods-receipt-items") {
         setDefaultEdit(() => false);
         setPath(routes);
-        localStorage.setItem("path", routes)
+        localStorage.setItem("path", routes);
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
@@ -1149,14 +1153,14 @@ export const CRUD = () => {
               quantity_received: data.quantity_received,
               quantity_due: data.quantity_due,
             });
-            setIdGoodReceiptItem(data.id)
+            setIdGoodReceiptItem(data.id);
           }
         } catch (error) {
           console.log(error);
         }
       } else if (routes === "products") {
-        setPath(() =>routes);
-        setEditProduct(true)
+        setPath(() => routes);
+        setEditProduct(true);
         setDefaultEdit(() => false);
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
@@ -1166,10 +1170,10 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
         });
-        setIdDelete(param)
+        setIdDelete(param);
         setDataEdit({
-          id: param
-        })
+          id: param,
+        });
         // try {
         //   const { data, status } = await getApiData(
         //     "goods-receipts/" + idDelete + "/items/" + param
@@ -1185,7 +1189,7 @@ export const CRUD = () => {
         //   console.log(error);
         // }
       } else if (path === "delivery-notes" && defaultEdit === true) {
-        setDefaultEdit(false)
+        setDefaultEdit(false);
         try {
           const { data, status } = await getApiData(
             "delivery-notes/" + param.textContent
@@ -1195,15 +1199,19 @@ export const CRUD = () => {
             setDataDetailDeliveryNotes(() => data);
             setIdDelete(data.id);
             // perbaiki ini kedepannya
-            localStorage.setItem('idDeliveriyNotes', data.id)
+            localStorage.setItem("idDeliveriyNotes", data.id);
             // perbaiki ini kedepannya
           }
         } catch (error) {
           console.log(error);
         }
-      } else if (routes === "delivery-notes" && defaultEdit === false && routes !== 'delivery-notes-item') {
-        setPath(routes)
-        localStorage.setItem('path', routes)
+      } else if (
+        routes === "delivery-notes" &&
+        defaultEdit === false &&
+        routes !== "delivery-notes-item"
+      ) {
+        setPath(routes);
+        localStorage.setItem("path", routes);
         setDataModal({
           labelModal: "Edit delivery note",
           labelBtnModal: "Save",
@@ -1221,17 +1229,17 @@ export const CRUD = () => {
               details: data.details,
               date: data.date,
               number: data.number,
-              deliveryNoteItems: JSON.stringify(data.delivery_note_items)
+              deliveryNoteItems: JSON.stringify(data.delivery_note_items),
             });
             // setDataTabelDeliveryNotes(() => data.deliveryNoteItems)
           }
         } catch (error) {}
-      } else if (routes === 'delivery-notes-item') {
-        localStorage.setItem("path", routes)
-        setPath(routes)
+      } else if (routes === "delivery-notes-item") {
+        localStorage.setItem("path", routes);
+        setPath(routes);
         setDataEdit({
           order_id: "",
-          product_id: ""
+          product_id: "",
         });
         setValidationError({});
         setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -1243,14 +1251,19 @@ export const CRUD = () => {
           handleBtn: edit,
         });
         try {
-          const {data, status} = await getApiData('delivery-notes/' + localStorage.getItem("idDeliveriyNotes") + '/items/' + param)
-          if(status === 200) {
+          const { data, status } = await getApiData(
+            "delivery-notes/" +
+              localStorage.getItem("idDeliveriyNotes") +
+              "/items/" +
+              param
+          );
+          if (status === 200) {
             setDataEdit({
               order_id: data.order_id,
               product_id: data.product_id,
-              id: data.id
-            })
-            setIdDeliveryNoteItem(data.id)
+              id: data.id,
+            });
+            setIdDeliveryNoteItem(data.id);
           }
         } catch (error) {
           console.log(error);
@@ -1283,9 +1296,7 @@ export const CRUD = () => {
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
             try {
-              const { data, status } = await getApiData(
-                "orders/" + idDelete
-              );
+              const { data, status } = await getApiData("orders/" + idDelete);
               if (status === 200) {
                 setDataDetailOrders(() => data);
                 setIdDelete(data.id);
@@ -1299,7 +1310,6 @@ export const CRUD = () => {
           setResponseError(error.response.data);
         }
         // gunakan componen terpisah
-        
       } else if (path === "invoices") {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
@@ -1347,7 +1357,7 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }
-      } else if (localStorage.getItem('path') === "goods-receipt") {
+      } else if (localStorage.getItem("path") === "goods-receipt") {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
           warehouse_id: refBody.warehouse_idRef.current.value,
@@ -1385,13 +1395,15 @@ export const CRUD = () => {
           product_id: refBody.product_idRef.current.value,
           quantity_ordered: refBody.quantity_orderedRef.current.value,
           quantity_received: refBody.quantity_receivedRef.current.value,
-          quantity_due: 0
+          quantity_due: 0,
         };
-
 
         try {
           const { data, status } = await putApiData(
-            'goods-receipts/' + localStorage.getItem("idGoodReceipt") + '/items/' + refBody.idRef.current.value ,
+            "goods-receipts/" +
+              localStorage.getItem("idGoodReceipt") +
+              "/items/" +
+              refBody.idRef.current.value,
             dataBody
           );
           if (status === 201) {
@@ -1418,12 +1430,12 @@ export const CRUD = () => {
       } else if (path === "products") {
         dataBody = {
           quantity: refBody.quantityRef.current.value,
-          price_per_unit: refBody.price_per_unitRef.current.value
+          price_per_unit: refBody.price_per_unitRef.current.value,
         };
 
         try {
           const { data, status } = await putApiData(
-            "orders/" + orderId + '/products/' + refBody.idRef.current.value,
+            "orders/" + orderId + "/products/" + refBody.idRef.current.value,
             dataBody
           );
           if (status === 201) {
@@ -1454,13 +1466,14 @@ export const CRUD = () => {
           warehouse_id: refBody.warehouse_idRef.current.value,
           vendor_id: refBody.vendor_idRef.current.value,
           details: refBody.detailsRef.current.value,
-          deliveryNoteItems: JSON.parse(refBody.deliveryNoteItemsRef.current.value)
-         }
+          deliveryNoteItems: JSON.parse(
+            refBody.deliveryNoteItemsRef.current.value
+          ),
+        };
 
         try {
           const { data, status } = await putApiData(
-            "delivery-notes/" +  
-            refBody.idRef.current.value ,
+            "delivery-notes/" + refBody.idRef.current.value,
             dataBody
           );
           if (status === 201) {
@@ -1487,30 +1500,36 @@ export const CRUD = () => {
       } else if (localStorage.getItem("path") === "delivery-notes-item") {
         dataBody = {
           order_id: parseInt(refBody.order_idRef.current.value),
-          product_id: parseInt(refBody.product_idRef.current.value)
-        }
+          product_id: parseInt(refBody.product_idRef.current.value),
+        };
         try {
-         const {data, status} = await putApiData('delivery-notes/' + localStorage.getItem('idDeliveriyNotes') + '/items/' + refBody.idRef.current.value, dataBody)
-         if(status === 201) {
-           setPath('delivery-notes');
-           setRefresh(!refresh);
-           setLoading((prevLoading) => !prevLoading);
-           setOpenModal((prevOpenModal) => !prevOpenModal);
-           try {
-            const { data, status } = await getApiData(
-              "delivery-notes/" + localStorage.getItem('idDeliveriyNotes')
-            );
-            if (status === 200) {
-              setDataEdit({});
-              setDataDetailDeliveryNotes(() => data);
-              setIdDelete(data.id);
+          const { data, status } = await putApiData(
+            "delivery-notes/" +
+              localStorage.getItem("idDeliveriyNotes") +
+              "/items/" +
+              refBody.idRef.current.value,
+            dataBody
+          );
+          if (status === 201) {
+            setPath("delivery-notes");
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData(
+                "delivery-notes/" + localStorage.getItem("idDeliveriyNotes")
+              );
+              if (status === 200) {
+                setDataEdit({});
+                setDataDetailDeliveryNotes(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
             }
-          } catch (error) {
-            console.log(error);
           }
-         }
         } catch (error) {
-         console.log(error);
+          console.log(error);
         }
       }
     };
@@ -1532,15 +1551,15 @@ export const CRUD = () => {
     };
 
     const handleDelete = async () => {
-      if(path === 'products') {
+      if (path === "products") {
         try {
-          await deleteApiData("orders/" + orderId + '/remove-product/' + idDelete);
+          await deleteApiData(
+            "orders/" + orderId + "/remove-product/" + idDelete
+          );
           setRefresh(!refresh);
           setDefaultEdit(true);
           try {
-            const { data, status } = await getApiData(
-              "orders/" + orderId
-            );
+            const { data, status } = await getApiData("orders/" + orderId);
             if (status === 200) {
               setDataDetailOrders(() => data);
               setIdDelete(data.id);
@@ -1552,14 +1571,19 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error.response);
         }
-      } else if(path === 'delivery-notes-item') {
+      } else if (path === "delivery-notes-item") {
         try {
-          await deleteApiData("delivery-notes/" + localStorage.getItem("idDeliveriyNotes") + '/items/' + idDeliveryNoteItem);
+          await deleteApiData(
+            "delivery-notes/" +
+              localStorage.getItem("idDeliveriyNotes") +
+              "/items/" +
+              idDeliveryNoteItem
+          );
           setRefresh(!refresh);
           setDefaultEdit(true);
           try {
             const { data, status } = await getApiData(
-              "delivery-notes/" + localStorage.getItem('idDeliveriyNotes')
+              "delivery-notes/" + localStorage.getItem("idDeliveriyNotes")
             );
             if (status === 200) {
               setDataEdit({});
@@ -1573,9 +1597,14 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error.response);
         }
-      } else if(path === 'goods-receipt-items') {
+      } else if (path === "goods-receipt-items") {
         try {
-          await deleteApiData("goods-receipts/" + localStorage.getItem("idGoodReceipt") + '/items/' + idGoodsReceiptItem);
+          await deleteApiData(
+            "goods-receipts/" +
+              localStorage.getItem("idGoodReceipt") +
+              "/items/" +
+              idGoodsReceiptItem
+          );
           setRefresh(!refresh);
           setDefaultEdit(true);
           try {
@@ -1604,7 +1633,6 @@ export const CRUD = () => {
           console.log(error.response);
         }
       }
-    
     };
 
     return {
@@ -1688,7 +1716,7 @@ export const CRUD = () => {
           handleBtn: create,
         });
       } else if (param === "products") {
-        setEditProduct(false)
+        setEditProduct(false);
         setPath(param);
         setDataEdit({
           invoice_id: "",
@@ -1740,10 +1768,10 @@ export const CRUD = () => {
           handleBtn: create,
         });
       } else if (param === "delivery-notes-item") {
-        setPath(param)
+        setPath(param);
         setDataEdit({
           order_id: "",
-          product_id: ""
+          product_id: "",
         });
         setValidationError({});
         setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -1847,13 +1875,17 @@ export const CRUD = () => {
           setResponseError(error.response.data.errors);
         }
       } else if (param === "products") {
-       
-        const product = JSON.parse(localStorage.getItem("dataTabelProducts"))
+        const product = JSON.parse(localStorage.getItem("dataTabelProducts"));
 
-        const dataBody = Object.fromEntries(product.map(obj => ['product', obj]))
+        const dataBody = Object.fromEntries(
+          product.map((obj) => ["product", obj])
+        );
 
         try {
-          const store = await postApiData('orders/' + refBody.order_idRef.current.value +'/add-product', dataBody);
+          const store = await postApiData(
+            "orders/" + refBody.order_idRef.current.value + "/add-product",
+            dataBody
+          );
           if (store.status === 201) {
             setPath(param);
             setRefresh(!refresh);
@@ -1876,51 +1908,61 @@ export const CRUD = () => {
           setResponseError(error.response.data.errors);
         }
       } else if (param === "delivery-notes") {
-       dataBody = {
-        number: refBody.numberRef.current.value,
-        date: refBody.dateRef.current.value,
-        warehouse_id: refBody.warehouse_idRef.current.value,
-        vendor_id: refBody.vendor_idRef.current.value,
-        details: refBody.detailsRef.current.value,
-        deliveryNoteItems: JSON.parse(localStorage.getItem("dataDeliveryNotesItem"))
-       }
-       try {
-        const {data, status} = await postApiData('delivery-notes', dataBody)
-        if(status === 201) {
-          setPath(param);
-          setRefresh(!refresh);
-          setLoading((prevLoading) => !prevLoading);
-          setOpenModal((prevOpenModal) => !prevOpenModal);
-        }
-       } catch (error) {
+        dataBody = {
+          number: refBody.numberRef.current.value,
+          date: refBody.dateRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          vendor_id: refBody.vendor_idRef.current.value,
+          details: refBody.detailsRef.current.value,
+          deliveryNoteItems: JSON.parse(
+            localStorage.getItem("dataDeliveryNotesItem")
+          ),
+        };
+        try {
+          const { data, status } = await postApiData(
+            "delivery-notes",
+            dataBody
+          );
+          if (status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
-       }
+        }
       } else if (param === "delivery-notes-item") {
         dataBody = {
           order_id: parseInt(refBody.order_idRef.current.value),
-          product_id: parseInt(refBody.product_idRef.current.value)
-        }
+          product_id: parseInt(refBody.product_idRef.current.value),
+        };
         try {
-         const {data, status} = await postApiData('delivery-notes/' + localStorage.getItem('idDeliveriyNotes') + '/items', dataBody)
-         if(status === 201) {
-           setPath(param);
-           setRefresh(!refresh);
-           setLoading((prevLoading) => !prevLoading);
-           setOpenModal((prevOpenModal) => !prevOpenModal);
-           try {
-            const { data, status } = await getApiData(
-              "delivery-notes/" + localStorage.getItem('idDeliveriyNotes')
-            );
-            if (status === 200) {
-              setDataEdit({});
-              setDataDetailDeliveryNotes(() => data);
-              setIdDelete(data.id);
+          const { data, status } = await postApiData(
+            "delivery-notes/" +
+              localStorage.getItem("idDeliveriyNotes") +
+              "/items",
+            dataBody
+          );
+          if (status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData(
+                "delivery-notes/" + localStorage.getItem("idDeliveriyNotes")
+              );
+              if (status === 200) {
+                setDataEdit({});
+                setDataDetailDeliveryNotes(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
             }
-          } catch (error) {
-            console.log(error);
           }
-         }
         } catch (error) {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
@@ -2134,10 +2176,19 @@ export const CRUD = () => {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
-            <input type="hidden" name="order_id" value={idDelete} ref={refBody.order_idRef}/>
+            <input
+              type="hidden"
+              name="order_id"
+              value={idDelete}
+              ref={refBody.order_idRef}
+            />
             {inputProducts &&
               inputProducts.map((item, index) => (
-                <div className={`col-span-2 ${editProduct === false ? `` : `hidden`}`}>
+                <div
+                  className={`col-span-2 ${
+                    editProduct === false ? `` : `hidden`
+                  }`}
+                >
                   <FormInput
                     key={item.id}
                     element={item.element}
@@ -2157,7 +2208,9 @@ export const CRUD = () => {
                 </div>
               ))}
 
-            <div className={`col-span-2 ${editProduct === false ? `` : `hidden`}`}>
+            <div
+              className={`col-span-2 ${editProduct === false ? `` : `hidden`}`}
+            >
               <TabelForProducts
                 dataTabelProducts={dataTabelProducts}
                 setDataTabelProducts={setDataTabelProducts}
@@ -2170,7 +2223,11 @@ export const CRUD = () => {
 
             {inputEditProducts &&
               inputEditProducts.map((item, index) => (
-                <div className={`col-span-2 ${editProduct === false ? `hidden` : ``}`}>
+                <div
+                  className={`col-span-2 ${
+                    editProduct === false ? `hidden` : ``
+                  }`}
+                >
                   <FormInput
                     key={item.id}
                     element={item.element}
@@ -2189,7 +2246,6 @@ export const CRUD = () => {
                   />
                 </div>
               ))}
-
           </div>
         </>
       );
@@ -2225,7 +2281,11 @@ export const CRUD = () => {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
-            <input type="hidden" ref={refBody.deliveryNoteItemsRef} value={dataEdit.deliveryNoteItems} />
+            <input
+              type="hidden"
+              ref={refBody.deliveryNoteItemsRef}
+              value={dataEdit.deliveryNoteItems}
+            />
             {inputDeliveryNotes &&
               inputDeliveryNotes.map((item, index) => (
                 <div className={`col-span-1`}>
@@ -2260,15 +2320,14 @@ export const CRUD = () => {
               placeholder={"Write details here"}
             />
 
-            <div className={`${
-                    defaultEdit === false ? `hidden ` : `col-span-2`
-                  }`}>
-               <TabelForDeliveryNoteItem
+            <div
+              className={`${defaultEdit === false ? `hidden ` : `col-span-2`}`}
+            >
+              <TabelForDeliveryNoteItem
                 dataTabelDeliveryNotes={dataTabelDeliveryNotes}
                 setDataTabelDeliveryNotes={setDataTabelDeliveryNotes}
               />
             </div>
-
           </div>
         </>
       );
@@ -2276,7 +2335,11 @@ export const CRUD = () => {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1">
-            <input type="hidden" ref={refBody.deliveryNoteItemsRef} value={dataEdit.deliveryNoteItems} />
+            <input
+              type="hidden"
+              ref={refBody.deliveryNoteItemsRef}
+              value={dataEdit.deliveryNoteItems}
+            />
             {inputDeliveryNotesItem &&
               inputDeliveryNotesItem.map((item, index) => (
                 <div className={`col-span-1`}>
@@ -2335,6 +2398,6 @@ export const CRUD = () => {
     dataDetailGoodReceipt,
     setPath,
     dataDetailDeliveryNotes,
-    setDataDetailDeliveryNotes
+    setDataDetailDeliveryNotes,
   };
 };
