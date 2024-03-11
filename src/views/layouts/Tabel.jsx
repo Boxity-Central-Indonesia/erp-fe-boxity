@@ -471,7 +471,7 @@ const TabelComponent = ({
                         ? `text-right`
                         : `` || header.id === "hpp balance"
                         ? `text-right`
-                        : `` || header.id === "harga rata-rata"
+                        : `` || header.id === "harga satuan"
                         ? `text-right`
                         : `` || header.id === "kapasitas"
                         ? `text-right`

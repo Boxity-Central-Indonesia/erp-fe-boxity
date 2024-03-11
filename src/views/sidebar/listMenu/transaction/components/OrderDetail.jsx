@@ -79,21 +79,29 @@ export const OrderDetail = ({
           <div className="col-span-1">
             <table className={`w-full`}>
               <tr className="">
-                <td className="py-3">Order code</td>
+                <td className="py-3">Kode Transaksi</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.kode_order || "--"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Vendor</td>
+                <td className="py-3">
+                  {data?.vendor?.transaction_type == "outbound"
+                    ? "Customer"
+                    : "Supplier"}
+                </td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.vendor?.name || "--"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Warehouses</td>
+                <td className="py-3">
+                  {data?.vendor?.transaction_type == "outbound"
+                    ? "Gudang Tujuan"
+                    : "Gudang Asal"}
+                </td>
                 <td>
                   {" "}
                   :{" "}
@@ -134,21 +142,22 @@ export const OrderDetail = ({
               </tr>
 
               <tr>
-                <td className="py-3">Taxes</td>
+                <td className="py-3">PPN</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.taxes || "--"}</span>
+                  : <span className="ml-5">{data?.taxes || "Rp. 0"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Shipping cost</td>
+                <td className="py-3">Biaya Pengiriman</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.shipping_cost || "--"}</span>
+                  :{" "}
+                  <span className="ml-5">{data?.shipping_cost || "Rp. 0"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Total price</td>
+                <td className="py-3">Total Tagihan</td>
                 <td>
                   {" "}
                   :{" "}
@@ -243,7 +252,7 @@ export const OrderDetail = ({
         <div className="grid grid-cols-1 gap-5">
           <div>
             <h2 className="text-xl font-medium dark:text-white mb-4">
-              Products
+              Daftar Produk
             </h2>
             <TabelForDetail
               data={dataProducts}
