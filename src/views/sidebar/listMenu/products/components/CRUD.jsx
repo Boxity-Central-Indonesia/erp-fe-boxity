@@ -4,6 +4,7 @@ import {
   postApiData,
   putApiData,
   deleteApiData,
+  postApiDataAndFile,
 } from "../../../../../function/Api";
 import IconAdd from "../../../../layouts/icons/IconAdd";
 import { TextArea } from "../../../../layouts/FormInput";
@@ -132,7 +133,7 @@ export const CRUD = () => {
         type: "file",
         name: "image_product",
         ref: refBody.image_productRef,
-        value: dataEdit.image_product,
+        // value: dataEdit.image_product,
         label: "Product Image",
         htmlFor: "image_product",
         id: "image_product",
@@ -825,11 +826,13 @@ export const CRUD = () => {
           category_id: refBody.category_idRef.current.value,
           unit_of_measure: refBody.unit_of_measureRef.current.value,
           raw_material: refBody.raw_materialRef.current.value,
-          image_product: refBody.image_productRef.current.value,
+          image_product: refBody.image_productRef.current.files[0],
         };
 
+        console.log(dataBody);
+
         try {
-          const store = await postApiData(param, dataBody);
+          const store = await postApiDataAndFile(param, dataBody);
           if (store.status === 201) {
             setPath(() => param);
             setRefresh(!refresh);

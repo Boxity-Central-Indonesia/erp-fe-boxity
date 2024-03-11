@@ -41,6 +41,24 @@ export const postApiData = async (endpoint, data) => {
   // }
 };
 
+// Fungsi untuk melakukan POST request denngan file
+export const postApiDataAndFile = async (endpoint, data) => {
+  // try {
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}${endpoint}`, data, {
+      withXSRFToken: true,
+      headers: {
+        Authorization: `Bearer ${Cookies.get('token')}`,
+        'Content-Type': 'multipart/form-data' 
+      }
+    });
+    return response.data;
+  // } catch (error) {
+  //   // Handle error
+  //   console.log('Error in API request:', error);
+  //   throw error;
+  // }
+};
+
 export const putApiData = async (endpoint, data) => {
   try {
     const response = await axios.put(`${import.meta.env.VITE_API_URL}${endpoint}`, data, {
