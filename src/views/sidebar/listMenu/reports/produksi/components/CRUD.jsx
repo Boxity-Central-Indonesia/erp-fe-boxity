@@ -105,9 +105,10 @@ export const CRUD = () => {
             const newData = data.map((item) => ({
               id: item.id,
               "kode order": item.kodeOrder,
-              product_name: item.product_name,
-              "activity type": item.activities[0].activity_type,
-              'production status': item.activities[0].status_production
+              "nama barang": item.product_name,
+              "jenis aktifitas": item.activities[0].activity_type,
+              "status produksi": item.activities[0].status_production,
+              "tanggal produksi": item.activities[0].tanggal_aktifitas,
             }));
             setData(() => newData);
           }
