@@ -429,7 +429,8 @@ const TabelComponent = ({
               </tbody>
             </table>
 
-            <Table hoverable className={`${skeleton ? `hidden` : ``}`}>
+            <div className="min-w-full w-max 2xl:w-full">
+            <Table hoverable className={`${skeleton ? `hidden` : ``} min-w-full w-max 2xl:w-full`}>
               <Table.Head>
                 {table.getHeaderGroups()[0].headers.map((header) => (
                   <Table.HeadCell
@@ -464,8 +465,8 @@ const TabelComponent = ({
                         ? `text-right`
                         : `` || header.id === "saldo"
                         ? `text-right`
-                        : `` || header.id === "quantity"
-                        ? `text-right`
+                        // : `` || header.id === "quantity"
+                        // ? `text-right`
                         : `` || header.id === "weight"
                         ? `text-right`
                         : `` || header.id === "hpp balance"
@@ -480,7 +481,9 @@ const TabelComponent = ({
                           header.id === "total amount" ||
                           header.id === "amount paid"
                         ? `text-right`
-                        : ``
+                        : `` || header.id === 'discount price'
+                        ? 'text-right'
+                        : ''
                     }`}
                     key={header.id}
                   >
@@ -567,6 +570,7 @@ const TabelComponent = ({
                 ))}
               </Table.Body>
             </Table>
+            </div>
           </div>
           <nav
             className="flex flex-col md:flex-row border-t-[1px] justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"

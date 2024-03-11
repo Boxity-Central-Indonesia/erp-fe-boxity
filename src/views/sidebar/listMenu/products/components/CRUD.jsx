@@ -128,7 +128,7 @@ export const CRUD = () => {
         placeholder: "Code",
       },
       {
-        element: "input",
+        element: "file",
         type: "file",
         name: "image_product",
         ref: refBody.image_productRef,

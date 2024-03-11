@@ -103,14 +103,11 @@ export const CRUD = () => {
           const { data, status } = await getApiData("production-report");
           if (status === 200) {
             const newData = data.map((item) => ({
+              id: item.id,
               "kode order": item.kodeOrder,
               product_name: item.product_name,
-              "data aktifitas": item.activities.map((item) => ({
-                // seharusnya
-                // item.activity_type: item.status_production,
-                activity_type: item.activity_type,
-                status_production: item.status_production,
-              })),
+              "activity type": item.activities[0].activity_type,
+              'production status': item.activities[0].status_production
             }));
             setData(() => newData);
           }
