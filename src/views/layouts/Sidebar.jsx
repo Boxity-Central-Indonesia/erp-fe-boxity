@@ -146,10 +146,6 @@ function Sidebar() {
           path: "/products-production/packages-data",
           label: "Packaging Data",
         },
-        // {
-        //   path: "/reports/production",
-        //   label: "Production Report",
-        // },
       ],
     },
     {

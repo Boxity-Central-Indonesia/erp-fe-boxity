@@ -183,7 +183,7 @@ const TabelComponent = ({
               "border py-0.5 px-2 rounded-full bg-blue-600 w-fit text-white text-sm flex items-center justify-center";
             icon = (
               <svg
-                class="w-5 h-5 text-white dark:text-white"
+                className="w-5 h-5 text-white dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -191,9 +191,9 @@ const TabelComponent = ({
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M8 20V7m0 13-4-4m4 4 4-4m4-12v13m0-13 4 4m-4-4-4 4"
                 />
               </svg>
@@ -430,11 +430,16 @@ const TabelComponent = ({
             </table>
 
             <div className="min-w-full w-max 2xl:w-full">
-            <Table hoverable className={`${skeleton ? `hidden` : ``} min-w-full w-max 2xl:w-full`}>
-              <Table.Head>
-                {table.getHeaderGroups()[0].headers.map((header) => (
-                  <Table.HeadCell
-                    className={`${header.id === "id" ? `hidden` : ``} 
+              <Table
+                hoverable
+                className={`${
+                  skeleton ? `hidden` : ``
+                } min-w-full w-max 2xl:w-full`}
+              >
+                <Table.Head>
+                  {table.getHeaderGroups()[0].headers.map((header) => (
+                    <Table.HeadCell
+                      className={`${header.id === "id" ? `hidden` : ``} 
                     ${
                       header.id === "price per unit"
                         ? `text-right`
@@ -465,9 +470,9 @@ const TabelComponent = ({
                         ? `text-right`
                         : `` || header.id === "saldo"
                         ? `text-right`
-                        // : `` || header.id === "quantity"
+                        : // : `` || header.id === "quantity"
                         // ? `text-right`
-                        : `` || header.id === "weight"
+                        `` || header.id === "weight"
                         ? `text-right`
                         : `` || header.id === "hpp balance"
                         ? `text-right`
@@ -481,95 +486,95 @@ const TabelComponent = ({
                           header.id === "total amount" ||
                           header.id === "amount paid"
                         ? `text-right`
-                        : `` || header.id === 'discount price'
-                        ? 'text-right'
-                        : ''
+                        : `` || header.id === "discount price"
+                        ? "text-right"
+                        : ""
                     }`}
-                    key={header.id}
+                      key={header.id}
+                    >
+                      <span className="">
+                        {header.id === "Employment Status" ? `` : header.id}
+                      </span>
+                      {header.column.getCanFilter() &&
+                        header.id === "Employment Status" && (
+                          <div>
+                            <Filter column={header.column} table={table} />
+                          </div>
+                        )}
+                    </Table.HeadCell>
+                  ))}
+                  <Table.HeadCell
+                    className={`${data.length === 0 ? `hidden` : ``}`}
                   >
-                    <span className="">
-                      {header.id === "Employment Status" ? `` : header.id}
-                    </span>
-                    {header.column.getCanFilter() &&
-                      header.id === "Employment Status" && (
-                        <div>
-                          <Filter column={header.column} table={table} />
-                        </div>
-                      )}
+                    <span className="sr-only">Edit</span>
                   </Table.HeadCell>
-                ))}
-                <Table.HeadCell
-                  className={`${data.length === 0 ? `hidden` : ``}`}
-                >
-                  <span className="sr-only">Edit</span>
-                </Table.HeadCell>
-              </Table.Head>
-              <Table.Body className="divide-y">
-                {table.getRowModel().rows.map((row) => (
-                  <Table.Row
-                    key={row.id}
-                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                  >
-                    {row.getVisibleCells().map((cell) => {
-                      // Check if the cell's column ID matches the one you want to hide
-                      if (cell.column.columnDef.id === "id") {
-                        return null; // Skip rendering this cell
-                      }
-                      return (
-                        <Table.Cell
-                          key={cell.id}
-                          className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </Table.Cell>
-                      );
-                    })}
-                    {row.getVisibleCells().map((cell) => {
-                      // Check if the cell's column ID matches the one you want to hide
-                      if (cell.column.columnDef.id === "id") {
+                </Table.Head>
+                <Table.Body className="divide-y">
+                  {table.getRowModel().rows.map((row) => (
+                    <Table.Row
+                      key={row.id}
+                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                    >
+                      {row.getVisibleCells().map((cell) => {
+                        // Check if the cell's column ID matches the one you want to hide
+                        if (cell.column.columnDef.id === "id") {
+                          return null; // Skip rendering this cell
+                        }
                         return (
-                          <Table.Cell className={`text-right`}>
-                            <button
-                              style={{ color: globalColor }}
-                              className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                              onClick={(e) => handleEditClick(e.target)} // Pass row.id as
-                              parameter
-                            >
-                              {/* <span className='hidden'>{flexRender(cell.column.columnDef.cell, cell.getContext())}</span> */}
-                              <svg
-                                className="w-6 h-6 dark:text-white"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="m14.3 4.8 2.9 2.9M7 7H4a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h11c.6 0 1-.4 1-1v-4.5m2.4-10a2 2 0 0 1 0 3l-6.8 6.8L8 14l.7-3.6 6.9-6.8a2 2 0 0 1 2.8 0Z"
-                                >
-                                  {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                  )}
-                                </path>
-                              </svg>
-                            </button>
+                          <Table.Cell
+                            key={cell.id}
+                            className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
                           </Table.Cell>
-                        ); // Skip rendering this cell
-                      } else {
-                        return null;
-                      }
-                    })}
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
+                        );
+                      })}
+                      {row.getVisibleCells().map((cell) => {
+                        // Check if the cell's column ID matches the one you want to hide
+                        if (cell.column.columnDef.id === "id") {
+                          return (
+                            <Table.Cell className={`text-right`}>
+                              <button
+                                style={{ color: globalColor }}
+                                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                                onClick={(e) => handleEditClick(e.target)} // Pass row.id as
+                                parameter
+                              >
+                                {/* <span className='hidden'>{flexRender(cell.column.columnDef.cell, cell.getContext())}</span> */}
+                                <svg
+                                  className="w-6 h-6 dark:text-white"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="m14.3 4.8 2.9 2.9M7 7H4a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h11c.6 0 1-.4 1-1v-4.5m2.4-10a2 2 0 0 1 0 3l-6.8 6.8L8 14l.7-3.6 6.9-6.8a2 2 0 0 1 2.8 0Z"
+                                  >
+                                    {flexRender(
+                                      cell.column.columnDef.cell,
+                                      cell.getContext()
+                                    )}
+                                  </path>
+                                </svg>
+                              </button>
+                            </Table.Cell>
+                          ); // Skip rendering this cell
+                        } else {
+                          return null;
+                        }
+                      })}
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
             </div>
           </div>
           <nav
