@@ -29,6 +29,7 @@ export const CRUD = () => {
   const [skeleton, setSkeleton] = useState(false);
   const [dataHeading, setDataHeading] = useState([{}]);
   const [path, setPath] = useState("products");
+  const [imageUrl, setImageUrl] = useState('https://res.cloudinary.com/du0tz73ma/image/upload/v1700279273/building_z7thy7.png')
 
   const [refBody, setRefBody] = useState({
     idRef: useRef(),
@@ -67,12 +68,28 @@ export const CRUD = () => {
     // Mendapatkan nama dan nilai input yang berubah
     const { name, value } = event.target;
 
+    if(name === 'image_product'){
+      setImageUrl(URL.createObjectURL(refBody.image_productRef.current.files[0]))
+      setDataEdit({
+        image_product: URL.createObjectURL(refBody.image_productRef.current.files[0])
+      })
+    }
+
     // Memperbarui state sesuai dengan nilai input yang berubah
     setDataEdit((prevDataEdit) => ({
       ...prevDataEdit,
       [name]: value,
     }));
   };
+
+  const deletePreviewImage = () => {
+    setImageUrl('https://res.cloudinary.com/du0tz73ma/image/upload/v1700279273/building_z7thy7.png')
+    setDataEdit({
+      image_product: ''
+    })
+    refBody.image_productRef.current.value = ''
+  }
+
 
   useEffect(() => {
     if (!!responseError) {
@@ -105,6 +122,18 @@ export const CRUD = () => {
   useEffect(() => {
     setInputProducts([
       {
+        element: "file",
+        type: "file",
+        name: "image_product",
+        ref: refBody.image_productRef,
+        value: dataEdit.Files,
+        label: "Product Image",
+        htmlFor: "image_product",
+        id: "image_product",
+        onchange: handleChange,
+        placeholder: "Product Image",
+      },
+      {
         element: "input",
         type: "text",
         name: "name",
@@ -127,18 +156,6 @@ export const CRUD = () => {
         id: "code",
         onchange: handleChange,
         placeholder: "Code",
-      },
-      {
-        element: "file",
-        type: "file",
-        name: "image_product",
-        ref: refBody.image_productRef,
-        // value: dataEdit.image_product,
-        label: "Product Image",
-        htmlFor: "image_product",
-        id: "image_product",
-        onchange: handleChange,
-        placeholder: "Product Image",
       },
       {
         element: "input",
@@ -991,6 +1008,8 @@ export const CRUD = () => {
               id: data.id,
             });
 
+            setImageUrl(data.image_product)
+
             setIdDelete(data.id);
           }
         } catch (error) {
@@ -1230,48 +1249,86 @@ export const CRUD = () => {
     let imageProductElement = null;
 
     if (param === "products") {
-      imageProductElement = response?.image_product && (
-        <img
-          src={response.image_product}
-          alt={response.name}
-          className="h-8 w-8 rounded-full object-cover"
-        />
-      );
-
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-3">
-            {inputProducts.map((item, index) => (
-              <FormInput
-                key={item.id}
-                element={item.element}
-                htmlFor={item.htmlFor}
-                label={item.label}
-                type={item.type}
-                name={item.name}
-                referens={item.ref}
-                value={item.value}
-                id={item.id}
-                onChange={(event) => item.onchange(event)}
-                placeholder={item.placeholder}
-                dataSelect={item.dataSelect}
-                uniqueId={index}
-                validationError={validationError}
-              />
-            ))}
-            <TextArea
-              span={`col-span-3`}
-              label={"Description"}
-              htmlFor={"description"}
-              id={"description"}
-              name={"description"}
-              referens={refBody.descriptionRef}
-              placeholder={"Write description here"}
-              value={dataEdit.description}
-              onChange={handleChange}
-              validationError={validationError}
-            />
-            {imageProductElement}
+            <div className="col-span-1">
+              <div className="w-fit relative">
+              <svg className={`w-6 h-6 text-gray-800 dark:text-white absolute right-[-10px] top-[-10px] cursor-pointer ${imageUrl === 'https://res.cloudinary.com/du0tz73ma/image/upload/v1700279273/building_z7thy7.png' ? `hidden` : ``}`} onClick={deletePreviewImage} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              </svg>
+              <img id="preview-image" className="w-72 h-72 mb-3 rounded-sm" src={imageUrl} alt="" />
+              </div>
+              {inputProducts
+                .filter(
+                  item => 
+                  item.name === 'image_product'
+                  ) // Filter item dengan name bukan 'name'
+                .map((item, index) => (
+                  <>
+                  <FormInput
+                    key={item.id}
+                    element={item.element}
+                    htmlFor={item.htmlFor}
+                    label={item.label}
+                    type={item.type}
+                    name={item.name}
+                    referens={item.ref}
+                    value={item.value}
+                    id={item.id}
+                    onChange={(event) => item.onchange(event)}
+                    placeholder={item.placeholder}
+                    dataSelect={item.dataSelect}
+                    uniqueId={index}
+                    validationError={validationError}
+                  />
+                  <div className="mt-3">
+                  <TextArea
+                    rows={8}
+                    span={`col-span-3`}
+                    label={"Description"}
+                    htmlFor={"description"}
+                    id={"description"}
+                    name={"description"}
+                    referens={refBody.descriptionRef}
+                    placeholder={"Write description here"}
+                    value={dataEdit.description}
+                    onChange={handleChange}
+                    validationError={validationError}
+                  />
+                  </div>
+                  </>
+                ))
+              }
+            </div>
+            <div className="col-span-2">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {inputProducts
+                .filter(
+                  item => 
+                  item.name !== 'image_product'
+                  ) // Filter item dengan name bukan 'name'
+                .map((item, index) => (
+                  <FormInput
+                    key={item.id}
+                    element={item.element}
+                    htmlFor={item.htmlFor}
+                    label={item.label}
+                    type={item.type}
+                    name={item.name}
+                    referens={item.ref}
+                    value={item.value}
+                    id={item.id}
+                    onChange={(event) => item.onchange(event)}
+                    placeholder={item.placeholder}
+                    dataSelect={item.dataSelect}
+                    uniqueId={index}
+                    validationError={validationError}
+                  />
+                ))
+              }
+              </div>
+            </div>
           </div>
         </>
       );

@@ -146,10 +146,10 @@ function Sidebar() {
           path: "/products-production/packages-data",
           label: "Packaging Data",
         },
-        {
-          path: "/reports/production",
-          label: "Production Report",
-        },
+        // {
+        //   path: "/reports/production",
+        //   label: "Production Report",
+        // },
       ],
     },
     {
@@ -216,8 +216,8 @@ function Sidebar() {
 
   const renderSubMenu = (subMenu, menuKey) => (
     <div
-      className={`pl-5 transition-max-height duration-700 ease-in-out overflow-hidden ${
-        expandedMenus[menuKey] ? "max-h-40" : "max-h-0"
+      className={`pl-5 transition-max-height duration-1000 ease-in-out overflow-hidden ${
+        expandedMenus[menuKey] ? "max-h-58" : "max-h-0"
       }`}
     >
       {subMenu.map((item, index) => (
@@ -239,12 +239,12 @@ function Sidebar() {
   );
   const sidebarContainerClass = `
   fixed top-0 left-0 z-30 h-full w-64 overflow-y-auto 
-  bg-white dark:bg-gray-800 shadow-md
+  bg-white dark:bg-gray-800 shadow-md border
 `;
 
   const sidebarContentClass = `
-py-4 text-gray-500 dark:text-gray-200 primary-color-sidebar-hover dark:text-gray-200 dark:hover:bg-gray-700 pt-[4rem]
-`;
+    py-4 text-gray-500 dark:text-gray-200 primary-color-sidebar-hover dark:text-gray-200 dark:hover:bg-gray-700 pt-[4rem]
+  `;
 
   return (
     <aside className={sidebarContainerClass}>
@@ -262,6 +262,7 @@ py-4 text-gray-500 dark:text-gray-200 primary-color-sidebar-hover dark:text-gray
                       <span className="mr-3">{item.icon}</span>
                       {item.label}
                     </span>
+
                     {item.subMenu && (
                       <span className="transition-transform duration-700 ease-in-out group-hover:rotate-180">
                         <svg
