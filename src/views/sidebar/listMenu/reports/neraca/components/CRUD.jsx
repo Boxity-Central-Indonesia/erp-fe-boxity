@@ -102,11 +102,18 @@ export const CRUD = () => {
         try {
           const { data, status } = await getApiData("balance-sheet-report");
           if (status === 200) {
-            const newData = data.map((item) => ({
-              assets: item.assets,
-              liabilities: item.liabilities,
-              equity: item.equity,
-            }));
+            // const newData = data.map((item) => ({
+            //   assets: item.assets,
+            //   liabilities: item.liabilities,
+            //   equity: item.equity,
+            // }));
+            const newData = [
+              {
+                assets: data.assets,
+                liabilities: data.liabilities,
+                equity: data.equity
+              }
+            ]
             setData(() => newData);
           }
         } catch (error) {

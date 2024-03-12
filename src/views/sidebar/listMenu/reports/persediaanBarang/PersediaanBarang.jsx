@@ -53,7 +53,7 @@ export const PersediaanBarang = () => {
 
   const [dataHeading, setDataHeading] = useState([
     {
-      label: "Cetak Laporan",
+      label: "Print report",
       icon: IconDownload(),
       heading: "Inventory Report",
       eventToggleModal: downloadReport,

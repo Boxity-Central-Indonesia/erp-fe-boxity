@@ -55,7 +55,7 @@ export const KasBesar = () => {
   };
   const [dataHeading, setDataHeading] = useState([
     {
-      label: "Cetak Laporan",
+      label: "Print report",
       icon: IconDownload(),
       heading: "Cash Ledger Report",
       eventToggleModal: downloadReport,

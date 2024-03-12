@@ -103,14 +103,14 @@ export const CRUD = () => {
           const { data, status } = await getApiData("vendor-report");
           if (status === 200) {
             const newData = data.map((item) => ({
-              kode_order: item.kode_order,
-              nama_vendor: item.nama_vendor,
-              nama_product: item.nama_product,
+              'order code': item.kode_order,
+              'vendor name': item.nama_vendor,
+              'product name': item.nama_product,
               amount: item.amount,
-              unit_price: item.unit_price,
+              'unit price': item.unit_price,
               taxes: item.taxes ?? 0,
-              "harga pengiriman": item.shipping_cost ?? 0,
-              total_price: item.total_price,
+              "shipping cost": item.shipping_cost ?? 0,
+              'total price': item.total_price,
             }));
             setData(() => newData);
           }

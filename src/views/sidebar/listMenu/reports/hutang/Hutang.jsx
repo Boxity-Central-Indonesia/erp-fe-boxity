@@ -55,7 +55,7 @@ export const Hutang = () => {
 
   const [dataHeading, setDataHeading] = useState([
     {
-      label: "Cetak Laporan",
+      label: "Print report",
       icon: IconDownload(),
       heading: "Payables Report",
       eventToggleModal: downloadReport,

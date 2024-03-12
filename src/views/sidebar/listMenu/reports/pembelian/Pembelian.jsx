@@ -53,7 +53,7 @@ export const Pembelian = () => {
   };
   const [dataHeading, setDataHeading] = useState([
     {
-      label: "Cetak Laporan",
+      label: "Print report",
       icon: IconDownload(),
       heading: "Purchase Report",
       eventToggleModal: downloadReport,

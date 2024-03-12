@@ -6,6 +6,7 @@ import { ModalContainer } from "../../../../layouts/ModalContainer"
 import FormInput from "../../../../layouts/FormInput"
 import { ModalConfirmDelete } from "../../../../layouts/ModalContainer"
 import { Spinner } from "../../../../layouts/Spinner"
+import IconDownload from "../../../../layouts/icons/IconDownload"
 
 export const VendorTransaction = () => {
     const {
@@ -24,11 +25,36 @@ export const VendorTransaction = () => {
         modalDelete,
         loading
     } = CRUD()
+    const downloadReport = async () => {
+        try {
+          const { data, status } = await getApiData("download/");
+          if (status === 200) {
+            const pdfUrl = data;
+    
+            // Create a hidden link
+            const link = document.createElement("a");
+            link.href = pdfUrl;
+            link.target = "_blank"; // Open in a new tab/window
+            link.download = data; // Set the desired file name
+    
+            // Append the link to the document
+            document.body.appendChild(link);
+    
+            // Simulate a click to trigger the download
+            link.click();
+    
+            // Remove the link from the document
+            document.body.removeChild(link);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
     const [dataHeading, setDataHeading] = useState( [{
-        label: 'Add account',
-        icon: IconAdd(),
+        label: 'Print report',
+        icon: IconDownload(),
         heading: 'Vendor Transaction Report',
-        eventToggleModal: handleCreate,
+        eventToggleModal: downloadReport,
     }]);
 
 

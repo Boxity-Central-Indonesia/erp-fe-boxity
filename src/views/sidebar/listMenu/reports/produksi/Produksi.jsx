@@ -54,7 +54,7 @@ export const Produksi = () => {
 
   const [dataHeading, setDataHeading] = useState([
     {
-      label: "Cetak Laporan",
+      label: "Print report",
       icon: IconDownload(),
       heading: "Production Report",
       eventToggleModal: downloadReport,

@@ -43,6 +43,7 @@ import { User } from "./views/sidebar/listMenu/user/User";
 // import { CompanyDetail } from "./views/sidebar/listMenu/company/organization/components/companyDetail";
 import { RoleAndPermission } from "./views/sidebar/listMenu/role&permission/role&permission";
 import { Asset } from "./views/sidebar/listMenu/asset/Asset"; 
+import { VendorTransaction } from "./views/sidebar/listMenu/reports/vendorTransaction/VendorTransaction";
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -271,14 +272,14 @@ function App() {
                       </Auth.ProtectedRoute>
                     }
                   />
-                  {/* <Route
+                  <Route
                     path="/reports/vendor-transactions"
                     element={
                       <Auth.ProtectedRoute>
                         <VendorTransaction />
                       </Auth.ProtectedRoute>
                     }
-                  /> */}
+                  />
                   <Route
                     path="/reports/cash-flow"
                     element={

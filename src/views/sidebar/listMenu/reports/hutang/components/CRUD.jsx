@@ -104,11 +104,12 @@ export const CRUD = () => {
           if (status === 200) {
             const newData = data.map((item) => ({
               "vendor name": item.vendor_name,
-              "data order": item.orders.map((item) => ({
-                "total tagihan": item.total_tagihan,
-                "total yang dibayar": item.total_dibayar,
-                "sisa tagihan": item.sisa_tagihan,
-              })),
+              // 'total bill': item.orders
+              // "data order": item.orders.map((item) => ({
+              //   "total tagihan": item.total_tagihan,
+              //   "total yang dibayar": item.total_dibayar,
+              //   "sisa tagihan": item.sisa_tagihan,
+              // })),
             }));
             setData(() => newData);
           }

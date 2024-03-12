@@ -54,7 +54,7 @@ export const BukuBesar = () => {
   };
   const [dataHeading, setDataHeading] = useState([
     {
-      label: "Cetak Laporan",
+      label: "Print report",
       icon: IconDownload(),
       heading: "Ledger Report",
       eventToggleModal: downloadReport,

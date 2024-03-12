@@ -57,7 +57,7 @@ export const Neraca = () => {
 
   const [dataHeading, setDataHeading] = useState([
     {
-      label: "Cetak Laporan",
+      label: "Print report",
       icon: IconDownload(),
       heading: "Balance Sheet Report",
       eventToggleModal: downloadReport,

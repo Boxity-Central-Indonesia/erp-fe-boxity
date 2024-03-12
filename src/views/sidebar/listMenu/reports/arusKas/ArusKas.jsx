@@ -54,7 +54,7 @@ export const ArusKas = () => {
   };
   const [dataHeading, setDataHeading] = useState([
     {
-      label: "Cetak Laporan",
+      label: "Print report",
       icon: IconDownload(),
       heading: "Cashflow Report",
       eventToggleModal: downloadReport,

@@ -274,14 +274,6 @@ const TabelComponent = ({
     debugTable: true,
   });
 
-  // useEffect(() => {
-  //   if (table.getState().columnFilters[0]?.id === 'fullName') {
-  //     if (table.getState().sorting[0]?.id !== 'fullName') {
-  //       table.setSorting([{ id: 'fullName', desc: false }]);
-  //     }
-  //   }
-  // }, [table.getState().columnFilters[0]?.id]);
-
   if (!data) {
     // Tampilkan pesan "Loading..." jika data masih undifined
     return (
@@ -488,7 +480,21 @@ const TabelComponent = ({
                         ? `text-right`
                         : `` || header.id === "discount price"
                         ? "text-right"
-                        : ""
+                        : "" || header.id === 'assets' 
+                        ? "text-right"
+                        : "" || header.id === 'liabilities' 
+                        ? "text-right" 
+                        : "" || header.id === 'equity'
+                        ? "text-right"
+                        : "" || header.id === 'opening balance' 
+                        ? "text-right" 
+                        : "" || header.id === 'total debit'
+                        ? "text-right" 
+                        : "" || header.id === 'total credit'
+                        ? "text-right"
+                        : "" || header.id === 'net cash flow'
+                        ? "text-right"
+                        : "" 
                     }`}
                       key={header.id}
                     >

@@ -54,7 +54,7 @@ export const Piutang = () => {
 
   const [dataHeading, setDataHeading] = useState([
     {
-      label: "Cetak Laporan",
+      label: "Print report",
       icon: IconDownload(),
       heading: "Receivables Report",
       eventToggleModal: downloadReport,
