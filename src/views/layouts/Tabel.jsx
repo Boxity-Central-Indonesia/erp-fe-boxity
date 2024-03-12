@@ -462,10 +462,10 @@ const TabelComponent = ({
                         ? `text-right`
                         : `` || header.id === "saldo"
                         ? `text-right`
-                        : // : `` || header.id === "quantity"
+                        // : // : `` || header.id === "quantity"
+                        // // ? `text-right`
+                        // `` || header.id === "weight"
                         // ? `text-right`
-                        `` || header.id === "weight"
-                        ? `text-right`
                         : `` || header.id === "hpp balance"
                         ? `text-right`
                         : `` || header.id === "harga satuan"
@@ -496,6 +496,10 @@ const TabelComponent = ({
                         ? "text-right"
                         : "" || header.id === 'paid amount' 
                         ? "text-right"
+                        : "" || header.id === 'amount of costs'
+                        ? "text-right"
+                        : "" || header.id === 'rest of the bill'
+                        ? "text-right" 
                         : ""
                     }`}
                       key={header.id}

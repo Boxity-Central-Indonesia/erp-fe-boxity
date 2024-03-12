@@ -1,8 +1,8 @@
 import { useState } from "react";
 import TabelComponent from "../../../../layouts/Tabel";
 import IconDownload from "../../../../layouts/icons/IconDownload";
-import { getApiData } from "../../../../../function/Api";
 import { Read } from "../read";
+import { downloadReport } from "../downloadReport";
 
 export const Penjualan = () => {
 
@@ -17,6 +17,10 @@ export const Penjualan = () => {
     }))
   }
 
+  const print = () => {
+    downloadReport({endPoint: 'download/sales-report' })
+  }
+
   const {
     data
   } = Read({
@@ -24,38 +28,13 @@ export const Penjualan = () => {
     endPoint: 'sales-report'
   })
 
-  const downloadReport = async () => {
-    try {
-      const { data, status } = await getApiData("download/sales-report");
-      if (status === 200) {
-        const pdfUrl = data;
-
-        // Create a hidden link
-        const link = document.createElement("a");
-        link.href = pdfUrl;
-        link.target = "_blank"; // Open in a new tab/window
-        link.download = data; // Set the desired file name
-
-        // Append the link to the document
-        document.body.appendChild(link);
-
-        // Simulate a click to trigger the download
-        link.click();
-
-        // Remove the link from the document
-        document.body.removeChild(link);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const [dataHeading, setDataHeading] = useState([
     {
       label: "Print report",
       icon: IconDownload(),
       heading: "Sales Report",
-      eventToggleModal: downloadReport,
+      eventToggleModal: print,
     },
   ]);
 
@@ -64,7 +43,6 @@ export const Penjualan = () => {
       <TabelComponent
         data={data}
         dataHeading={dataHeading}
-        // handleEdit={handleEdit}
       />
     </>
   );

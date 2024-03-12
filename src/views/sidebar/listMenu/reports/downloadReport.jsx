@@ -1,6 +1,10 @@
-export const downloadReport = async () => {
+import {getApiData} from '../../../../function/Api'
+
+export const downloadReport = async ({
+  endPoint
+}) => {
     try {
-      const { data, status } = await getApiData("download/sales-report");
+      const { data, status } = await getApiData(endPoint);
       if (status === 200) {
         const pdfUrl = data;
 
