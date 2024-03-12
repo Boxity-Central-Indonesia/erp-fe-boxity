@@ -494,7 +494,9 @@ const TabelComponent = ({
                         ? "text-right"
                         : "" || header.id === 'net cash flow'
                         ? "text-right"
-                        : "" 
+                        : "" || header.id === 'paid amount' 
+                        ? "text-right"
+                        : ""
                     }`}
                       key={header.id}
                     >
