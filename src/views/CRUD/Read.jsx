@@ -1,4 +1,5 @@
 import {getApiData} from '../../function/Api'
+import { useState, useEffect } from 'react';
 
 
 export const Read = ({ dataTabel, endPoint }) => {

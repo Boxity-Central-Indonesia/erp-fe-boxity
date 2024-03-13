@@ -1,7 +1,8 @@
+import { useState } from 'react'
 import {Read} from '../../../../../CRUD/Read'
 
 
-export const Read = () => {
+export const ReadCompany = () => {
     const dataTabel = (data) => {
         return data.map(item => ({
             id: item.id,
@@ -12,5 +13,10 @@ export const Read = () => {
         }))
     }
 
-    const {data} = Read({dataTabel, e})
+    const {data} = Read({dataTabel, endPoint: 'companies' })
+
+    return{
+        data,
+    }
+
 }
