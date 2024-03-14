@@ -24,15 +24,10 @@ export const CRUD = () => {
   const [path, setPath] = useState("users");
 
   const [refBody, setRefBody] = useState({
-    emailRef: useRef(),
     nameRef: useRef(),
-    usernameRef: useRef(),
-    no_handphoneRef: useRef(),
-    roleRef: useRef(),
-    genderRef: useRef(),
+    emailRef: useRef(),
     passwordRef: useRef(),
-    confirm_passwordRef: useRef(),
-    idRef: useRef(),
+    confirmPasswordRef: useRef()
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -98,53 +93,50 @@ export const CRUD = () => {
       {
         element: "input",
         type: "text",
-        name: "nama_prospek",
-        ref: refBody.nama_prospekRef,
-        value: dataEdit.nama_prospek,
-        label: "Prospek name",
-        htmlFor: "nama_prospek",
-        id: "nama_prospek",
+        name: "name",
+        ref: refBody.nameRef,
+        value: dataEdit.name,
+        label: "Name",
+        htmlFor: "name",
+        id: "name",
         onchange: handleChange,
-        placeholder: "Prospek name",
+        placeholder: "Name",
       },
       {
         element: "input",
         type: "email",
-        name: "email_prospek",
-        ref: refBody.email_prospekRef,
-        value: dataEdit.email_prospek,
-        label: "Prospek email",
-        htmlFor: "email_prospek",
-        id: "email_prospek",
+        name: "emaiL",
+        ref: refBody.emaiLRef,
+        value: dataEdit.emaiL,
+        label: "email",
+        htmlFor: "emaiL",
+        id: "emaiL",
         onchange: handleChange,
-        placeholder: "Prospek email",
+        placeholder: "email",
       },
       {
         element: "input",
-        type: "text",
-        name: "nomor_telepon_prospek",
-        ref: refBody.nomor_telepon_prospekRef,
-        value: dataEdit.nomor_telepon_prospek,
-        label: "Prospek number phone",
-        htmlFor: "nomor_telepon_prospek",
-        id: "nomor_telepon_prospek",
+        type: "password",
+        name: "password",
+        ref: refBody.passwordRef,
+        value: dataEdit.password,
+        label: "password",
+        htmlFor: "password",
+        id: "password",
         onchange: handleChange,
-        placeholder: "Prospek number phone",
+        placeholder: "password",
       },
       {
-        element: "select",
-        name: "tipe_prospek",
-        ref: refBody.tipe_prospekRef,
-        value: dataEdit.tipe_prospek,
-        label: "Prospek type",
-        htmlFor: "tipe_prospek",
-        id: "tipe_prospek",
-        dataSelect: [
-          { value: "perorangan", name: "perorangan" },
-          { value: "bisnis", name: "bisnis" },
-          { value: "rekomendasi", name: "rekomendasi" },
-        ],
+        element: "input",
+        type: "password",
+        name: "confirmPassword",
+        ref: refBody.confirmPassword,
+        value: dataEdit.confirmPassword,
+        label: "confirmPassword",
+        htmlFor: "confirmPassword",
+        id: "confirmPassword",
         onchange: handleChange,
+        placeholder: "confirmPassword",
       },
     ]);
   }, [dataEdit]);
@@ -187,25 +179,13 @@ export const CRUD = () => {
 
   const CREATE = () => {
     const handleCreate = (param) => {
-      setDataEdit({
-        nama_prospek: "",
-        email_prospek: "",
-        nomor_telepon_prospek: "",
-        tipe_prospek: "",
-        id: "",
-      });
-      setValidationError({
-        nama_prospek: "",
-        email_prospek: "",
-        nomor_telepon_prospek: "",
-        tipe_prospek: "",
-        id: "",
-      });
+      setDataEdit({});
+      setValidationError({});
       setOpenModal((prevOpenModal) => !prevOpenModal);
       setDataModal({
         size: "lg",
-        labelModal: "Add New leads",
-        labelBtnModal: "Add new leads",
+        labelModal: "Add New users",
+        labelBtnModal: "Add new users",
         labelBtnSecondaryModal: "Back",
         handleBtn: create,
       });
@@ -214,11 +194,7 @@ export const CRUD = () => {
     const create = async (param) => {
       setLoading((prevLoading) => !prevLoading);
       let dataBody = {
-        nama_prospek: refBody.nama_prospekRef.current.value,
-        email_prospek: refBody.email_prospekRef.current.value,
-        nomor_telepon_prospek: refBody.nomor_telepon_prospekRef.current.value,
-        tipe_prospek: refBody.tipe_prospekRef.current.value,
-        id: refBody.idRef.current.value,
+        name: useRef.name
       };
 
       try {

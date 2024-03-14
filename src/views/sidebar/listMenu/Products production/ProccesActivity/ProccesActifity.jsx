@@ -3,6 +3,7 @@ import { ModalConfirmDelete, ModalContainer } from "../../../../layouts/ModalCon
 import {CRUD} from "./components/CRUD"
 import TabelComponent from "../../../../layouts/Tabel"
 import { Spinner } from "../../../../layouts/Spinner"
+import { ProccesActivityDetail } from "./components/proccesActifityDetail"
 
 export const ProccesActifity = () => {
     const {
@@ -22,7 +23,10 @@ export const ProccesActifity = () => {
         loading,
         handleCreate,
         skeleton,
-        path
+        path,
+        defaultEdit,
+        setDefaultEdit,
+        detailProccesActivity
     } = CRUD()
 
     const dataModalBody = () => {
@@ -33,6 +37,40 @@ export const ProccesActifity = () => {
                     {inputBody(path)}
                 </form>
 
+            </>
+        )
+    }
+
+    if(!defaultEdit){
+        return(
+            <>
+                <ModalContainer 
+                    openModal={openModal}
+                    onToggleModal={setOpenModal}
+                    modalBody={dataModalBody}
+                    sizeModal={dataModal.size}
+                    labelModal={dataModal.labelModal}
+                    labelBtnModal={dataModal.labelBtnModal}
+                    labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
+                    handleBtnModal={dataModal.handleBtn}
+                    parameter={path}
+                    openModalDelete={openModalDelete}
+                />
+
+                <Spinner loading={loading} />
+
+                < ModalConfirmDelete 
+                modalDelete={modalDelete}
+                closeModalDelete={closeModalDelete}
+                handleDelete={handleDelete}
+                />
+
+                <ProccesActivityDetail
+                    data={detailProccesActivity}
+                    defaultEdit={setDefaultEdit}
+                    handleEdit={handleEdit}
+                    dataHeading={dataHeading}
+                />
             </>
         )
     }
