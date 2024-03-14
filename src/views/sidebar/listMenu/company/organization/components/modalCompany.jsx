@@ -1,8 +1,10 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { inputBody } from "./inputBody";
 import { createCompany } from "./CreateCompany";
 
 export const modalCompany = () => {
+    const [openModal, setOpenModal] = useState(false);
+
     const [refBody, setRefBody] = useState({
         nameRef: useRef(),
         emailRef: useRef(),
@@ -22,44 +24,29 @@ export const modalCompany = () => {
         idDepartmentsRef: useRef(),
     });
 
-    const dataBody = {
-        name: refBody.nameRef.current.value,
-        email: refBody.emailRef.current.value,
-        phone_number: refBody.phone_numberRef.current.value,
-        website: refBody.websiteRef.current.value,
-        address: refBody.addressRef.current.value,
-        city: refBody.cityRef.current.value,
-        province: refBody.provinceRef.current.value,
-        postal_code: refBody.postal_codeRef.current.value,
-        country: refBody.countryRef.current.value,
-        industry: refBody.industryRef.current.value,
-        description: refBody.descriptionRef.current.value,
-        id: refBody.idRef.current.value,
-    }
-
-    createCompany({endPoint: 'companies', })
+    const create = () => {
+        const { validationError } = createCompany({ endPoint: "companies", refBody });
+        // Lakukan sesuatu dengan validationError jika diperlukan
+    };
 
     const [dataModal, setDataModal] = useState({
         size: "6xl",
-          labelModal: "Add New companies",
-          labelBtnModal: "Add new companies",
-          labelBtnSecondaryModal: "Back",
-        //   handleBtn: create,
+        labelModal: "Tambah Perusahaan Baru",
+        labelBtnModal: "Tambah Perusahaan Baru",
+        labelBtnSecondaryModal: "Kembali",
+        handleBtn: create,
     });
-    const [openModal, setOpenModal] = useState(false)
 
     const dataModalBody = () => {
         return (
             <>
                 <form className="">
                     <input type="hidden" name="id" />
-                    {inputBody({param: 'companies', refBody})}
+                    {inputBody({ param: 'companies', refBody })}
                 </form>
-
             </>
-        )
-    }
-
+        );
+    };
 
     return {
         dataModal,
@@ -67,5 +54,5 @@ export const modalCompany = () => {
         openModal,
         setOpenModal,
         dataModalBody
-    }
-}
+    };
+};

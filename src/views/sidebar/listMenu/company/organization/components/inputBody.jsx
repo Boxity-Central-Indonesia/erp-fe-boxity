@@ -3,11 +3,11 @@ import FormInput from "../../../../../layouts/FormInput";
 import { TextArea } from "../../../../../layouts/FormInput";
 
 
-export const inputBody = ({param, refBody}) => {
+export const inputBody = ({param, refBody, validationError}) => {
     const [inputCompanies, setInputCompanies] = useState([]);
     const [inputBranch, setInputBranch] = useState();
     const [inputDepartments, setInputDepartments] = useState();
-    const [validationError, setValidationError] = useState();
+    // const [validationError, setValidationError] = useState();
     const [dataEdit, setDataEdit] = useState({});
 
     const handleChange = (event) => {
