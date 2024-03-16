@@ -1,6 +1,16 @@
 import {Create} from '../../../../../CRUD/Create'
 
-export const createCompany = ({endPoint ,refBody}) => {
+export const createCompany = ({
+    endPoint,
+    refBody, 
+    responseError, 
+    setResponseError, 
+    setLoading,
+    loading,
+    refresh,
+    setRefresh,
+    setOpenModal
+}) => {
     const dataBody = {
         name: refBody.nameRef.current.value,
         email: refBody.emailRef.current.value,
@@ -14,10 +24,18 @@ export const createCompany = ({endPoint ,refBody}) => {
         industry: refBody.industryRef.current.value,
         description: refBody.descriptionRef.current.value,
     }
-    const {validationError, setValidationError} = Create({endPoint, dataBody})
 
-    return {
-        validationError,
-        setValidationError,
-    }
+
+    setLoading(!loading)
+
+    Create({
+        endPoint, 
+        dataBody, 
+        setResponseError,
+        setLoading,
+        loading,
+        refresh,
+        setRefresh,
+        setOpenModal
+    })
 }

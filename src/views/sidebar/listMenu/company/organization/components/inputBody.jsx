@@ -3,12 +3,16 @@ import FormInput from "../../../../../layouts/FormInput";
 import { TextArea } from "../../../../../layouts/FormInput";
 
 
-export const inputBody = ({param, refBody, validationError}) => {
+export const inputBody = ({
+  param, 
+  refBody, 
+  validationError,
+  setDataEdit,
+  dataEdit
+}) => {
     const [inputCompanies, setInputCompanies] = useState([]);
     const [inputBranch, setInputBranch] = useState();
     const [inputDepartments, setInputDepartments] = useState();
-    // const [validationError, setValidationError] = useState();
-    const [dataEdit, setDataEdit] = useState({});
 
     const handleChange = (event) => {
         // Mendapatkan nama dan nilai input yang berubah

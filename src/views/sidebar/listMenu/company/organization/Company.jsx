@@ -6,83 +6,56 @@ import { CompanyDetail } from "./components/companyDetail"
 import { index } from "./components"
 
 export const Company = () => {
-    // const {
-    //     data,
-    //     openModal, 
-    //     setOpenModal,
-    //     dataModal, 
-    //     refBody,
-    //     handleEdit,
-    //     dataEdit,
-    //     openModalDelete,
-    //     closeModalDelete,
-    //     handleDelete,
-    //     modalDelete,
-    //     dataHeading,
-    //     inputBody,
-    //     loading,
-    //     handleCreate,
-    //     skeleton,
-    //     path,
-    //     dataDetailCompany,
-    //     defaultEdit,
-    //     setDefaultEdit
-    // } = CRUD()
+    
+        const {
+            data,
+            dataHeading,
+            dataModal,
+            openModal,
+            setOpenModal,
+            dataModalBody,
+            loading,
+            defaultEdit,
+            setDefaultEdit,
+            handleEdit,
+            dataDetail
+        } = index()
 
-    // const dataModalBody = () => {
-    //     return (
-    //         <>
-    //             <form className="">
-    //                 <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id} />
-    //                 {inputBody(path)}
-    //             </form>
 
-    //         </>
-    //     )
-    // }
+    if(!defaultEdit){
+        return(
+            <>
+              <ModalContainer 
+                openModal={openModal}
+                onToggleModal={setOpenModal}
+                modalBody={dataModalBody}
+                sizeModal={dataModal.size}
+                labelModal={dataModal.labelModal}
+                labelBtnModal={dataModal.labelBtnModal}
+                labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
+                handleBtnModal={dataModal.handleBtn}
+                // parameter={path}
+                // openModalDelete={openModalDelete}
+                />
 
-    // if(!defaultEdit){
-    //     return(
-    //         <>
-    //             <ModalContainer 
-    //                 openModal={openModal}
-    //                 onToggleModal={setOpenModal}
-    //                 modalBody={dataModalBody}
-    //                 sizeModal={dataModal.size}
-    //                 labelModal={dataModal.labelModal}
-    //                 labelBtnModal={dataModal.labelBtnModal}
-    //                 labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
-    //                 handleBtnModal={dataModal.handleBtn}
-    //                 parameter={path}
-    //                 openModalDelete={openModalDelete}
-    //             />
+                <Spinner loading={loading} />
 
-    //             <Spinner loading={loading} />
+                {/* < ModalConfirmDelete 
+                modalDelete={modalDelete}
+                closeModalDelete={closeModalDelete}
+                handleDelete={handleDelete}
+                /> */}
 
-    //             < ModalConfirmDelete 
-    //             modalDelete={modalDelete}
-    //             closeModalDelete={closeModalDelete}
-    //             handleDelete={handleDelete}
-    //             />
+                <CompanyDetail
+                    data={dataDetail}
+                    defaultEdit={setDefaultEdit}
+                    handleEdit={handleEdit}
+                    dataHeading={dataHeading}
+                />
+            </>
+        )
+    }
 
-    //             <CompanyDetail
-    //                 data={dataDetailCompany}
-    //                 defaultEdit={setDefaultEdit}
-    //                 handleEdit={handleEdit}
-    //                 dataHeading={dataHeading}
-    //             />
-    //         </>
-    //     )
-    // }
-
-    const {
-        data,
-        dataHeading,
-        dataModal,
-        openModal,
-        setOpenModal,
-        dataModalBody
-    } = index()
 
 
     return(
@@ -100,9 +73,9 @@ export const Company = () => {
         // openModalDelete={openModalDelete}
         />
 
-        {/* <Spinner loading={loading} />
+        <Spinner loading={loading} />
 
-        < ModalConfirmDelete 
+        {/* < ModalConfirmDelete 
         modalDelete={modalDelete}
         closeModalDelete={closeModalDelete}
         handleDelete={handleDelete}
@@ -113,7 +86,7 @@ export const Company = () => {
         dataHeading={dataHeading}
         // skeleton={skeleton}
         // setOpenModal={handleCreate}
-        // handleEdit={handleEdit}
+        handleEdit={handleEdit}
         />
        </>
     )

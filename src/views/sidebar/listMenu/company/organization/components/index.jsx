@@ -1,30 +1,57 @@
 import { ReadCompany } from "./ReadCompany"
-import { useState } from "react"
-import IconAdd from '../../../../../layouts/icons/IconAdd'
+import { useState, useEffect } from "react"
 import { modalCompany } from "./modalCompany"
+import { editCompany } from "./EditCompany"
 
 
 export const index = () => {
+    const [dataHeading, setDataHeading] = useState([])
+    const [defaultEdit, setDefaultEdit] = useState(true);
+    const [data, setData] = useState('');
+    const [dataDetail, setDataDetail] = useState({})
+
     const {
         setDataModal,
         dataModal,
         setOpenModal,
         openModal,
-        dataModalBody
-    } = modalCompany()
-
-    const [dataHeading, setDataHeading] = useState([{
-        label: 'Add company',
-        icon: IconAdd(),
-        heading: "Company list",
-        information:
-          "A company list is a directory or database of companies, often organized by industry, location, size, or other relevant criteria.  It's valuable for finding potential partners, suppliers, customers, or competitors. Company lists can also help  with market research, job searches, and investment opportunities.  Depending on the platform, you may be able to filter company lists, view company profiles with contact information, and get insights into their financial performance.",
-        eventToggleModal: () => setOpenModal(!openModal),
-        // onclick: handleClickHeading,
-    }])
+        dataModalBody,
+        loading,
+        refresh,
+        setRefresh,
+        setDataEdit,
+        refBody,
+        setResponseError,
+        setLoading,
+    } = modalCompany({defaultEdit, setDefaultEdit})
    
 
-    const {data} = ReadCompany()
+        ReadCompany({
+            refresh, 
+            setDataHeading, 
+            setOpenModal, 
+            openModal,
+            data,
+            setData
+        })
+
+
+    const {
+        handleEdit
+    } = editCompany({
+        setDefaultEdit, 
+        refresh, 
+        setRefresh,
+        setDataDetail,
+        dataDetail,
+        defaultEdit,
+        setOpenModal,
+        setDataModal,
+        setDataEdit,
+        refBody,
+        setResponseError,
+        setLoading
+    })
     
     
     return{
@@ -33,6 +60,11 @@ export const index = () => {
         dataModal,
         openModal,
         setOpenModal,
-        dataModalBody
+        dataModalBody,
+        loading,
+        defaultEdit,
+        setDefaultEdit,
+        handleEdit,
+        dataDetail
     }
 }
