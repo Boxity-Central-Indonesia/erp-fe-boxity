@@ -16,23 +16,24 @@ export const CRUD = () => {
   const [idDelete, setIdDelete] = useState();
   const [dataModal, setDataModal] = useState({});
   const [input, setInput] = useState([]);
+  const [inputUpdate, setInputUpdate] = useState([]);
   const [responseError, setResponseError] = useState();
   const [validationError, setValidationError] = useState();
   const [loading, setLoading] = useState(true);
   const [skeleton, setSkeleton] = useState(false);
   const [dataHeading, setDataHeading] = useState([{}]);
   const [path, setPath] = useState("users");
+  const [update, setUpdate] = useState(false)
 
   const [refBody, setRefBody] = useState({
-    emailRef: useRef(),
     nameRef: useRef(),
+    emailRef: useRef(),
     usernameRef: useRef(),
     no_handphoneRef: useRef(),
-    roleRef: useRef(),
     genderRef: useRef(),
     passwordRef: useRef(),
-    confirm_passwordRef: useRef(),
-    idRef: useRef(),
+    confirmPasswordRef: useRef(),
+    idRef: useRef()
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -50,10 +51,12 @@ export const CRUD = () => {
   useEffect(() => {
     if (!!responseError) {
       setValidationError({
-        nama_prospek: responseError?.nama_prospek?.[0] || "",
-        email_prospek: responseError?.email_prospek?.[0] || "",
-        nomor_telepon_prospek: responseError?.nomor_telepon_prospek?.[0] || "",
-        tipe_prospek: responseError?.tipe_prospek?.[0] || "",
+        name: responseError?.name?.[0] || "",
+        email: responseError?.email?.[0] || "",
+        username: responseError?.username?.[0] || "",
+        password: responseError?.password?.[0] || "",
+        gender: responseError?.gender?.[0] || "",
+        no_handphone: responseError?.no_handphone?.[0] || "",
       });
     }
   }, [responseError]);
@@ -98,53 +101,152 @@ export const CRUD = () => {
       {
         element: "input",
         type: "text",
-        name: "nama_prospek",
-        ref: refBody.nama_prospekRef,
-        value: dataEdit.nama_prospek,
-        label: "Prospek name",
-        htmlFor: "nama_prospek",
-        id: "nama_prospek",
+        name: "name",
+        ref: refBody.nameRef,
+        value: dataEdit.name,
+        label: "Name",
+        htmlFor: "name",
+        id: "name",
         onchange: handleChange,
-        placeholder: "Prospek name",
+        placeholder: "Name",
       },
       {
         element: "input",
         type: "email",
-        name: "email_prospek",
-        ref: refBody.email_prospekRef,
-        value: dataEdit.email_prospek,
-        label: "Prospek email",
-        htmlFor: "email_prospek",
-        id: "email_prospek",
+        name: "email",
+        ref: refBody.emailRef,
+        value: dataEdit.email,
+        label: "Email",
+        htmlFor: "email",
+        id: "email",
         onchange: handleChange,
-        placeholder: "Prospek email",
+        placeholder: "Email",
       },
       {
         element: "input",
         type: "text",
-        name: "nomor_telepon_prospek",
-        ref: refBody.nomor_telepon_prospekRef,
-        value: dataEdit.nomor_telepon_prospek,
-        label: "Prospek number phone",
-        htmlFor: "nomor_telepon_prospek",
-        id: "nomor_telepon_prospek",
+        name: "username",
+        ref: refBody.usernameRef,
+        value: dataEdit.username,
+        label: "Username",
+        htmlFor: "username",
+        id: "username",
         onchange: handleChange,
-        placeholder: "Prospek number phone",
+        placeholder: "Username",
       },
       {
         element: "select",
-        name: "tipe_prospek",
-        ref: refBody.tipe_prospekRef,
-        value: dataEdit.tipe_prospek,
-        label: "Prospek type",
-        htmlFor: "tipe_prospek",
-        id: "tipe_prospek",
+        name: "gender",
+        ref: refBody.genderRef,
+        value: dataEdit.gender,
+        label: "Gender",
+        htmlFor: "gender",
+        id: "gender",
         dataSelect: [
-          { value: "perorangan", name: "perorangan" },
-          { value: "bisnis", name: "bisnis" },
-          { value: "rekomendasi", name: "rekomendasi" },
+          { value: "male", name: "Male" },
+          { value: "Female", name: "Female" },
         ],
         onchange: handleChange,
+      },
+      {
+        element: "input",
+        type: "text",
+        name: "no_handphone",
+        ref: refBody.no_handphoneRef,
+        value: dataEdit.no_handphone,
+        label: "Number phone",
+        htmlFor: "no_handphone",
+        id: "no_handphone",
+        onchange: handleChange,
+        placeholder: "Number phone",
+      },
+      {
+        element: "input",
+        type: "password",
+        name: "password",
+        ref: refBody.passwordRef,
+        value: dataEdit.password,
+        label: "password",
+        htmlFor: "password",
+        id: "password",
+        onchange: handleChange,
+        placeholder: "password",
+      },
+      {
+        element: "input",
+        type: "password",
+        name: "confirmPassword",
+        ref: refBody.confirmPasswordRef,
+        value: dataEdit.confirmPassword,
+        label: "confirmPassword",
+        htmlFor: "confirmPassword",
+        id: "confirmPassword",
+        onchange: handleChange,
+        placeholder: "confirmPassword",
+      },
+    ]);
+    setInputUpdate([
+      {
+        element: "input",
+        type: "text",
+        name: "name",
+        ref: refBody.nameRef,
+        value: dataEdit.name,
+        label: "Name",
+        htmlFor: "name",
+        id: "name",
+        onchange: handleChange,
+        placeholder: "Name",
+      },
+      {
+        element: "input",
+        type: "email",
+        name: "email",
+        ref: refBody.emailRef,
+        value: dataEdit.email,
+        label: "Email",
+        htmlFor: "email",
+        id: "email",
+        onchange: handleChange,
+        placeholder: "Email",
+      },
+      {
+        element: "input",
+        type: "text",
+        name: "username",
+        ref: refBody.usernameRef,
+        value: dataEdit.username,
+        label: "Username",
+        htmlFor: "username",
+        id: "username",
+        onchange: handleChange,
+        placeholder: "Username",
+      },
+      {
+        element: "select",
+        name: "gender",
+        ref: refBody.genderRef,
+        value: dataEdit.gender,
+        label: "Gender",
+        htmlFor: "gender",
+        id: "gender",
+        dataSelect: [
+          { value: "male", name: "Male" },
+          { value: "Female", name: "Female" },
+        ],
+        onchange: handleChange,
+      },
+      {
+        element: "input",
+        type: "text",
+        name: "no_handphone",
+        ref: refBody.no_handphoneRef,
+        value: dataEdit.no_handphone,
+        label: "Number phone",
+        htmlFor: "no_handphone",
+        id: "no_handphone",
+        onchange: handleChange,
+        placeholder: "Number phone",
       },
     ]);
   }, [dataEdit]);
@@ -187,25 +289,14 @@ export const CRUD = () => {
 
   const CREATE = () => {
     const handleCreate = (param) => {
-      setDataEdit({
-        nama_prospek: "",
-        email_prospek: "",
-        nomor_telepon_prospek: "",
-        tipe_prospek: "",
-        id: "",
-      });
-      setValidationError({
-        nama_prospek: "",
-        email_prospek: "",
-        nomor_telepon_prospek: "",
-        tipe_prospek: "",
-        id: "",
-      });
+      setUpdate(false)
+      setDataEdit({});
+      setValidationError({});
       setOpenModal((prevOpenModal) => !prevOpenModal);
       setDataModal({
-        size: "lg",
-        labelModal: "Add New leads",
-        labelBtnModal: "Add new leads",
+        size: "2xl",
+        labelModal: "Add New users",
+        labelBtnModal: "Add new users",
         labelBtnSecondaryModal: "Back",
         handleBtn: create,
       });
@@ -214,24 +305,30 @@ export const CRUD = () => {
     const create = async (param) => {
       setLoading((prevLoading) => !prevLoading);
       let dataBody = {
-        nama_prospek: refBody.nama_prospekRef.current.value,
-        email_prospek: refBody.email_prospekRef.current.value,
-        nomor_telepon_prospek: refBody.nomor_telepon_prospekRef.current.value,
-        tipe_prospek: refBody.tipe_prospekRef.current.value,
-        id: refBody.idRef.current.value,
+        name: refBody.nameRef.current.value,
+        email: refBody.emailRef.current.value,
+        username: refBody.usernameRef.current.value,
+        gender: refBody.genderRef.current.value,
+        no_handphone: refBody.no_handphoneRef.current.value,
+        password: refBody.passwordRef.current.value,
+        password_confirmation: refBody.confirmPasswordRef.current.value
       };
 
       try {
-        const store = await postApiData("leads", dataBody);
+        const store = await postApiData("users", dataBody);
         if (store.status === 201) {
           setRefresh((prevRefresh) => !prevRefresh);
           setPath(() => param);
           setLoading((prevLoading) => !prevLoading);
           setOpenModal((prevOpenModal) => !prevOpenModal);
+        }else if(store.status === 400) {
+          setResponseError(store.errors);
+          setLoading((prevLoading) => !prevLoading);
         }
       } catch (error) {
+        console.log(error);
         setLoading((prevLoading) => !prevLoading);
-        setResponseError(error.response.data.errors);
+        setResponseError(error.response.data);
       }
     };
 
@@ -244,30 +341,26 @@ export const CRUD = () => {
   const EDIT = () => {
     const handleEdit = async (param) => {
       const id = param.textContent;
+      setUpdate(true)
       setDataModal({
-        size: "lg",
-        labelModal: "Update leads",
+        size: "2xl",
+        labelModal: "Update user",
         labelBtnModal: "Save",
         labelBtnSecondaryModal: "Delete",
         handleBtn: edit,
       });
-      setValidationError({
-        nama_prospek: "",
-        email_prospek: "",
-        nomor_telepon_prospek: "",
-        tipe_prospek: "",
-        id: "",
-      });
+      setValidationError({});
 
       setOpenModal((prevOpenModal) => !prevOpenModal);
       try {
         const { data, status } = await getApiData(path + "/" + id);
         if (status === 200) {
           setDataEdit({
-            nama_prospek: data.nama_prospek,
-            email_prospek: data.email_prospek,
-            nomor_telepon_prospek: data.nomor_telepon_prospek,
-            tipe_prospek: data.tipe_prospek,
+            name: data.name,
+            username: data.username,
+            email: data.email,
+            gender: data.gender,
+            no_handphone: data.no_handphone,
             id: data.id,
           });
 
@@ -280,12 +373,12 @@ export const CRUD = () => {
 
     const edit = async () => {
       setLoading((prevLoading) => !prevLoading);
-      const dataBody = {
-        nama_prospek: refBody.nama_prospekRef.current.value,
-        email_prospek: refBody.email_prospekRef.current.value,
-        nomor_telepon_prospek: refBody.nomor_telepon_prospekRef.current.value,
-        tipe_prospek: refBody.tipe_prospekRef.current.value,
-        id: refBody.idRef.current.value,
+      let dataBody = {
+        name: refBody.nameRef.current.value,
+        email: refBody.emailRef.current.value,
+        username: refBody.usernameRef.current.value,
+        gender: refBody.genderRef.current.value,
+        no_handphone: refBody.no_handphoneRef.current.value,
       };
 
       try {
@@ -299,7 +392,8 @@ export const CRUD = () => {
           setOpenModal((prevOpenModal) => !prevOpenModal);
         }
       } catch (error) {
-        setResponseError(error.response.data.errors);
+        console.log(error);
+        setResponseError(error.response.data);
         setLoading((prevLoading) => !prevLoading);
       }
     };
@@ -338,30 +432,57 @@ export const CRUD = () => {
   };
 
   const inputBody = (param) => {
-    return (
-      <>
-        <div className="grid gap-4 mb-4 grid-cols-1">
-          {input.map((item, index) => (
-            <FormInput
-              key={item.id}
-              element={item.element}
-              htmlFor={item.htmlFor}
-              label={item.label}
-              type={item.type}
-              name={item.name}
-              referens={item.ref}
-              value={item.value}
-              id={item.id}
-              onChange={(event) => item.onchange(event)}
-              placeholder={item.placeholder}
-              dataSelect={item.dataSelect}
-              uniqueId={index}
-              validationError={validationError}
-            />
-          ))}
-        </div>
-      </>
-    );
+    if(!update){
+      return (
+        <>
+          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+            {input.map((item, index) => (
+              <FormInput
+                key={item.id}
+                element={item.element}
+                htmlFor={item.htmlFor}
+                label={item.label}
+                type={item.type}
+                name={item.name}
+                referens={item.ref}
+                value={item.value}
+                id={item.id}
+                onChange={(event) => item.onchange(event)}
+                placeholder={item.placeholder}
+                dataSelect={item.dataSelect}
+                uniqueId={index}
+                validationError={validationError}
+              />
+            ))}
+          </div>
+        </>
+      );
+    }else {
+      return (
+        <>
+          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+            {inputUpdate.map((item, index) => (
+              <FormInput
+                key={item.id}
+                element={item.element}
+                htmlFor={item.htmlFor}
+                label={item.label}
+                type={item.type}
+                name={item.name}
+                referens={item.ref}
+                value={item.value}
+                id={item.id}
+                onChange={(event) => item.onchange(event)}
+                placeholder={item.placeholder}
+                dataSelect={item.dataSelect}
+                uniqueId={index}
+                validationError={validationError}
+              />
+            ))}
+          </div>
+        </>
+      );
+    }
   };
 
   const { data, handleClickHeading } = READ();

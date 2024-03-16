@@ -24,6 +24,9 @@ export const CRUD = () => {
   const [dataProduct, setDataProduct] = useState();
   const [path, setPath] = useState("processing-activities");
   const [input, setInput] = useState([]);
+  const [defaultEdit, setDefaultEdit] = useState(true);
+  const [detailProccesActivity, setDetailProccesActivity] = useState()
+
 
   const [refBody, setRefBody] = useState({
     order_idRef: useRef(),
@@ -149,11 +152,13 @@ export const CRUD = () => {
           const { data } = await getApiData(path);
           if (path === "processing-activities") {
             const newData = data.map((item) => ({
-              "activity type": item.activity_type,
-              "status activities": item.status_activities,
-              details: item.details.note,
-              "average weight per package":
-                item.details.average_weight_per_package + " kg",
+              'transaction code': '--',
+              // "activity type": item.activity_type,
+              "status activity": item.status_activities,
+              'last activity': '--',
+              // details: item.details.note,
+              // "average weight per package":
+              //   item.details.average_weight_per_package + " kg",
               "activity date": item.activity_date,
               id: item.id,
             }));
@@ -240,43 +245,59 @@ export const CRUD = () => {
   };
 
   const EDIT = () => {
-    const handleEdit = async (param) => {
-      console.log(param.textContent);
-      setDataEdit({
-        order_id: "",
-        product_id: "",
-      });
-      setValidationError({
-        order_id: "",
-        ptoduct_id: "",
-      });
-      setOpenModal((prevOpenModal) => !prevOpenModal);
-      setDataModal({
-        size: "2xl",
-        labelModal: "Detail & edit Procces activity",
-        labelBtnModal: "Save",
-        labelBtnSecondaryModal: "Delete",
-        handleBtn: edit,
-      });
-      try {
-        const { data, status } = await getApiData(
-          path + "/" + param.textContent
-        );
-        if (status === 200) {
-          setDataEdit({
-            order_id: data.order_id,
-            product_id: data.product_id,
-            status_activities: data.status_activities,
-            activity_type: data.activity_type,
-            average_weight_per_package: data.details.average_weight_per_package,
-            note: data.details.note,
-            id: data.id,
-          });
-          setIdDelete(data.id);
+    const handleEdit = async (param, routes) => {
+      console.log(param);
+      if(routes === 'processing-activities/{{processID}}'){
+         setDataEdit({
+          order_id: "",
+          product_id: "",
+        });
+        setValidationError({
+          order_id: "",
+          ptoduct_id: "",
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Detail & edit Procces activity",
+          labelBtnModal: "Save",
+          labelBtnSecondaryModal: "Delete",
+          handleBtn: edit,
+        });
+        try {
+          const { data, status } = await getApiData(
+            path + "/" + param
+          );
+          if (status === 200) {
+            setDataEdit({
+              order_id: data.order_id,
+              product_id: data.product_id,
+              status_activities: data.status_activities,
+              activity_type: data.activity_type,
+              average_weight_per_package: data.details.average_weight_per_package,
+              note: data.details.note,
+              id: data.id,
+            });
+            setIdDelete(data.id);
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
+      }else {
+        setDefaultEdit(false);
+        try {
+          const { data, status } = await getApiData(
+            path + "/" + param.textContent
+          );
+          if (status === 200) {
+          setDetailProccesActivity(data)
+           setIdDelete(data.id);
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
+     
     };
 
     const edit = async () => {
@@ -408,5 +429,8 @@ export const CRUD = () => {
     loading,
     skeleton,
     path,
+    defaultEdit,
+    setDefaultEdit,
+    detailProccesActivity
   };
 };
