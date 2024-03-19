@@ -10,7 +10,7 @@ export const TabelForDetail = ({
   hidden
 }) => {
   const { globalColor, changeColor } = useColor();
-
+  
     if (!data) {
     // Tampilkan pesan "Loading..." jika data masih undifined
     return (
@@ -102,7 +102,7 @@ export const TabelForDetail = ({
                 </Table.Cell>
                 ))}
                 <Table.Cell>
-                  <button onClick={() => handleEdit(item.id, routes, item.product_id)}>
+                  <button onClick={() => handleEdit(item.id, routes, item.id)}>
                     <svg style={{color: globalColor}} className="w-6 h-6 dark:text-white" aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"

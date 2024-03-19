@@ -953,7 +953,6 @@ export const CRUD = () => {
 
   const EDIT = () => {
     const handleEdit = async (param, routes, param2) => {
-      console.log(path);
       if (path === "orders" && defaultEdit === true) {
         setDefaultEdit(false);
         setDataModal({
@@ -1159,7 +1158,8 @@ export const CRUD = () => {
           console.log(error);
         }
       } else if (routes === "products") {
-        setPath(() => routes);
+        setPath('products');
+        localStorage.setItem('path', routes)
         setEditProduct(true);
         setDefaultEdit(() => false);
         setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -1174,20 +1174,19 @@ export const CRUD = () => {
         setDataEdit({
           id: param,
         });
-        // try {
-        //   const { data, status } = await getApiData(
-        //     "goods-receipts/" + idDelete + "/items/" + param
-        //   );
-        //   if (status === 200) {
-        //     setDataEdit({
-        //       quantity_ordered: data.quantity_ordered,
-        //       quantity_received: data.quantity_received,
-        //       quantity_due: data.quantity_due,
-        //     });
-        //   }
-        // } catch (error) {
-        //   console.log(error);
-        // }
+        try {
+          const { data, status } = await getApiData(
+            "orders/" + orderId + "/products/" + param2
+          );
+          if (status === 200) {
+            setDataEdit({
+              quantity: data.quantity,
+              price_per_unit: data.price_per_unit
+            });
+          }
+        } catch (error) {
+          console.log(error);
+        }
       } else if (path === "delivery-notes" && defaultEdit === true) {
         setDefaultEdit(false);
         try {
@@ -1273,9 +1272,8 @@ export const CRUD = () => {
 
     const edit = async () => {
       let dataBody = {};
-      console.log(path);
       setLoading((prevLoading) => !prevLoading);
-      if (path === "orders") {
+      if (path === "orders" && localStorage.getItem('path') !== 'products') {
         dataBody = {
           vendor_id: refBody.vendor_idRef.current.value,
           warehouse_id: refBody.warehouse_idRef.current.value,
@@ -1427,10 +1425,12 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }
-      } else if (path === "products") {
+      } else if (localStorage.getItem('path') === 'products') {
         dataBody = {
-          quantity: refBody.quantityRef.current.value,
-          price_per_unit: refBody.price_per_unitRef.current.value,
+          product: {
+            quantity: refBody.quantityRef.current.value,
+            price_per_unit: refBody.price_per_unitRef.current.value,
+          }
         };
 
         try {
@@ -1442,18 +1442,18 @@ export const CRUD = () => {
             setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
-            // try {
-            //   const { data, status } = await getApiData(
-            //     "goods-receipt/" + idDelete
-            //   );
-            //   if (status === 200) {
-            //     setDataEdit({});
-            //     setDataDetailGoodReceipt(() => data);
-            //     setIdDelete(data.id);
-            //   }
-            // } catch (error) {
-            //   console.log(error);
-            // }
+            try {
+              const { data, status } = await getApiData(
+                "orders/" + idDelete
+              );
+              if (status === 200) {
+                setDataEdit({});
+                setDataDetailOrders(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
+            }
           }
         } catch (error) {
           setLoading((prevLoading) => !prevLoading);
@@ -2001,7 +2001,6 @@ export const CRUD = () => {
   };
 
   const inputBody = (param) => {
-    console.log(param);
     if (param === "orders") {
       return (
         <>
