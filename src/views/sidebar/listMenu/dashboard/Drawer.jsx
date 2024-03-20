@@ -6,7 +6,8 @@ import { useColor } from "../../../conifg/GlobalColour";
 
 export const Drawer = ({
     openDrawer,
-    setOpenDrawer
+    setOpenDrawer,
+    setSelectedCheckbox
 }) => {
     const { globalColor, changeColor } = useColor();
 
@@ -135,15 +136,20 @@ export const Drawer = ({
         )
     }
 
+    const closeDrawer = () => {
+        setOpenDrawer(false)
+        setSelectedCheckbox(null)
+    }
+
     return(
         <>
             <div id="drawer-right-example"
                 className={openDrawer ? classOpen : classClosed}
                 tabindex="-1" aria-labelledby="drawer-right-label">
                 <h5 id="drawer-right-label"
-                    className="inline-flex items-center mb-4 text-2xl font-semibold dark:text-gray-400">
+                    className="inline-flex items-center mb-4 text-xl font-semibold dark:text-gray-400">
                     Order detail</h5>
-                <button onClick={() => setOpenDrawer(prevOpenDrawer => !prevOpenDrawer)} type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example"
+                <button onClick={closeDrawer} type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example"
                     className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-16 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
                     <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 14 14">

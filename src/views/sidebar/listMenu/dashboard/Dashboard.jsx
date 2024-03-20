@@ -16,7 +16,7 @@ const Dashboard = () => {
       <div>
         <Ringkasan/>
       </div>
-      <div className="mt-10">
+      <div className="mt-8">
         <QuickAcces/>
       </div>
       <div className="mt-10 mb-10 grid grid-cols-1 xl:grid-cols-3 gap-4">

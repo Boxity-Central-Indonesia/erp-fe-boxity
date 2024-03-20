@@ -24,7 +24,7 @@ export const TransactionRunning = () => {
     return (
         <>
             <div className="bg-white rounded-md border p-5">
-                <h1 className="text-2xl font-semibold mb-5">Ongoing transaction</h1>
+                <h1 className="text-xl font-semibold mb-5">Ongoing transaction</h1>
                 <Table>
                     <Table.Head>
                         {columns.map((column, index) => (

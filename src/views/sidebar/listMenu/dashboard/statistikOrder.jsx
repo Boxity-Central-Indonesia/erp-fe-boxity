@@ -7,7 +7,7 @@ export const StatistikOrder = () => {
 
     return (
         <div className="bg-white rounded-md p-5 max-h-68 border">
-            <h2 className="text-3xl font-semibold mb-1">Rp 500.000.000</h2>
+            <h2 className="text-xl font-semibold mb-1">Rp 500.000.000</h2>
             <p className="text-gray-600">Order statistic</p>
             <div className="my-3">
                 <LineChart/>

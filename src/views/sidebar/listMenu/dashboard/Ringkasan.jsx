@@ -80,7 +80,7 @@ export const Ringkasan = () => {
 
     return (
         <>
-            <h1 className="text-3xl font-medium mb-4">Overall Summary</h1>
+            <h1 className="text-xl font-medium mb-3">Overall Summary</h1>
             <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
                 {data && data.map((item, index) => (
                     <div className="rounded-md bg-white p-4 shadow-sm border">
@@ -93,7 +93,7 @@ export const Ringkasan = () => {
                                     <p className="text-gray-600 text-sm">{item.label}</p>
                                     {item.secondaryIcon}
                                 </div>
-                                <h3 className="text-2xl font-medium">{item.amount}</h3>
+                                <h3 className="text-xl font-medium">{item.amount}</h3>
                             </div>
                         </div>
                         <div className="text-gray-600 text-sm">
