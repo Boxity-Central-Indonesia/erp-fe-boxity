@@ -9,6 +9,7 @@ import {
 import IconAdd from "../../../../layouts/icons/IconAdd";
 import { TextArea } from "../../../../layouts/FormInput";
 import FormInput from "../../../../layouts/FormInput";
+import { FormatCurrency, numberToCurrency} from "../../../../conifg/FormatCurrency";
 
 export const CRUD = () => {
   const [refresh, setRefresh] = useState(false);
@@ -17,6 +18,7 @@ export const CRUD = () => {
   const [idDelete, setIdDelete] = useState();
   const [dataModal, setDataModal] = useState({});
   const [inputProducts, setInputProducts] = useState([]);
+
   const [inputProductCategories, setInputProductCategories] = useState([]);
   const [inputProductPrices, setInputProductPrices] = useState([]);
   const [inputProductMovements, setInputProductMovements] = useState([]);
@@ -75,11 +77,19 @@ export const CRUD = () => {
       })
     }
 
-    // Memperbarui state sesuai dengan nilai input yang berubah
-    setDataEdit((prevDataEdit) => ({
-      ...prevDataEdit,
-      [name]: value,
-    }));
+
+    if(name === 'price' || name === 'selling_price' || name === 'buying_price' || name === 'discount_price'){
+      // Memperbarui state sesuai dengan nilai input yang berubah
+      setDataEdit((prevDataEdit) => ({
+        ...prevDataEdit,
+        [name]: FormatCurrency({value}),
+      }));
+    }else {
+      setDataEdit((prevDataEdit) => ({
+        ...prevDataEdit,
+        [name]: value,
+      }));
+    }
   };
 
   const deletePreviewImage = () => {
@@ -159,7 +169,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "price",
         ref: refBody.priceRef,
         value: dataEdit.price,
@@ -360,7 +370,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "price",
         ref: refBody.priceRef,
         value: dataEdit.price,
@@ -386,7 +396,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "selling_price",
         ref: refBody.selling_priceRef,
         value: dataEdit.selling_price,
@@ -398,7 +408,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "buying_price",
         ref: refBody.buying_priceRef,
         value: dataEdit.buying_price,
@@ -410,7 +420,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "discount_price",
         ref: refBody.discount_priceRef,
         value: dataEdit.discount_price,
@@ -846,8 +856,6 @@ export const CRUD = () => {
           image_product: refBody.image_productRef.current.files[0],
         };
 
-        console.log(dataBody);
-
         try {
           const store = await postApiDataAndFile(param, dataBody);
           if (store.status === 201) {
@@ -993,7 +1001,7 @@ export const CRUD = () => {
               name: data.name,
               code: data.code,
               description: data.description,
-              price: data.price,
+              price: numberToCurrency(data.price),
               type: data.type,
               animal_type: data.animal_type,
               age: data.age,
@@ -1063,9 +1071,9 @@ export const CRUD = () => {
           if (status === 200) {
             setDataEdit({
               product_id: data.product_id,
-              selling_price: data.selling_price,
-              buying_price: data.buying_price,
-              discount_price: data.discount_price,
+              selling_price: numberToCurrency(data.selling_price),
+              buying_price: numberToCurrency(data.buying_price),
+              discount_price: numberToCurrency(data.discount_price),
               id: data.id,
             });
 
@@ -1098,7 +1106,7 @@ export const CRUD = () => {
               warehouse_id: data.warehouse_id,
               movement_type: data.movement_type,
               quantity: data.quantity,
-              price: data.price,
+              price: numberToCurrency(data.price),
               id: data.id,
             });
 

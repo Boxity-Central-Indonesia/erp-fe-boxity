@@ -29,14 +29,14 @@ export class LineChart extends Component {
           xaxis: {
             categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
           },
-          colors:['#f95b12'],
+          colors:['#3565d8', '#fdba8c'],
           fill: {
             type: "gradient",
             gradient: {
               shadeIntensity: 1,
-              opacityFrom: 0.7,
-              opacityTo: 0.9,
-              stops: [0, 90, 100]
+              opacityFrom: 0.1,
+              opacityTo: 0.7,
+              stops: [0, 95, 100]
             }
           },
           dataLabels: {

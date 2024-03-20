@@ -83,6 +83,12 @@ export const editCompany = ({
             setLoading,
             setRefresh
         })
+
+        Read({
+            endPoint: 'companies/' + refBody.idRef.current.value, 
+            refresh,
+            setDataDetail
+        })
     }
 
 

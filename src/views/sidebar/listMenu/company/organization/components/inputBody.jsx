@@ -4,7 +4,7 @@ import { TextArea } from "../../../../../layouts/FormInput";
 
 
 export const inputBody = ({
-  param, 
+  parameter, 
   refBody, 
   validationError,
   setDataEdit,
@@ -263,7 +263,7 @@ export const inputBody = ({
     ]);
   }, [dataEdit]);
 
-    if (param === "companies") {
+    if (parameter === "companies") {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-3">
@@ -300,22 +300,22 @@ export const inputBody = ({
         </>
       );
     } else if (
-      defaultEdit == false &&
-      param === "companies/{companyId}/branches"
+      // defaultEdit == false &&
+      parameter === "companies/{companyId}/branches"
     ) {
       return (
         <>
           <input
             type="hidden"
             name="company_id"
-            value={idDelete}
-            ref={refBody.company_idRef}
+            // value={idDelete}
+            // ref={refBody.company_idRef}
           />
           <input
             type="hidden"
             name="id"
-            value={dataEdit.idBranch}
-            ref={refBody.idBranchRef}
+            // value={dataEdit.idBranch}
+            // ref={refBody.idBranchRef}
           />
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
             {inputBranch.map((item, index) => (
@@ -340,8 +340,8 @@ export const inputBody = ({
         </>
       );
     } else if (
-      defaultEdit == false &&
-      param === "companies/{companyId}/departments"
+      // defaultEdit == false &&
+      parameter === "companies/{companyId}/departments"
     ) {
       return (
         <>

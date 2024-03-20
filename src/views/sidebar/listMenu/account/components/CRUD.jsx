@@ -43,12 +43,39 @@ export const CRUD = () => {
     // Mendapatkan nama dan nilai input yang berubah
     const { name, value } = event.target;
 
-    // Memperbarui state sesuai dengan nilai input yang berubah
-    setDataEdit((prevDataEdit) => ({
-      ...prevDataEdit,
-      [name]: value,
-    }));
-  };
+    if(name === 'balance' || name === 'amount'){
+      // Konversi nilai menjadi format mata uang
+      const currencyToNumber = (currencyString) => {
+        // Menghapus karakter non-numeric dari string (seperti koma dan simbol mata uang)
+        const numericString = currencyString.replace(/[^0-9-]+/g, '');
+    
+        // Mengonversi string menjadi integer atau float
+        return parseFloat(numericString);
+    };
+
+      const fixValue = currencyToNumber(value)
+      console.log(fixValue);
+      const formattedValue = parseFloat(fixValue || 0).toLocaleString('id-ID', {
+        style: 'currency',
+        currency: 'IDR'
+      }).replace(/\,00$/, ''); // Menghapus ,00 di akhir string jika ada
+    
+
+      // Memperbarui state sesuai dengan nilai input yang berubah
+      setDataEdit((prevDataEdit) => ({
+        ...prevDataEdit,
+        [name]: formattedValue,
+      }));
+    }else {
+      setDataEdit((prevDataEdit) => ({
+        ...prevDataEdit,
+        [name]: value,
+      }));
+    }
+
+    
+};
+
 
   useEffect(() => {
     if (!!responseError) {
@@ -132,7 +159,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "balance",
         ref: refBody.balanceRef,
         value: dataEdit.balance,
@@ -183,7 +210,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "amount",
         ref: refBody.amountRef,
         value: dataEdit.amount,
@@ -388,7 +415,7 @@ export const CRUD = () => {
         dataBody = {
           name: refBody.nameRef.current.value,
           type: refBody.typeRef.current.value,
-          balance: refBody.balanceRef.current.value,
+          balance: refBody.balanceRef.current.value.replace(/[^0-9-]+/g, ''),
         };
 
         try {
@@ -408,7 +435,7 @@ export const CRUD = () => {
           type: refBody.typeRef.current.value,
           date: refBody.dateRef.current.value,
           account_id: refBody.account_idRef.current.value,
-          amount: refBody.amountRef.current.value,
+          amount: refBody.amountRef.current.value.replace(/[^0-9-]+/g, ''),
         };
 
         try {
@@ -427,7 +454,7 @@ export const CRUD = () => {
         dataBody = {
           name: refBody.nameRef.current.value,
           type: refBody.typeRef.current.value,
-          balance: refBody.balanceRef.current.value,
+          balance: refBody.balanceRef.current.valuereplace(/[^0-9-]+/g, ''),
         };
 
         try {
@@ -475,7 +502,10 @@ export const CRUD = () => {
             setDataEdit({
               name: data.name,
               type: data.type,
-              balance: data.balance,
+              balance: parseFloat(data.balance).toLocaleString('id-ID' ,{
+                style: 'currency',
+                currency: 'IDR'
+              }).replace(/\,00$/, ''),
               id: data.id,
             });
 
@@ -507,7 +537,10 @@ export const CRUD = () => {
               type: data.type,
               date: data.date,
               account_id: data.account_id,
-              amount: data.amount,
+              amount: parseFloat(data.amount).toLocaleString('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+              }).replace(/\,00$/, ''),
               id: data.id,
             });
 

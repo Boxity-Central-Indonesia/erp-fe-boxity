@@ -8,6 +8,7 @@ import {
 import IconAdd from "../../../../layouts/icons/IconAdd";
 import { TextArea } from "../../../../layouts/FormInput";
 import FormInput from "../../../../layouts/FormInput";
+import {FormatCurrency, numberToCurrency} from "../../../../conifg/FormatCurrency"
 
 export const CRUD = () => {
   const [refresh, setRefresh] = useState(false);
@@ -54,11 +55,19 @@ export const CRUD = () => {
     // Mendapatkan nama dan nilai input yang berubah
     const { name, value } = event.target;
 
-    // Memperbarui state sesuai dengan nilai input yang berubah
-    setDataEdit((prevDataEdit) => ({
-      ...prevDataEdit,
-      [name]: value,
-    }));
+    if(name === 'acquisition_cost' || name === 'book_value'){
+       // Memperbarui state sesuai dengan nilai input yang berubah
+      setDataEdit((prevDataEdit) => ({
+        ...prevDataEdit,
+        [name]: FormatCurrency({value}),
+      }));
+    }else {
+       // Memperbarui state sesuai dengan nilai input yang berubah
+      setDataEdit((prevDataEdit) => ({
+        ...prevDataEdit,
+        [name]: value,
+      }));
+    }
   };
 
   useEffect(() => {
@@ -155,7 +164,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "acquisition_cost",
         ref: refBody.acquisition_costRef,
         value: dataEdit.acquisition_cost,
@@ -167,7 +176,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "book_value",
         ref: refBody.book_valueRef,
         value: dataEdit.book_value,
@@ -229,10 +238,10 @@ export const CRUD = () => {
       name: item.name,
       type: item.type,
       "acquisition date": item.acquisition_date,
-      "acquisition cost": item.book_value,
       location: item.location.name ?? "--",
       condition: item.condition.condition,
       description: item.description,
+      "acquisition cost": item.book_value,
       "book value": item.book_value,
     }));
   };
@@ -637,8 +646,8 @@ export const CRUD = () => {
               type: data.type ?? "",
               description: data.description ?? "",
               acquisition_date: data.acquisition_date ?? "",
-              acquisition_cost: data.acquisition_cost ?? "",
-              book_value: data.book_value ?? "",
+              acquisition_cost:  numberToCurrency(data.acquisition_cost),
+              book_value: numberToCurrency(data.book_value),
               location_id: data.location_id ?? "",
               condition_id: data.condition_id ?? "",
               id: data.id ?? "",
@@ -769,7 +778,6 @@ export const CRUD = () => {
         }
       }
     };
-
     return {
       handleEdit,
       edit,

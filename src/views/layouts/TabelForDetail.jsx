@@ -59,10 +59,16 @@ export const TabelForDetail = ({
     return (
         <>
         <div className="overflow-x-auto">
-        < TabelHeadingForDetail toggleOpenModal={dataHeading && dataHeading[0].eventToggleModal} icon={dataHeading && dataHeading[0].icon}
-            label={dataHeading && dataHeading[0].label}
-            handleClickHeading={dataHeading && dataHeading[0].onclick} showNavHeading={dataHeading && dataHeading[0].showNavHeading}
-            dataNavHeading={dataHeading && dataHeading[0].dataNavHeading} routes={routes} hidden={hidden}/>
+        < TabelHeadingForDetail 
+          toggleOpenModal={dataHeading && dataHeading[0].eventToggleModal} 
+          icon={dataHeading && dataHeading[0].icon}
+          label={dataHeading && dataHeading[0].label}
+          handleClickHeading={dataHeading && dataHeading[0].onclick} 
+          showNavHeading={dataHeading && dataHeading[0].showNavHeading}
+          dataNavHeading={dataHeading && dataHeading[0].dataNavHeading} 
+          routes={routes} 
+          hidden={hidden}
+          />
           <table className={`w-full ${data && data.length === 0 ? `` : `hidden`}`}>
             <tbody>
               <tr className='w-full flex justify-center border-t-[1px] border-b'>

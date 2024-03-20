@@ -9,7 +9,8 @@ export const ReadCompany = ({
     setOpenModal, 
     openModal,
     data,
-    setData
+    setData,
+    setParameter
 }) => {
     const dataTabel = (data) => {
         return data.map(item => ({
@@ -20,6 +21,16 @@ export const ReadCompany = ({
             "phone number": item.phone_number,
         }))
     }
+    
+    const handleOpenModal = (param) => {
+        setOpenModal(!openModal)
+        if(param == undefined){
+            setParameter('companies')
+        }else{
+            setParameter(param)
+        }
+        
+    }
 
    useEffect(() => {
     setDataHeading([
@@ -29,7 +40,7 @@ export const ReadCompany = ({
             heading: "Company list",
             information:
             "A company list is a directory or database of companies, often organized by industry, location, size, or other relevant criteria.  It's valuable for finding potential partners, suppliers, customers, or competitors. Company lists can also help  with market research, job searches, and investment opportunities.  Depending on the platform, you may be able to filter company lists, view company profiles with contact information, and get insights into their financial performance.",
-            eventToggleModal: () => setOpenModal(!openModal),
+            eventToggleModal: handleOpenModal,
             // onclick: handleClickHeading,
         }
     ])

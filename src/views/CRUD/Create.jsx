@@ -18,7 +18,7 @@ export const Create = ({
           if(status === 201) {
             setRefresh(prevRefresh => !prevRefresh)
             setOpenModal(prevOpenModal => !prevOpenModal)
-            setLoading(!loading)
+            setLoading(prevLoading => !prevLoading)
           }
       } catch (error) {
         setLoading(prevLoading => !prevLoading)

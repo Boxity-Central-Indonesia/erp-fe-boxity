@@ -23,6 +23,7 @@ export const index = () => {
         refBody,
         setResponseError,
         setLoading,
+        setParameter
     } = modalCompany({defaultEdit, setDefaultEdit})
    
 
@@ -32,7 +33,8 @@ export const index = () => {
             setOpenModal, 
             openModal,
             data,
-            setData
+            setData,
+            setParameter
         })
 
 

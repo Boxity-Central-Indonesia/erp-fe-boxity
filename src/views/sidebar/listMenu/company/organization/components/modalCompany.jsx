@@ -6,6 +6,7 @@ export const modalCompany = ({
   defaultEdit,
   setDefaultEdit
 }) => {
+    const [parameter, setParameter] = useState('companies')
     const [openModal, setOpenModal] = useState(false);
     const [responseError, setResponseError] = useState();
     const [validationError, setValidationError] = useState();
@@ -42,20 +43,10 @@ export const modalCompany = ({
             phone_number: !!responseError.phone_number
               ? responseError.phone_number[0]
               : "",
-            company_id: !!responseError.company_id
-              ? responseError.company_id[0]
+            website: !!responseError.website
+              ? responseError.website[0]
               : "",
             job_title: !!responseError.job_title ? responseError.job_title[0] : "",
-            date_of_birth: !!responseError.date_of_birth
-              ? responseError.date_of_birth[0]
-              : "",
-            employment_status: !!responseError.employment_status
-              ? responseError.employment_status[0]
-              : "",
-            hire_date: !!responseError.hire_date ? responseError.hire_date[0] : "",
-            termination_date: !!responseError.termination_date
-              ? responseError.termination_date[0]
-              : "",
             address: !!responseError.address ? responseError.address[0] : "",
             city: !!responseError.city ? responseError.city[0] : "",
             province: !!responseError.province ? responseError.province[0] : "",
@@ -63,17 +54,7 @@ export const modalCompany = ({
               ? responseError.postal_code[0]
               : "",
             country: !!responseError.country ? responseError.country[0] : "",
-            emergency_contact_name: !!responseError.emergency_contact_name
-              ? responseError.emergency_contact_name[0]
-              : "",
-            emergency_contact_phone_number:
-              !!responseError.emergency_contact_phone_number
-                ? responseError.emergency_contact_phone_number[0]
-                : "",
-            notes: !!responseError.notes ? responseError.notes[0] : "",
-            department_id: !!responseError.department_id
-              ? responseError.department_id[0]
-              : "",
+            industry: !!responseError.industry ? responseError.industry[0] : "",
           });
         }
     }, [responseError]);
@@ -110,7 +91,7 @@ export const modalCompany = ({
             <>
                 <form className="">
                     <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id}/>
-                    {inputBody({ param: 'companies', refBody, validationError, dataEdit, setDataEdit})}
+                    {inputBody({parameter, refBody, validationError, dataEdit, setDataEdit})}
                 </form>
             </>
         );
@@ -129,5 +110,7 @@ export const modalCompany = ({
         refBody,
         setResponseError,
         setLoading,
+        setParameter,
+        setDataModal
     };
 };

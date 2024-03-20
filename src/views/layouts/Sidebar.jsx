@@ -250,9 +250,10 @@ function Sidebar() {
             {menuItems.map((item, index) => (
               <React.Fragment key={index}>
                 <li className="group">
-                  <button
+                  <NavLink
+                    to={item.path}
+                    className="flex items-center justify-between w-full px-4 py-2 text-sm font-semibold text-left bg-transparent rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none"
                     onClick={() => toggleDropdown(item.label)}
-                    className="flex items-center justify-between w-full px-4 py-2 text-sm font-semibold text-left bg-transparent rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none"
                   >
                     <span className="flex items-center">
                       <span className="mr-3">{item.icon}</span>
@@ -274,7 +275,7 @@ function Sidebar() {
                         </svg>
                       </span>
                     )}
-                  </button>
+                  </NavLink>
                   {item.subMenu && renderSubMenu(item.subMenu, item.label)}
                 </li>
                 {item.title && (
@@ -290,6 +291,7 @@ function Sidebar() {
       </div>
     </aside>
   );
+
 }
 
 export default Sidebar;
