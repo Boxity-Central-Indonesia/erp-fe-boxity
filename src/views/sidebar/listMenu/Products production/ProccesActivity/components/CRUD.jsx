@@ -26,13 +26,17 @@ export const CRUD = () => {
   const [input, setInput] = useState([]);
   const [defaultEdit, setDefaultEdit] = useState(true);
   const [detailProccesActivity, setDetailProccesActivity] = useState()
+  const [inputEdit, setInputEdit] = useState([])
 
 
   const [refBody, setRefBody] = useState({
     order_idRef: useRef(),
     product_idRef: useRef(),
+    estimated_completionRef: useRef(),
     activity_typeRef: useRef(),
-    average_weight_per_packageRef: useRef(),
+    unloading_timeRef: useRef(),
+    number_of_rackRef: useRef(),
+    number_of_animalsRef: useRef(),
     noteRef: useRef(),
     idRef: useRef(),
   });
@@ -106,12 +110,38 @@ export const CRUD = () => {
         dataSelect: dataOrder,
         onchange: handleChange,
       },
+      // {
+      //   element: "input",
+      //   type: "text",
+      //   name: "estimated_completion",
+      //   ref: refBody.estimated_completionRef,
+      //   value: dataEdit.estimated_completion,
+      //   label: "Estimated_completion",
+      //   htmlFor: "estimated_completion",
+      //   id: "estimated_completion",
+      //   onchange: handleChange,
+      //   placeholder: "Estimated_completion",
+      // },
+    ]);
+
+    setInputEdit([
+      {
+        element: "select",
+        name: "order_id",
+        ref: refBody.order_idRef,
+        value: dataEdit.order_id,
+        label: "Order",
+        htmlFor: "order_id",
+        id: "order_id",
+        dataSelect: dataOrder,
+        onchange: handleChange,
+      },
       {
         element: "select",
         name: "product_id",
         ref: refBody.product_idRef,
         value: dataEdit.product_id,
-        label: "Product",
+        label: "Order",
         htmlFor: "product_id",
         id: "product_id",
         dataSelect: dataProduct,
@@ -131,38 +161,60 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
-        name: "average_weight_per_package",
-        ref: refBody.average_weight_per_packageRef,
-        value: dataEdit.average_weight_per_package,
-        label: "average weight per package",
-        htmlFor: "average_weight_per_package",
-        id: "average_weight_per_package",
+        type: "time",
+        name: "unloading_time",
+        ref: refBody.unloading_timeRef,
+        value: dataEdit.unloading_time,
+        label: "Unloading time",
+        htmlFor: "unloading_time",
+        id: "unloading_time",
         onchange: handleChange,
-        placeholder: "average weight per package (kg)",
+        placeholder: "Unloading time",
       },
-    ]);
+      {
+        element: "input",
+        type: "number",
+        name: "number_of_rack",
+        ref: refBody.number_of_rackRef,
+        value: dataEdit.number_of_rack,
+        label: "Number of rack",
+        htmlFor: "number_of_rack",
+        id: "number_of_rack",
+        onchange: handleChange,
+        placeholder: "Number of rack",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "number_of_animals",
+        ref: refBody.number_of_animalsRef,
+        value: dataEdit.number_of_animals,
+        label: "Number of animals",
+        htmlFor: "number_of_animals",
+        id: "number_of_animals",
+        onchange: handleChange,
+        placeholder: "Number of animals",
+      },
+    ])
   }, [dataEdit]);
 
   const READ = () => {
     const [data, setData] = useState();
+    
     useEffect(() => {
       const getData = async () => {
         try {
           const { data } = await getApiData(path);
           if (path === "processing-activities") {
-            const newData = data.map((item) => ({
-              'transaction code': '--',
-              // "activity type": item.activity_type,
-              "status activity": item.status_activities,
-              'last activity': '--',
-              // details: item.details.note,
-              // "average weight per package":
-              //   item.details.average_weight_per_package + " kg",
-              "activity date": item.activity_date,
-              id: item.id,
-            }));
-            setData(() => newData);
+            const newData = Object.values(data).flatMap(innerObj =>
+              Object.values(innerObj).map(item => ({
+                'activity type': item[item.length - 1].activity_type,
+                'status activity': item[item.length - 1].status_activities,
+                'description': item[item.length - 1].details?.description || '--', // Tambahkan penanganan untuk jika details tidak tersedia
+                id: item[item.length - 1].id,
+              }))
+            );
+            setData(newData);
             setDataHeading([
               {
                 label: "Add new procces activity",
@@ -173,11 +225,6 @@ export const CRUD = () => {
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: false,
-                // dataNavHeading: [
-                //     {path: 'employees', label: 'Employees'},
-                //     {path: 'employee-categories', label: 'Employee categories'},
-                // ],
-                // activeButton: path,
               },
             ]);
           }
@@ -187,9 +234,12 @@ export const CRUD = () => {
       };
       getData();
     }, [refresh]);
-
+  
     return { data };
   };
+  
+  
+  
 
   const CREATE = () => {
     const handleCreate = (param) => {
@@ -215,13 +265,6 @@ export const CRUD = () => {
       setLoading((prevLoading) => !prevLoading);
       const dataBody = {
         order_id: refBody.order_idRef.current.value,
-        product_id: refBody.product_idRef.current.value,
-        activity_type: refBody.activity_typeRef.current.value,
-        details: {
-          average_weight_per_package:
-            refBody.average_weight_per_packageRef.current.value,
-          note: refBody.noteRef.current.value,
-        },
       };
 
       try {
@@ -272,10 +315,8 @@ export const CRUD = () => {
             setDataEdit({
               order_id: data.order_id,
               product_id: data.product_id,
-              status_activities: data.status_activities,
               activity_type: data.activity_type,
-              average_weight_per_package: data.details.average_weight_per_package,
-              note: data.details.note,
+              description: data.details.description,
               id: data.id,
             });
             setIdDelete(data.id);
@@ -307,11 +348,14 @@ export const CRUD = () => {
         product_id: refBody.product_idRef.current.value,
         activity_type: refBody.activity_typeRef.current.value,
         details: {
-          average_weight_per_package:
-            refBody.average_weight_per_packageRef.current.value,
+          unloading_time: refBody.unloading_timeRef.current.value,
+          number_of_rack: refBody.number_of_rackRef.current.value,
+          number_of_animals: refBody.number_of_animalsRef.current.value,
           note: refBody.noteRef.current.value,
         },
       };
+
+      console.log(dataBody);
 
       try {
         const store = await putApiData(
@@ -365,42 +409,83 @@ export const CRUD = () => {
 
   const inputBody = (param) => {
     if (param === "processing-activities") {
-      return (
-        <>
-          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
-            {input.map((item, index) => (
-              <FormInput
-                key={item.id}
-                element={item.element}
-                htmlFor={item.htmlFor}
-                label={item.label}
-                type={item.type}
-                name={item.name}
-                referens={item.ref}
-                value={item.value}
-                id={item.id}
-                onChange={(event) => item.onchange(event)}
-                placeholder={item.placeholder}
-                dataSelect={item.dataSelect}
-                uniqueId={index}
-                validationError={validationError}
+      if(defaultEdit){
+        return (
+          <>
+            <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+              {input.map((item, index) => (
+                <FormInput
+                  key={item.id}
+                  element={item.element}
+                  htmlFor={item.htmlFor}
+                  label={item.label}
+                  type={item.type}
+                  name={item.name}
+                  referens={item.ref}
+                  value={item.value}
+                  id={item.id}
+                  onChange={(event) => item.onchange(event)}
+                  placeholder={item.placeholder}
+                  dataSelect={item.dataSelect}
+                  uniqueId={index}
+                  validationError={validationError}
+                />
+              ))}
+              
+  {/* 
+              <TextArea
+                span={`col-span-2`}
+                label={"Note"}
+                htmlFor={"note"}
+                id={"note"}
+                name={"note"}
+                value={dataEdit.note}
+                referens={refBody.noteRef}
+                placeholder={"Write note here"}
+                onChange={handleChange}
+              /> */}
+            </div>
+          </>
+        );
+      }else {
+        return (
+          <>
+            <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+              {inputEdit.map((item, index) => (
+                <FormInput
+                  key={item.id}
+                  element={item.element}
+                  htmlFor={item.htmlFor}
+                  label={item.label}
+                  type={item.type}
+                  name={item.name}
+                  referens={item.ref}
+                  value={item.value}
+                  id={item.id}
+                  onChange={(event) => item.onchange(event)}
+                  placeholder={item.placeholder}
+                  dataSelect={item.dataSelect}
+                  uniqueId={index}
+                  validationError={validationError}
+                />
+              ))}
+              
+  
+              <TextArea
+                span={`col-span-2`}
+                label={"Notes"}
+                htmlFor={"note"}
+                id={"note"}
+                name={"note"}
+                value={dataEdit.note}
+                referens={refBody.noteRef}
+                placeholder={"Write note here"}
+                onChange={handleChange}
               />
-            ))}
-
-            <TextArea
-              span={`col-span-2`}
-              label={"Note"}
-              htmlFor={"note"}
-              id={"note"}
-              name={"note"}
-              value={dataEdit.note}
-              referens={refBody.noteRef}
-              placeholder={"Write note here"}
-              onChange={handleChange}
-            />
-          </div>
-        </>
-      );
+            </div>
+          </>
+        );
+      }
     }
   };
 

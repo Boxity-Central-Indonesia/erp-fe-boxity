@@ -26,10 +26,10 @@ export const ProccesActivityDetail = ({
           <div className="col-span-1">
             <table className={`w-full`}>
               <tr className="">
-                <td className="py-3">Transaction code</td>
+                <td className="py-3">Actifity type</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.transaction_code || "--"}</span>
+                  : <span className="ml-5">{data?.activity_type || "--"}</span>
                 </td>
               </tr>
               <tr>
@@ -40,7 +40,39 @@ export const ProccesActivityDetail = ({
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Notes</td>
+                <td className="py-3">Description</td>
+                <td>
+                  {" "}
+                  : <span className="ml-5">{data?.details.description || "--"}</span>
+                </td>
+              </tr>
+              <tr>
+                <td className="py-3">Unloading time</td>
+                <td>
+                  {" "}
+                  : <span className="ml-5">{data?.details.unloading_time || "--"}</span>
+                </td>
+              </tr>
+              <tr>
+                <td className="py-3">Number of rack</td>
+                <td>
+                  {" "}
+                  : <span className="ml-5">{data?.details.number_of_rack || "--"}</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div className="col-span-1">
+            <table className={`w-full`}>
+              <tr className="">
+                <td className="py-3">Number of animals</td>
+                <td>
+                  {" "}
+                  : <span className="ml-5">{data?.details.number_of_animals || "--"}</span>
+                </td>
+              </tr>
+              <tr className="">
+                <td className="py-3">Note</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.details.note || "--"}</span>
