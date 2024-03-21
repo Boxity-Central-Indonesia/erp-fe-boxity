@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { Spinner } from "flowbite-react";
-import { useColor } from "../conifg/GlobalColour";
+import { useColor } from "../config/GlobalColour";
 import Button from "../layouts/Button";
 
 const Login = ({ setAuth }) => {

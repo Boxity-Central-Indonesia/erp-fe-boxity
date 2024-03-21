@@ -1,6 +1,6 @@
 import { Table } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { useColor } from '../../../../conifg/GlobalColour';
+import { useColor } from '../../../../config/GlobalColour';
 import { getApiData } from '../../../../../function/Api'
 
 

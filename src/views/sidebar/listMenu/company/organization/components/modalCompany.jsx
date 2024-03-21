@@ -74,15 +74,15 @@ export const modalCompany = ({
         labelModal: "Add new companies",
         labelBtnModal: "Add new companies",
         labelBtnSecondaryModal: "Back",
-        handleBtn: () => createCompany({    endPoint: "companies",
-                                            refBody, 
-                                            responseError, 
-                                            setResponseError, 
-                                            setLoading, 
-                                            loading,
-                                            refresh,
-                                            setRefresh,
-                                            setOpenModal
+        handleBtn: () => createCompany({  endPoint: "companies",
+                                          refBody, 
+                                          responseError, 
+                                          setResponseError, 
+                                          setLoading, 
+                                          loading,
+                                          refresh,
+                                          setRefresh,
+                                          setOpenModal
                                         }),
     });
 

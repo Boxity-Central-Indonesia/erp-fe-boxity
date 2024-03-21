@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Table } from 'flowbite-react';
-import { useColor } from '../../../../conifg/GlobalColour';
+import { useColor } from '../../../../config/GlobalColour';
 
 export const TabelForProducts = ({ 
     dataTabelProducts, 

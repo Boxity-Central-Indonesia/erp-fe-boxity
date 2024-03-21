@@ -1,4 +1,4 @@
-import { useColor } from "../conifg/GlobalColour";
+import { useColor } from "../config/GlobalColour";
 
 const Button = ({
   event,

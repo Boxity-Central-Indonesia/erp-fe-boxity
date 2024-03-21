@@ -5,8 +5,14 @@ import { StatistikOrder } from "./statistikOrder";
 import { TransactionRunning } from "./TransactionRunning";
 import { TabelOrder } from "./TabelOrder";
 import { GrossSales } from "./GrossSales";
+import { index } from "./index";
 
 const Dashboard = () => {
+
+  const {
+    data,
+    dataOrders
+  } = index()
 
   return (
     <div className="dashboard">
@@ -14,7 +20,7 @@ const Dashboard = () => {
        <Dates/>
       </div>
       <div>
-        <Ringkasan/>
+        <Ringkasan data={data}/>
       </div>
       <div className="mt-8">
         <QuickAcces/>
@@ -24,7 +30,7 @@ const Dashboard = () => {
           <StatistikOrder/>
         </div>
         <div className="col-span-1">
-          <TransactionRunning />
+          <TransactionRunning dataOrders={dataOrders}/>
         </div>
       </div>
       <div className="mb-10">

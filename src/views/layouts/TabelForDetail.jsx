@@ -1,5 +1,5 @@
 import { Table } from "flowbite-react"
-import { useColor } from '../conifg/GlobalColour';
+import { useColor } from '../config/GlobalColour';
 import { TabelHeadingForDetail } from "./TabelHeadingForDetail";
 
 export const TabelForDetail = ({

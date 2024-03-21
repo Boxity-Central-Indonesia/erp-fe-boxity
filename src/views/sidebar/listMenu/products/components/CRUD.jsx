@@ -9,7 +9,7 @@ import {
 import IconAdd from "../../../../layouts/icons/IconAdd";
 import { TextArea } from "../../../../layouts/FormInput";
 import FormInput from "../../../../layouts/FormInput";
-import { FormatCurrency, numberToCurrency} from "../../../../conifg/FormatCurrency";
+import { FormatCurrency, numberToCurrency} from "../../../../config/FormatCurrency";
 
 export const CRUD = () => {
   const [refresh, setRefresh] = useState(false);

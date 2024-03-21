@@ -1,7 +1,7 @@
 // TabelHeading.jsx
 import React from "react";
 import Button from "./Button";
-import { useColor } from "../conifg/GlobalColour";
+import { useColor } from "../config/GlobalColour";
 import { useState, useEffect } from "react";
 import { Dropdown } from "flowbite-react";
 

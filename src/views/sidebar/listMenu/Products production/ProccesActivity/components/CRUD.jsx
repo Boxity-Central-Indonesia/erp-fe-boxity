@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useDebugValue } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   getApiData,
   postApiData,
@@ -8,6 +8,7 @@ import {
 import IconAdd from "../../../../../layouts/icons/IconAdd";
 import { TextArea } from "../../../../../layouts/FormInput";
 import FormInput from "../../../../../layouts/FormInput";
+import { ReadProccesActivity } from "./ReadProccesActivity";
 
 export const CRUD = () => {
   const [refresh, setRefresh] = useState(false);
@@ -198,45 +199,45 @@ export const CRUD = () => {
     ])
   }, [dataEdit]);
 
-  const READ = () => {
-    const [data, setData] = useState();
+  // const READ = () => {
+  //   const [data, setData] = useState();
     
-    useEffect(() => {
-      const getData = async () => {
-        try {
-          const { data } = await getApiData(path);
-          if (path === "processing-activities") {
-            const newData = Object.values(data).flatMap(innerObj =>
-              Object.values(innerObj).map(item => ({
-                'activity type': item[item.length - 1].activity_type,
-                'status activity': item[item.length - 1].status_activities,
-                'description': item[item.length - 1].details?.description || '--', // Tambahkan penanganan untuk jika details tidak tersedia
-                id: item[item.length - 1].id,
-              }))
-            );
-            setData(newData);
-            setDataHeading([
-              {
-                label: "Add new procces activity",
-                icon: IconAdd(),
-                heading: "Procces activity list",
-                information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
-                eventToggleModal: handleCreate,
-                onclick: handleClickHeading,
-                showNavHeading: false,
-              },
-            ]);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      getData();
-    }, [refresh]);
+  //   useEffect(() => {
+  //     const getData = async () => {
+  //       try {
+  //         const { data } = await getApiData(path);
+  //         if (path === "processing-activities") {
+  //           const newData = Object.values(data).flatMap(innerObj =>
+  //             Object.values(innerObj).map(item => ({
+  //               'activity type': item[item.length - 1].activity_type,
+  //               'status activity': item[item.length - 1].status_activities,
+  //               'description': item[item.length - 1].details?.description || '--', // Tambahkan penanganan untuk jika details tidak tersedia
+  //               id: item[item.length - 1].id,
+  //             }))
+  //           );
+  //           setData(newData);
+  //           setDataHeading([
+  //             {
+  //               label: "Add new procces activity",
+  //               icon: IconAdd(),
+  //               heading: "Procces activity list",
+  //               information:
+  //                 "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+  //               eventToggleModal: handleCreate,
+  //               onclick: handleClickHeading,
+  //               showNavHeading: false,
+  //             },
+  //           ]);
+  //         }
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //     };
+  //     getData();
+  //   }, [refresh]);
   
-    return { data };
-  };
+  //   return { data };
+  // };
   
   
   
@@ -489,7 +490,11 @@ export const CRUD = () => {
     }
   };
 
-  const { data, handleClickHeading } = READ();
+  const { data, handleClickHeading } = ReadProccesActivity({
+    refresh,
+    path,
+    setDataHeading
+  });
   const { handleCreate } = CREATE();
   const { handleEdit } = EDIT();
   const { openModalDelete, closeModalDelete, handleDelete } = DELETE();

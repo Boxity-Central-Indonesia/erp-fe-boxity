@@ -18,7 +18,10 @@ export const Company = () => {
             defaultEdit,
             setDefaultEdit,
             handleEdit,
-            dataDetail
+            dataDetail,
+            modalDelete,
+            openModalDelete,
+            closeModalDelete
         } = index()
 
 
@@ -35,16 +38,16 @@ export const Company = () => {
                 labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
                 handleBtnModal={dataModal.handleBtn}
                 // parameter={path}
-                // openModalDelete={openModalDelete}
+                openModalDelete={openModalDelete}
                 />
 
                 <Spinner loading={loading} />
 
-                {/* < ModalConfirmDelete 
+                < ModalConfirmDelete 
                 modalDelete={modalDelete}
                 closeModalDelete={closeModalDelete}
-                handleDelete={handleDelete}
-                /> */}
+                // handleDelete={handleDelete}
+                />
 
                 <CompanyDetail
                     data={dataDetail}

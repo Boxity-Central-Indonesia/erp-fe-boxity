@@ -2,7 +2,10 @@ import {Component} from "react";
 import Chart from "react-apexcharts";
 import { Dropdown } from "flowbite-react";
 
-export function DropdownForLineChart() {
+export function DropdownForLineChart({
+  dataXaxis,
+  dataSeries
+}) {
     return (
       <Dropdown label="" dismissOnClick={false} renderTrigger={() => <span className="text-gray-600">Last 30 days</span>}>
         <Dropdown.Item>Dashboard</Dropdown.Item>

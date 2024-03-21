@@ -1,12 +1,14 @@
-import { useState } from "react"
-import { useColor } from "../../../conifg/GlobalColour";
+import { useEffect, useState } from "react"
+import { useColor } from "../../../config/GlobalColour";
+import { getApiData } from "../../../../function/Api"
 
 
-export const Ringkasan = () => {
+export const Ringkasan = ({
+    data
+}) => {
 
     const { globalColor, changeColor } = useColor();
-
-    const [data, setData] = useState([
+    const dataElement = [
         {
             mainIcon: <div className="bg-red-200 p-3 rounded-md w-fit h-fit"> 
                         <svg className="w-6 h-6 text-red-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -16,8 +18,8 @@ export const Ringkasan = () => {
 
            ,
             label: 'Total Sales',
-            amount: 'Rp 500,000,000', 
-            information: '50% Increase from last month',
+            amount: data.length > 0 ? data[0].amount : 'Loading...',
+            information:  data.length > 0 ? data[0].information : 'Loading...',
             secondaryIcon: <svg className="w-6 h-6 text-green-500 dark:text-white" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -34,8 +36,8 @@ export const Ringkasan = () => {
 
 ,
             label: 'Total Purchase',
-            amount: 'Rp 500,000,000', 
-            information: '50% Increase from last month',
+            amount: data.length > 0 ? data[1].amount : "Loading...", 
+            information:  data.length > 0 ? data[1].information : 'Loading...',
             secondaryIcon: <svg className="w-6 h-6 text-green-500 dark:text-white" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -51,8 +53,8 @@ export const Ringkasan = () => {
                      </div>
 ,
             label: 'Total Paid',
-            amount: 'Rp 500,000,000', 
-            information: '50% Increase from last month',
+            amount: data.length > 0 ? data[2].amount : "Loading...", 
+            information:  data.length > 0 ? data[2].information : 'Loading...',
             secondaryIcon: <svg className="w-6 h-6 text-green-500 dark:text-white" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -68,8 +70,8 @@ export const Ringkasan = () => {
                     </div>
 ,
             label: 'Total Profid',
-            amount: 'Rp 500,000,000', 
-            information: '50% Increase from last month',
+            amount: data.length > 0 ? data[3].amount : "Loading...", 
+            information:  data.length > 0 ? data[3].information : 'Loading...',
             secondaryIcon: <svg className="w-6 h-6 text-green-500 dark:text-white" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -77,13 +79,13 @@ export const Ringkasan = () => {
             </svg>
 ,
         },
-    ])
+    ]
 
     return (
         <>
             <h1 className="text-xl font-medium mb-3">Overall Summary</h1>
             <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
-                {data && data.map((item, index) => (
+                {dataElement && dataElement.map((item, index) => (
                     <div className="rounded-md bg-white p-4 shadow-sm border">
                         <div className="flex gap-3 mb-5">
                             {/* <div className="bg-[#f95b1240] p-2 rounded-md w-fit h-fit"> */}

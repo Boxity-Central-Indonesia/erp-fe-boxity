@@ -17,7 +17,7 @@ import Cookies from "js-cookie";
 import { EmployesList } from "./views/sidebar/listMenu/company/employees/EmployeesList";
 import { Products } from "./views/sidebar/listMenu/products/Products";
 import { Warehouses } from "./views/sidebar/listMenu/warehouses/Warehouses";
-import { ColorProvider } from "./views/conifg/GlobalColour";
+import { ColorProvider } from "./views/config/GlobalColour";
 import { Test } from "./views/sidebar/listMenu/user/test";
 import { Penjualan } from "./views/sidebar/listMenu/reports/penjualan/Penjualan";
 import { Pembelian } from "./views/sidebar/listMenu/reports/pembelian/Pembelian";

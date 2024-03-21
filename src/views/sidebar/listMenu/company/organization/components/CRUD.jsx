@@ -542,8 +542,6 @@ export const CRUD = () => {
 
         setIdCompany(refBody.idRef.current.value);
 
-        console.log(dataBody);
-
         try {
           const response = await putApiData(
             endPoint + "/" + idCompany,

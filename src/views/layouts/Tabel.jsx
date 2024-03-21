@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { Table, Dropdown, TableCell, TableBody } from "flowbite-react";
 import Paginate from "./PaginateTest";
 import TabelHeading from "./TabelHeading";
-import { useColor } from "../conifg/GlobalColour";
+import { useColor } from "../config/GlobalColour";
 import { useState, useEffect } from "react";
 import {
   createColumnHelper,

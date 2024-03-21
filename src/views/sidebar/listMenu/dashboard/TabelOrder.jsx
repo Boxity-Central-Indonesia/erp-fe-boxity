@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Table } from 'flowbite-react';
-import { useColor } from "../../../conifg/GlobalColour";
+import { useColor } from "../../../config/GlobalColour";
 import { Drawer } from "./Drawer";
 
 export const TabelOrder = () => {

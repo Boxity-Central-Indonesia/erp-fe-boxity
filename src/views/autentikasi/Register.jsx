@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { useColor } from "../conifg/GlobalColour";
+import { useColor } from "../config/GlobalColour";
 import Button from "../layouts/Button";
 import { Spinner } from "flowbite-react";
 

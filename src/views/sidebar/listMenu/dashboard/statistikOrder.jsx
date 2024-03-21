@@ -1,9 +1,15 @@
 import { LineChart, DropdownForLineChart } from "./chart/lineChart";
-import { useColor } from "../../../conifg/GlobalColour";
+import { useColor } from "../../../config/GlobalColour";
 
 
-export const StatistikOrder = () => {
+export const StatistikOrder = ({
+    data
+}) => {
     const { globalColor, changeColor } = useColor();
+
+    const dataXaxis = data && data.map(item => {
+       const value = item[4].sales
+    })
 
     return (
         <div className="bg-white rounded-md p-5 max-h-68 border">

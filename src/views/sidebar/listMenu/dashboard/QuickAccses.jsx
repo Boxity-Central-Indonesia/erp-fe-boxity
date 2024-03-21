@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useColor } from "../../../conifg/GlobalColour";
+import { useColor } from "../../../config/GlobalColour";
 
 
 export const QuickAcces = () => {
