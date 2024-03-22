@@ -21,7 +21,8 @@ export const Company = () => {
             dataDetail,
             modalDelete,
             openModalDelete,
-            closeModalDelete
+            closeModalDelete,
+            handleDelete
         } = index()
 
 
@@ -46,7 +47,7 @@ export const Company = () => {
                 < ModalConfirmDelete 
                 modalDelete={modalDelete}
                 closeModalDelete={closeModalDelete}
-                // handleDelete={handleDelete}
+                handleDelete={handleDelete}
                 />
 
                 <CompanyDetail

@@ -12,6 +12,7 @@ export const index = () => {
     const [dataDetail, setDataDetail] = useState({})
     // const [openModalDelete, setOpenModalDelete] = useState(false)
     const [modalDelete, setModalDelete] = useState();
+    const [idDelete, setIdDelete] = useState()
 
 
     // modal company
@@ -63,17 +64,22 @@ export const index = () => {
         setDataEdit,
         refBody,
         setResponseError,
-        setLoading
+        setLoading,
+        setIdDelete
     })
 
     // delete company
 
     const {
         openModalDelete,
-        closeModalDelete
+        closeModalDelete,
+        handleDelete
     } = DeleteCompany({
         setModalDelete,
-        setOpenModal
+        setOpenModal,
+        idDelete,
+        setDefaultEdit,
+        setRefresh
     })
 
     // delete company end
@@ -93,6 +99,7 @@ export const index = () => {
         dataDetail,
         modalDelete,
         openModalDelete,
-        closeModalDelete
+        closeModalDelete,
+        handleDelete
     }
 }

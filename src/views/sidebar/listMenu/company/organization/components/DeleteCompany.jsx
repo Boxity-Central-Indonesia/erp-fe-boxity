@@ -1,9 +1,12 @@
-
+import { Delete } from "../../../../../CRUD/Delete"
 
 
 export const DeleteCompany = ({
     setModalDelete,
-    setOpenModal
+    setOpenModal,
+    idDelete,
+    setDefaultEdit,
+    setRefresh
 }) => {
     const openModalDelete = () => {
         setModalDelete(prevModalDelete => !prevModalDelete)
@@ -15,13 +18,19 @@ export const DeleteCompany = ({
     };
 
 
-    const handleDelete = () => {
-        
+    const handleDelete = async() => {
+        Delete({
+            endPoint: 'companies/' + idDelete
+        })
+
+        setDefaultEdit(prevDefaultEdit => !prevDefaultEdit)
+        setRefresh(prevRefresh => !prevRefresh)
     }
 
 
     return {
         openModalDelete,
-        closeModalDelete
+        closeModalDelete,
+        handleDelete,
     }
 }

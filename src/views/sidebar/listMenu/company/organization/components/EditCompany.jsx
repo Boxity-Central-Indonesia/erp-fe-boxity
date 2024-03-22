@@ -14,7 +14,8 @@ export const editCompany = ({
     refBody,
     setResponseError,
     setLoading,
-    setRefresh
+    setRefresh,
+    setIdDelete
 }) => {
 
     const handleEdit = (param) => {
@@ -52,6 +53,8 @@ export const editCompany = ({
                 id: dataDetail.id,
                 company_id: dataDetail.id,
             });
+
+            setIdDelete(dataDetail.id)
         }
         
       }
