@@ -36,28 +36,28 @@ export const ProccesActivityDetail = ({
                 <td className="py-3">Order type</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.order.order_type || "--"}</span>
+                  : <span className="ml-5">{data?.order?.order_type || "--"}</span>
                 </td>
               </tr>
               <tr>
                 <td className="py-3">Description</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.details.description || "--"}</span>
+                  : <span className="ml-5">{data?.details?.description || "--"}</span>
                 </td>
               </tr>
               <tr>
                 <td className="py-3">Unloading time</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.details.unloading_time || "--"}</span>
+                  : <span className="ml-5">{data?.details?.unloading_time || "--"}</span>
                 </td>
               </tr>
               <tr>
                 <td className="py-3">Number of rack</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.details.number_of_rack || "--"}</span>
+                  : <span className="ml-5">{data?.details?.number_of_rack || "--"}</span>
                 </td>
               </tr>
             </table>
@@ -68,14 +68,14 @@ export const ProccesActivityDetail = ({
                 <td className="py-3">Number of animals</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.details.number_of_animals || "--"}</span>
+                  : <span className="ml-5">{data?.details?.number_of_animals || "--"}</span>
                 </td>
               </tr>
               <tr className="">
                 <td className="py-3">Note</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.details.note || "--"}</span>
+                  : <span className="ml-5">{data?.details?.note || "--"}</span>
                 </td>
               </tr>
             </table>

@@ -1,45 +1,30 @@
-import FormInput from "../../../../layouts/FormInput"
 import { ModalConfirmDelete, ModalContainer } from "../../../../layouts/ModalContainer"
 import {CRUD} from "./components/CRUD"
 import TabelComponent from "../../../../layouts/Tabel"
 import { Spinner } from "../../../../layouts/Spinner"
 import { ProccesActivityDetail } from "./components/proccesActifityDetail"
+import { index } from "./components"
 
 export const ProccesActifity = () => {
+    
     const {
         data,
-        openModal, 
-        setOpenModal,
-        dataModal, 
-        refBody,
-        handleEdit,
-        dataEdit,
-        openModalDelete,
-        closeModalDelete,
-        handleDelete,
-        modalDelete,
         dataHeading,
-        inputBody,
+        dataModal,
+        openModal,
+        setOpenModal,
+        dataModalBody,
         loading,
-        handleCreate,
-        skeleton,
-        path,
         defaultEdit,
         setDefaultEdit,
-        detailProccesActivity
-    } = CRUD()
+        handleEdit,
+        dataDetail,
+        modalDelete,
+        openModalDelete,
+        closeModalDelete,
+        handleDelete
+    } = index()
 
-    const dataModalBody = () => {
-        return (
-            <>
-                <form className="">
-                    <input type="hidden" name="id" ref={refBody.idRef} value={dataEdit.id} />
-                    {inputBody(path)}
-                </form>
-
-            </>
-        )
-    }
 
     if(!defaultEdit){
         return(
@@ -53,7 +38,7 @@ export const ProccesActifity = () => {
                     labelBtnModal={dataModal.labelBtnModal}
                     labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
                     handleBtnModal={dataModal.handleBtn}
-                    parameter={path}
+                    // parameter={path}
                     openModalDelete={openModalDelete}
                 />
 
@@ -66,7 +51,7 @@ export const ProccesActifity = () => {
                 />
 
                 <ProccesActivityDetail
-                    data={detailProccesActivity}
+                    data={dataDetail}
                     defaultEdit={setDefaultEdit}
                     handleEdit={handleEdit}
                     dataHeading={dataHeading}
@@ -86,23 +71,23 @@ export const ProccesActifity = () => {
         labelBtnModal={dataModal.labelBtnModal}
         labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
         handleBtnModal={dataModal.handleBtn}
-        parameter={path}
-        openModalDelete={openModalDelete}
+        // parameter={path}
+        // openModalDelete={openModalDelete}
         />
 
         <Spinner loading={loading} />
 
-        < ModalConfirmDelete 
+        {/* < ModalConfirmDelete 
         modalDelete={modalDelete}
         closeModalDelete={closeModalDelete}
         handleDelete={handleDelete}
-        />
+        /> */}
 
         < TabelComponent 
         data={data}
         dataHeading={dataHeading}
-        skeleton={skeleton}
-        setOpenModal={handleCreate}
+        // skeleton={skeleton}
+        // setOpenModal={handleCreate}
         handleEdit={handleEdit}
         />
        </>

@@ -4,7 +4,6 @@ import { createCompany } from "./CreateCompany";
 
 export const modalCompany = ({
   defaultEdit,
-  setDefaultEdit
 }) => {
     const [parameter, setParameter] = useState('companies')
     const [openModal, setOpenModal] = useState(false);

@@ -1,5 +1,4 @@
 import { ModalConfirmDelete, ModalContainer } from "../../../../layouts/ModalContainer"
-import {CRUD} from "./components/CRUD"
 import TabelComponent from "../../../../layouts/Tabel"
 import { Spinner } from "../../../../layouts/Spinner"
 import { CompanyDetail } from "./components/companyDetail"
