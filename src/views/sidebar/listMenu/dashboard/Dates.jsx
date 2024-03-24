@@ -13,16 +13,16 @@ const GreetingComponent = ({
 
   // Determine greetings based on focus goals
   const focusGreetings = [
-    "Let's boost your sales and profits today!",
-    "Utilize Quick Access to reach your targets!",
-    "Quick Access is ready to help manage your business effortlessly.",
+    "Let's boost your sales and profits today! 💼",
+    "Utilize Quick Access to reach your targets! 🚀",
+    "Quick Access is ready to help manage your business effortlessly. 💡",
   ];
 
   // Determine personal greetings
   const personalGreetings = [
-    "How are you doing today?",
-    "Hope you have a pleasant and blessed day!",
-    "Don't forget to have coffee and breakfast before starting your activities!",
+    "How are you doing today? 😊",
+    "Hope you have a pleasant and blessed day! 🌟",
+    "Don't forget to have coffee and breakfast before starting your activities! ☕🥐",
   ];
 
   // Select a random greeting from the available list
@@ -88,10 +88,10 @@ export const Dates = () => {
     const hour = new Date().getHours();
     const newGreeting =
       hour < 12
-        ? ["Good morning,", "Hello,", "Morning vibes,"]
+        ? ["Good morning! 🌅", "Hello! 👋", "Morning vibes! ☀️"]
         : hour < 18
-        ? ["Good afternoon,", "Hello,", "Afternoon vibes,"]
-        : ["Good evening,", "Hello,", "Evening vibes,"];
+        ? ["Good afternoon! 🌞", "Hello! 👋", "Afternoon vibes! 🌻"]
+        : ["Good evening! 🌙", "Hello! 👋", "Evening vibes! 🌠"];
     setGreeting(newGreeting);
 
     // Update live time

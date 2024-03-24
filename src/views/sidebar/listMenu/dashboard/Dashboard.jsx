@@ -12,7 +12,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <div className="my-7">
+      <div className="mb-7">
         <Dates />
       </div>
       <div className="mb-7">
