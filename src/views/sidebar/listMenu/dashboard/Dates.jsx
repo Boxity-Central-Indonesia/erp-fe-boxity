@@ -29,13 +29,6 @@ const GreetingComponent = ({
   const randomGreeting = (greetings) =>
     greetings[Math.floor(Math.random() * greetings.length)];
 
-  // Determine whether to use focus or personal greeting randomly
-  const getRandomGreetingType = () => {
-    return Math.random() < 0.5 ? focusGreetings : personalGreetings;
-  };
-
-  const chosenGreetingType = getRandomGreetingType();
-
   return (
     <>
       <h3 className="text-4md font-semibold dark:text-white">
@@ -44,7 +37,7 @@ const GreetingComponent = ({
       <p className="text-md">
         {currentDate} {currentTime}
       </p>
-      <p className="text-md">{randomGreeting(chosenGreetingType)}</p>
+      <p className="text-md">{randomGreeting(greeting)}</p>
     </>
   );
 };
@@ -52,13 +45,13 @@ const GreetingComponent = ({
 // Komponen Dates
 export const Dates = () => {
   const [userName, setUserName] = useState("");
-  const [greeting, setGreeting] = useState("");
+  const [greeting, setGreeting] = useState([]);
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
   const [currentDate, setCurrentDate] = useState(
     new Date().toLocaleDateString("id-ID", {
-      weekday: "short",
+      weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
