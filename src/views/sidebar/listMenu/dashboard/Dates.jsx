@@ -2,28 +2,14 @@ import React, { useState, useEffect } from "react";
 import { getApiData } from "../../../../function/Api";
 
 // Komponen GreetingComponent
-const GreetingComponent = ({ userName, currentDate, currentTime }) => {
+const GreetingComponent = ({
+  userName,
+  greeting,
+  currentDate,
+  currentTime,
+}) => {
   // Determine greetings based on time
-  const getGreetingBasedOnTime = () => {
-    const hour = new Date().getHours();
-    if (hour >= 5 && hour < 12) {
-      // Morning
-      return ["Bright morning,", "Good morning,", "Morning vibes,"];
-    } else if (hour >= 12 && hour < 18) {
-      // Afternoon
-      return ["Good afternoon,", "Hello,", "Afternoon vibes,"];
-    } else {
-      // Evening
-      return ["Good evening,", "Hello,", "Evening vibes,"];
-    }
-  };
-
-  // Select a random greeting from the available list
-  const randomGreeting = (greetings) =>
-    greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Get greetings based on time
-  const timeGreetings = getGreetingBasedOnTime();
+  const timeGreetings = greeting;
 
   // Determine greetings based on focus goals
   const focusGreetings = [
@@ -39,6 +25,17 @@ const GreetingComponent = ({ userName, currentDate, currentTime }) => {
     "Don't forget to have coffee and breakfast before starting your activities!",
   ];
 
+  // Select a random greeting from the available list
+  const randomGreeting = (greetings) =>
+    greetings[Math.floor(Math.random() * greetings.length)];
+
+  // Determine whether to use focus or personal greeting randomly
+  const getRandomGreetingType = () => {
+    return Math.random() < 0.5 ? focusGreetings : personalGreetings;
+  };
+
+  const chosenGreetingType = getRandomGreetingType();
+
   return (
     <>
       <h3 className="text-4md font-semibold dark:text-white">
@@ -47,8 +44,7 @@ const GreetingComponent = ({ userName, currentDate, currentTime }) => {
       <p className="text-md">
         {currentDate} {currentTime}
       </p>
-      <p className="text-md">{randomGreeting(focusGreetings)}</p>
-      <p className="text-md">{randomGreeting(personalGreetings)}</p>
+      <p className="text-md">{randomGreeting(chosenGreetingType)}</p>
     </>
   );
 };
@@ -56,6 +52,7 @@ const GreetingComponent = ({ userName, currentDate, currentTime }) => {
 // Komponen Dates
 export const Dates = () => {
   const [userName, setUserName] = useState("");
+  const [greeting, setGreeting] = useState("");
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
@@ -83,6 +80,16 @@ export const Dates = () => {
 
     fetchUserProfile();
 
+    // Determine greeting based on time
+    const hour = new Date().getHours();
+    const newGreeting =
+      hour < 12
+        ? ["Bright morning,", "Good morning,", "Morning vibes,"]
+        : hour < 18
+        ? ["Good afternoon,", "Hello,", "Afternoon vibes,"]
+        : ["Good evening,", "Hello,", "Evening vibes,"];
+    setGreeting(newGreeting);
+
     // Update live time
     const timerId = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString());
@@ -103,6 +110,7 @@ export const Dates = () => {
   return (
     <GreetingComponent
       userName={userName}
+      greeting={greeting}
       currentDate={currentDate}
       currentTime={currentTime}
     />
