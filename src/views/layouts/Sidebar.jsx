@@ -65,7 +65,7 @@ function Sidebar() {
         { path: "/employees", label: "Employees" },
         { path: "/leads/list", label: "Leads Prospect" },
         { label: "Role & Permission", path: "/role-permission" },
-        { label: "Test", path: "/user/test" },
+        // { label: "Test", path: "/user/test" },
       ],
     },
     {
@@ -291,7 +291,6 @@ function Sidebar() {
       </div>
     </aside>
   );
-
 }
 
 export default Sidebar;
