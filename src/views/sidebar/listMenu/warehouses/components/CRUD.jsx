@@ -162,7 +162,7 @@ export const CRUD = () => {
         name: "warehouse_id",
         ref: refBody.warehouse_idRef,
         value: dataEdit.warehouse_id,
-        label: "Warehousees",
+        label: "Warehouse",
         htmlFor: "warehouse_id",
         id: "warehouse_id",
         dataSelect: dataWarehouseesSelect,

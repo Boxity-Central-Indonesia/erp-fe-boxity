@@ -23,7 +23,7 @@ export const CRUD = () => {
   const [skeleton, setSkeleton] = useState(false);
   const [dataHeading, setDataHeading] = useState([{}]);
   const [path, setPath] = useState("users");
-  const [update, setUpdate] = useState(false)
+  const [update, setUpdate] = useState(false);
 
   const [refBody, setRefBody] = useState({
     nameRef: useRef(),
@@ -33,7 +33,7 @@ export const CRUD = () => {
     genderRef: useRef(),
     passwordRef: useRef(),
     confirmPasswordRef: useRef(),
-    idRef: useRef()
+    idRef: useRef(),
   });
   const [dataEdit, setDataEdit] = useState({});
 
@@ -178,11 +178,11 @@ export const CRUD = () => {
         name: "confirmPassword",
         ref: refBody.confirmPasswordRef,
         value: dataEdit.confirmPassword,
-        label: "confirmPassword",
+        label: "Konfirmasi Password",
         htmlFor: "confirmPassword",
         id: "confirmPassword",
         onchange: handleChange,
-        placeholder: "confirmPassword",
+        placeholder: "Konfirmasi Password",
       },
     ]);
     setInputUpdate([
@@ -289,7 +289,7 @@ export const CRUD = () => {
 
   const CREATE = () => {
     const handleCreate = (param) => {
-      setUpdate(false)
+      setUpdate(false);
       setDataEdit({});
       setValidationError({});
       setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -311,7 +311,7 @@ export const CRUD = () => {
         gender: refBody.genderRef.current.value,
         no_handphone: refBody.no_handphoneRef.current.value,
         password: refBody.passwordRef.current.value,
-        password_confirmation: refBody.confirmPasswordRef.current.value
+        password_confirmation: refBody.confirmPasswordRef.current.value,
       };
 
       try {
@@ -321,7 +321,7 @@ export const CRUD = () => {
           setPath(() => param);
           setLoading((prevLoading) => !prevLoading);
           setOpenModal((prevOpenModal) => !prevOpenModal);
-        }else if(store.status === 400) {
+        } else if (store.status === 400) {
           setResponseError(store.errors);
           setLoading((prevLoading) => !prevLoading);
         }
@@ -341,7 +341,7 @@ export const CRUD = () => {
   const EDIT = () => {
     const handleEdit = async (param) => {
       const id = param.textContent;
-      setUpdate(true)
+      setUpdate(true);
       setDataModal({
         size: "2xl",
         labelModal: "Update user",
@@ -432,7 +432,7 @@ export const CRUD = () => {
   };
 
   const inputBody = (param) => {
-    if(!update){
+    if (!update) {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
@@ -457,7 +457,7 @@ export const CRUD = () => {
           </div>
         </>
       );
-    }else {
+    } else {
       return (
         <>
           <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">

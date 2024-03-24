@@ -245,7 +245,7 @@ export const CRUD = () => {
         name: "employment_status",
         ref: refBody.employment_statusRef,
         value: dataEdit.employment_status,
-        label: "satus",
+        label: "Status",
         htmlFor: "employment_status",
         id: "employment_status",
         dataSelect: [
@@ -433,7 +433,7 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: "Add new Employes",
+                label: "Add New Employees",
                 icon: IconAdd(),
                 heading: "Employes list",
                 information:
@@ -571,8 +571,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add New employes",
-          labelBtnModal: "Add new employes",
+          labelModal: "Add New Employees",
+          labelBtnModal: "Add New Employees",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -640,8 +640,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add New employes",
-          labelBtnModal: "Add new employes",
+          labelModal: "Add New Employees",
+          labelBtnModal: "Add New Employees",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
