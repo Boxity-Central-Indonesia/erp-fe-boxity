@@ -6,7 +6,7 @@ const GreetingComponent = ({
   userName,
   greeting,
   currentDate,
-  currentTime,
+  formattedTime,
 }) => {
   // Determine greetings based on time
   const timeGreetings = greeting;
@@ -42,7 +42,7 @@ const GreetingComponent = ({
         {randomGreeting(timeGreetings)} {userName}!
       </h3>
       <p className="text-md">
-        {currentDate} {currentTime}
+        {currentDate} {formattedTime}
       </p>
       <p className="text-md">{randomGreeting(chosenGreetingType)}</p>
     </>
@@ -92,7 +92,13 @@ export const Dates = () => {
 
     // Update live time
     const timerId = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString());
+      setCurrentTime(
+        new Date().toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        })
+      );
       setCurrentDate(
         new Date().toLocaleDateString("id-ID", {
           weekday: "long",
@@ -112,7 +118,7 @@ export const Dates = () => {
       userName={userName}
       greeting={greeting}
       currentDate={currentDate}
-      currentTime={currentTime}
+      formattedTime={currentTime}
     />
   );
 };
