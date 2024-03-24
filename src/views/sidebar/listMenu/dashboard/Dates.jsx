@@ -37,15 +37,19 @@ const GreetingComponent = ({
   const chosenGreetingType = getRandomGreetingType();
 
   return (
-    <>
-      <h3 className="text-4md font-semibold dark:text-white">
-        {randomGreeting(timeGreetings)} {userName}!
-      </h3>
-      <p className="text-md">
-        {currentDate} {formattedTime}
-      </p>
-      <p className="text-md">{randomGreeting(chosenGreetingType)}</p>
-    </>
+    <div className="flex justify-between">
+      <div>
+        <h3 className="text-4md font-semibold dark:text-white">
+          {randomGreeting(timeGreetings)} {userName}!
+        </h3>
+        <p className="text-md">{randomGreeting(chosenGreetingType)}</p>
+      </div>
+      <div>
+        <p className="text-md">
+          {currentDate} {formattedTime}
+        </p>
+      </div>
+    </div>
   );
 };
 
@@ -84,7 +88,7 @@ export const Dates = () => {
     const hour = new Date().getHours();
     const newGreeting =
       hour < 12
-        ? ["Bright morning,", "Good morning,", "Morning vibes,"]
+        ? ["Good morning,", "Hello,", "Morning vibes,"]
         : hour < 18
         ? ["Good afternoon,", "Hello,", "Afternoon vibes,"]
         : ["Good evening,", "Hello,", "Evening vibes,"];
