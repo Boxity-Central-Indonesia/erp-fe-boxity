@@ -58,7 +58,7 @@ export const Dates = () => {
   );
   const [currentDate, setCurrentDate] = useState(
     new Date().toLocaleDateString("id-ID", {
-      weekday: "long",
+      weekday: "short",
       year: "numeric",
       month: "long",
       day: "numeric",
