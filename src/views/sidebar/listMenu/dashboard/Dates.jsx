@@ -13,16 +13,16 @@ const GreetingComponent = ({
 
   // Determine greetings based on focus goals
   const focusGreetings = [
-    "Let's boost your sales and profits today! 💼",
-    "Utilize Quick Access to reach your targets! 🚀",
-    "Quick Access is ready to help manage your business effortlessly. 💡",
+    "Let's boost your sales and profits today 💼",
+    "Utilize Quick Access to reach your targets 🚀",
+    "Quick Access is ready to help manage your business effortlessly 💡",
   ];
 
   // Determine personal greetings
   const personalGreetings = [
-    "How are you doing today? 😊",
+    "😊 How are you doing today?",
     "Hope you have a pleasant and blessed day! 🌟",
-    "Don't forget to have coffee and breakfast before starting your activities! ☕🥐",
+    "Don't forget to have coffee ☕ and breakfast 🥐 before starting your activities!",
   ];
 
   // Select a random greeting from the available list
@@ -39,9 +39,9 @@ const GreetingComponent = ({
   return (
     <div className="flex justify-between">
       <div>
-        <h3 className="text-4md font-semibold dark:text-white">
+        <h1 className="text-2xl font-semibold dark:text-white">
           {randomGreeting(timeGreetings)} {userName}!
-        </h3>
+        </h1>
         <p className="text-md">{randomGreeting(chosenGreetingType)}</p>
       </div>
       <div>
@@ -88,10 +88,10 @@ export const Dates = () => {
     const hour = new Date().getHours();
     const newGreeting =
       hour < 12
-        ? ["Good morning! 🌅", "Hello! 👋", "Morning vibes! ☀️"]
+        ? ["Good morning 🌅,", "Hello 👋,", "Morning vibes ☀️,"]
         : hour < 18
-        ? ["Good afternoon! 🌞", "Hello! 👋", "Afternoon vibes! 🌻"]
-        : ["Good evening! 🌙", "Hello! 👋", "Evening vibes! 🌠"];
+        ? ["Good afternoon 🌞,", "Hello 👋,", "Afternoon vibes 🌻,"]
+        : ["Good evening 🌙,", "Hello 👋,", "Evening vibes 🌠,"];
     setGreeting(newGreeting);
 
     // Update live time
@@ -111,7 +111,7 @@ export const Dates = () => {
           day: "numeric",
         })
       );
-    }, 1000);
+    }, 60000);
 
     // Clean up interval
     return () => clearInterval(timerId);

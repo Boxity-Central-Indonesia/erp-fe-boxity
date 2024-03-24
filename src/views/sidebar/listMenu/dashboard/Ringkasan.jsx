@@ -191,7 +191,7 @@ export const Ringkasan = ({ data }) => {
 
   return (
     <>
-      <h1 className="text-xl font-medium mb-3">Overall Summary</h1>
+      <h1 className="text-xl font-medium mb-3">Overall summary</h1>
       <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
         {dataElement &&
           dataElement.map((item, index) => (
