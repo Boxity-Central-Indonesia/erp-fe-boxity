@@ -30,7 +30,7 @@ export const ProccesActivityDetail = ({
                   <td className="py-3">Actifity type</td>
                   <td>
                     {" "}
-                    : <span className="ml-5 capitalize">{data?.activity_type.replace(/_/g, ' ') || "--"}</span>
+                    : <span className="ml-5 capitalize">{data?.activity_type?.replace(/_/g, ' ') || "--"}</span>
                   </td>
                 </tr>
                 <tr>
