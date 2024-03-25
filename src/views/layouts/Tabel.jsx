@@ -550,6 +550,7 @@ const TabelComponent = ({
                           return (
                             <Table.Cell className={`text-right`}>
                               <button
+                                key={1 + 1}
                                 style={{ color: globalColor }}
                                 className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
                                 onClick={(e) => handleEditClick(e.target)} // Pass row.id as

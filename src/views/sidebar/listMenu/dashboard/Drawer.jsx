@@ -1,5 +1,5 @@
 import {Table} from 'flowbite-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useColor } from "../../../config/GlobalColour";
 
 
@@ -7,7 +7,8 @@ import { useColor } from "../../../config/GlobalColour";
 export const Drawer = ({
     openDrawer,
     setOpenDrawer,
-    setSelectedCheckbox
+    setSelectedCheckbox,
+    dataDrawer
 }) => {
     const { globalColor, changeColor } = useColor();
 
@@ -15,125 +16,202 @@ export const Drawer = ({
 
     const classClosed = 'fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800'
 
+
+    const dataProducts = dataDrawer?.products
+    ? dataDrawer.products.map((item) => ({
+        id: item.id,
+        name: item.name,
+        quantity: item.quantity + " pcs",
+        "price per unit": new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+        }).format(item.price_per_unit),
+        "total price": new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+        }).format(item.total_price),
+      }))
+    : []; // Use an empty array if data.departments is null
+
     const tabelOrder = () => {
         return(
             <>
-                 <table className={`w-full text-gray-700 text`}>
-                        <tr className="">
-                            <td className="py-1.5">Kode Transaksi</td>
-                            <td>
-                                {" "}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="py-1.5">
-                                Customer
-                            </td>
-                            <td>
-                                {" "}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="py-1.5">
-                                Gudang Asal
-                            </td>
-                            <td>
-                                {" "}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="py-1.5">Kode transaksi invoice</td>
-                            <td>
-                                {" "}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="py-1.5">Order type</td>
-                            <td>
-                                {" "}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="py-1.5">Order status</td>
-                            <td>
-                                {" "}
-                            </td>
-                        </tr>
+                <table className={`w-full text-gray-700 text`}>
+                    <tr className="">
+                        <td className="py-1.5">Kode Transaksi</td>
+                        <td>
+                            {" "}
+                            : <span className="ml-5">{dataDrawer?.kode_order || "--"}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="py-1.5">
+                            Customer
+                        </td>
+                        <td>
+                            {" "}
+                            : <span className="ml-5">{dataDrawer?.vendor?.name || "--"}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="py-1.5">
+                            Gudang Asal
+                        </td>
+                        <td>
+                            {" "}
+                            :{" "}
+                            <span className="ml-5">{dataDrawer?.warehouse?.name || "--"}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="py-1.5">Kode transaksi invoice</td>
+                        <td>
+                            {" "}
+                            :{" "}
+                            <span className="ml-5">
+                                {dataDrawer?.invoices?.length > 0
+                                ? dataDrawer.invoices
+                                .map((invoice) => invoice.kode_invoice)
+                                .join(", ")
+                                : "--"}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="py-1.5">Order type</td>
+                        <td>
+                            {" "}
+                            : <span className="ml-5">{dataDrawer?.order_type || "--"}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="py-1.5">Order status</td>
+                        <td>
+                            {" "}
+                            : <span className="ml-5">{dataDrawer?.order_status || "--"}</span>
+                        </td>
+                    </tr>
 
-                        <tr>
-                            <td className="py-1.5">PPN</td>
-                            <td>
-                                {" "}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="py-1.5">Biaya Pengiriman</td>
-                            <td>
-                                {" "}
-                                {/* :{" "}
-                                <span className="ml-5">{data?.shipping_cost || "Rp. 0"}</span> */}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="py-1.5">Total Tagihan</td>
-                            <td>
-                                {" "}
-                                {/* :{" "}
-                                <span className="ml-5">
-                                    {data?.total_price
-                                    ? new Intl.NumberFormat("id-ID", {
-                                    style: "currency",
-                                    currency: "IDR",
-                                    }).format(data.total_price)
-                                    : "--"}
-                                </span> */}
-                            </td>
-                        </tr>
-                    </table>
+                    <tr>
+                        <td className="py-1.5">PPN</td>
+                        <td>
+                            {" "}
+                            : <span className="ml-5">{dataDrawer?.taxes || "Rp. 0"}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="py-1.5">Biaya Pengiriman</td>
+                        <td>
+                            {" "}
+                            :{" "}
+                            <span className="ml-5">{dataDrawer?.shipping_cost || "Rp. 0"}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="py-1.5">Total Tagihan</td>
+                        <td>
+                            {" "}
+                            :{" "}
+                            <span className="ml-5">
+                                {dataDrawer?.total_price
+                                ? new Intl.NumberFormat("id-ID", {
+                                style: "currency",
+                                currency: "IDR",
+                                }).format(dataDrawer.total_price)
+                                : "--"}
+                            </span>
+                        </td>
+                    </tr>
+                </table>
             </>
         )
     }
 
     const tabelProductOrder = () => {
-        return(
-            <>
-                <div className="overflow-x-auto">
-                    <Table>
-                        <Table.Head>
-                            <Table.HeadCell>Product name</Table.HeadCell>
-                            <Table.HeadCell>Color</Table.HeadCell>
-                            <Table.HeadCell>Category</Table.HeadCell>
-                            <Table.HeadCell>Price</Table.HeadCell>
-                        </Table.Head>
-                        <Table.Body className="divide-y">
-                            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                    {'Apple MacBook Pro 17"'}
-                                </Table.Cell>
-                                <Table.Cell>Sliver</Table.Cell>
-                                <Table.Cell>Laptop</Table.Cell>
-                                <Table.Cell>$2999</Table.Cell>
-                            </Table.Row>
-                            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                    Microsoft Surface Pro
-                                </Table.Cell>
-                                <Table.Cell>White</Table.Cell>
-                                <Table.Cell>Laptop PC</Table.Cell>
-                                <Table.Cell>$1999</Table.Cell>
-                            </Table.Row>
-                            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                    Magic Mouse 2</Table.Cell>
-                                <Table.Cell>Black</Table.Cell>
-                                <Table.Cell>Accessories</Table.Cell>
-                                <Table.Cell>$99</Table.Cell>
-                            </Table.Row>
-                        </Table.Body>
-                    </Table>
+        if (dataProducts.length === 0) {
+            // Tampilkan pesan "Loading..." jika data masih undifined
+            return (
+              <div
+                role="status"
+                className="max-w-full p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                    <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                  </div>
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
                 </div>
-            </>
-        )
+                <div className="flex items-center justify-between pt-4">
+                  <div>
+                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                    <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                  </div>
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                </div>
+                <div className="flex items-center justify-between pt-4">
+                  <div>
+                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                    <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                  </div>
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                </div>
+                <div className="flex items-center justify-between pt-4">
+                  <div>
+                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                    <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                  </div>
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                </div>
+                <div className="flex items-center justify-between pt-4">
+                  <div>
+                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                    <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                  </div>
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                </div>
+                <span className="sr-only">Loading...</span>
+              </div>
+            );
+        }else {
+            return(
+                <>
+                    <div className="overflow-x-auto">
+                        <Table>
+                            <Table.Head className="border-b">
+                                {dataProducts &&
+                                dataProducts[0] &&
+                                Object.keys(dataProducts[0]).map(
+                                (key) =>
+                                key !== "product_id" &&
+                                key !== "id" &&
+                                dataProducts[0][key] !== null && (
+                                <Table.HeadCell key={key}>{key}</Table.HeadCell>
+                                )
+                                )}
+                            </Table.Head>
+                            <Table.Body className="divide-y">
+                                {dataProducts && dataProducts.map((item) => (
+                                <Table.Row key={item.id}
+                                    className="bg-white dark:border-gray-700 dark:bg-gray-800 border-b">
+                                    {Object.keys(item)
+                                    .filter((key) => key !== "id")
+                                    .filter((key) => key !== "product_id")
+                                    .map((key) => (
+                                    <Table.Cell key={key}
+                                        className="whitespace-nowrap capitalize font-medium text-gray-900 dark:text-white">
+                                        {item[key]}
+                                    </Table.Cell>
+                                    ))}
+                                </Table.Row>
+                                ))}
+                            </Table.Body>
+                        </Table>
+                    </div>
+                </>
+            )
+        }
+       
     }
 
     const closeDrawer = () => {

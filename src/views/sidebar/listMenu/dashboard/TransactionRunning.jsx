@@ -28,16 +28,22 @@ export const TransactionRunning = ({ dataOrders }) => {
           <Table>
             <Table.Head>
               {dataHeading.map((heading, index) => (
-                <Table.HeadCell key={index}>{heading}</Table.HeadCell>
+              <Table.HeadCell key={index}>{heading}</Table.HeadCell>
               ))}
             </Table.Head>
             <Table.Body className="divide-y">
               {data.map((row, rowIndex) => (
-                <Table.Row key={rowIndex}>
-                  {dataHeading.map((heading, columnIndex) => (
-                    <Table.Cell key={columnIndex}>{row[heading]}</Table.Cell>
-                  ))}
-                </Table.Row>
+              <Table.Row key={rowIndex}>
+                {dataHeading.map((heading, columnIndex) => (
+                <Table.Cell key={columnIndex}>
+                  <div className={`${row[heading]=='Completed' ? `bg-green-600 px-3 py-1 text-white font-medium w-fit
+                    rounded-full` : row[heading]==='In Production'
+                    ? 'bg-yellow-600 px-3 py-1 text-white font-medium w-fit rounded-full' : ``}`}>
+                    <p>{row[heading]}</p>
+                  </div>
+                </Table.Cell>
+                ))}
+              </Table.Row>
               ))}
             </Table.Body>
           </Table>
@@ -46,27 +52,12 @@ export const TransactionRunning = ({ dataOrders }) => {
         <div className="px-5 pb-5">
           <div className="mt-7 mb-3 flex items-center justify-between">
             <DropdownForLineChart />
-            <div
-              style={{ color: globalColor }}
-              className="flex items-center cursor-pointer"
-            >
+            <div style={{ color: globalColor }} className="flex items-center cursor-pointer">
               <p className="text-medium">Full report</p>
-              <svg
-                className="w-5 h-5 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m9 5 7 7-7 7"
-                />
+              <svg className="w-5 h-5 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                  d="m9 5 7 7-7 7" />
               </svg>
             </div>
           </div>

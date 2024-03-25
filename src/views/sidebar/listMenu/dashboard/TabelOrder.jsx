@@ -2,35 +2,56 @@ import React, { useState, useRef } from "react";
 import { Table } from "flowbite-react";
 import { useColor } from "../../../config/GlobalColour";
 import { Drawer } from "./Drawer";
+import { numberToCurrency } from "../../../config/FormatCurrency";
+import { getApiData } from "../../../../function/Api";
 
-export const TabelOrder = () => {
-  const [data, setData] = useState([
-    { id: 1, type: "purchase", amount: 100, date: "2024-03-18" },
-    { id: 2, type: "sale", amount: 150, date: "2024-03-19" },
-    { id: 3, type: "purchase", amount: 80, date: "2024-03-20" },
-    { id: 4, type: "sale", amount: 200, date: "2024-03-21" },
-    { id: 5, type: "purchase", amount: 120, date: "2024-03-22" },
-    { id: 6, type: "sale", amount: 180, date: "2024-03-23" },
-    { id: 7, type: "purchase", amount: 90, date: "2024-03-24" },
-    { id: 8, type: "sale", amount: 170, date: "2024-03-25" },
-    { id: 9, type: "purchase", amount: 110, date: "2024-03-26" },
-  ]);
+export const TabelOrder = ({
+  dataOrders
+}) => {
+  const data =
+    dataOrders &&
+    dataOrders.map((item) => ({
+      "kode transaksi": item.kode_order,
+      "vendor name": item.vendor.name,
+      "transaction type": item.vendor.transaction_type,
+      // 'product name': item.products.name,
+      "tujuan/asal gudang": item.warehouse.name,
+      // status: item.status,
+      "order status": item.order_status,
+      "order type": item.order_type,
+      taxes: numberToCurrency(item.taxes) ?? "--",
+      // quantity: item.quantity,
+      // 'price per unnit': item.price_per_unit,
+      "shipping cost": numberToCurrency( item.shipping_cost) ?? "--",
+      "total price": numberToCurrency(item.total_price),
+      id: item.id,
+    }));
 
   const { globalColor } = useColor();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
+  const [dataDrawer, setDataDrawer] = useState()
 
   const checkboxRef = useRef();
 
-  const columns = ["type", "amount", "date"];
+  const dataHeading = data.length > 0 ? Object.keys(data[0]) : [];
 
-  const handleCheckbox = (id) => {
+  const handleCheckbox = async(id) => {
+    setDataDrawer({})
     if (selectedCheckbox === id) {
       setOpenDrawer(false); // Jika checkbox yang dipilih adalah yang sama dengan sebelumnya, tutup drawer
       setSelectedCheckbox(null); // Hapus checkbox yang dipilih
     } else {
       setOpenDrawer(true);
       setSelectedCheckbox(id);
+      try {
+        const {data, status} = await getApiData('orders/' + id)
+        if(status === 200) {
+          setDataDrawer(data)
+        }
+      } catch (error) {
+        console.log(data);
+      }
     }
   };
 
@@ -39,26 +60,32 @@ export const TabelOrder = () => {
       <div className="overflow-x-auto">
         <Table hoverable>
           <Table.Head>
-            <Table.HeadCell></Table.HeadCell>
-            {columns.map((column, index) => (
-              <Table.HeadCell key={index}>{column}</Table.HeadCell>
-            ))}
-          </Table.Head>
+              <Table.HeadCell>Detail</Table.HeadCell>
+              {dataHeading
+                .filter(heading => heading !== 'id')
+                .map((heading, index) => (
+                  <Table.HeadCell className={`${heading === 'taxes' || heading === 'shipping cost' || heading === 'total price' ?  `text-right` : ``}`} key={index}>{heading}</Table.HeadCell>
+                ))
+              }
+            </Table.Head>
           <Table.Body className="divide-y">
-            {data.map((row, index) => (
-              <Table.Row
-                key={index}
-                className="bg-white dark:border-gray-700 dark:bg-gray-800"
-              >
-                <Table.Cell className="p-4 flex item-center">
-                  {checkbox(row.id)}
-                </Table.Cell>
-                {columns.map((column, columnIndex) => (
-                  <Table.Cell key={columnIndex}>{row[column]}</Table.Cell>
-                ))}
-              </Table.Row>
-            ))}
-          </Table.Body>
+              {data.map((row, rowIndex) => (
+                <Table.Row key={rowIndex}>
+                  <Table.Cell>
+                    {checkbox(row.id)}
+                  </Table.Cell>
+                  {dataHeading
+                  .filter(heading => heading !== 'id')
+                  .map((heading, columnIndex) => (
+                    <Table.Cell key={columnIndex}>
+                      <div className={`${row[heading] == 'Completed' ? `bg-green-600 px-3 py-1 text-white font-medium w-fit rounded-full` : row[heading] === 'In Production' ? 'bg-yellow-600 px-3 py-1 text-white font-medium w-fit rounded-full' : heading === 'taxes' || heading === 'shipping cost' ? 'text-right' : ''}`}>
+                        <p>{row[heading]}</p> 
+                      </div>
+                    </Table.Cell>
+                  ))}
+                </Table.Row>
+              ))}
+            </Table.Body>
         </Table>
       </div>
     );
@@ -83,7 +110,12 @@ export const TabelOrder = () => {
   return (
     <section className="bg-white rounded-md border p-5">
       <h1 className="text-xl font-semibold mb-5">All transaction list</h1>
-      {Drawer({ openDrawer, setOpenDrawer, setSelectedCheckbox })}
+      {Drawer({ 
+        openDrawer, 
+        setOpenDrawer, 
+        setSelectedCheckbox,
+        dataDrawer
+      })}
       {tabel()}
     </section>
   );

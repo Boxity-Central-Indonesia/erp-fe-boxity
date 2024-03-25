@@ -189,9 +189,7 @@ export const index = () => {
 
     useEffect(() => {
         setDataTabelProccesActivity(dataProccesActivity?.[dataDetail?.order_id]?.[dataDetail?.product_id]);
-        console.log(dataProccesActivity?.[dataDetail?.order_id]?.[dataDetail?.product_id]);
     }, [dataProccesActivity])
-
 
     // modal company
 
@@ -222,6 +220,15 @@ export const index = () => {
     })
 
     // modal company end
+
+    // hapus data detailActivity saat modal di triger
+
+    useEffect(() => {
+        localStorage.removeItem("dataDetailsActivity")
+    }, [openModal])
+
+    // hapus data detailActivity saat modal di triger
+
 
     // store dataDetailActivity to localstorage
 

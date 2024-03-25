@@ -37,8 +37,6 @@ export const inputBody = ({
           }));
       };
 
-     
-
 
       const searchDataByActivityType = (searchActivityType) => {
         // Cari objek yang memiliki activity_type yang cocok
@@ -59,7 +57,8 @@ export const inputBody = ({
          const { name, value } = event.target;
 
 
-        setDataFindProcces(searchDataByActivityType(value).details)
+        setDataFindProcces(searchDataByActivityType(value.replace(/ /g, '_')).details)
+        console.log(searchDataByActivityType(value.replace(/ /g, '_')));
 
          // Memperbarui state sesuai dengan nilai input yang berubah
          setDataEdit((prevDataEdit) => ({
@@ -123,49 +122,13 @@ export const inputBody = ({
             element: "select",
             name: "activity_type",
             ref: refBody.activity_typeRef,
-            value: dataEdit.activity_type,
+            value: dataEdit.activity_type?.replace(/_/g, ' '),
             label: "Activity type",
             htmlFor: "activity_type",
             id: "activity_type",
             dataSelect: activity_type,
             onchange: handleChangeAndFindProccesActivities,
           },
-        //   {
-        //     element: "input",
-        //     type: "time",
-        //     name: "unloading_time",
-        //     ref: refBody.unloading_timeRef,
-        //     value: dataEdit.unloading_time,
-        //     label: "Unloading time",
-        //     htmlFor: "unloading_time",
-        //     id: "unloading_time",
-        //     onchange: handleChange,
-        //     placeholder: "Unloading time",
-        //   },
-        //   {
-        //     element: "input",
-        //     type: "number",
-        //     name: "number_of_rack",
-        //     ref: refBody.number_of_rackRef,
-        //     value: dataEdit.number_of_rack,
-        //     label: "Number of rack",
-        //     htmlFor: "number_of_rack",
-        //     id: "number_of_rack",
-        //     onchange: handleChange,
-        //     placeholder: "Number of rack",
-        //   },
-        //   {
-        //     element: "input",
-        //     type: "number",
-        //     name: "number_of_animals",
-        //     ref: refBody.number_of_animalsRef,
-        //     value: dataEdit.number_of_animals,
-        //     label: "Number of animals",
-        //     htmlFor: "number_of_animals",
-        //     id: "number_of_animals",
-        //     onchange: handleChange,
-        //     placeholder: "Number of animals",
-        //   },
         ])
       }, [dataEdit]);
     

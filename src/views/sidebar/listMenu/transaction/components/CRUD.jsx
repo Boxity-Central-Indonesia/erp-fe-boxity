@@ -10,6 +10,7 @@ import { TextArea, RadioButtons } from "../../../../layouts/FormInput";
 import FormInput from "../../../../layouts/FormInput";
 import { TabelForProducts } from "./TabelForProducts";
 import { TabelForDeliveryNoteItem } from "./TabelForDeliveryNotesItem";
+import { FormatCurrency, numberToCurrency } from "../../../../config/FormatCurrency";
 
 export const CRUD = () => {
   const [refresh, setRefresh] = useState(false);
@@ -175,10 +176,18 @@ export const CRUD = () => {
       localStorage.setItem("order_type", value);
     }
 
-    setDataEdit((prevDataEdit) => ({
-      ...prevDataEdit,
-      [name]: value,
-    }));
+    if(name === 'balance_due' ||  name === 'total_amount' || name === 'amount_paid') {
+      setDataEdit((prevDataEdit) => ({
+        ...prevDataEdit,
+        [name]: FormatCurrency({value}),
+      }));
+    }else{
+      setDataEdit((prevDataEdit) => ({
+        ...prevDataEdit,
+        [name]: value,
+      }));
+    }
+
   };
 
   useEffect(() => {
@@ -346,7 +355,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "total_amount",
         ref: refBody.total_amountRef,
         value: dataEdit.total_amount,
@@ -358,7 +367,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "balance_due",
         ref: refBody.balance_dueRef,
         value: dataEdit.balance_due,
@@ -423,7 +432,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "amount_paid",
         ref: refBody.amount_paidRef,
         value: dataEdit.amount_paid,
@@ -1039,8 +1048,8 @@ export const CRUD = () => {
             setDataEdit({
               id: data.id,
               order_id: data.order_id,
-              total_amount: data.total_amount,
-              balance_due: data.balance_due,
+              total_amount: numberToCurrency(data.total_amount),
+              balance_due: numberToCurrency(data.balance_due),
               invoice_date: data.invoice_date,
               due_date: data.due_date,
               status: data.status,
@@ -1073,7 +1082,7 @@ export const CRUD = () => {
             setDataEdit({
               id: data.id,
               invoice_id: data.invoice_id,
-              amount_paid: data.amount_paid,
+              amount_paid: numberToCurrency(data.amount_paid),
               payment_method: data.payment_method,
               payment_date: data.payment_date,
             });

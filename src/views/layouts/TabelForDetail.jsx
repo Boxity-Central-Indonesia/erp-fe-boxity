@@ -104,7 +104,7 @@ export const TabelForDetail = ({
                 .filter((key) => key !== "id")
                 .filter((key) => key !== "product_id")
                 .map((key) => (
-                <Table.Cell key={key} className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                <Table.Cell key={key} className="whitespace-nowrap capitalize font-medium text-gray-900 dark:text-white">
                   {item[key]}
                 </Table.Cell>
                 ))}

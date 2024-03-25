@@ -30,7 +30,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="mb-10">
-        <TabelOrder />
+        <TabelOrder dataOrders={dataOrders}/>
       </div>
       <div className="mb-20 grid grid-cols-1 lg:grid-cols-2">
         <GrossSales />
