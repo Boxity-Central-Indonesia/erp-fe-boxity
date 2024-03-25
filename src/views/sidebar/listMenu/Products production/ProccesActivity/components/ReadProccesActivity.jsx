@@ -17,7 +17,7 @@ export const ReadProccesActivity = ({
                   Object.values(innerObj).map(item => ({
                     'transacsion_code': '--',
                     'status activity': item[item.length - 1].status_activities,
-                    'last activity': item[item.length - 1].activity_type,
+                    'last activity': item[item.length - 1].activity_type.replace(/_/g, ' '),
                     'activity date': item[item.length -1].activity_date,
                     // 'description': item[item.length - 1].details?.description || '--', // Tambahkan penanganan untuk jika details tidak tersedia
                     id: item[item.length - 1].id,

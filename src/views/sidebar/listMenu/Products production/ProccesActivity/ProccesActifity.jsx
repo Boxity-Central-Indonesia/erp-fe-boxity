@@ -1,5 +1,5 @@
 import { ModalConfirmDelete, ModalContainer } from "../../../../layouts/ModalContainer"
-import {CRUD} from "./components/CRUD"
+// import {CRUD} from "./components/CRUD"
 import TabelComponent from "../../../../layouts/Tabel"
 import { Spinner } from "../../../../layouts/Spinner"
 import { ProccesActivityDetail } from "./components/proccesActifityDetail"
@@ -22,7 +22,8 @@ export const ProccesActifity = () => {
         modalDelete,
         openModalDelete,
         closeModalDelete,
-        handleDelete
+        handleDelete,
+        dataTabelProccesActivity
     } = index()
 
 
@@ -55,6 +56,7 @@ export const ProccesActifity = () => {
                     defaultEdit={setDefaultEdit}
                     handleEdit={handleEdit}
                     dataHeading={dataHeading}
+                    dataTabelProccesActivity={dataTabelProccesActivity}
                 />
             </>
         )

@@ -17,6 +17,8 @@ export const index = () => {
     const [dataProduct, setDataProduct] = useState([])
     const [dataFindProcces, setDataFindProcces] = useState()
     const [dataDetailsActivity, setDataDetailsActivity] = useState({})
+    const [dataProccesActivity, setDataProccesActivity] = useState()
+    const [dataTabelProccesActivity, setDataTabelProccesActivity] = useState()
     const [dataProcces, setDataProcces] = useState([
       {
           activity_type: "weight_based_ordering",
@@ -185,6 +187,12 @@ export const index = () => {
       }, []);
 
 
+    useEffect(() => {
+        setDataTabelProccesActivity(dataProccesActivity?.[dataDetail?.order_id]?.[dataDetail?.product_id]);
+        console.log(dataProccesActivity?.[dataDetail?.order_id]?.[dataDetail?.product_id]);
+    }, [dataProccesActivity])
+
+
     // modal company
 
     const {
@@ -259,7 +267,8 @@ export const index = () => {
         dataProcces,
         setDataFindProcces,
         dataFindProcces,
-        setDataDetailsActivity
+        setDataDetailsActivity,
+        setDataProccesActivity
     })
 
     // edit procces end
@@ -296,6 +305,7 @@ export const index = () => {
         modalDelete,
         openModalDelete,
         closeModalDelete,
-        handleDelete
+        handleDelete,
+        dataTabelProccesActivity
     }
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Read } from "../../../../../CRUD/Read"
 import { Update } from "../../../../../CRUD/Update"
+import { getApiData } from "../../../../../../function/Api";
 
 
 export const editProccesActivity = ({
@@ -19,7 +20,9 @@ export const editProccesActivity = ({
     setIdDelete,
     dataProcces,
     setDataFindProcces,
-    setDataDetailsActivity
+    setDataDetailsActivity,
+    setDataProccesActivity,
+
 }) => {
 
   const searchDataByActivityType = (searchActivityType) => {
@@ -35,7 +38,11 @@ export const editProccesActivity = ({
     }
   };
 
-  const handleEdit = (param) => {
+  // useEffect(() => {
+  //   console.log(dataDetail);
+  // }, [dataDetail])
+
+  const handleEdit = async(param) => {
     if(defaultEdit === true) {
       setDefaultEdit(false)
       Read({
@@ -43,6 +50,16 @@ export const editProccesActivity = ({
           refresh,
           setDataDetail
       })
+
+      try {
+        const {data, status} = await getApiData('processing-activities')
+        if(status === 200) {
+          setDataProccesActivity(data)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
     }else if(defaultEdit === false){
       setOpenModal(prevOpenModal => !prevOpenModal)
       setDataFindProcces(searchDataByActivityType(dataDetail.activity_type).details);

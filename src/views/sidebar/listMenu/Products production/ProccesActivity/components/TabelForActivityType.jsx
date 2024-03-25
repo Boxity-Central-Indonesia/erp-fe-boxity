@@ -19,7 +19,7 @@ export const TabelForActivityType = ({
     const handleChange = (event, index) => {
         const { name, value } = event.target;
         const newData = [...dataFindProcces];
-        newData[index] = value;
+        newData[index] = value.replace(/ /g, '_');
         setDataFindProcces(newData);
     }
 
@@ -59,7 +59,7 @@ export const TabelForActivityType = ({
                                         <input 
                                             type="text" 
                                             placeholder="klik untuk mengedit" 
-                                            value={item} 
+                                            value={item.replace(/_/g, ' ')} 
                                             onChange={(event) => handleChange(event, index)} 
                                             className="border-none py-1 px-1 text-gray-700 text-sm"
                                         />

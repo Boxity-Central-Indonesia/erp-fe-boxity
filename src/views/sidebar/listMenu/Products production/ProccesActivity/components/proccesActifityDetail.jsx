@@ -1,4 +1,3 @@
-import { CRUD } from "./CRUD";
 import { useEffect } from "react";
 import Button from "../../../../../layouts/Button";
 import { TabelForDetail } from "../../../../../layouts/TabelForDetail";
@@ -8,13 +7,14 @@ export const ProccesActivityDetail = ({
   defaultEdit,
   handleEdit,
   dataHeading,
+  dataTabelProccesActivity
 }) => {
 
-
-    const dataTabelForDetail = [{
-        'activity type' : data?.activity_type || '--',
-        'status activities': data?.status_activities || '--'
-    }]
+    const dataTabelForDetail = dataTabelProccesActivity && dataTabelProccesActivity.map(item => ({
+      'activity type': item.activity_type.replace(/_/g, ' ') || '--',
+      'status activities': item.status_activities || '--'
+  }));
+  
 
   return (
     <>
@@ -143,6 +143,7 @@ export const ProccesActivityDetail = ({
               handleEdit={handleEdit}
               routes={""}
               hidden={true}
+              hiddenBtnEdit={true}
             />
           </div>
         </div>

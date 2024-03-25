@@ -26,7 +26,7 @@ export const CRUD = () => {
   const [validationError, setValidationError] = useState();
   const [dataProductsSelect, setDataProducstSelect] = useState([]);
   const [dataWarehouseesSelect, setDataWarehouseesSelect] = useState([]);
-  const [dataDepartments, setDataDepartments] = useState();
+  const [dataCategorySelect, setDataCategorySelect] = useState();
   const [loading, setLoading] = useState(true);
   const [skeleton, setSkeleton] = useState(false);
   const [dataHeading, setDataHeading] = useState([{}]);
@@ -260,10 +260,7 @@ export const CRUD = () => {
         label: "Category",
         htmlFor: "category_id",
         id: "category_id",
-        dataSelect: [
-          { value: "active", name: "Active" },
-          { value: "inactive", name: "Inactive" },
-        ],
+        dataSelect: dataCategorySelect,
         onchange: handleChange,
       },
       {
@@ -290,16 +287,18 @@ export const CRUD = () => {
         placeholder: "Unit of measure",
       },
       {
-        element: "input",
-        type: "text",
+        element: "select",
         name: "raw_material",
         ref: refBody.raw_materialRef,
         value: dataEdit.raw_material,
         label: "Raw material",
         htmlFor: "raw_material",
         id: "raw_material",
+        dataSelect: [
+          { value: "true", name: "True" },
+          { value: "false", name: "False" },
+        ],
         onchange: handleChange,
-        placeholder: "Raw material",
       },
     ]);
 
@@ -611,6 +610,19 @@ export const CRUD = () => {
         }
       };
       getSelectWarehousees();
+
+      const getSelectKategory = async () => {
+        const { data, status } = await getApiData("product-categories");
+        if (status === 200) {
+          const newData = data.map((item) => ({
+            id: item.id,
+            name: item.name,
+          }));
+          setDataCategorySelect(newData);
+        }
+      };
+
+      getSelectKategory()
     }, [path]);
 
     const handleClickHeading = async (param) => {

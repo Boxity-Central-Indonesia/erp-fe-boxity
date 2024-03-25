@@ -22,7 +22,7 @@ export const inputBody = ({
     const [inputEdit, setInputEdit] = useState([])
 
     const activity_type =  dataProcces && dataProcces.map(item => ({
-        name: item?.activity_type
+        name: item?.activity_type.replace(/_/g, ' ')
     }))
 
   

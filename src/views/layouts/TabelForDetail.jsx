@@ -7,7 +7,8 @@ export const TabelForDetail = ({
   dataHeading, 
   routes, 
   handleEdit,
-  hidden
+  hidden,
+  hiddenBtnEdit
 }) => {
   const { globalColor, changeColor } = useColor();
   
@@ -92,7 +93,7 @@ export const TabelForDetail = ({
               <Table.HeadCell key={key}>{key}</Table.HeadCell>
               )
               )}
-              <Table.HeadCell className={`${data && data.length === 0 ? `hidden` : ``}`}>
+              <Table.HeadCell className={`${data && data.length === 0 || hiddenBtnEdit ? `hidden` : ``}`}>
                 <span className="sr-only">Edit</span>
               </Table.HeadCell>
             </Table.Head>
@@ -107,7 +108,7 @@ export const TabelForDetail = ({
                   {item[key]}
                 </Table.Cell>
                 ))}
-                <Table.Cell>
+                <Table.Cell className={`${hiddenBtnEdit ? `hidden` : ``}`}>
                   <button onClick={() => handleEdit(item.id, routes, item.id)}>
                     <svg style={{color: globalColor}} className="w-6 h-6 dark:text-white" aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

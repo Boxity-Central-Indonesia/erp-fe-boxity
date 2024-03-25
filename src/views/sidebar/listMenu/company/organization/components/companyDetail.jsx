@@ -1,4 +1,3 @@
-import { CRUD } from "./CRUD";
 import { useEffect } from "react";
 import Button from "../../../../../layouts/Button";
 import { TabelForDetail } from "../../../../../layouts/TabelForDetail";
