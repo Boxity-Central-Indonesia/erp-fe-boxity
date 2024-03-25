@@ -1,19 +1,35 @@
+import React, { useEffect, useState } from "react";
 import { LineChart, DropdownForLineChart } from "./chart/lineChart";
 import { useColor } from "../../../config/GlobalColour";
+import { getApiData } from "../../../../function/Api";
 
 export const StatistikOrder = ({ data }) => {
   const { globalColor, changeColor } = useColor();
+  const [totalSalesThisMonth, setTotalSalesThisMonth] = useState(null);
 
-  const dataXaxis =
-    data &&
-    data.map((item) => {
-      const value = item[4].sales;
-    });
+  useEffect(() => {
+    // Fetch total sales this month from API/dashboard
+    const fetchTotalSalesThisMonth = async () => {
+      try {
+        const response = await getApiData("dashboard");
+        const totalSalesThisMonth = response.data[5].total_sales_this_month;
+        setTotalSalesThisMonth(totalSalesThisMonth);
+      } catch (error) {
+        console.error("Error fetching total sales this month:", error);
+      }
+    };
+
+    fetchTotalSalesThisMonth();
+  }, []);
 
   return (
     <div className="bg-white rounded-md p-5 max-h-68 border">
-      <h2 className="text-xl font-semibold mb-1">Transaction statistics</h2>
-      <h4 className="text-md text-gray-600">Rp. 500.000.000</h4>
+      <h2 className="text-xl font-semibold mb-1 capitalize">
+        Transaction statistics
+      </h2>
+      {totalSalesThisMonth !== null && (
+        <h4 className="text-md text-gray-600">{totalSalesThisMonth}</h4>
+      )}
       <div className="my-3">
         <LineChart />
       </div>
@@ -24,7 +40,7 @@ export const StatistikOrder = ({ data }) => {
           style={{ color: globalColor }}
           className="flex items-center cursor-pointer"
         >
-          <p className="text-medium">See more detail</p>
+          <p className="text-xs capitalize">See more detail</p>
           <svg
             className="w-5 h-5 dark:text-white"
             aria-hidden="true"

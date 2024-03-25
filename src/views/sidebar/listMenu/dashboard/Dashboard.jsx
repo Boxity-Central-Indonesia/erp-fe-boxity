@@ -8,33 +8,31 @@ import { GrossSales } from "./GrossSales";
 import { index } from "./index";
 
 const Dashboard = () => {
-  const { data, dataOrders } = index();
+  const { data, dataOrdersNotCompleted, dataOrders } = index();
 
   return (
     <div className="dashboard">
-      <div className="mb-7">
+      <div className="mb-4">
         <Dates />
       </div>
-      <div className="mb-7">
+      <div className="mb-4">
         <QuickAcces />
       </div>
-      <div>
+      <div className="mb-4">
         <Ringkasan data={data} />
       </div>
-      <div className="mt-10 mb-10 grid grid-cols-1 xl:grid-cols-3 gap-4">
-        <div className="col-span-2">
+      <div className="mb-4 grid grid-cols-1 gap-4">
+        <div>
           <StatistikOrder />
         </div>
-        <div className="col-span-1">
-          <TransactionRunning dataOrders={dataOrders} />
-        </div>
+        {/* <div>
+          <GrossSales />
+        </div> */}
       </div>
-      <div className="mb-10">
-        <TabelOrder dataOrders={dataOrders}/>
+      <div className="mb-4">
+        <TabelOrder dataOrders={dataOrders} />
       </div>
-      <div className="mb-20 grid grid-cols-1 lg:grid-cols-2">
-        <GrossSales />
-      </div>
+      <div className="mb-20 grid grid-cols-1 lg:grid-cols-2"></div>
     </div>
   );
 };

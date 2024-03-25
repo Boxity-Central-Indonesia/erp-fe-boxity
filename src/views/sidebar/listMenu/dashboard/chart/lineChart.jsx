@@ -1,13 +1,24 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { Dropdown } from "flowbite-react";
+import { getApiData } from "../../../../../function/Api";
+
+// Function to format number as currency (rupiah)
+const formatCurrency = (value) => {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  }).format(value);
+};
 
 export function DropdownForLineChart({ dataXaxis, dataSeries }) {
   return (
     <Dropdown
       label=""
       dismissOnClick={false}
-      renderTrigger={() => <span className="text-gray-600">Last 30 days</span>}
+      renderTrigger={() => (
+        <span className="text-gray-600 text-xs">Last 30 days</span>
+      )}
     >
       <Dropdown.Item>Dashboard</Dropdown.Item>
       <Dropdown.Item>Settings</Dropdown.Item>
@@ -17,56 +28,79 @@ export function DropdownForLineChart({ dataXaxis, dataSeries }) {
   );
 }
 
-export class LineChart extends Component {
-  constructor(props) {
-    super(props);
+export function LineChart() {
+  const [chartData, setChartData] = useState(null);
 
-    this.state = {
-      options: {
-        chart: {
-          id: "basic-bar",
-        },
-        stroke: {
-          curve: "smooth",
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
-        },
-        colors: ["#3565d8", "#fdba8c"],
-        fill: {
-          type: "gradient",
-          gradient: {
-            shadeIntensity: 1,
-            opacityFrom: 0.1,
-            opacityTo: 0.7,
-            stops: [0, 95, 100],
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getApiData("dashboard");
+        const data = response.data[4];
+        const { sales_data, purchase_data } = data;
+        const defaultPurchaseData = purchase_data.length
+          ? purchase_data
+          : [{ date: "", total_sales: 0 }];
+
+        // Menggabungkan tanggal dari sales_data dan purchase_data
+        const allDates = [
+          ...sales_data.map((data) => data.date),
+          ...defaultPurchaseData.map((data) => data.date),
+        ].filter((date, index, self) => self.indexOf(date) === index);
+
+        const chartData = {
+          options: {
+            chart: { id: "basic-bar" },
+            stroke: { curve: "smooth" },
+            xaxis: {
+              categories: allDates,
+            },
+            colors: ["#3565d8", "#fdba8c"],
+            fill: {
+              type: "gradient",
+              gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.1,
+                opacityTo: 0.7,
+                stops: [0, 95, 100],
+              },
+            },
+            dataLabels: { enabled: false },
           },
-        },
-        dataLabels: {
-          enabled: false,
-        },
-      },
-      series: [
-        {
-          name: "Sales",
-          data: [30, 40, 45, 50, 49, 60, 70, 91],
-        },
-        {
-          name: "Purchase",
-          data: [20, 60, 25, 20, 43, 10, 50, 11],
-        },
-      ],
-    };
-  }
+          series: [
+            {
+              name: "Sales",
+              data: allDates.map((date) => {
+                const sales = sales_data.find((data) => data.date === date);
+                return sales ? parseFloat(sales.total_sales) : 0;
+              }),
+            },
+            {
+              name: "Purchase",
+              data: allDates.map((date) => {
+                const purchase = purchase_data.find(
+                  (data) => data.date === date
+                );
+                return purchase ? parseFloat(purchase.total_sales) : 0;
+              }),
+            },
+          ],
+        };
 
-  render() {
-    return (
-      <Chart
-        options={this.state.options}
-        series={this.state.series}
-        type="area"
-        height={450}
-      />
-    );
-  }
+        setChartData(chartData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return chartData ? (
+    <Chart
+      options={chartData.options}
+      series={chartData.series}
+      type="area"
+      height={350}
+    />
+  ) : null;
 }

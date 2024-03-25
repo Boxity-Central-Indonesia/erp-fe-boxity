@@ -7,20 +7,20 @@ import { downloadReport } from "../downloadReport";
 
 export const Produksi = () => {
   const dataTabel = (data) => {
-    return data.map(item => ({
+    return data.map((item) => ({
       "order code": item.kodeOrder,
       "product name": item.product_name,
-      "actifity type": item.activities[0].activity_type,
+      "Activity type": item.activities[0].activity_type,
       "production status": item.activities[0].status_production,
       "production date": item.activities[0].tanggal_aktifitas,
-    }))
-  }
+    }));
+  };
 
-  const {data} = Read({dataTabel, endPoint: 'production-report'})
+  const { data } = Read({ dataTabel, endPoint: "production-report" });
 
   const print = () => {
-    downloadReport("download/production-report")
-  }
+    downloadReport("download/production-report");
+  };
   const [dataHeading, setDataHeading] = useState([
     {
       label: "Print report",
@@ -32,10 +32,7 @@ export const Produksi = () => {
 
   return (
     <>
-      <TabelComponent
-        data={data}
-        dataHeading={dataHeading}
-      />
+      <TabelComponent data={data} dataHeading={dataHeading} />
     </>
   );
 };

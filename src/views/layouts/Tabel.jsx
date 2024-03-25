@@ -105,27 +105,27 @@ const TabelComponent = ({
           };
 
           if (statusMap.hasOwnProperty(info.getValue())) {
-            className = `border py-0.5 px-4 rounded-full ${
+            className = `border py-0.5 px-4 rounded ${
               statusMap[info.getValue()]
             } w-fit text-white text-sm`;
           } else if (orderStatusMap.hasOwnProperty(info.getValue())) {
-            className = `border py-0.5 px-4 rounded-full ${
+            className = `border py-0.5 px-4 rounded ${
               orderStatusMap[info.getValue()]
             } w-fit text-white text-sm`;
           } else if (productionStatusMap.hasOwnProperty(info.getValue())) {
-            className = `border py-0.5 px-4 rounded-full ${
+            className = `border py-0.5 px-4 rounded ${
               productionStatusMap[info.getValue()]
             } w-fit text-white text-sm`;
           } else if (paymentMethodMap.hasOwnProperty(info.getValue())) {
-            className = `border py-0.5 px-4 rounded-full ${
+            className = `border py-0.5 px-4 rounded ${
               paymentMethodMap[info.getValue()]
             } w-fit text-white text-sm`;
           } else if (paymentStatusMap.hasOwnProperty(info.getValue())) {
-            className = `border py-0.5 px-4 rounded-full ${
+            className = `border py-0.5 px-4 rounded ${
               paymentStatusMap[info.getValue()]
             } w-fit text-white text-sm`;
           } else if (goodReceiptMap.hasOwnProperty(info.getValue())) {
-            className = `border py-0.5 px-4 rounded-full ${
+            className = `border py-0.5 px-4 rounded ${
               goodReceiptMap[info.getValue()]
             } w-fit text-white text-sm`;
           }
@@ -136,7 +136,7 @@ const TabelComponent = ({
             info.getValue() === "supplier"
           ) {
             className =
-              "border py-0.5 px-2 rounded-full bg-green-600 w-fit text-white text-sm flex items-center justify-center";
+              "border py-0.5 px-2 rounded bg-green-600 w-fit text-white text-sm flex items-center justify-center";
             icon = (
               <svg
                 className="w-5 h-5 text-white dark:text-white"
@@ -160,7 +160,7 @@ const TabelComponent = ({
             info.getValue() === "customer"
           ) {
             className =
-              "border py-0.5 px-2 rounded-full bg-red-600 w-fit text-white text-sm flex items-center justify-center";
+              "border py-0.5 px-2 rounded bg-red-600 w-fit text-white text-sm flex items-center justify-center";
             icon = (
               <svg
                 className="w-5 h-5 text-white dark:text-white"
@@ -180,7 +180,7 @@ const TabelComponent = ({
             );
           } else if (info.getValue() === "transfer") {
             className =
-              "border py-0.5 px-2 rounded-full bg-blue-600 w-fit text-white text-sm flex items-center justify-center";
+              "border py-0.5 px-2 rounded bg-blue-600 w-fit text-white text-sm flex items-center justify-center";
             icon = (
               <svg
                 className="w-5 h-5 text-white dark:text-white"
@@ -283,38 +283,38 @@ const TabelComponent = ({
       >
         <div className="flex items-center justify-between">
           <div>
-            <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-            <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-600 w-24 mb-2.5"></div>
+            <div className="w-32 h-2 bg-gray-200 rounded dark:bg-gray-700"></div>
           </div>
-          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+          <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-700 w-12"></div>
         </div>
         <div className="flex items-center justify-between pt-4">
           <div>
-            <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-            <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-600 w-24 mb-2.5"></div>
+            <div className="w-32 h-2 bg-gray-200 rounded dark:bg-gray-700"></div>
           </div>
-          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+          <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-700 w-12"></div>
         </div>
         <div className="flex items-center justify-between pt-4">
           <div>
-            <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-            <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-600 w-24 mb-2.5"></div>
+            <div className="w-32 h-2 bg-gray-200 rounded dark:bg-gray-700"></div>
           </div>
-          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+          <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-700 w-12"></div>
         </div>
         <div className="flex items-center justify-between pt-4">
           <div>
-            <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-            <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-600 w-24 mb-2.5"></div>
+            <div className="w-32 h-2 bg-gray-200 rounded dark:bg-gray-700"></div>
           </div>
-          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+          <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-700 w-12"></div>
         </div>
         <div className="flex items-center justify-between pt-4">
           <div>
-            <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-            <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-600 w-24 mb-2.5"></div>
+            <div className="w-32 h-2 bg-gray-200 rounded dark:bg-gray-700"></div>
           </div>
-          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+          <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-700 w-12"></div>
         </div>
         <span className="sr-only">Loading...</span>
       </div>
@@ -358,38 +358,38 @@ const TabelComponent = ({
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                          <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-600 w-24 mb-2.5"></div>
+                          <div className="w-32 h-2 bg-gray-200 rounded dark:bg-gray-700"></div>
                         </div>
-                        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-700 w-12"></div>
                       </div>
                       <div className="flex items-center justify-between pt-4">
                         <div>
-                          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                          <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-600 w-24 mb-2.5"></div>
+                          <div className="w-32 h-2 bg-gray-200 rounded dark:bg-gray-700"></div>
                         </div>
-                        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-700 w-12"></div>
                       </div>
                       <div className="flex items-center justify-between pt-4">
                         <div>
-                          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                          <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-600 w-24 mb-2.5"></div>
+                          <div className="w-32 h-2 bg-gray-200 rounded dark:bg-gray-700"></div>
                         </div>
-                        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-700 w-12"></div>
                       </div>
                       <div className="flex items-center justify-between pt-4">
                         <div>
-                          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                          <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-600 w-24 mb-2.5"></div>
+                          <div className="w-32 h-2 bg-gray-200 rounded dark:bg-gray-700"></div>
                         </div>
-                        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-700 w-12"></div>
                       </div>
                       <div className="flex items-center justify-between pt-4">
                         <div>
-                          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                          <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-600 w-24 mb-2.5"></div>
+                          <div className="w-32 h-2 bg-gray-200 rounded dark:bg-gray-700"></div>
                         </div>
-                        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        <div className="h-2.5 bg-gray-300 rounded dark:bg-gray-700 w-12"></div>
                       </div>
                       <span className="sr-only">Loading...</span>
                     </div>
@@ -433,7 +433,7 @@ const TabelComponent = ({
                     <Table.HeadCell
                       className={`${header.id === "id" ? `hidden` : ``} 
                     ${
-                      header.id === "price per unit"
+                      header.id === "harga satuan"
                         ? `text-right`
                         : `` || header.id === "shipping cost"
                         ? `text-right`
@@ -462,11 +462,11 @@ const TabelComponent = ({
                         ? `text-right`
                         : `` || header.id === "saldo"
                         ? `text-right`
-                        // : // : `` || header.id === "quantity"
+                        : // : // : `` || header.id === "quantity"
                         // // ? `text-right`
                         // `` || header.id === "weight"
                         // ? `text-right`
-                        : `` || header.id === "hpp balance"
+                        `` || header.id === "hpp balance"
                         ? `text-right`
                         : `` || header.id === "harga satuan"
                         ? `text-right`
@@ -480,26 +480,26 @@ const TabelComponent = ({
                         ? `text-right`
                         : `` || header.id === "discount price"
                         ? "text-right"
-                        : "" || header.id === 'assets' 
+                        : "" || header.id === "assets"
                         ? "text-right"
-                        : "" || header.id === 'liabilities' 
-                        ? "text-right" 
-                        : "" || header.id === 'equity'
+                        : "" || header.id === "liabilities"
                         ? "text-right"
-                        : "" || header.id === 'opening balance' 
-                        ? "text-right" 
-                        : "" || header.id === 'total debit'
-                        ? "text-right" 
-                        : "" || header.id === 'total credit'
+                        : "" || header.id === "equity"
                         ? "text-right"
-                        : "" || header.id === 'net cash flow'
+                        : "" || header.id === "opening balance"
                         ? "text-right"
-                        : "" || header.id === 'paid amount' 
+                        : "" || header.id === "total debit"
                         ? "text-right"
-                        : "" || header.id === 'amount of costs'
+                        : "" || header.id === "total credit"
                         ? "text-right"
-                        : "" || header.id === 'rest of the bill'
-                        ? "text-right" 
+                        : "" || header.id === "net cash flow"
+                        ? "text-right"
+                        : "" || header.id === "paid amount"
+                        ? "text-right"
+                        : "" || header.id === "amount of costs"
+                        ? "text-right"
+                        : "" || header.id === "rest of the bill"
+                        ? "text-right"
                         : ""
                     }`}
                       key={header.id}

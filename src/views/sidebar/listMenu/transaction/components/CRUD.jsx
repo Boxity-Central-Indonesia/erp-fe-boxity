@@ -10,7 +10,10 @@ import { TextArea, RadioButtons } from "../../../../layouts/FormInput";
 import FormInput from "../../../../layouts/FormInput";
 import { TabelForProducts } from "./TabelForProducts";
 import { TabelForDeliveryNoteItem } from "./TabelForDeliveryNotesItem";
-import { FormatCurrency, numberToCurrency } from "../../../../config/FormatCurrency";
+import {
+  FormatCurrency,
+  numberToCurrency,
+} from "../../../../config/FormatCurrency";
 
 export const CRUD = () => {
   const [refresh, setRefresh] = useState(false);
@@ -176,18 +179,21 @@ export const CRUD = () => {
       localStorage.setItem("order_type", value);
     }
 
-    if(name === 'balance_due' ||  name === 'total_amount' || name === 'amount_paid') {
+    if (
+      name === "balance_due" ||
+      name === "total_amount" ||
+      name === "amount_paid"
+    ) {
       setDataEdit((prevDataEdit) => ({
         ...prevDataEdit,
-        [name]: FormatCurrency({value}),
+        [name]: FormatCurrency({ value }),
       }));
-    }else{
+    } else {
       setDataEdit((prevDataEdit) => ({
         ...prevDataEdit,
         [name]: value,
       }));
     }
-
   };
 
   useEffect(() => {
@@ -566,11 +572,11 @@ export const CRUD = () => {
         name: "price_per_unit",
         ref: refBody.price_per_unitRef,
         value: dataEdit.price_per_unit,
-        label: "Price per unit",
+        label: "harga satuan",
         htmlFor: "price_per_unit",
         id: "price_per_unit",
         onchange: handleChange,
-        placeholder: "Price per unit",
+        placeholder: "harga satuan",
       },
     ]);
 
@@ -1167,8 +1173,8 @@ export const CRUD = () => {
           console.log(error);
         }
       } else if (routes === "products") {
-        setPath('products');
-        localStorage.setItem('path', routes)
+        setPath("products");
+        localStorage.setItem("path", routes);
         setEditProduct(true);
         setDefaultEdit(() => false);
         setOpenModal((prevOpenModal) => !prevOpenModal);
@@ -1190,7 +1196,7 @@ export const CRUD = () => {
           if (status === 200) {
             setDataEdit({
               quantity: data.quantity,
-              price_per_unit: data.price_per_unit
+              price_per_unit: data.price_per_unit,
             });
           }
         } catch (error) {
@@ -1282,7 +1288,7 @@ export const CRUD = () => {
     const edit = async () => {
       let dataBody = {};
       setLoading((prevLoading) => !prevLoading);
-      if (path === "orders" && localStorage.getItem('path') !== 'products') {
+      if (path === "orders" && localStorage.getItem("path") !== "products") {
         dataBody = {
           vendor_id: refBody.vendor_idRef.current.value,
           warehouse_id: refBody.warehouse_idRef.current.value,
@@ -1434,12 +1440,12 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data);
         }
-      } else if (localStorage.getItem('path') === 'products') {
+      } else if (localStorage.getItem("path") === "products") {
         dataBody = {
           product: {
             quantity: refBody.quantityRef.current.value,
             price_per_unit: refBody.price_per_unitRef.current.value,
-          }
+          },
         };
 
         try {
@@ -1452,9 +1458,7 @@ export const CRUD = () => {
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
             try {
-              const { data, status } = await getApiData(
-                "orders/" + idDelete
-              );
+              const { data, status } = await getApiData("orders/" + idDelete);
               if (status === 200) {
                 setDataEdit({});
                 setDataDetailOrders(() => data);

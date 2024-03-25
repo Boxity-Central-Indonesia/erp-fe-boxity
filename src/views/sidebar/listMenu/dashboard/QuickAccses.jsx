@@ -144,7 +144,7 @@ export const QuickAcces = () => {
 
   return (
     <>
-      <h1 className="text-xl mb-3 font-medium">Quick access</h1>
+      <h1 className="text-xl mb-3 font-medium capitalize">Quick access</h1>
       <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
         {data &&
           data.map((item, index) => (
