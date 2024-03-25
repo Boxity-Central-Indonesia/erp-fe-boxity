@@ -35,14 +35,6 @@ function Navbar({ onToggleSidebar, setAuth }) {
     getData();
   }, []);
 
-  function darkMode() {
-    return (
-      <Flowbite>
-        <DarkThemeToggle />
-      </Flowbite>
-    );
-  }
-
   const dropdown = () => {
     return (
       <Dropdown
@@ -193,7 +185,6 @@ function Navbar({ onToggleSidebar, setAuth }) {
         </div>
         <div className="flex items-center lg:order-2">
           <div className="flex items-center gap-3">
-            {darkMode()}
             <div className="text-right">
               <span className="block text-sm">{profile.name}</span>
               <span className="block truncate text-sm font-medium">
