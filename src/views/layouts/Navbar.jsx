@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { getApiData } from "../../function/Api";
 
 function Navbar({ onToggleSidebar, setAuth }) {
+  const [isOpenSideBar, setIsOpenSideBar] = useState()
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
     name: "",

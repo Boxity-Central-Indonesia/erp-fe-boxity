@@ -233,10 +233,16 @@ function Sidebar() {
       ))}
     </div>
   );
-  const sidebarContainerClass = `
+  const sidebarContainerClassShow = `
   fixed top-0 left-0 z-30 h-full w-64 overflow-y-auto 
   bg-white dark:bg-gray-800 shadow-md border
 `;
+
+  const sidebarContainerClass = `
+  fixed top-0 left-0 z-30 h-full w-64 overflow-y-auto 
+  bg-white dark:bg-gray-800 shadow-md border
+  `;
+
 
   const sidebarContentClass = `
     py-4 text-gray-500 dark:text-gray-200 primary-color-sidebar-hover dark:text-gray-200 dark:hover:bg-gray-700 pt-[4rem]
