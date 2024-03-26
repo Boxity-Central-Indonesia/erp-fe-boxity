@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../../../../layouts/Button";
 import { TabelForDetail } from "../../../../../layouts/TabelForDetail";
 
@@ -9,9 +9,10 @@ export const ProccesActivityDetail = ({
   dataHeading,
   dataTabelProccesActivity,
 }) => {
-  const dataTabelForDetail =
-    dataTabelProccesActivity &&
-    dataTabelProccesActivity.map((item) => {
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    const formattedData = dataTabelProccesActivity?.map((item) => {
       const details = item.details;
       const detailsArray = [];
 
@@ -26,10 +27,14 @@ export const ProccesActivityDetail = ({
         "activities name": item.activity_type.replace(/_/g, " ") || "--",
         status: item.status_activities || "--",
         date: item.created_at || "--",
-        description:
-          <div dangerouslySetInnerHTML={{ __html: detailsString }} /> || "--",
+        description: (
+          <div dangerouslySetInnerHTML={{ __html: detailsString }} /> || "--"
+        ),
       };
     });
+
+    setTableData(formattedData || []);
+  }, [dataTabelProccesActivity]);
 
   return (
     <>
@@ -177,7 +182,7 @@ export const ProccesActivityDetail = ({
               Company branch
             </h2> */}
             <TabelForDetail
-              data={dataTabelForDetail}
+              data={tableData}
               dataHeading={dataHeading}
               handleEdit={handleEdit}
               routes={""}

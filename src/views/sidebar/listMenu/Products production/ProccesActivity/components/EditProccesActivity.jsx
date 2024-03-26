@@ -25,6 +25,8 @@ export const editProccesActivity = ({
 
 }) => {
 
+  const [dataUpdate, setDataUpdate] = useState()
+
   const searchDataByActivityType = (searchActivityType) => {
     // Cari objek yang memiliki activity_type yang cocok
     const foundData = dataProcces.find(data => data.activity_type === searchActivityType);
@@ -38,9 +40,14 @@ export const editProccesActivity = ({
     }
   };
 
-  // useEffect(() => {
-  //   console.log(dataDetail);
-  // }, [dataDetail])
+
+  useEffect(() => {
+    Read({
+      endPoint: 'processing-activities/' + dataUpdate, 
+      refresh,
+      setDataDetail
+  })
+  }, [dataUpdate])
 
   const handleEdit = async(param) => {
     if(defaultEdit === true) {
@@ -106,16 +113,12 @@ export const editProccesActivity = ({
             setOpenModal,
             setResponseError,
             setLoading,
-            setRefresh
+            setRefresh,
+            setDataUpdate
         })
 
         localStorage.removeItem("dataDetailsActivity")
 
-        Read({
-            endPoint: 'processing-activities/' + refBody.idRef.current.value, 
-            refresh,
-            setDataDetail
-        })
   }
   }
   

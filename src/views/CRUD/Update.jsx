@@ -1,4 +1,5 @@
 import { putApiData } from "../../function/Api";
+import { useState } from "react";
 
 export const Update = ({
     endPoint,
@@ -6,7 +7,8 @@ export const Update = ({
     setOpenModal,
     setResponseError,
     setLoading,
-    setRefresh
+    setRefresh,
+    setDataUpdate
 }) => {
     const update = async () => {
         try {
@@ -15,6 +17,7 @@ export const Update = ({
                 setRefresh(prevRefresh => !prevRefresh)
                 setOpenModal(prevOpenModal => !prevOpenModal)
                 setLoading(prevloading => !prevloading)
+                setDataUpdate(data.id)
             }
         } catch (error) {
             setResponseError(error.response.data.errors);
