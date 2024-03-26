@@ -20,12 +20,12 @@ export const PersediaanBarang = () => {
     }))
   }
 
-  const {data} = Read({dataTabel, endPoint: 'inventory-report'})
-
+  
   const print = () => {
-    downloadReport('download/inventory-report')
+    downloadReport({endPoint: 'download/inventory-report'})
   }
-
+  
+  const {data} = Read({dataTabel, endPoint: 'inventory-report'})
   
 
   const [dataHeading, setDataHeading] = useState([
