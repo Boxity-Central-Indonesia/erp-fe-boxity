@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { Dropdown } from "flowbite-react";
 import { getApiData } from "../../../../../function/Api";
-
-// Function to format number as currency (rupiah)
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-  }).format(value);
-};
+import {FormatCurrency} from "../../../../config/FormatCurrency"
 
 export function DropdownForLineChart({ dataXaxis, dataSeries }) {
   return (
@@ -51,6 +44,18 @@ export function LineChart() {
           options: {
             chart: { id: "basic-bar" },
             stroke: { curve: "smooth" },
+            yaxis: {
+              labels: {
+                  formatter: function (value) {
+                      return value
+                          .toLocaleString("id-ID", {
+                              style: "currency",
+                              currency: "IDR",
+                          })
+                          .split(",")[0];
+                  },
+              },
+          },
             xaxis: {
               categories: allDates,
             },

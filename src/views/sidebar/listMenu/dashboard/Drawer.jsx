@@ -2,6 +2,7 @@ import { Table } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { useColor } from "../../../config/GlobalColour";
 import IconPrint from "../../../layouts/icons/IconPrint"
+import { downloadReport } from "../reports/downloadReport";
 
 export const Drawer = ({
   openDrawer,
@@ -246,10 +247,10 @@ export const Drawer = ({
           >
             Order Detail
           </h5>
-          <a style={{backgroundColor: globalColor}} className="flex gap-1 border py-2.5 px-4 rounded-md" href={`https://beta-api-boxity.octansidn.com/api/download/orders/` + dataDrawer?.id}>
+          <button onClick={() => downloadReport({endPoint: 'download/orders/' + dataDrawer.id})} style={{backgroundColor: globalColor}} className="flex gap-1 border py-2.5 px-4 rounded-md">
             <IconPrint />
             <p className="text-sm text-white">Print</p>
-          </a>
+          </button>
         </div>
         <button
           onClick={closeDrawer}
