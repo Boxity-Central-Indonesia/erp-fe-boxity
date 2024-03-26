@@ -12,6 +12,7 @@ import { TabelForProducts } from "./TabelForProducts";
 import { TabelForDeliveryNoteItem } from "./TabelForDeliveryNotesItem";
 import {
   FormatCurrency,
+  currencyToNumber,
   numberToCurrency,
 } from "../../../../config/FormatCurrency";
 
@@ -1833,12 +1834,14 @@ export const CRUD = () => {
       } else if (param === "invoices") {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
-          total_amount: refBody.total_amountRef.current.value,
-          balance_due: refBody.balance_dueRef.current.value,
+          total_amount: currencyToNumber(refBody.total_amountRef.current.value),
+          balance_due: currencyToNumber(refBody.balance_dueRef.current.value),
           invoice_date: refBody.invoice_dateRef.current.value,
           due_date: refBody.due_dateRef.current.value,
           status: refBody.statusRef.current.value,
         };
+
+        console.log(dataBody);
 
         try {
           const store = await postApiData(param, dataBody);
@@ -1856,7 +1859,7 @@ export const CRUD = () => {
       } else if (param === "payments") {
         dataBody = {
           invoice_id: refBody.invoice_dateRef.current.value,
-          amount_paid: refBody.amount_paidRef.current.value,
+          amount_paid: currencyToNumber(refBody.amount_paidRef.current.value),
           payment_method: refBody.payment_methodRef.current.value,
           payment_date: refBody.payment_dateRef.current.value,
         };

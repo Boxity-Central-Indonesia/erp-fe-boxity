@@ -3,7 +3,7 @@ export const currencyToNumber = (currencyString) => {
     const numericString = currencyString.replace(/[^0-9-]+/g, '');
 
     // Mengonversi string menjadi integer atau float
-    return parseFloat(numericString);
+    return numericString;
 };
 
 
