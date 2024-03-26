@@ -12,6 +12,7 @@ import FormInput from "../../../../layouts/FormInput";
 import {
   FormatCurrency,
   numberToCurrency,
+  currencyToNumber
 } from "../../../../config/FormatCurrency";
 
 export const CRUD = () => {
@@ -309,8 +310,8 @@ export const CRUD = () => {
         htmlFor: "raw_material",
         id: "raw_material",
         dataSelect: [
-          { value: "true", name: "True" },
-          { value: "false", name: "False" },
+          { id: '1', name: "True" },
+          { id: '0', name: "False" },
         ],
         onchange: handleChange,
       },
@@ -869,7 +870,7 @@ export const CRUD = () => {
           name: refBody.nameRef.current.value,
           code: refBody.codeRef.current.value,
           description: refBody.descriptionRef.current.value,
-          price: refBody.priceRef.current.value,
+          price: currencyToNumber(refBody.priceRef.current.value),
           type: refBody.typeRef.current.value,
           animal_type: refBody.animal_typeRef.current.value,
           age: refBody.ageRef.current.value,
