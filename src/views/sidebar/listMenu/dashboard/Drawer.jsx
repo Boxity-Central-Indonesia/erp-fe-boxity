@@ -1,6 +1,7 @@
 import { Table } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { useColor } from "../../../config/GlobalColour";
+import IconPrint from "../../../layouts/icons/IconPrint"
 
 export const Drawer = ({
   openDrawer,
@@ -238,12 +239,18 @@ export const Drawer = ({
         tabIndex="-1"
         aria-labelledby="drawer-right-label"
       >
-        <h5
-          id="drawer-right-label"
-          className="inline-flex items-center mb-4 text-xl font-semibold dark:text-gray-400"
-        >
-          Order Detail
-        </h5>
+        <div className="flex justify-between items-center my-4">
+          <h5
+            id="drawer-right-label"
+            className="inline-flex items-center text-xl font-semibold dark:text-gray-400"
+          >
+            Order Detail
+          </h5>
+          <a style={{backgroundColor: globalColor}} className="flex gap-1 border py-2.5 px-4 rounded-md" href={`https://beta-api-boxity.octansidn.com/api/download/orders/` + dataDrawer?.id}>
+            <IconPrint />
+            <p className="text-sm text-white">Print</p>
+          </a>
+        </div>
         <button
           onClick={closeDrawer}
           type="button"
