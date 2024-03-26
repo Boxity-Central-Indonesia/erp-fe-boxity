@@ -223,7 +223,7 @@ export const CRUD = () => {
                 },
               ]);
             } else if (path === "packages-product") {
-              const newData = dataPackaging(data);
+              const newData = dataPackagesProduct(data);
               setData(() => newData);
               setDataHeading([
                 {
@@ -292,7 +292,7 @@ export const CRUD = () => {
     const dataPackaging = (data) => {
       return data.map((item) => ({
         id: item.id,
-        product_name: item.product_id,
+        'product name': item.product.name,
         weight: item.weight,
         "package type": item.package_type,
       }));
@@ -301,8 +301,8 @@ export const CRUD = () => {
     const dataPackagesProduct = (data) => {
       return data.map((item) => ({
         id: item.id,
-        package: item.package_id,
-        product: item.product,
+        package: item.package.package_name,
+        product: item.product.name,
       }));
     };
 
