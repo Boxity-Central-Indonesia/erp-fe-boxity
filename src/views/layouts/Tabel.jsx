@@ -210,23 +210,34 @@ const TabelComponent = ({
             key !== "quantity" &&
             key !== "kapasitas" &&
             key !== "tagihan terbayar"
+            // key !== "unit_of_measure"
           ) {
             className = "text-right";
             formattedValue = formatToRupiah(value);
           } else if (
-            (typeof value === "number" && key === "capacity") ||
+            (typeof value === "number" && 
+            key === "capacity") ||
             key === "kapasitas"
+            // key === "amount"
           ) {
             // Handle capacity with decimal formatting
             className = "text-right";
-            const formattedNumber = value.toLocaleString("en-US", {
+            const formattedNumber = value.toLocaleString("id-ID", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             });
             formattedValue = `${formattedNumber} ton`;
+          } else if(key === 'unit of measure') {
+            className = "text-right"
+            formattedValue = value
           } else {
             formattedValue = value;
           }
+
+          if(key === 'amount') {
+            formattedValue = value.toLocaleString("id-ID")
+          }
+
           // Tambahkan kondisi untuk tidak mengaplikasikan capitalize pada key tertentu
           const shouldCapitalize = ![
             "email",
@@ -499,6 +510,12 @@ const TabelComponent = ({
                         : "" || header.id === "amount of costs"
                         ? "text-right"
                         : "" || header.id === "rest of the bill"
+                        ? "text-right"
+                        : "" || header.id === "total harga"
+                        ? "text-right"
+                        : "" || header.id === "harga pengiriman"
+                        ? "text-right"
+                        : "" || header.id === 'unit of measure'
                         ? "text-right"
                         : ""
                     }`}

@@ -29,3 +29,12 @@ export const FormatCurrency = ({ value }) => {
 
     return formattedValue;
 }
+
+
+export const numberToDecimal = ({value}) => {
+    const formattedValue = parseFloat(value).toLocaleString('id-ID', {
+        maximumFractionDigits: 2
+    });
+
+    return formattedValue
+}
