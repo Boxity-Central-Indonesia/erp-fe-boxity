@@ -123,6 +123,11 @@ export const CRUD = () => {
     }
   }, [render]);
 
+  useEffect(() => {
+    localStorage.removeItem("dataTabelProducts")
+    setDataTabelProducts([])
+  }, [openModal])
+
   const handleChangeAndPushProducts = async (event) => {
     // Mendapatkan nama dan nilai input yang berubah
     const { name, value } = event.target;
