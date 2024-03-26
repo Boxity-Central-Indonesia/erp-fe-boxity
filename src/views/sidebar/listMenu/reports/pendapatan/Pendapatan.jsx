@@ -6,21 +6,20 @@ import { downloadReport } from "../downloadReport";
 
 export const Pendapatan = () => {
   const dataTabel = (data) => {
-    return data.map(item => ({
+    return data.map((item) => ({
       "account name": item.account.name,
       "account type": item.account.type,
       "sale date": item.date,
       "amount of costs": item.amount,
       "account balance": item.account.balance,
-    }))
-  }
+    }));
+  };
 
-  const {data} = Read({dataTabel, endPoint: 'revenue-report'})
+  const { data } = Read({ dataTabel, endPoint: "revenue-report" });
 
   const print = () => {
-    downloadReport({endPoint: 'download/prevenue-report' })
-  }
-
+    downloadReport({ endPoint: "download/revenue-report" });
+  };
 
   const [dataHeading, setDataHeading] = useState([
     {
@@ -33,10 +32,7 @@ export const Pendapatan = () => {
 
   return (
     <>
-      <TabelComponent
-        data={data}
-        dataHeading={dataHeading}
-      />
+      <TabelComponent data={data} dataHeading={dataHeading} />
     </>
   );
 };

@@ -77,8 +77,6 @@ export const CRUD = () => {
     ProductionOrderRef: useRef(),
 
     //invoices
-    total_amountRef: useRef(),
-    balance_dueRef: useRef(),
     invoice_dateRef: useRef(),
     due_dateRef: useRef(),
 
@@ -125,9 +123,9 @@ export const CRUD = () => {
   }, [render]);
 
   useEffect(() => {
-    localStorage.removeItem("dataTabelProducts")
-    setDataTabelProducts([])
-  }, [openModal])
+    localStorage.removeItem("dataTabelProducts");
+    setDataTabelProducts([]);
+  }, [openModal]);
 
   const handleChangeAndPushProducts = async (event) => {
     // Mendapatkan nama dan nilai input yang berubah
@@ -206,8 +204,6 @@ export const CRUD = () => {
     if (!!responseError) {
       setValidationError({
         order_id: responseError?.order_id?.[0] || "",
-        total_amount: responseError?.total_amount?.[0] || "",
-        balance_due: responseError?.balance_due?.[0] || "",
         invoice_date: responseError?.invoice_date?.[0] || "",
         due_date: responseError?.due_date?.[0] || "",
         status: responseError?.status?.[0] || "",
@@ -364,30 +360,6 @@ export const CRUD = () => {
         id: "order_id",
         dataSelect: dataOrdersSelect,
         onchange: handleChange,
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "total_amount",
-        ref: refBody.total_amountRef,
-        value: dataEdit.total_amount,
-        label: "Total amount",
-        htmlFor: "total_amount",
-        id: "total_amount",
-        onchange: handleChange,
-        placeholder: "Total amount",
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "balance_due",
-        ref: refBody.balance_dueRef,
-        value: dataEdit.balance_due,
-        label: "Balance due",
-        htmlFor: "balance_due",
-        id: "balance_due",
-        onchange: handleChange,
-        placeholder: "Balance due",
       },
       {
         element: "input",
@@ -1691,16 +1663,12 @@ export const CRUD = () => {
       } else if (param === "invoices") {
         setDataEdit({
           order_id: "",
-          total_amount: "",
-          balance_due: "",
           invoice_date: "",
           due_date: "",
           status: "",
         });
         setValidationError({
           order_id: "",
-          total_amount: "",
-          balance_due: "",
           invoice_date: "",
           due_date: "",
           status: "",
@@ -1834,8 +1802,6 @@ export const CRUD = () => {
       } else if (param === "invoices") {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
-          total_amount: currencyToNumber(refBody.total_amountRef.current.value),
-          balance_due: currencyToNumber(refBody.balance_dueRef.current.value),
           invoice_date: refBody.invoice_dateRef.current.value,
           due_date: refBody.due_dateRef.current.value,
           status: refBody.statusRef.current.value,
