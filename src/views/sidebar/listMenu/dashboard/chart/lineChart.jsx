@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { Dropdown } from "flowbite-react";
 import { getApiData } from "../../../../../function/Api";
-import {FormatCurrency} from "../../../../config/FormatCurrency"
+import { FormatCurrency } from "../../../../config/FormatCurrency";
 
 export function DropdownForLineChart({ dataXaxis, dataSeries }) {
   return (
@@ -32,12 +32,16 @@ export function LineChart() {
         const { sales_data, purchase_data } = data;
         const defaultPurchaseData = purchase_data.length
           ? purchase_data
+          : [{ date: "", total_purchase: 0 }];
+        const defaultSalesData = sales_data.length
+          ? sales_data
           : [{ date: "", total_sales: 0 }];
 
         // Menggabungkan tanggal dari sales_data dan purchase_data
         const allDates = [
           ...sales_data.map((data) => data.date),
           ...defaultPurchaseData.map((data) => data.date),
+          ...defaultSalesData.map((data) => data.date),
         ].filter((date, index, self) => self.indexOf(date) === index);
 
         const chartData = {
@@ -46,16 +50,16 @@ export function LineChart() {
             stroke: { curve: "smooth" },
             yaxis: {
               labels: {
-                  formatter: function (value) {
-                      return value
-                          .toLocaleString("id-ID", {
-                              style: "currency",
-                              currency: "IDR",
-                          })
-                          .split(",")[0];
-                  },
+                formatter: function (value) {
+                  return value
+                    .toLocaleString("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    })
+                    .split(",")[0];
+                },
               },
-          },
+            },
             xaxis: {
               categories: allDates,
             },
@@ -85,7 +89,7 @@ export function LineChart() {
                 const purchase = purchase_data.find(
                   (data) => data.date === date
                 );
-                return purchase ? parseFloat(purchase.total_sales) : 0;
+                return purchase ? parseFloat(purchase.total_purchases) : 0;
               }),
             },
           ],
