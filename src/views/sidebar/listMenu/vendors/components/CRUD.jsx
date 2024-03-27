@@ -344,12 +344,8 @@ export const CRUD = () => {
     return data.map((item) => ({
       id: item.id,
       vendor: item.vendor?.name,
-      amount: item.amount,
-      product: item.product?.name,
-      taxes: item.taxes,
-      "unit price": item.unit_price,
-      "unit of measure": item.product?.unit_of_measure,
-      "harga pengiriman": item.shipping_cost,
+      "nama product": item.product?.name,
+      "harga satuan": item.unit_price,
       "total harga": item.total_price,
     }));
   };

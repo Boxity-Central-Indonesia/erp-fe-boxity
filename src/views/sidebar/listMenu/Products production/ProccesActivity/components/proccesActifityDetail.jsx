@@ -27,9 +27,8 @@ export const ProccesActivityDetail = ({
         "activities name": item.activity_type.replace(/_/g, " ") || "--",
         status: item.status_activities || "--",
         date: item.created_at || "--",
-        description: (
-          <div dangerouslySetInnerHTML={{ __html: detailsString }} /> || "--"
-        ),
+        description:
+          <div dangerouslySetInnerHTML={{ __html: detailsString }} /> || "--",
       };
     });
 
@@ -136,7 +135,7 @@ export const ProccesActivityDetail = ({
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="currentColor"
@@ -162,7 +161,7 @@ export const ProccesActivityDetail = ({
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="currentColor"

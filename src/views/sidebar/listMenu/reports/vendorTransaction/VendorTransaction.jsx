@@ -1,41 +1,39 @@
-import { useState } from "react"
-import TabelComponent from "../../../../layouts/Tabel"
-import IconDownload from "../../../../layouts/icons/IconDownload"
+import { useState } from "react";
+import TabelComponent from "../../../../layouts/Tabel";
+import IconDownload from "../../../../layouts/icons/IconDownload";
 import { Read } from "../read";
 import { downloadReport } from "../downloadReport";
 
 export const VendorTransaction = () => {
-    const dataTabel = (data) => {
-        return data.map(item => ({
-            'order code': item.kode_order,
-            'vendor name': item.nama_vendor,
-            'product name': item.nama_product,
-            amount: item.amount,
-            'unit price': item.unit_price,
-            taxes: item.taxes ?? 0,
-            "shipping cost": item.shipping_cost ?? 0,
-            'total price': item.total_price,
-        }))
-      }
-    
-      const {data} = Read({dataTabel, endPoint: 'vendor-report'})
-    
-      const print = () => {
-        downloadReport("download/vendor-report")
-      }
+  const dataTabel = (data) => {
+    return data.map((item) => ({
+      "kode transaksi": item.kode_order,
+      "vendor name": item.nama_vendor,
+      "nama product": item.nama_product,
+      amount: item.amount,
+      "harga satuan": item.unit_price,
+      "total harga": item.total_price,
+    }));
+  };
 
-    const [dataHeading, setDataHeading] = useState( [{
-        label: 'Print report',
-        icon: IconDownload(),
-        heading: 'Vendor Transaction Report',
-        eventToggleModal: downloadReport,
-    }]);
+  const { data } = Read({ dataTabel, endPoint: "vendor-report" });
 
+  const print = () => {
+    downloadReport("download/vendor-report");
+  };
 
-    return (
-        <>
-        < TabelComponent data={data}  dataHeading={dataHeading}/>
-        </>
-    )
+  const [dataHeading, setDataHeading] = useState([
+    {
+      label: "Print report",
+      icon: IconDownload(),
+      heading: "Vendor Transaction Report",
+      eventToggleModal: downloadReport,
+    },
+  ]);
 
-}
+  return (
+    <>
+      <TabelComponent data={data} dataHeading={dataHeading} />
+    </>
+  );
+};

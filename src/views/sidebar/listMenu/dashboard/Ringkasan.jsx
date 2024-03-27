@@ -15,7 +15,7 @@ export const Ringkasan = ({ data }) => {
             width="24"
             height="24"
             fill="none"
-            viewBox="0 0 24 24"
+            viewBox="0 0 30 24"
           >
             <path
               stroke="currentColor"
@@ -39,7 +39,7 @@ export const Ringkasan = ({ data }) => {
           width="24"
           height="24"
           fill="none"
-          viewBox="0 0 24 24"
+          viewBox="0 0 30 24"
         >
           <path
             stroke="currentColor"
@@ -61,7 +61,7 @@ export const Ringkasan = ({ data }) => {
             width="24"
             height="24"
             fill="none"
-            viewBox="0 0 24 24"
+            viewBox="0 0 30 24"
           >
             <path
               stroke="currentColor"
@@ -85,7 +85,7 @@ export const Ringkasan = ({ data }) => {
           width="24"
           height="24"
           fill="none"
-          viewBox="0 0 24 24"
+          viewBox="0 0 30 24"
         >
           <path
             stroke="currentColor"
@@ -107,7 +107,7 @@ export const Ringkasan = ({ data }) => {
             width="24"
             height="24"
             fill="none"
-            viewBox="0 0 24 24"
+            viewBox="0 0 30 24"
           >
             <path
               stroke="currentColor"
@@ -130,7 +130,7 @@ export const Ringkasan = ({ data }) => {
           width="24"
           height="24"
           fill="none"
-          viewBox="0 0 24 24"
+          viewBox="0 0 30 24"
         >
           <path
             stroke="currentColor"
@@ -152,7 +152,7 @@ export const Ringkasan = ({ data }) => {
             width="24"
             height="24"
             fill="none"
-            viewBox="0 0 24 24"
+            viewBox="0 0 30 24"
           >
             <path
               stroke="currentColor"
@@ -175,7 +175,7 @@ export const Ringkasan = ({ data }) => {
           width="24"
           height="24"
           fill="none"
-          viewBox="0 0 24 24"
+          viewBox="0 0 30 24"
         >
           <path
             stroke="currentColor"

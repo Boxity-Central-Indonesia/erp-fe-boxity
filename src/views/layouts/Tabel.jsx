@@ -65,43 +65,43 @@ const TabelComponent = ({
 
           // Definisi objek pemetaan untuk status Active/Inactive
           const statusMap = {
-            Active: "bg-green-600",
-            Inactive: "bg-red-600",
+            Active: "bg-green-600 text-center",
+            Inactive: "bg-red-600 text-center",
           };
 
           // Definisi objek pemetaan untuk status Completed/Incompleted
           const orderStatusMap = {
-            completed: "bg-green-600",
-            incompleted: "bg-red-600",
+            completed: "bg-green-600 text-center",
+            incompleted: "bg-red-600 text-center",
           };
 
           // Definisi objek pemetaan untuk production status/order status
           const productionStatusMap = {
-            Completed: "bg-green-600",
-            "Pending Confirmation": "bg-yellow-600",
-            "In Production": "bg-yellow-600",
-            Packaging: "bg-yellow-600",
-            Cancelled: "bg-red-600",
-            Shipped: "bg-green-600",
+            Completed: "bg-green-600 text-center",
+            "Pending Confirmation": "bg-yellow-600 text-center",
+            "In Production": "bg-yellow-600 text-center",
+            Packaging: "bg-yellow-600 text-center",
+            Cancelled: "bg-red-600 text-center",
+            Shipped: "bg-green-600 text-center",
           };
 
           // Definisi objek pemetaan untuk metode pembayaran
           const paymentMethodMap = {
-            cash: "bg-green-600",
-            credit: "bg-yellow-600",
-            Online: "bg-primary-600",
-            Other: "bg-red-600",
+            cash: "bg-green-600 text-center",
+            credit: "bg-yellow-600 text-center",
+            online: "bg-primary-600 text-center",
+            other: "bg-red-600 text-center",
           };
 
           // Definisi objek pemetaan untuk status pembayaran
           const paymentStatusMap = {
-            paid: "bg-green-600",
-            partial: "bg-yellow-600",
-            unpaid: "bg-primary-600",
+            paid: "bg-green-600 text-center",
+            partial: "bg-yellow-600 text-center",
+            unpaid: "bg-primary-600 text-center",
           };
           // Definisi objek pemetaan untuk status transaksi penerimaan barang
           const goodReceiptMap = {
-            received: "bg-green-600",
+            received: "bg-green-600 text-center",
           };
 
           if (statusMap.hasOwnProperty(info.getValue())) {
@@ -136,14 +136,14 @@ const TabelComponent = ({
             info.getValue() === "supplier"
           ) {
             className =
-              "border py-0.5 px-2 rounded bg-green-600 w-fit text-white text-sm flex items-center justify-center";
+              "border py-0.5 px-2 rounded bg-green-600 w-fit text-white text-sm flex items-center justify-center text-center";
             icon = (
               <svg
                 className="w-5 h-5 text-white dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="currentColor"
@@ -160,14 +160,14 @@ const TabelComponent = ({
             info.getValue() === "customer"
           ) {
             className =
-              "border py-0.5 px-2 rounded bg-red-600 w-fit text-white text-sm flex items-center justify-center";
+              "border py-0.5 px-2 rounded bg-red-600 w-fit text-white text-sm flex items-center justify-center text-center";
             icon = (
               <svg
                 className="w-5 h-5 text-white dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="currentColor"
@@ -180,14 +180,14 @@ const TabelComponent = ({
             );
           } else if (info.getValue() === "transfer") {
             className =
-              "border py-0.5 px-2 rounded bg-blue-600 w-fit text-white text-sm flex items-center justify-center";
+              "border py-0.5 px-2 rounded bg-blue-600 w-fit text-white text-sm flex items-center justify-center text-center";
             icon = (
               <svg
                 className="w-5 h-5 text-white dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="currentColor"
@@ -195,6 +195,46 @@ const TabelComponent = ({
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M8 20V7m0 13-4-4m4 4 4-4m4-12v13m0-13 4 4m-4-4-4 4"
+                />
+              </svg>
+            );
+          } else if (info.getValue() === "Direct Order") {
+            className =
+              "border py-0.5 px-2 rounded bg-blue-600 w-fit text-white text-sm flex items-center justify-center text-center";
+            icon = (
+              <svg
+                class="w-5 h-5 text-white dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 30 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 12H5m14 0-4 4m4-4-4-4"
+                />
+              </svg>
+            );
+          } else if (info.getValue() === "Production Order") {
+            className =
+              "border py-0.5 px-2 rounded bg-yellow-600 w-fit text-white text-sm flex items-center justify-center text-center";
+            icon = (
+              <svg
+                class="w-5 h-5 text-white dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 30 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
                 />
               </svg>
             );
@@ -215,8 +255,7 @@ const TabelComponent = ({
             className = "text-right";
             formattedValue = formatToRupiah(value);
           } else if (
-            (typeof value === "number" && 
-            key === "capacity") ||
+            (typeof value === "number" && key === "capacity") ||
             key === "kapasitas"
             // key === "amount"
           ) {
@@ -227,15 +266,15 @@ const TabelComponent = ({
               maximumFractionDigits: 2,
             });
             formattedValue = `${formattedNumber} ton`;
-          } else if(key === 'unit of measure') {
-            className = "text-right"
-            formattedValue = value
+          } else if (key === "unit of measure") {
+            className = "text-right";
+            formattedValue = value;
           } else {
             formattedValue = value;
           }
 
-          if(key === 'amount') {
-            formattedValue = value.toLocaleString("id-ID")
+          if (key === "amount") {
+            formattedValue = value.toLocaleString("id-ID");
           }
 
           // Tambahkan kondisi untuk tidak mengaplikasikan capitalize pada key tertentu
@@ -339,7 +378,7 @@ const TabelComponent = ({
       </h3>
       <p
         className="text-gray-600 dark:text-gray-300 mb-6"
-        style={{ paddingRight: "30rem" }}
+        style={{ paddingRight: "10rem" }}
       >
         {dataHeading && dataHeading[0].information}
       </p>
@@ -358,7 +397,7 @@ const TabelComponent = ({
               dataNavHeading={dataHeading && dataHeading[0].dataNavHeading}
             />
           </div>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
             <table className={`w-full ${skeleton ? `` : `hidden`}`}>
               <tbody>
                 <tr className="w-full border-t-[1px]">
@@ -440,104 +479,72 @@ const TabelComponent = ({
                 } min-w-full w-max 2xl:w-full`}
               >
                 <Table.Head>
-                  {table.getHeaderGroups()[0].headers.map((header) => (
-                    <Table.HeadCell
-                      className={`${header.id === "id" ? `hidden` : ``} 
-                    ${
-                      header.id === "harga satuan"
-                        ? `text-right`
-                        : `` || header.id === "shipping cost"
-                        ? `text-right`
-                        : `` || header.id === "total price"
-                        ? `text-right`
-                        : `` || header.id === "balance"
-                        ? `text-right`
-                        : `` || header.id === "account balance"
-                        ? `text-right`
-                        : `` ||
-                          header.id === "book value" ||
-                          header.id === "price" ||
-                          header.id === "buying price"
-                        ? `text-right`
-                        : `` || header.id === "selling price"
-                        ? `text-right`
-                        : `` || header.id === "unit price"
-                        ? `text-right`
-                        : `` || header.id === "shipping cost"
-                        ? `text-right`
-                        : `` || header.id === "balance due"
-                        ? `text-right`
-                        : `` || header.id === "taxes"
-                        ? `text-right`
-                        : `` || header.id === "biaya"
-                        ? `text-right`
-                        : `` || header.id === "saldo"
-                        ? `text-right`
-                        : // : // : `` || header.id === "quantity"
-                        // // ? `text-right`
-                        // `` || header.id === "weight"
-                        // ? `text-right`
-                        `` || header.id === "hpp balance"
-                        ? `text-right`
-                        : `` || header.id === "harga satuan"
-                        ? `text-right`
-                        : `` || header.id === "kapasitas"
-                        ? `text-right`
-                        : `` || header.id === "tagihan terbayar"
-                        ? `text-right`
-                        : `` ||
-                          header.id === "total amount" ||
-                          header.id === "amount paid"
-                        ? `text-right`
-                        : `` || header.id === "discount price"
-                        ? "text-right"
-                        : "" || header.id === "assets"
-                        ? "text-right"
-                        : "" || header.id === "liabilities"
-                        ? "text-right"
-                        : "" || header.id === "equity"
-                        ? "text-right"
-                        : "" || header.id === "opening balance"
-                        ? "text-right"
-                        : "" || header.id === "total debit"
-                        ? "text-right"
-                        : "" || header.id === "total credit"
-                        ? "text-right"
-                        : "" || header.id === "net cash flow"
-                        ? "text-right"
-                        : "" || header.id === "paid amount"
-                        ? "text-right"
-                        : "" || header.id === "amount of costs"
-                        ? "text-right"
-                        : "" || header.id === "rest of the bill"
-                        ? "text-right"
-                        : "" || header.id === "total harga"
-                        ? "text-right"
-                        : "" || header.id === "harga pengiriman"
-                        ? "text-right"
-                        : "" || header.id === 'unit of measure'
-                        ? "text-right"
-                        : ""
-                    }`}
-                      key={header.id}
-                    >
-                      <span className="">
-                        {header.id === "Employment Status" ? `` : header.id}
-                      </span>
-                      {header.column.getCanFilter() &&
-                        header.id === "Employment Status" && (
-                          <div>
-                            <Filter column={header.column} table={table} />
-                          </div>
-                        )}
-                    </Table.HeadCell>
-                  ))}
-                  <Table.HeadCell
-                    className={`${data.length === 0 ? `hidden` : ``}`}
-                  >
-                    <span className="sr-only">Edit</span>
-                  </Table.HeadCell>
+                  {table.getHeaderGroups()[0].headers.map((header) => {
+                    const headerClassMap = {
+                      "harga satuan": "text-right",
+                      "shipping cost": "text-right",
+                      "total price": "text-right",
+                      balance: "text-right",
+                      "account balance": "text-right",
+                      "book value": "text-right",
+                      price: "text-right",
+                      "buying price": "text-right",
+                      "selling price": "text-right",
+                      "unit price": "text-right",
+                      "balance due": "text-right",
+                      taxes: "text-right",
+                      biaya: "text-right",
+                      saldo: "text-right",
+                      "hpp balance": "text-right",
+                      kapasitas: "text-right",
+                      "tagihan terbayar": "text-right",
+                      "total amount": "text-right",
+                      "amount paid": "text-right",
+                      "sisa tagihan": "text-right",
+                      "total tagihan": "text-right",
+                      "discount price": "text-right",
+                      assets: "text-right",
+                      liabilities: "text-right",
+                      equity: "text-right",
+                      "opening balance": "text-right",
+                      "total debit": "text-right",
+                      "total credit": "text-right",
+                      "net cash flow": "text-right",
+                      "paid amount": "text-right",
+                      "amount of costs": "text-right",
+                      "rest of the bill": "text-right",
+                      "total harga": "text-right",
+                      "harga pengiriman": "text-right",
+                      "unit of measure": "text-right",
+                      status: "text-center",
+                      // "transaction type": "text-center",
+                      // "order status": "text-center",
+                      // "order type": "text-center",
+                    };
+
+                    return (
+                      <Table.HeadCell
+                        className={`${
+                          header.id === "id" || data.length === 0
+                            ? "hidden"
+                            : ""
+                        } ${headerClassMap[header.id] || ""}`}
+                        key={header.id}
+                      >
+                        <span className="">
+                          {header.id === "Employment Status" ? `` : header.id}
+                        </span>
+                        {header.column.getCanFilter() &&
+                          header.id === "Employment Status" && (
+                            <div>
+                              <Filter column={header.column} table={table} />
+                            </div>
+                          )}
+                      </Table.HeadCell>
+                    );
+                  })}
                 </Table.Head>
+
                 <Table.Body className="divide-y">
                   {table.getRowModel().rows.map((row) => (
                     <Table.Row
@@ -552,7 +559,7 @@ const TabelComponent = ({
                         return (
                           <Table.Cell
                             key={cell.id}
-                            className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
+                            className="whitespace-nowrap font-small text-sm text-gray-900 dark:text-white"
                           >
                             {flexRender(
                               cell.column.columnDef.cell,
@@ -565,21 +572,21 @@ const TabelComponent = ({
                         // Check if the cell's column ID matches the one you want to hide
                         if (cell.column.columnDef.id === "id") {
                           return (
-                            <Table.Cell className={`text-right`}>
+                            <Table.Cell
+                              className={`text-right flex items-center justify-end`}
+                            >
                               <button
                                 key={1 + 1}
                                 style={{ color: globalColor }}
                                 className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                                onClick={(e) => handleEditClick(e.target)} // Pass row.id as
-                                parameter
+                                onClick={(e) => handleEditClick(e.target)}
                               >
-                                {/* <span className='hidden'>{flexRender(cell.column.columnDef.cell, cell.getContext())}</span> */}
                                 <svg
-                                  className="w-6 h-6 dark:text-white"
+                                  className="w-5 h-5 dark:text-white"
                                   aria-hidden="true"
                                   xmlns="http://www.w3.org/2000/svg"
                                   fill="none"
-                                  viewBox="0 0 24 24"
+                                  viewBox="0 0 30 24"
                                 >
                                   <path
                                     stroke="currentColor"

@@ -5,20 +5,19 @@ import { useState, useEffect } from "react";
 import { Dropdown } from "flowbite-react";
 import Button from "./Button";
 
-export const TabelHeadingForDetail = ({ 
-  toggleOpenModal, 
-  icon, 
-  label, 
-  globalFilter, 
-  setGlobalFilter, 
-  handleClickHeading, 
+export const TabelHeadingForDetail = ({
+  toggleOpenModal,
+  icon,
+  label,
+  globalFilter,
+  setGlobalFilter,
+  handleClickHeading,
   showNavHeading,
   dataNavHeading,
   activeButton,
   hidden,
   routes,
 }) => {
-
   const { globalColor, changeColor } = useColor();
 
   return (
@@ -55,7 +54,7 @@ export const TabelHeadingForDetail = ({
                     aria-hidden="true"
                     className="w-5 h-5 text-gray-500 dark:text-gray-400"
                     fill="currentColor"
-                    viewBox="0 0 20 20"
+                    viewBox="0 0 30 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
@@ -147,4 +146,3 @@ function DebouncedInput({
     />
   );
 }
-

@@ -8,7 +8,7 @@ export const GoodReceiptDetail = ({
   defaultEdit,
   handleEdit,
   dataHeading,
-  setPath
+  setPath,
 }) => {
   const dataGoodReceiptItem = data?.goods_receipt_items
     ? data.goods_receipt_items.map((item) => ({
@@ -18,15 +18,14 @@ export const GoodReceiptDetail = ({
         "quantity ordered": item.quantity_ordered + " pcs",
         "quantity received": item.quantity_received + " pcs",
         "quantity due": item.quantity_due + " pcs",
-        product_id: item.product_id
+        product_id: item.product_id,
       }))
     : []; // Use an empty array if data.departments is null
 
-
-    const handleBack = () => {
-      defaultEdit(true)
-      setPath('goods-receipt')
-  }
+  const handleBack = () => {
+    defaultEdit(true);
+    setPath("goods-receipt");
+  };
 
   return (
     <>
@@ -94,10 +93,7 @@ export const GoodReceiptDetail = ({
                 <td className="py-3">Details</td>
                 <td>
                   {" "}
-                  :{" "}
-                  <span className="ml-5">
-                    {data?.details}
-                  </span>
+                  : <span className="ml-5">{data?.details}</span>
                 </td>
               </tr>
             </table>
@@ -116,7 +112,7 @@ export const GoodReceiptDetail = ({
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="currentColor"
@@ -140,7 +136,7 @@ export const GoodReceiptDetail = ({
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="currentColor"

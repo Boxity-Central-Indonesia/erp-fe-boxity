@@ -9,7 +9,7 @@ export const DeliveryNotesDetail = ({
   handleEdit,
   dataHeading,
   setPath,
-  refBody
+  refBody,
 }) => {
   const dataDeliveryNotesItem = data?.delivery_note_items
     ? data.delivery_note_items.map((item) => ({
@@ -19,11 +19,10 @@ export const DeliveryNotesDetail = ({
       }))
     : []; // Use an empty array if data.departments is null
 
-
-    const handleBack = () => {
-      defaultEdit(true)
-      setPath('delivery-notes')
-  }
+  const handleBack = () => {
+    defaultEdit(true);
+    setPath("delivery-notes");
+  };
 
   return (
     <>
@@ -38,8 +37,7 @@ export const DeliveryNotesDetail = ({
                 <td className="py-3">Number</td>
                 <td>
                   {" "}
-                  :{" "}
-                  <span className="ml-5">{data?.number || "--"}</span>
+                  : <span className="ml-5">{data?.number || "--"}</span>
                 </td>
               </tr>
               <tr className="">
@@ -61,8 +59,7 @@ export const DeliveryNotesDetail = ({
                 <td className="py-3">Date</td>
                 <td>
                   {" "}
-                  :{" "}
-                  <span className="ml-5">{data?.date || "--"}</span>
+                  : <span className="ml-5">{data?.date || "--"}</span>
                 </td>
               </tr>
             </table>
@@ -95,7 +92,7 @@ export const DeliveryNotesDetail = ({
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="currentColor"
@@ -119,7 +116,7 @@ export const DeliveryNotesDetail = ({
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="currentColor"
@@ -136,7 +133,7 @@ export const DeliveryNotesDetail = ({
         <div className="grid grid-cols-1 gap-5">
           <div>
             <h2 className="text-xl font-medium dark:text-white mb-4">
-                Delivery notes item
+              Delivery notes item
             </h2>
             <TabelForDetail
               data={dataDeliveryNotesItem}

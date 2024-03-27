@@ -16,7 +16,7 @@ export const OrderDetail = ({
     ? data.products.map((item) => ({
         id: item.id,
         name: item.name,
-        quantity: item.quantity + " pcs",
+        quantity: item.quantity + " Kg",
         "harga satuan": new Intl.NumberFormat("id-ID", {
           style: "currency",
           currency: "IDR",
@@ -187,7 +187,7 @@ export const OrderDetail = ({
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="currentColor"
@@ -211,7 +211,7 @@ export const OrderDetail = ({
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="currentColor"
@@ -236,7 +236,7 @@ export const OrderDetail = ({
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="0 0 30 24"
               >
                 <path
                   stroke="white"

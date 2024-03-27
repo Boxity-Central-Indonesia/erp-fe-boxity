@@ -61,18 +61,7 @@ export const TabelOrder = ({ dataOrders }) => {
             {dataHeading
               .filter((heading) => heading !== "id")
               .map((heading, index) => (
-                <Table.HeadCell
-                  className={`${
-                    heading === "taxes" ||
-                    heading === "shipping cost" ||
-                    heading === "total price"
-                      ? `text-right`
-                      : ``
-                  }`}
-                  key={index}
-                >
-                  {heading}
-                </Table.HeadCell>
+                <Table.HeadCell key={index}>{heading}</Table.HeadCell>
               ))}
           </Table.Head>
           <Table.Body className="divide-y text-xs">

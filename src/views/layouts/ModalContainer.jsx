@@ -98,7 +98,7 @@ export const ModalConfirmDelete = ({
                 aria-hidden="true"
                 className="w-5 h-5"
                 fill="currentColor"
-                viewBox="0 0 20 20"
+                viewBox="0 0 30 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
@@ -113,7 +113,7 @@ export const ModalConfirmDelete = ({
               className="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto"
               aria-hidden="true"
               fill="currentColor"
-              viewBox="0 0 20 20"
+              viewBox="0 0 30 24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path

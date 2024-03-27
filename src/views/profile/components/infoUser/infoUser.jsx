@@ -1,13 +1,21 @@
+// InfoUser.jsx
 import { useEffect, useState } from "react";
 import FormInput from "../../../layouts/FormInput";
 import Button from "../../../layouts/Button";
 import IconSave from "../../../layouts/icons/IconSave";
 import { getApiData } from "../../../../function/Api";
-import { CRUD } from "./components/CRUD"
+import { CRUD } from "./components/CRUD";
 
 export const InfoUser = () => {
+  const { input, profileData } = CRUD(); // Mengambil input dan profileData dari CRUD
 
-  const {input} = CRUD()
+  // Fungsi untuk mengatur nilai pada input berdasarkan profileData
+  const setInputValueFromProfileData = (fieldName) => {
+    if (profileData && profileData[fieldName]) {
+      return profileData[fieldName];
+    }
+    return ""; // Kembalikan string kosong jika tidak ada data
+  };
 
   return (
     <>
@@ -16,24 +24,22 @@ export const InfoUser = () => {
           User Information
         </h1>
         <div className="grid grid-cols-2 gap-6">
-          {input && input.map((item, index) => (
-            <FormInput
-              key={item.id}
-              element={item.element}
-              htmlFor={item.htmlFor}
-              label={item.label}
-              type={item.type}
-              name={item.name}
-              // referens={item.ref}
-              // value={item.value}
-              id={item.id}
-              // onChange={(event) => item.onchange(event)}
-              placeholder={item.placeholder}
-              dataSelect={item.dataSelect}
-              uniqueId={index}
-              // validationError={validationError}
-            />
-          ))}
+          {input &&
+            input.map((item, index) => (
+              <FormInput
+                key={item.id}
+                element={item.element}
+                htmlFor={item.htmlFor}
+                label={item.label}
+                type={item.type}
+                name={item.name}
+                value={setInputValueFromProfileData(item.name)} // Atur nilai dari profileData ke dalam input
+                id={item.id}
+                placeholder={item.placeholder}
+                dataSelect={item.dataSelect}
+                uniqueId={index}
+              />
+            ))}
         </div>
         <div className="mt-4">
           <Button

@@ -643,11 +643,11 @@ export const CRUD = () => {
       // status: item.status,
       "order status": item.order_status,
       "order type": item.order_type,
-      taxes: item.taxes ?? "--",
+      // taxes: item.taxes ?? "--",
       // quantity: item.quantity,
       // 'price per unnit': item.price_per_unit,
-      "shipping cost": item.shipping_cost ?? "--",
-      "total price": item.total_price,
+      // "shipping cost": item.shipping_cost ?? "--",
+      "total tagihan": item.total_price,
       id: item.id,
     }));
   };
@@ -671,7 +671,7 @@ export const CRUD = () => {
       "tanggal jatuh tempo": item.due_date,
       status: item.status,
       "sisa tagihan": item.balance_due,
-      "total amount": item.total_amount,
+      "total tagihan": item.total_amount,
       id: item.id,
     }));
   };

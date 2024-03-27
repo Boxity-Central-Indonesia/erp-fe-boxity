@@ -12,7 +12,7 @@ import FormInput from "../../../../layouts/FormInput";
 import {
   FormatCurrency,
   numberToCurrency,
-  currencyToNumber
+  currencyToNumber,
 } from "../../../../config/FormatCurrency";
 
 export const CRUD = () => {
@@ -310,8 +310,8 @@ export const CRUD = () => {
         htmlFor: "raw_material",
         id: "raw_material",
         dataSelect: [
-          { id: '1', name: "True" },
-          { id: '0', name: "False" },
+          { id: "1", name: "True" },
+          { id: "0", name: "False" },
         ],
         onchange: handleChange,
       },
@@ -1300,7 +1300,7 @@ export const CRUD = () => {
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
-                  viewBox="0 0 24 24"
+                  viewBox="0 0 30 24"
                 >
                   <path
                     stroke="currentColor"

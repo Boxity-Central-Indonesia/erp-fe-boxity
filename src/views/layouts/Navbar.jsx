@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { getApiData } from "../../function/Api";
 
 function Navbar({ onToggleSidebar, setAuth }) {
-  const [isOpenSideBar, setIsOpenSideBar] = useState()
+  const [isOpenSideBar, setIsOpenSideBar] = useState();
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
     name: "",
@@ -145,7 +145,7 @@ function Navbar({ onToggleSidebar, setAuth }) {
               aria-hidden="true"
               className="w-6 h-6"
               fill="currentColor"
-              viewBox="0 0 20 20"
+              viewBox="0 0 30 24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -158,7 +158,7 @@ function Navbar({ onToggleSidebar, setAuth }) {
               aria-hidden="true"
               className="hidden w-6 h-6"
               fill="currentColor"
-              viewBox="0 0 20 20"
+              viewBox="0 0 30 24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
