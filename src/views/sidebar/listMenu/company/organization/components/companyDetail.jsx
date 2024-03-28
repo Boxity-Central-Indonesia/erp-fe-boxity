@@ -35,35 +35,35 @@ export const CompanyDetail = ({
           <div className="col-span-1">
             <table className={`w-full`}>
               <tr className="">
-                <td className="py-3">Company name</td>
+                <td className="py-1">Company name</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.name || "--"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Phone Number</td>
+                <td className="py-1">Phone Number</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.phone_number || "--"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Address</td>
+                <td className="py-1">Address</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.address || "--"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Email</td>
+                <td className="py-1">Email</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.email || "--"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Website</td>
+                <td className="py-1">Website</td>
                 <td>
                   {" "}
                   :{" "}
@@ -77,7 +77,7 @@ export const CompanyDetail = ({
           <div className="col-span-1">
             <table className="w-full">
               <tr>
-                <td className="py-3">Location</td>
+                <td className="py-1">Location</td>
                 <td>
                   {" "}
                   :{" "}
@@ -88,7 +88,7 @@ export const CompanyDetail = ({
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Industry</td>
+                <td className="py-1">Industry</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.industry ?? "--"}</span>

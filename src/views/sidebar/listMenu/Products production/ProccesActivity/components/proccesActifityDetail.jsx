@@ -46,7 +46,7 @@ export const ProccesActivityDetail = ({
             <table className={`w-full`}>
               <tbody>
                 <tr>
-                  <td className="py-3">Transaction code</td>
+                  <td className="py-1">Transaction code</td>
                   <td>
                     {" "}
                     :{" "}
@@ -56,7 +56,7 @@ export const ProccesActivityDetail = ({
                   </td>
                 </tr>
                 <tr>
-                  <td className="py-3">Detail order</td>
+                  <td className="py-1">Detail order</td>
                   <td>
                     {" "}
                     :{" "}
@@ -64,7 +64,7 @@ export const ProccesActivityDetail = ({
                   </td>
                 </tr>
                 <tr>
-                  <td className="py-3">Product ordered</td>
+                  <td className="py-1">Product ordered</td>
                   <td>
                     {" "}
                     :{" "}
@@ -72,7 +72,7 @@ export const ProccesActivityDetail = ({
                   </td>
                 </tr>
                 <tr>
-                  <td className="py-3">Product type</td>
+                  <td className="py-1">Product type</td>
                   <td>
                     {" "}
                     :{" "}
@@ -89,7 +89,7 @@ export const ProccesActivityDetail = ({
             <table className={`w-full`}>
               <tbody>
                 <tr className="">
-                  <td className="py-3">Last Activity</td>
+                  <td className="py-1">Last Activity</td>
                   <td>
                     {" "}
                     :{" "}
@@ -99,7 +99,7 @@ export const ProccesActivityDetail = ({
                   </td>
                 </tr>
                 <tr className="">
-                  <td className="py-3">Last activity date</td>
+                  <td className="py-1">Last activity date</td>
                   <td>
                     {" "}
                     :{" "}
@@ -109,7 +109,7 @@ export const ProccesActivityDetail = ({
                   </td>
                 </tr>
                 <tr>
-                  <td className="py-3">Description</td>
+                  <td className="py-1">Description</td>
                   <td>
                     {" "}
                     :{" "}

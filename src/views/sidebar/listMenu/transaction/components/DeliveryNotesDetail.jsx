@@ -34,14 +34,14 @@ export const DeliveryNotesDetail = ({
           <div className="col-span-1">
             <table className={`w-full`}>
               <tr className="">
-                <td className="py-3">Number</td>
+                <td className="py-1">Number</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.number || "--"}</span>
                 </td>
               </tr>
               <tr className="">
-                <td className="py-3">Warehouses</td>
+                <td className="py-1">Warehouses</td>
                 <td>
                   {" "}
                   :{" "}
@@ -49,14 +49,14 @@ export const DeliveryNotesDetail = ({
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Vendor</td>
+                <td className="py-1">Vendor</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.vendor?.name || "--"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Date</td>
+                <td className="py-1">Date</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.date || "--"}</span>
@@ -67,7 +67,7 @@ export const DeliveryNotesDetail = ({
           <div className="col-span-1">
             <table className="w-full">
               <tr>
-                <td className="py-3">Details</td>
+                <td className="py-1">Details</td>
                 <td>
                   {" "}
                   :{" "}

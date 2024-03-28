@@ -79,14 +79,14 @@ export const OrderDetail = ({
           <div className="col-span-1">
             <table className={`w-full`}>
               <tr className="">
-                <td className="py-3">Kode Transaksi</td>
+                <td className="py-1">Kode Transaksi</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.kode_order || "--"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">
+                <td className="py-1">
                   {data?.vendor?.transaction_type == "outbound"
                     ? "Customer"
                     : "Supplier"}
@@ -97,7 +97,7 @@ export const OrderDetail = ({
                 </td>
               </tr>
               <tr>
-                <td className="py-3">
+                <td className="py-1">
                   {data?.vendor?.transaction_type == "outbound"
                     ? "Gudang Tujuan"
                     : "Gudang Asal"}
@@ -109,7 +109,7 @@ export const OrderDetail = ({
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Kode transaksi invoice</td>
+                <td className="py-1">Kode transaksi invoice</td>
                 <td>
                   {" "}
                   :{" "}
@@ -123,7 +123,7 @@ export const OrderDetail = ({
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Order type</td>
+                <td className="py-1">Order type</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.order_type || "--"}</span>
@@ -134,7 +134,7 @@ export const OrderDetail = ({
           <div className="col-span-1">
             <table className="w-full">
               <tr>
-                <td className="py-3">Order status</td>
+                <td className="py-1">Order status</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.order_status || "--"}</span>
@@ -142,14 +142,14 @@ export const OrderDetail = ({
               </tr>
 
               <tr>
-                <td className="py-3">PPN</td>
+                <td className="py-1">PPN</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.taxes || "Rp. 0"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Biaya Pengiriman</td>
+                <td className="py-1">Biaya Pengiriman</td>
                 <td>
                   {" "}
                   :{" "}
@@ -157,7 +157,7 @@ export const OrderDetail = ({
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Total Tagihan</td>
+                <td className="py-1">Total Tagihan</td>
                 <td>
                   {" "}
                   :{" "}

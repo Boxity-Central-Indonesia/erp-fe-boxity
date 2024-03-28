@@ -37,7 +37,7 @@ export const GoodReceiptDetail = ({
           <div className="col-span-1">
             <table className={`w-full`}>
               <tr className="">
-                <td className="py-3">Recived code</td>
+                <td className="py-1">Recived code</td>
                 <td>
                   {" "}
                   :{" "}
@@ -45,7 +45,7 @@ export const GoodReceiptDetail = ({
                 </td>
               </tr>
               <tr className="">
-                <td className="py-3">Transaction code</td>
+                <td className="py-1">Transaction code</td>
                 <td>
                   {" "}
                   :{" "}
@@ -53,14 +53,14 @@ export const GoodReceiptDetail = ({
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Received date</td>
+                <td className="py-1">Received date</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.created_at || "--"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Ordered date</td>
+                <td className="py-1">Ordered date</td>
                 <td>
                   {" "}
                   :{" "}
@@ -72,7 +72,7 @@ export const GoodReceiptDetail = ({
           <div className="col-span-1">
             <table className="w-full">
               <tr>
-                <td className="py-3">Received status</td>
+                <td className="py-1">Received status</td>
                 <td>
                   {" "}
                   :{" "}
@@ -83,14 +83,14 @@ export const GoodReceiptDetail = ({
               </tr>
 
               <tr>
-                <td className="py-3">Warehouses</td>
+                <td className="py-1">Warehouses</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.warehouse.name || "--"}</span>
                 </td>
               </tr>
               <tr>
-                <td className="py-3">Details</td>
+                <td className="py-1">Details</td>
                 <td>
                   {" "}
                   : <span className="ml-5">{data?.details}</span>
