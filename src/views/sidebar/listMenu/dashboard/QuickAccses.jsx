@@ -7,27 +7,8 @@ export const QuickAcces = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([
     {
-      label: "Order",
-      icon: (
-        <svg
-          style={{ color: globalColor }}
-          className="w-6 h-6 dark:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
-          viewBox="0 0 30 24"
-        >
-          <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z"
-          />
-        </svg>
-      ),
+      label: "Transactions",
+      icon: "https://res.cloudinary.com/boxity-id/image/upload/v1711653128/svg/o3dvkjrlrlk43ceiyg9b.svg",
 
       information:
         "Track order status, manage shipments, and view purchase details.",
@@ -37,28 +18,14 @@ export const QuickAcces = () => {
           eventListener: "",
         },
         {
-          button1: "Manage order",
+          button1: "Manage transactions",
           eventListener: "/transactions",
         },
       ],
     },
     {
-      label: "Product",
-      icon: (
-        <svg
-          style={{ color: globalColor }}
-          className="w-6 h-6 dark:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="currentColor"
-          viewBox="0 0 30 24"
-        >
-          <path d="M12.013 6.175 7.006 9.369l5.007 3.194-5.007 3.193L2 12.545l5.006-3.193L2 6.175l5.006-3.194 5.007 3.194ZM6.981 17.806l5.006-3.193 5.006 3.193L11.987 21l-5.006-3.194Z" />
-          <path d="m12.013 12.545 5.006-3.194-5.006-3.176 4.98-3.194L22 6.175l-5.007 3.194L22 12.562l-5.007 3.194-4.98-3.211Z" />
-        </svg>
-      ),
+      label: "Products",
+      icon: "https://res.cloudinary.com/boxity-id/image/upload/v1711653127/svg/loczxkm20okxelzl4tfk.svg",
 
       information:
         "Manage product catalog, add stock, and organize categories.",
@@ -68,33 +35,14 @@ export const QuickAcces = () => {
           eventListener: "",
         },
         {
-          button1: "Product Catalog",
+          button1: "Product Catalogue",
           eventListener: "",
         },
       ],
     },
     {
-      label: "Report",
-      icon: (
-        <svg
-          style={{ color: globalColor }}
-          className="w-6 h-6 dark:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
-          viewBox="0 0 30 24"
-        >
-          <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M18 5V4a1 1 0 0 0-1-1H8.914a1 1 0 0 0-.707.293L4.293 7.207A1 1 0 0 0 4 7.914V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5M9 3v4a1 1 0 0 1-1 1H4m11.383.772 2.745 2.746m1.215-3.906a2.089 2.089 0 0 1 0 2.953l-6.65 6.646L9 17.95l.739-3.692 6.646-6.646a2.087 2.087 0 0 1 2.958 0Z"
-          />
-        </svg>
-      ),
+      label: "Reports",
+      icon: "https://res.cloudinary.com/boxity-id/image/upload/v1711653128/svg/pbeivhrxpsjythbsr03v.svg",
       information:
         "Monitor your business performance with easy-to-understand and accessible reports.",
       button: [
@@ -109,35 +57,16 @@ export const QuickAcces = () => {
       ],
     },
     {
-      label: "Good receipt",
-      icon: (
-        <svg
-          style={{ color: globalColor }}
-          className="w-6 h-6 dark:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
-          viewBox="0 0 30 24"
-        >
-          <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M9 8h6m-6 4h6m-6 4h6M6 3v18l2-2 2 2 2-2 2 2 2-2 2 2V3l-2 2-2-2-2 2-2-2-2 2-2-2Z"
-          />
-        </svg>
-      ),
+      label: "Logistics",
+      icon: "https://res.cloudinary.com/boxity-id/image/upload/v1711653128/svg/v0q2qsjyvxbxrv87jjj9.svg",
       information: "Manage goods receipt, check stock, and verify invoices.",
       button: [
         {
-          button1: "New good receipt",
+          button1: "Goods Receipt",
           eventListener: "",
         },
         {
-          button1: "See good receipt",
+          button1: "Delivery Notes",
           eventListener: "",
         },
       ],
@@ -154,7 +83,11 @@ export const QuickAcces = () => {
         {data &&
           data.map((item, index) => (
             <div className="border rounded-md p-5 bg-white flex flex-col items-center">
-              <div className="bg-[#f95b1240] p-3 rounded-md">{item.icon}</div>
+              <img
+                src={item.icon}
+                alt={item.label}
+                className="w-40 h-20 dark:text-white"
+              />
               <h2 className="my-3 text-xl font-medium">{item.label}</h2>
               <p className="text-center text-gray-500 text-sm mb-3">
                 {item.information}

@@ -122,7 +122,7 @@ export const Ringkasan = ({ data }) => {
           </div>
         ),
 
-      label: "Total Purchase",
+      label: "Total Purchases",
       amount: data.length > 0 ? data[1].amount : "Loading...",
       information: data.length > 0 ? data[1].information : "Loading...",
       secondaryIcon: (
