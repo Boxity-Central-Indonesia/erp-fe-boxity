@@ -517,6 +517,7 @@ const TabelComponent = ({
                       "harga pengiriman": "text-right",
                       "unit of measure": "text-right",
                       status: "text-center",
+                      quantity: "text-right",
                       // "transaction type": "text-center",
                       // "order status": "text-center",
                       // "order type": "text-center",
@@ -546,10 +547,12 @@ const TabelComponent = ({
                 </Table.Head>
 
                 <Table.Body className="divide-y">
-                  {table.getRowModel().rows.map((row) => (
+                  {table.getRowModel().rows.map((row, rowIndex) => (
                     <Table.Row
                       key={row.id}
-                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                      className={`${
+                        rowIndex % 2 === 0 ? "even:bg-gray-50" : "odd:bg-white"
+                      } border-b hover:bg-gray-50`}
                     >
                       {row.getVisibleCells().map((cell) => {
                         // Check if the cell's column ID matches the one you want to hide
@@ -559,7 +562,7 @@ const TabelComponent = ({
                         return (
                           <Table.Cell
                             key={cell.id}
-                            className="whitespace-nowrap font-small text-sm text-gray-900 dark:text-white"
+                            className="whitespace-nowrap font-small text-sm text-gray-900"
                           >
                             {flexRender(
                               cell.column.columnDef.cell,
@@ -578,11 +581,11 @@ const TabelComponent = ({
                               <button
                                 key={1 + 1}
                                 style={{ color: globalColor }}
-                                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                                className="font-medium text-cyan-600 hover:underline"
                                 onClick={(e) => handleEditClick(e.target)}
                               >
                                 <svg
-                                  className="w-5 h-5 dark:text-white"
+                                  className="w-5 h-5"
                                   aria-hidden="true"
                                   xmlns="http://www.w3.org/2000/svg"
                                   fill="none"

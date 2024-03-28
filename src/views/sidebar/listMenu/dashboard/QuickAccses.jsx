@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useColor } from "../../../config/GlobalColour";
 
 export const QuickAcces = () => {
   const { globalColor, changeColor } = useColor();
+  const navigate = useNavigate();
   const [data, setData] = useState([
     {
       label: "Order",
@@ -36,7 +38,7 @@ export const QuickAcces = () => {
         },
         {
           button1: "Manage order",
-          eventListener: "",
+          eventListener: "/transactions",
         },
       ],
     },
@@ -141,6 +143,9 @@ export const QuickAcces = () => {
       ],
     },
   ]);
+  const handleButtonClick = (url) => {
+    navigate(url); // Menggunakan useNavigate untuk navigasi
+  };
 
   return (
     <>
@@ -161,6 +166,9 @@ export const QuickAcces = () => {
                 <button
                   style={{ backgroundColor: globalColor }}
                   className="border text-white py-2 px-3 text-sm rounded-md text-gray-700"
+                  onClick={() =>
+                    handleButtonClick(item.button[0].eventListener)
+                  }
                 >
                   {item.button[0].button1}
                 </button>

@@ -42,7 +42,6 @@ export const CRUD = () => {
   const [refBody, setRefBody] = useState({
     idRef: useRef(),
     nameRef: useRef(),
-    codeRef: useRef(),
     descriptionRef: useRef(),
     priceRef: useRef(),
     typeRef: useRef(),
@@ -120,7 +119,6 @@ export const CRUD = () => {
     if (!!responseError) {
       setValidationError({
         name: responseError?.name?.[0] || "",
-        code: responseError?.code?.[0] || "",
         description: responseError?.description?.[0] || "",
         price: responseError?.price?.[0] || "",
         type: responseError?.type?.[0] || "",
@@ -169,18 +167,6 @@ export const CRUD = () => {
         id: "name",
         onchange: handleChange,
         placeholder: "Name",
-      },
-      {
-        element: "input",
-        type: "text",
-        name: "code",
-        ref: refBody.codeRef,
-        value: dataEdit.code,
-        label: "Code",
-        htmlFor: "code",
-        id: "code",
-        onchange: handleChange,
-        placeholder: "Code",
       },
       {
         element: "input",
@@ -243,16 +229,18 @@ export const CRUD = () => {
         placeholder: "Weight",
       },
       {
-        element: "input",
-        type: "text",
+        element: "select",
         name: "health_status",
         ref: refBody.health_statusRef,
         value: dataEdit.health_status,
-        label: "Health status",
+        label: "Kesehatan Barang",
         htmlFor: "health_status",
         id: "health_status",
+        dataSelect: [
+          { id: "1", name: "Healthy" },
+          { id: "0", name: "Half Healthy" },
+        ],
         onchange: handleChange,
-        placeholder: "Health status",
       },
       {
         element: "input",
@@ -260,7 +248,7 @@ export const CRUD = () => {
         name: "stock",
         ref: refBody.stockRef,
         value: dataEdit.stock,
-        label: "Stock",
+        label: "Stock Quantity",
         htmlFor: "stock",
         id: "stock",
         onchange: handleChange,
@@ -272,7 +260,7 @@ export const CRUD = () => {
         name: "category_id",
         ref: refBody.category_idRef,
         value: dataEdit.category_id,
-        label: "Category",
+        label: "Kategori Barang",
         htmlFor: "category_id",
         id: "category_id",
         dataSelect: dataCategorySelect,
@@ -283,7 +271,7 @@ export const CRUD = () => {
         name: "warehouse_id",
         ref: refBody.warehouse_idRef,
         value: dataEdit.warehouse_id,
-        label: "Warehouses",
+        label: "Penempatan Gudang",
         htmlFor: "warehouse_id",
         id: "warehouse_id",
         dataSelect: dataWarehouseesSelect,
@@ -306,7 +294,7 @@ export const CRUD = () => {
         name: "raw_material",
         ref: refBody.raw_materialRef,
         value: dataEdit.raw_material,
-        label: "Raw material",
+        label: "Bahan Baku atau Tidak",
         htmlFor: "raw_material",
         id: "raw_material",
         dataSelect: [
@@ -473,8 +461,8 @@ export const CRUD = () => {
   const dataProductCategories = (data) => {
     return data.map((item) => ({
       id: item.id,
-      name: item.name,
-      description: item.description,
+      "nama kategori": item.name,
+      deskripsi: item.description,
     }));
   };
 
@@ -494,7 +482,7 @@ export const CRUD = () => {
       "product name": item.product.name,
       warhouses: item.warehouse.name,
       "movement type": item.movement_type,
-      quantity: item.quantity,
+      quantity: item.quantity + " Pcs",
       price: item.price,
     }));
   };
@@ -510,7 +498,7 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new products",
+                label: "Add new product",
                 icon: IconAdd(),
                 heading: "Product list",
                 information:
@@ -714,7 +702,6 @@ export const CRUD = () => {
       if (param === "products") {
         setDataEdit({
           name: "",
-          code: "",
           description: "",
           price: "",
           type: "",
@@ -731,7 +718,6 @@ export const CRUD = () => {
         });
         setValidationError({
           name: "",
-          code: "",
           description: "",
           price: "",
           type: "",
@@ -749,8 +735,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add New products",
-          labelBtnModal: "Add new products",
+          labelModal: "Add New product",
+          labelBtnModal: "Add new product",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -819,7 +805,6 @@ export const CRUD = () => {
       } else {
         setDataEdit({
           name: "",
-          code: "",
           description: "",
           price: "",
           type: "",
@@ -836,7 +821,6 @@ export const CRUD = () => {
         });
         setValidationError({
           name: "",
-          code: "",
           description: "",
           price: "",
           type: "",
@@ -868,7 +852,6 @@ export const CRUD = () => {
       if (param === "products") {
         dataBody = {
           name: refBody.nameRef.current.value,
-          code: refBody.codeRef.current.value,
           description: refBody.descriptionRef.current.value,
           price: currencyToNumber(refBody.priceRef.current.value),
           type: refBody.typeRef.current.value,
@@ -1005,7 +988,6 @@ export const CRUD = () => {
         });
         setValidationError({
           name: "",
-          code: "",
           description: "",
           price: "",
           type: "",
@@ -1026,7 +1008,6 @@ export const CRUD = () => {
           if (status === 200) {
             setDataEdit({
               name: data.name,
-              code: data.code,
               description: data.description,
               price: numberToCurrency(data.price),
               type: data.type,
@@ -1152,7 +1133,6 @@ export const CRUD = () => {
       if (path === "products") {
         dataBody = {
           name: refBody.nameRef.current.value,
-          code: refBody.codeRef.current.value,
           description: refBody.descriptionRef.current.value,
           price: refBody.priceRef.current.value,
           type: refBody.typeRef.current.value,
