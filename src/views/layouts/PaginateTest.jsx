@@ -3,7 +3,8 @@ import { Dropdown } from 'flowbite-react';
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from 'react-icons/hi';
 
 function Paginate({
-  table
+  table,
+  itemsPagination
 }) {
 
   return(
@@ -16,7 +17,7 @@ function Paginate({
             table.setPageSize(Number(e.target.value));
             }}
             >
-            {[15, 30, 50].map((pageSize) => (
+            {itemsPagination.map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               {pageSize}
             </option>

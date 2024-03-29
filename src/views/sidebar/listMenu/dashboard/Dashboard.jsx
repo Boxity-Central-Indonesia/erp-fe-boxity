@@ -1,11 +1,12 @@
 import { Ringkasan } from "./Ringkasan";
 import { Dates } from "./Dates";
-import { QuickAcces } from "./QuickAccses";
+import { QuickAcces } from "./quickAkses/QuickAccses";
 import { StatistikOrder } from "./statistikOrder";
 import { TransactionRunning } from "./TransactionRunning";
 import { TabelOrder } from "./TabelOrder";
 import { GrossSales } from "./GrossSales";
 import { index } from "./index";
+import { MostSales } from "./mostSales";
 
 const Dashboard = () => {
   const { data, dataOrdersNotCompleted, dataOrders } = index();
@@ -21,16 +22,19 @@ const Dashboard = () => {
       <div className="mb-4">
         <Ringkasan data={data} />
       </div>
-      <div className="mb-4 grid grid-cols-1 gap-4">
-        <div>
+      <div className="mb-4 grid grid-cols-3 gap-4">
+        <div className="col-span-2">
           <StatistikOrder />
+        </div>
+        <div className="col-span-1">
+          <MostSales/>
         </div>
         {/* <div>
           <GrossSales />
         </div> */}
       </div>
       <div className="mb-4">
-        <TabelOrder dataOrders={dataOrders} />
+        <TabelOrder data={dataOrders} />
       </div>
       <div className="mb-20 grid grid-cols-1 lg:grid-cols-2"></div>
     </div>

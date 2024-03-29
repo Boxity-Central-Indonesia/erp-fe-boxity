@@ -1329,7 +1329,6 @@ export const CRUD = () => {
           due_date: refBody.due_dateRef.current.value,
           status: refBody.statusRef.current.value,
         };
-
         try {
           const { data, status } = await putApiData(
             path + "/" + refBody.idRef.current.value,
@@ -1339,6 +1338,15 @@ export const CRUD = () => {
             setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData("invoices/" + idDelete);
+              if (status === 200) {
+                setDetailInvoices(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
+            }
           }
         } catch (error) {
           console.log(error);
@@ -1558,6 +1566,7 @@ export const CRUD = () => {
             setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
+            setDetailInvoices(() => data)
           }
         } catch (error) {
           setLoading((prevLoading) => !prevLoading);
@@ -2022,10 +2031,19 @@ export const CRUD = () => {
         try {
           const store = await postApiData('payments', dataBody);
           if (store.status === 201) {
-            setPath(param);
+            setPath('invoices');
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData("invoices/" + refBody.invoice_idRef.current.value);
+              if (status === 200) {
+                setDetailInvoices(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
+            }
           }
         } catch (error) {
           setLoading((prevLoading) => !prevLoading);

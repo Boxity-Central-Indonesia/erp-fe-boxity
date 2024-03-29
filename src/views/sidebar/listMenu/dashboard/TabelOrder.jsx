@@ -4,6 +4,9 @@ import { useColor } from "../../../config/GlobalColour";
 import { Drawer } from "./Drawer";
 import { numberToCurrency } from "../../../config/FormatCurrency";
 import { getApiData } from "../../../../function/Api";
+import Paginate from "../../../layouts/PaginateTest";
+import uuid from 'uuid-random'; 
+
 
 import {
   createColumnHelper,
@@ -15,45 +18,59 @@ import {
 
 const columnHelper = createColumnHelper()
 
-export const TabelOrder = ({ dataOrders }) => {
-  const data =
-    dataOrders &&
-    dataOrders.map((item) => ({
-      "kode transaksi": item.kode_order,
-      "vendor name": item.vendor.name,
-      type: item.vendor.transaction_type === "outbound" ? "Sales" : "Purchase",
-      date: new Date(item.created_at)
-        .toISOString()
-        .slice(0, 19)
-        .replace("T", " "),
-      "tujuan/asal gudang": item.warehouse.name,
-      // status: item.status,
-      "order status": item.order_status,
-      "order type": item.order_type,
-      "total price": numberToCurrency(item.total_price),
-      id: item.id,
-    }));
+export const TabelOrder = ({ data }) => {
 
-  const columns = useMemo(() => {
-    if (!data || !data[0]) return [];
-    const keys = Object.keys(data[0]);
-    const filteredKeys = keys.filter(key => data[0][key] !== null);
-
-    return filteredKeys.map((key) => {
-      return columnHelper.accessor((row) => row[key], {
-        id: key,
-        cell: (info) => info.getValue(),
-        Header: key,
-      });
-    });
-  }, [data]);
+  const columns = [
+    {
+      accessorKey: 'id',
+      Header: 'Edit',
+      cell: (cell) => checkbox(cell.getValue())
+    },
+    {
+      accessorKey: "kode_order",
+      Header: "kode order",
+    },
+    {
+      accessorKey: "vendor",
+      Header: "vendor name",
+      cell: (cell) => cell.getValue().name
+    },
+    {
+      accessorKey: 'vendor',
+      Header: 'type',
+      cell: (cell) => cell.getValue().transaction_type === 'outbound' ? 'Sales' : 'Purchase'
+    },
+    {
+      accessorKey: 'created_at',
+      Header: 'Date',
+      cell: (cell) => new Date(cell.getValue()).toISOString().slice(0, 19).replace("T", " "),
+    },
+    {
+      accessorKey: 'warehouse',
+      Header: 'Tujuan/asal gudang',
+      cell: (cell) => cell.getValue().name
+    },
+    {
+      accessorKey: 'order_status',
+      Header: 'order status',
+    },
+    {
+      accessorKey: 'order_type',
+      Header: 'order type',
+    },
+    {
+      accessorKey: 'total_price',
+      Header: 'total price',
+      cell: (cell) => <p className="text-right">{numberToCurrency(cell.getValue())}</p>
+    },
+  ];
 
   const table = useReactTable({
     data,
     columns,
     initialState: {
         pagination: {
-          pageSize: 15,
+          pageSize: 5,
         },
       },
     getCoreRowModel: getCoreRowModel(),
@@ -76,7 +93,6 @@ export const TabelOrder = ({ dataOrders }) => {
       },
     ],
   });
-
 
 
   const { globalColor } = useColor();
@@ -112,16 +128,15 @@ export const TabelOrder = ({ dataOrders }) => {
       <div className="overflow-x-auto">
         <Table hoverable>
           <Table.Head className="text-xs">
-            {/* <Table.HeadCell>Detail</Table.HeadCell> */}
             {columns.map((col) => (
-              <Table.HeadCell key={col.id}>{col.Header}</Table.HeadCell>
+              <Table.HeadCell className={`${col.Header === 'total price' ? `text-right` : ``}`} key={uuid()}>{col.Header}</Table.HeadCell>
             ))}
           </Table.Head>
           <Table.Body>
             {table.getRowModel().rows.map((row) => (
               <Table.Row key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
+                  <TableCell key={uuid()}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
@@ -129,19 +144,23 @@ export const TabelOrder = ({ dataOrders }) => {
             ))}
           </Table.Body>
         </Table>
+        <hr className="my-2" />
+        <div className="px-5 mt-5">
+          <Paginate table={table} itemsPagination={[5, 10 , 15]}/>
+        </div>
       </div>
     );
   };
 
-  const checkbox = (id) => {
+  const checkbox = (value) => {
     return (
       <div className="flex items-center mb-4">
         <input
-          id={`checkbox-${id}`}
+          id={`checkbox-${value}`}
           type="checkbox"
-          value={`test checkbox ${id}`}
-          onChange={() => handleCheckbox(id)}
-          checked={selectedCheckbox === id}
+          value={`value`}
+          onChange={() => handleCheckbox(value)}
+          checked={selectedCheckbox === value}
           ref={checkboxRef}
           className={`w-4 h-4 text-[${globalColor}] bg-gray-100 border-gray-300 rounded focus:ring-[${globalColor}] dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600`}
         />

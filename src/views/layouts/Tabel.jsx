@@ -203,7 +203,7 @@ const TabelComponent = ({
               "border py-0.5 px-2 rounded bg-blue-600 w-fit text-white text-sm flex items-center justify-center text-center";
             icon = (
               <svg
-                class="w-5 h-5 text-white dark:text-white"
+                className="w-5 h-5 text-white dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -223,7 +223,7 @@ const TabelComponent = ({
               "border py-0.5 px-2 rounded bg-yellow-600 w-fit text-white text-sm flex items-center justify-center text-center";
             icon = (
               <svg
-                class="w-5 h-5 text-white dark:text-white"
+                className="w-5 h-5 text-white dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -473,7 +473,8 @@ const TabelComponent = ({
 
             <div className="min-w-full w-max 2xl:w-full">
               <Table
-                hoverable
+                // hoverable
+                striped
                 className={`${
                   skeleton ? `hidden` : ``
                 } min-w-full w-max 2xl:w-full`}
@@ -553,7 +554,7 @@ const TabelComponent = ({
                       key={row.id}
                       className={`${
                         rowIndex % 2 === 0 ? "even:bg-gray-50" : "odd:bg-white"
-                      } border-b hover:bg-gray-50`}
+                      } border-b`}
                     >
                       {row.getVisibleCells().map((cell) => {
                         // Check if the cell's column ID matches the one you want to hide
@@ -622,7 +623,7 @@ const TabelComponent = ({
             className="flex flex-col md:flex-row border-t-[1px] justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
             aria-label="Table navigation"
           >
-            <Paginate table={table} />
+            <Paginate table={table} itemsPagination={[15,30,50]}/>
           </nav>
         </div>
       </div>

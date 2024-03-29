@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useColor } from "../../../config/GlobalColour";
 import IconPrint from "../../../layouts/icons/IconPrint"
 import { downloadReport } from "../reports/downloadReport";
+import uuid from 'uuid-random'; 
 
 export const Drawer = ({
   openDrawer,
@@ -11,6 +12,8 @@ export const Drawer = ({
   dataDrawer,
 }) => {
   const { globalColor, changeColor } = useColor();
+
+  const uniqueId = uuid(); // Membuat uniqueId untuk setiap instance komponen
 
   const classOpen =
     "fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform bg-white w-[42%] dark:bg-gray-800 transform-none border pt-24";
@@ -195,7 +198,7 @@ export const Drawer = ({
                       key !== "product_id" &&
                       key !== "id" &&
                       dataProducts[0][key] !== null && (
-                        <Table.HeadCell key={key}>{key}</Table.HeadCell>
+                        <Table.HeadCell key={uniqueId}>{key}</Table.HeadCell>
                       )
                   )}
               </Table.Head>
@@ -211,7 +214,7 @@ export const Drawer = ({
                         .filter((key) => key !== "product_id")
                         .map((key) => (
                           <Table.Cell
-                            key={key}
+                            key={uniqueId}
                             className="whitespace-nowrap capitalize font-medium text-gray-900 dark:text-white"
                           >
                             {item[key]}

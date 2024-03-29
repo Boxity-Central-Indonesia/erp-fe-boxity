@@ -73,7 +73,7 @@ export const TabelForDetail = ({
           hidden={hidden}
         />
         <table
-          className={`w-full ${data && data.length === 0 ? `` : `hidden`}`}
+          className={`w-full ${data && data?.length === 0 ? `` : `hidden`}`}
         >
           <tbody>
             <tr className="w-full flex justify-center border-t-[1px] border-b">

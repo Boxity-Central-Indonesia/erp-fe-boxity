@@ -1,6 +1,7 @@
 import Button from "../../../../layouts/Button";
 import { numberToCurrency } from "../../../../config/FormatCurrency";
 import { TabelForDetail } from "../../../../layouts/TabelForDetail";
+import { useEffect, useState } from "react";
 
 export const InvoicesDetail = ({
     data,
@@ -15,15 +16,20 @@ export const InvoicesDetail = ({
         setPath("invoices");
       };
 
-    const dataInvoicesPayments = data?.payments
-    ? data.payments.map((item) => ({
-        id: item.id,
-        'kode payment': item.kode_payment,
-        'metode pembayaran': item.payment_method,
-        'tanggal terbayar': item.payment_date,
-        'tagihan terbayar': item.amount_paid
-      }))
-    : []; // Use an empty array if data.departments is null
+    const [dataInvoicesPayments, setDataInvoicesPayments] = useState([])
+
+    useEffect(() => {
+        setDataInvoicesPayments(() => data?.payments
+            ? data.payments.map((item) => ({
+                id: item.id,
+                'kode payment': item.kode_payment,
+                'metode pembayaran': item.payment_method,
+                'tanggal terbayar': item.payment_date,
+                'tagihan terbayar': item.amount_paid
+              }))
+            : []
+        )
+    }, [data])
 
     return (
         <>
