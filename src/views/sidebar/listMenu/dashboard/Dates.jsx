@@ -4,37 +4,14 @@ import { getApiData } from "../../../../function/Api";
 // Komponen GreetingComponent
 const GreetingComponent = ({
   userName,
-  greeting,
+  timeGreetings,
+  focusGreetings,
   currentDate,
   formattedTime,
 }) => {
-  // Determine greetings based on time
-  const timeGreetings = greeting;
-
-  // Determine greetings based on focus goals
-  const focusGreetings = [
-    "Let's boost your sales and profits today 💼",
-    "Utilize Quick Access to reach your targets 🚀",
-    "Quick Access is ready to help manage your business effortlessly 💡",
-  ];
-
-  // Determine personal greetings
-  const personalGreetings = [
-    "😊 How are you doing today?",
-    "Hope you have a pleasant and blessed day! 🌟",
-    "Don't forget to have coffee ☕ and breakfast 🥐 before starting your activities!",
-  ];
-
   // Select a random greeting from the available list
   const randomGreeting = (greetings) =>
     greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Determine whether to use focus or personal greeting randomly
-  const getRandomGreetingType = () => {
-    return Math.random() < 0.5 ? focusGreetings : personalGreetings;
-  };
-
-  const chosenGreetingType = getRandomGreetingType();
 
   return (
     <div className="flex justify-between">
@@ -42,7 +19,7 @@ const GreetingComponent = ({
         <h1 className="text-2xl font-semibold dark:text-white">
           {randomGreeting(timeGreetings)} {userName}!
         </h1>
-        <p className="text-md">{randomGreeting(chosenGreetingType)}</p>
+        <p className="text-md">{randomGreeting(focusGreetings)}</p>
       </div>
       <div>
         <p className="text-md">
@@ -56,7 +33,8 @@ const GreetingComponent = ({
 // Komponen Dates
 export const Dates = () => {
   const [userName, setUserName] = useState("");
-  const [greeting, setGreeting] = useState("");
+  const [timeGreetings, setTimeGreetings] = useState([]);
+  const [focusGreetings, setFocusGreetings] = useState([]);
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
@@ -82,17 +60,33 @@ export const Dates = () => {
       }
     };
 
-    fetchUserProfile();
+    // Fetch greetings data
+    const fetchGreetingsData = async () => {
+      try {
+        // Simpan data salam berdasarkan waktu
+        const hour = new Date().getHours();
+        const newTimeGreetings =
+          hour < 12
+            ? ["Good morning 🌅,", "Hello 👋,", "Morning vibes ☀️,"]
+            : hour < 18
+            ? ["Good afternoon 🌞,", "Hello 👋,", "Afternoon vibes 🌻,"]
+            : ["Good evening 🌙,", "Hello 👋,", "Evening vibes 🌠,"];
+        setTimeGreetings(newTimeGreetings);
 
-    // Determine greeting based on time
-    const hour = new Date().getHours();
-    const newGreeting =
-      hour < 12
-        ? ["Good morning 🌅,", "Hello 👋,", "Morning vibes ☀️,"]
-        : hour < 18
-        ? ["Good afternoon 🌞,", "Hello 👋,", "Afternoon vibes 🌻,"]
-        : ["Good evening 🌙,", "Hello 👋,", "Evening vibes 🌠,"];
-    setGreeting(newGreeting);
+        // Simpan data salam berdasarkan tujuan fokus
+        const newFocusGreetings = [
+          "Let's boost your sales and profits today 💼",
+          "Utilize Quick Access to reach your targets 🚀",
+          "Quick Access is ready to help manage your business effortlessly 💡",
+        ];
+        setFocusGreetings(newFocusGreetings);
+      } catch (error) {
+        console.error("Error fetching greetings data:", error);
+      }
+    };
+
+    fetchUserProfile();
+    fetchGreetingsData();
 
     // Update live time
     const timerId = setInterval(() => {
@@ -120,7 +114,8 @@ export const Dates = () => {
   return (
     <GreetingComponent
       userName={userName}
-      greeting={greeting}
+      timeGreetings={timeGreetings}
+      focusGreetings={focusGreetings}
       currentDate={currentDate}
       formattedTime={currentTime}
     />

@@ -301,7 +301,7 @@ function Sidebar() {
               </React.Fragment>
             ))}
           </ul>
-          <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+          <ul className="pt-2 mt-2 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
             <li className="group">
               <a
                 href="mailto:help@boxity.id"
@@ -345,11 +345,11 @@ function Sidebar() {
             role="alert"
           >
             <div class="flex items-center mb-3">
-              <span class="bg-orange-100 text-orange-800 text-sm font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-orange-200 dark:text-orange-900">
-                UAT Version
+              <span class="bg-orange-100 text-orange-800 text-xs font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-orange-200 dark:text-orange-900">
+                UAT Version 0.0.1
               </span>
             </div>
-            <p class="mb-3 text-sm text-blue-800 dark:text-blue-400">
+            <p class="mb-3 text-xs text-blue-800 dark:text-blue-400">
               Aplikasi ini masih dalam tahap Uji Terima Pengguna (UAT) dan
               mungkin tidak stabil. Bantu kami meningkatkannya dengan melaporkan
               masalah dan memberikan umpan balik Anda. Kirim email ke
