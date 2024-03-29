@@ -3,7 +3,7 @@ import { Avatar, Dropdown, DarkThemeToggle, Flowbite } from "flowbite-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { getApiData } from "../../function/Api";
-import {AppsForNavbar} from "../layouts/AppForNavbar"
+import { AppsForNavbar } from "../layouts/AppForNavbar";
 
 function Navbar({ onToggleSidebar, setAuth }) {
   const [isOpenSideBar, setIsOpenSideBar] = useState();
@@ -187,12 +187,12 @@ function Navbar({ onToggleSidebar, setAuth }) {
         </div>
         <div className="flex items-center lg:order-2">
           <div className="flex items-center gap-3">
+            <AppsForNavbar />
             <div className="text-right">
-              <AppsForNavbar/>
-              {/* <span className="block text-sm">{profile.name}</span>
+              <span className="block text-sm">{profile.name}</span>
               <span className="block truncate text-sm font-medium">
                 {profile.email}
-              </span> */}
+              </span>
             </div>
             {dropdown()}
           </div>

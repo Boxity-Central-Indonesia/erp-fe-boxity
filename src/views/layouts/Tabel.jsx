@@ -473,7 +473,7 @@ const TabelComponent = ({
 
             <div className="min-w-full w-max 2xl:w-full">
               <Table
-                // hoverable
+                hoverable
                 striped
                 className={`${
                   skeleton ? `hidden` : ``
@@ -623,7 +623,7 @@ const TabelComponent = ({
             className="flex flex-col md:flex-row border-t-[1px] justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
             aria-label="Table navigation"
           >
-            <Paginate table={table} itemsPagination={[15,30,50]}/>
+            <Paginate table={table} itemsPagination={[15, 30, 50]} />
           </nav>
         </div>
       </div>
