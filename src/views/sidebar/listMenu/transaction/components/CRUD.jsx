@@ -27,7 +27,6 @@ export const CRUD = () => {
   const [inputPayments, setInputPayments] = useState([]);
   const [responseError, setResponseError] = useState();
   const [validationError, setValidationError] = useState();
-  const [dataDepartments, setDataDepartments] = useState();
   const [dataOrdersSelect, setDataOrdersSelect] = useState([]);
   const [dataInvoicesSelect, setDataInvoicesSelect] = useState([]);
   const [dataGoodReceiptsSelect, setDataGoodReceiptsSelect] = useState([]);
@@ -58,6 +57,7 @@ export const CRUD = () => {
   const [dataDetailDeliveryNotes, setDataDetailDeliveryNotes] = useState([]);
   const [idDeliveryNoteItem, setIdDeliveryNoteItem] = useState();
   const [idGoodsReceiptItem, setIdGoodReceiptItem] = useState();
+  const [dataDetailInvoices, setDetailInvoices] = useState([]);
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -121,6 +121,10 @@ export const CRUD = () => {
       setDataTabelDeliveryNotes(JSON.parse(dataDeliveryNotesAtLocalStorage));
     }
   }, [render]);
+
+  useEffect(() => {
+    console.log(defaultEdit);
+  }, [defaultEdit])
 
   useEffect(() => {
     localStorage.removeItem("dataTabelProducts");
@@ -406,7 +410,7 @@ export const CRUD = () => {
       {
         element: "select",
         name: "invoice_id",
-        ref: refBody.invoice_dateRef,
+        ref: refBody.invoice_idRef,
         value: dataEdit.invoice_id,
         label: "Invoice",
         htmlFor: "invoice_id",
@@ -948,33 +952,6 @@ export const CRUD = () => {
     const handleEdit = async (param, routes, param2) => {
       if (path === "orders" && defaultEdit === true) {
         setDefaultEdit(false);
-        setDataModal({
-          labelModal: "Update employes",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        setValidationError({
-          name: "",
-          email: "",
-          phone_number: "",
-          company_id: "",
-          job_title: "",
-          date_of_birth: "",
-          employment_status: "",
-          hire_date: "",
-          termination_date: "",
-          address: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country: "",
-          emergency_contact_name: "",
-          emergency_contact_phone_number: "",
-          notes: "",
-          department_id: "",
-        });
-        // setOpenModal(prevOpenModal => !prevOpenModal)
         try {
           const { data, status } = await getApiData(
             "orders/" + param.textContent
@@ -1015,19 +992,32 @@ export const CRUD = () => {
         } catch (error) {}
 
         setOpenModal((prevOpenModal) => !prevOpenModal);
-      } else if (path === "invoices") {
-        setDataModal({
-          labelModal: "Update invoice",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        setValidationError({});
-        setOpenModal((prevOpenModal) => !prevOpenModal);
+      } else if (path === "invoices" && defaultEdit === true) {
+        setDefaultEdit(false)
         try {
           const { data, status } = await getApiData(
             path + "/" + param.textContent
           );
+          if (status === 200) {
+            setDetailInvoices(data)
+            // setDataEdit({
+            //   invoice_id: data.id
+            // })
+            setIdDelete(data.id);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      } else if (path === 'invoices' && defaultEdit === false && routes !== 'invoices-payments') {
+        setDataModal({
+          labelModal: "Edit invoices",
+          labelBtnModal: "Save",
+          labelBtnSecondaryModal: "Delete",
+          handleBtn: edit,
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        try {
+          const { data, status } = await getApiData("invoices/" + param);
           if (status === 200) {
             setDataEdit({
               id: data.id,
@@ -1041,9 +1031,7 @@ export const CRUD = () => {
 
             setIdDelete(data.id);
           }
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
       } else if (path === "payments") {
         setDataModal({
           labelModal: "Update payments",
@@ -1260,6 +1248,37 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
+      } else if (routes === "invoices-payments") {
+        localStorage.setItem("path", routes);
+        setPath(routes);
+        setDataEdit({
+          invoice_id: '',
+          payment_method: ''
+        });
+        setValidationError({});
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "xl",
+          labelModal: "Edit payments",
+          labelBtnModal: "Save",
+          labelBtnSecondaryModal: "Delete",
+          handleBtn: edit,
+        });
+        try {
+          const { data, status } = await getApiData('payments/' + param);
+          if (status === 200) {
+            setDataEdit({
+              id: data.id,
+              // invoice_id: data.invoice_id,
+              amount_paid: numberToCurrency(data.amount_paid),
+              payment_method: data.payment_method,
+              payment_date: data.payment_date,
+            });
+            setIdDeliveryNoteItem(data.id);
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
     };
 
@@ -1304,8 +1323,8 @@ export const CRUD = () => {
       } else if (path === "invoices") {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
-          total_amount: refBody.total_amountRef.current.value,
-          balance_due: refBody.balance_dueRef.current.value,
+          // total_amount: refBody.total_amountRef.current.value,
+          // balance_due: refBody.balance_dueRef.current.value,
           invoice_date: refBody.invoice_dateRef.current.value,
           due_date: refBody.due_dateRef.current.value,
           status: refBody.statusRef.current.value,
@@ -1328,8 +1347,8 @@ export const CRUD = () => {
         }
       } else if (path === "payments") {
         dataBody = {
-          invoice_id: refBody.invoice_dateRef.current.value,
-          amount_paid: refBody.amount_paidRef.current.value,
+          invoice_id: refBody.invoice_idRef.current.value,
+          amount_paid: currencyToNumber(refBody.amount_paidRef.current.value),
           payment_method: refBody.payment_methodRef.current.value,
           payment_date: refBody.payment_dateRef.current.value,
         };
@@ -1521,6 +1540,28 @@ export const CRUD = () => {
           }
         } catch (error) {
           console.log(error);
+        }
+      } else if (localStorage.getItem("path") === "invoices-payments") {
+        dataBody = {
+          invoice_id: refBody.invoice_idRef.current.value,
+          amount_paid: currencyToNumber(refBody.amount_paidRef.current.value),
+          payment_method: refBody.payment_methodRef.current.value,
+          payment_date: refBody.payment_dateRef.current.value,
+        };
+
+        try {
+          const { data, status } = await putApiData(
+            path + "/" + refBody.idRef.current.value,
+            dataBody
+          );
+          if (status === 201) {
+            setLoading((prevLoading) => !prevLoading);
+            setRefresh(!refresh);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data);
         }
       }
     };
@@ -1769,7 +1810,23 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
-      }
+      } else if (param === "invoices-payments") {
+        setDefaultEdit(false)
+        setPath(param);
+        setDataEdit({
+          order_id: "",
+          product_id: "",
+        });
+        setValidationError({});
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Add New Payment",
+          labelBtnModal: "Add new Payment",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } 
     };
 
     const create = async (param) => {
@@ -1807,8 +1864,6 @@ export const CRUD = () => {
           status: refBody.statusRef.current.value,
         };
 
-        console.log(dataBody);
-
         try {
           const store = await postApiData(param, dataBody);
           if (store.status === 201) {
@@ -1824,7 +1879,7 @@ export const CRUD = () => {
         }
       } else if (param === "payments") {
         dataBody = {
-          invoice_id: refBody.invoice_dateRef.current.value,
+          invoice_id: refBody.invoice_idRef.current.value,
           amount_paid: currencyToNumber(refBody.amount_paidRef.current.value),
           payment_method: refBody.payment_methodRef.current.value,
           payment_date: refBody.payment_dateRef.current.value,
@@ -1949,6 +2004,28 @@ export const CRUD = () => {
             } catch (error) {
               console.log(error);
             }
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "invoices-payments") {
+        dataBody = {
+          invoice_id: refBody.invoice_idRef.current.value,
+          amount_paid: currencyToNumber(refBody.amount_paidRef.current.value),
+          payment_method: refBody.payment_methodRef.current.value,
+          payment_date: refBody.payment_dateRef.current.value,
+        };
+
+        // console.log(dataBody);
+
+        try {
+          const store = await postApiData('payments', dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
           setLoading((prevLoading) => !prevLoading);
@@ -2350,6 +2427,32 @@ export const CRUD = () => {
           </div>
         </>
       );
+    } else if (param === "invoices-payments") {
+      return (
+        <>
+          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+            <input type="hidden" name="invoice_id" ref={refBody.invoice_idRef} value={dataDetailInvoices.id}/>
+            {inputPayments.filter(item => item.name !== 'invoice_id').map((item, index) => (
+              <FormInput
+                key={item.id}
+                element={item.element}
+                htmlFor={item.htmlFor}
+                label={item.label}
+                type={item.type}
+                name={item.name}
+                referens={item.ref}
+                value={item.value}
+                id={item.id}
+                onChange={(event) => item.onchange(event)}
+                placeholder={item.placeholder}
+                dataSelect={item.dataSelect}
+                uniqueId={index}
+                validationError={validationError}
+              />
+            ))}
+          </div>
+        </>
+      )
     }
   };
 
@@ -2385,5 +2488,6 @@ export const CRUD = () => {
     setPath,
     dataDetailDeliveryNotes,
     setDataDetailDeliveryNotes,
+    dataDetailInvoices
   };
 };

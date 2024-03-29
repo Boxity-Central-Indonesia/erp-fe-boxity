@@ -9,7 +9,6 @@ export const DeliveryNotesDetail = ({
   handleEdit,
   dataHeading,
   setPath,
-  refBody,
 }) => {
   const dataDeliveryNotesItem = data?.delivery_note_items
     ? data.delivery_note_items.map((item) => ({

@@ -543,6 +543,7 @@ const TabelComponent = ({
                       </Table.HeadCell>
                     );
                   })}
+                  <Table.HeadCell></Table.HeadCell>
                 </Table.Head>
 
                 <Table.Body className="divide-y">

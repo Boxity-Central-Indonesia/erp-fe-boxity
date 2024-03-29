@@ -1,9 +1,19 @@
-import React, { useState, useRef } from "react";
-import { Table } from "flowbite-react";
+import React, { useState, useRef,useMemo } from "react";
+import { Table, TableCell } from "flowbite-react";
 import { useColor } from "../../../config/GlobalColour";
 import { Drawer } from "./Drawer";
 import { numberToCurrency } from "../../../config/FormatCurrency";
 import { getApiData } from "../../../../function/Api";
+
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+
+const columnHelper = createColumnHelper()
 
 export const TabelOrder = ({ dataOrders }) => {
   const data =
@@ -24,6 +34,51 @@ export const TabelOrder = ({ dataOrders }) => {
       id: item.id,
     }));
 
+  const columns = useMemo(() => {
+    if (!data || !data[0]) return [];
+    const keys = Object.keys(data[0]);
+    const filteredKeys = keys.filter(key => data[0][key] !== null);
+
+    return filteredKeys.map((key) => {
+      return columnHelper.accessor((row) => row[key], {
+        id: key,
+        cell: (info) => info.getValue(),
+        Header: key,
+      });
+    });
+  }, [data]);
+
+  const table = useReactTable({
+    data,
+    columns,
+    initialState: {
+        pagination: {
+          pageSize: 15,
+        },
+      },
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getColumnHelpers: () => [
+      ({ props }) => ({
+        filterValue: globalFilter,
+        setFilterValue: setGlobalFilter,
+      }),
+      ({ column }) => {
+        if (column.id === 'status') {
+          return {
+            filterValue: selectedStatus,
+            setFilterValue: (value) => {
+              setSelectedStatus(value);
+            },
+          };
+        }
+        return {};
+      },
+    ],
+  });
+
+
+
   const { globalColor } = useColor();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
@@ -31,7 +86,7 @@ export const TabelOrder = ({ dataOrders }) => {
 
   const checkboxRef = useRef();
 
-  const dataHeading = data.length > 0 ? Object.keys(data[0]) : [];
+  // const dataHeading = data.length > 0 ? Object.keys(data[0]) : [];
 
   const handleCheckbox = async (id) => {
     setDataDrawer({});
@@ -57,36 +112,19 @@ export const TabelOrder = ({ dataOrders }) => {
       <div className="overflow-x-auto">
         <Table hoverable>
           <Table.Head className="text-xs">
-            <Table.HeadCell>Detail</Table.HeadCell>
-            {dataHeading
-              .filter((heading) => heading !== "id")
-              .map((heading, index) => (
-                <Table.HeadCell key={index}>{heading}</Table.HeadCell>
-              ))}
+            {/* <Table.HeadCell>Detail</Table.HeadCell> */}
+            {columns.map((col) => (
+              <Table.HeadCell key={col.id}>{col.Header}</Table.HeadCell>
+            ))}
           </Table.Head>
-          <Table.Body className="divide-y text-xs">
-            {data.map((row, rowIndex) => (
-              <Table.Row key={rowIndex}>
-                <Table.Cell>{checkbox(row.id)}</Table.Cell>
-                {dataHeading
-                  .filter((heading) => heading !== "id")
-                  .map((heading, columnIndex) => (
-                    <Table.Cell key={columnIndex}>
-                      <div
-                        className={`${
-                          row[heading] == "Completed"
-                            ? `bg-green-600 px-3 py-1 text-white font-medium w-fit rounded`
-                            : row[heading] === "In Production"
-                            ? "bg-yellow-400 px-3 py-1 text-white font-medium w-fit rounded"
-                            : heading === "taxes" || heading === "shipping cost"
-                            ? "text-right"
-                            : ""
-                        }`}
-                      >
-                        <p>{row[heading]}</p>
-                      </div>
-                    </Table.Cell>
-                  ))}
+          <Table.Body>
+            {table.getRowModel().rows.map((row) => (
+              <Table.Row key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
               </Table.Row>
             ))}
           </Table.Body>

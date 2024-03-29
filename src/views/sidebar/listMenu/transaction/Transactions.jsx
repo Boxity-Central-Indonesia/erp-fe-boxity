@@ -8,6 +8,7 @@ import { CRUD } from "./components/CRUD"
 import { OrderDetail } from "./components/OrderDetail"
 import { GoodReceiptDetail } from "./components/GoodReceiptDetail"
 import { DeliveryNotesDetail } from "./components/DeliveryNotesDetail"
+import { InvoicesDetail } from "./components/InvoicesDetail"
 
 export const Transactions = () => {
     const {
@@ -34,7 +35,7 @@ export const Transactions = () => {
         dataDetailGoodReceipt,
         setPath,
         dataDetailDeliveryNotes,
-        setDataDetailDeliveryNotes
+        dataDetailInvoices
     } = CRUD()
 
     const dataModalBody = () => {
@@ -142,6 +143,40 @@ export const Transactions = () => {
 
                 <DeliveryNotesDetail
                     data={dataDetailDeliveryNotes}
+                    defaultEdit={setDefaultEdit}
+                    handleEdit={handleEdit}
+                    dataHeading={dataHeading}
+                    setPath={setPath}
+                    refBody={refBody}
+                />
+        </>
+        )
+    } else if(defaultEdit === false && path === 'invoices' || path === 'invoices-payments') {
+        return (
+            <>
+                <ModalContainer 
+                    openModal={openModal}
+                    onToggleModal={setOpenModal}
+                    modalBody={dataModalBody}
+                    sizeModal={dataModal.size}
+                    labelModal={dataModal.labelModal}
+                    labelBtnModal={dataModal.labelBtnModal}
+                    labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
+                    handleBtnModal={dataModal.handleBtn}
+                    parameter={path}
+                    openModalDelete={openModalDelete}
+                />
+
+                <Spinner loading={loading} />
+
+                < ModalConfirmDelete 
+                    modalDelete={modalDelete}
+                    closeModalDelete={closeModalDelete}
+                    handleDelete={handleDelete}
+                />
+
+               <InvoicesDetail
+                    data={dataDetailInvoices} 
                     defaultEdit={setDefaultEdit}
                     handleEdit={handleEdit}
                     dataHeading={dataHeading}
