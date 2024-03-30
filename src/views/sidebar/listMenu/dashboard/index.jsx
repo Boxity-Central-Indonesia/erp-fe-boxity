@@ -11,7 +11,6 @@ export const index = () => {
       try {
         const { data, status } = await getApiData("dashboard");
         if (status === 200) {
-          console.log(data);
           // Pastikan data tidak kosong sebelum diset
           if (data.length > 0) {
             setData(data); // Set data dengan data yang diperoleh dari API

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useColor } from "../../../../config/GlobalColour";
 import { Drawer } from "../../../../layouts/Drawer";
 import { NewOrder } from "./components/newOrder";
 
 export const QuickAcces = () => {
+  
+
   const { globalColor, changeColor } = useColor();
   const navigate = useNavigate();
   const [openDrawer, setOpenDrawer] = useState(false)
@@ -88,17 +90,13 @@ export const QuickAcces = () => {
   ]);
 
 
-  const handleButtonClick = (url) => {
-    navigate(url); // Menggunakan useNavigate untuk navigasi
-  };
-
   return (
     <>
       <Drawer 
         openDrawer={openDrawer} 
         setOpenDrawer={setOpenDrawer}
         titleDrawer={dataDrawer.titleDrawer}
-        bodyDrawer={dataDrawer.bodyDrawer}
+        bodyDrawer={dataDrawer.bodyDrawer({setOpenDrawer})}
       />
       <h1 className="text-xl mb-3 font-medium capitalize">Quick access</h1>
       <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">

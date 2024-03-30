@@ -3,9 +3,13 @@ import FormInput from "../../../../../layouts/FormInput"
 import { TextArea, RadioButtons } from "../../../../../layouts/FormInput"
 import { getApiData } from "../../../../../../function/Api"
 import {TabelForProducts} from "../../../transaction/components/TabelForProducts"
+import IconAdd from "../../../../../layouts/icons/IconAdd"
+import {useColor} from "../../../../../config/GlobalColour"
+import { postApiData } from "../../../../../../function/Api"
 
-
-export const NewOrder = () => {
+export const NewOrder = ({
+  setOpenDrawer
+}) => {
     const [selectedOption, setSelectedOption] = useState();
     const [inputProducts, setInputProducts] = useState();
     const [inputOrder, setInputOrder] = useState([])
@@ -14,10 +18,19 @@ export const NewOrder = () => {
     const [dataSelectWarehouses, setDataSelectWarehouses] = useState();
     const [dataSelectVendor, setDataSelectVendor] = useState();
     const [dataSelectProducts, setDataSelectProducts] = useState();
+    const [responseError, setResponseError] = useState();
+    const [validationError, setValidationError] = useState();
+
+
     const [refBody, setRefBody] = useState({
-        vendor_idRef: useRef(),
-        warehouse_idRef: useRef(),
+      vendor_idRef: useRef(),
+      warehouse_idRef: useRef(),
+      order_typeRef: useRef(),
+      detailsRef: useRef(),
+      product_idRef: useRef()
     });
+
+    const { globalColor, changeColor } = useColor();
 
     useEffect(() => {
         const fetchData = async (param, state) => {
@@ -45,7 +58,7 @@ export const NewOrder = () => {
             {
               element: "select",
               name: "vendor_id",
-              ref: refBody.vendor_idRef,
+              ref: refBody?.vendor_idRef,
               value: dataEdit.vendor_id,
               label: "Vendor",
               htmlFor: "vendor_id",
@@ -56,7 +69,7 @@ export const NewOrder = () => {
             {
               element: "select",
               name: "warehouse_id",
-              ref: refBody.warehouse_idRef,
+              ref: refBody?.warehouse_idRef,
               value: dataEdit.warehouse_id,
               label: "Warehouses",
               htmlFor: "warehouse_id",
@@ -84,7 +97,7 @@ export const NewOrder = () => {
             {
               element: "select",
               name: "product_id",
-              ref: refBody.product_idRef,
+              ref: refBody?.product_idRef,
               value: dataEdit.product_id,
               label: "products",
               htmlFor: "product_id",
@@ -166,11 +179,56 @@ export const NewOrder = () => {
         }));
     };
     
+    useEffect(() => {
+      if (!!responseError) {
+        setValidationError({
+          order_id: responseError?.order_id?.[0] || "",
+          invoice_date: responseError?.invoice_date?.[0] || "",
+          due_date: responseError?.due_date?.[0] || "",
+          status: responseError?.status?.[0] || "",
+          invoice_id: responseError?.invoice_id?.[0] || "",
+          amount_paid: responseError?.amount_paid?.[0] || "",
+          payment_method: responseError?.payment_method?.[0] || "",
+          payment_date: responseError?.payment_date?.[0] || "",
+          warehouse_id: responseError?.warehouse_id?.[0] || "",
+          details: responseError?.details?.[0] || "",
+          vendor_id: responseError?.vendor_id?.[0] || "",
+          number: responseError?.number?.[0] || "",
+          date: responseError?.date?.[0] || "",
+          product_id: responseError?.product_id?.[0] || "",
+        });
+      }
+    }, [responseError]);
+
+    const handleCreateOrder = async() => {
+      const dataBody = {
+        vendor_id: refBody.vendor_idRef.current.value,
+        warehouse_id: refBody.warehouse_idRef.current.value,
+        details: refBody.detailsRef.current.value,
+        status: "pending",
+        order_type: localStorage.getItem("order_type"),
+        products: JSON.parse(localStorage.getItem("dataTabelProducts")),
+      };
+  
+      try {
+        const store = await postApiData('orders/', dataBody);
+        if (store.status === 201) {
+          localStorage.removeItem("dataTabelProducts");
+          setOpenDrawer(prevOpenDrawer => !prevOpenDrawer)
+          setDataTabelProducts([]);
+          alert('Data order berhasl ditambahkan')
+        }
+      } catch (error) {
+        setResponseError(error.response.data.errors);
+        alert('Data order gagal ditambahkan')
+      }
+    }
 
     return(
-        <>
+      <>
+          <div className="px-5 overflow-y-scroll">
             <div className="grid grid-cols-2 gap-3">
-            {inputOrder.map((item, index) => (
+            {inputOrder && inputOrder?.map((item, index) => (
               <FormInput
                 key={item.id}
                 element={item.element}
@@ -185,7 +243,7 @@ export const NewOrder = () => {
                 placeholder={item.placeholder}
                 dataSelect={item.dataSelect}
                 uniqueId={index}
-                // validationError={validationError}
+                validationError={validationError}
               />
             ))}
             </div>
@@ -195,7 +253,7 @@ export const NewOrder = () => {
                 onChange={handleChange}
                 selectedOption={selectedOption}
                 setSelectedOption={setSelectedOption}
-                referens={refBody.order_typeRef}
+                referens={refBody?.order_typeRef}
                 name={"order_type"}
                 />
             </div>
@@ -207,14 +265,14 @@ export const NewOrder = () => {
                 htmlFor={"detail"}
                 id={"detail"}
                 name={"detail"}
-                referens={refBody.detailsRef}
+                referens={refBody?.detailsRef}
                 placeholder={"Write detail here"}
                 />
             </div>
 
 
             {inputProducts &&
-              inputProducts.map((item, index) => (
+              inputProducts?.map((item, index) => (
                 <div
                   className={`col-span-2`}
                 >
@@ -238,7 +296,7 @@ export const NewOrder = () => {
               ))}
 
             <div
-              className={`col-span-2 mt-5`}
+              className={`col-span-2 mt-5 mb-32`}
             >
               <TabelForProducts
                 dataTabelProducts={dataTabelProducts}
@@ -249,6 +307,19 @@ export const NewOrder = () => {
                 saveDataToLocalStorage={saveDataToLocalStorage}
               />
             </div>
-        </>
+          </div>
+
+          <div className="fixed p-5 border w-full bottom-0 flex gap-3 bg-white z-50 ">
+                    <button className="rounded-md py-3 px-5 border w-fit text-sm">
+                        Back
+                    </button>
+                    <button onClick={handleCreateOrder} style={{backgroundColor : globalColor}} className="rounded-md text-white py-3 px-5 border w-fit text-sm flex items-center">
+                        <IconAdd/>
+                        Add new order
+                    </button>
+            </div>
+      </>
     )
+
+    
 }

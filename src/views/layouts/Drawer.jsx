@@ -7,7 +7,8 @@ export const Drawer = ({
     setOpenDrawer,
     withDrawer,
     titleDrawer,
-    bodyDrawer
+    bodyDrawer,
+    eventButton
 }) => {
 
     const classOpen = `fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 transform-none border pt-24 ${withDrawer ?? `w-[30%]`}`;
@@ -24,9 +25,9 @@ export const Drawer = ({
 
     return (
         <>
-            <div id="drawer-right-example" className={`${openDrawer ? classOpen : classClosed} px-5`} tabIndex="-1"
+            <div id="drawer-right-example" className={`${openDrawer ? classOpen : classClosed} px-0`} tabIndex="-1"
                 aria-labelledby="drawer-right-label">
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mb-4 px-5">
                     <h5 id="drawer-right-label"
                         className="inline-flex items-center text-xl font-semibold dark:text-gray-400">
                         {titleDrawer}
@@ -47,15 +48,8 @@ export const Drawer = ({
                     </svg>
                     <span className="sr-only">Close menu</span>
                 </button>
-                {bodyDrawer()}
-                <div className="my-5 absolute bottom-0 flex gap-3">
-                    <button className="rounded-md py-3 px-5 border w-fit text-sm">
-                        Back
-                    </button>
-                    <button style={{backgroundColor : globalColor}} className="rounded-md text-white py-3 px-5 border w-fit text-sm flex items-center">
-                        <IconAdd/>
-                        Add new order
-                    </button>
+                <div>
+                {bodyDrawer}
                 </div>
             </div>
             <div drawer-backdrop="" className={`bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-30 ${openDrawer ? `` : `hidden`}`}></div>
