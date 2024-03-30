@@ -215,7 +215,6 @@ export const NewOrder = ({
         const store = await postApiData('orders', dataBody);
         if (store.status === 201) {
           localStorage.removeItem("dataTabelProducts");
-          setOpenDrawer(prevOpenDrawer => !prevOpenDrawer)
           setDataTabelProducts([]);
           Swal.fire({
             title: 'Error!',
@@ -330,7 +329,7 @@ export const NewOrder = ({
           </div>
 
           <div className="fixed p-5 border w-full bottom-0 flex gap-3 bg-white z-50 ">
-                    <button className="rounded-md py-3 px-5 border w-fit text-sm">
+                    <button onClick={() => setOpenDrawer(prevOpenDrawer => !prevOpenDrawer)} className="rounded-md py-3 px-5 border w-fit text-sm">
                         Back
                     </button>
                     <button onClick={handleCreateOrder} style={{backgroundColor : globalColor}} className="rounded-md text-white py-3 px-5 border w-fit text-sm flex items-center">
