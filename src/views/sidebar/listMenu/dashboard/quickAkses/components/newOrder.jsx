@@ -211,7 +211,7 @@ export const NewOrder = ({
       };
   
       try {
-        const store = await postApiData('orders/', dataBody);
+        const store = await postApiData('orders', dataBody);
         if (store.status === 201) {
           localStorage.removeItem("dataTabelProducts");
           setOpenDrawer(prevOpenDrawer => !prevOpenDrawer)
