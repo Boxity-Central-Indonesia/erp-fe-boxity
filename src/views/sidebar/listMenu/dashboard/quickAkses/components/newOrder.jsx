@@ -6,6 +6,7 @@ import {TabelForProducts} from "../../../transaction/components/TabelForProducts
 import IconAdd from "../../../../../layouts/icons/IconAdd"
 import {useColor} from "../../../../../config/GlobalColour"
 import { postApiData } from "../../../../../../function/Api"
+import Swal from 'sweetalert2'
 
 export const NewOrder = ({
   setOpenDrawer
@@ -216,11 +217,30 @@ export const NewOrder = ({
           localStorage.removeItem("dataTabelProducts");
           setOpenDrawer(prevOpenDrawer => !prevOpenDrawer)
           setDataTabelProducts([]);
-          alert('Data order berhasl ditambahkan')
+          Swal.fire({
+            title: 'Error!',
+            text: 'Do you want to continue',
+            icon: 'error',
+            confirmButtonText: 'Cool'
+          })
         }
       } catch (error) {
         setResponseError(error.response.data.errors);
-        alert('Data order gagal ditambahkan')
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Signed in successfully"
+        });
       }
     }
 
