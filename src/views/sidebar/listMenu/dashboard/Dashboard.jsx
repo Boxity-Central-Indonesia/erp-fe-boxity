@@ -2,11 +2,10 @@ import { Ringkasan } from "./Ringkasan";
 import { Dates } from "./Dates";
 import { QuickAcces } from "./quickAkses/QuickAccses";
 import { StatistikOrder } from "./statistikOrder";
-import { TransactionRunning } from "./TransactionRunning";
 import { TabelOrder } from "./TabelOrder";
-import { GrossSales } from "./GrossSales";
 import { index } from "./index";
 import { MostSales } from "./mostSales";
+import Swal from "sweetalert2";
 
 const Dashboard = () => {
   const { data, dataOrdersNotCompleted, dataOrders } = index();
@@ -27,7 +26,7 @@ const Dashboard = () => {
           <StatistikOrder />
         </div>
         <div className="col-span-1">
-          <MostSales/>
+          <MostSales />
         </div>
         {/* <div>
           <GrossSales />

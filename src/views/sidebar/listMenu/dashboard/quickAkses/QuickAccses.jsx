@@ -5,21 +5,17 @@ import { Drawer } from "../../../../layouts/Drawer";
 import { NewOrder } from "./components/newOrder";
 
 export const QuickAcces = () => {
-  
-
   const { globalColor, changeColor } = useColor();
   const navigate = useNavigate();
-  const [openDrawer, setOpenDrawer] = useState(false)
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [dataDrawer, setDataDrawer] = useState({
-    titleDrawer: "Cretae new order",
-    bodyDrawer: NewOrder
-  })
-
+    titleDrawer: "Create new order",
+    bodyDrawer: NewOrder,
+  });
 
   const handleOpenDrawer = () => {
     setOpenDrawer(!openDrawer);
-  }
-
+  };
 
   const [data, setData] = useState([
     {
@@ -89,20 +85,22 @@ export const QuickAcces = () => {
     },
   ]);
 
-
   return (
     <>
-      <Drawer 
-        openDrawer={openDrawer} 
+      <Drawer
+        openDrawer={openDrawer}
         setOpenDrawer={setOpenDrawer}
         titleDrawer={dataDrawer.titleDrawer}
-        bodyDrawer={dataDrawer.bodyDrawer({setOpenDrawer})}
+        bodyDrawer={dataDrawer.bodyDrawer({ setOpenDrawer })}
       />
       <h1 className="text-xl mb-3 font-medium capitalize">Quick access</h1>
       <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
         {data &&
           data.map((item, index) => (
-            <div key={index} className="border rounded-md p-5 bg-white flex flex-col items-center">
+            <div
+              key={index}
+              className="border rounded-md p-5 bg-white flex flex-col items-center"
+            >
               <img
                 src={item.icon}
                 alt={item.label}
@@ -113,7 +111,10 @@ export const QuickAcces = () => {
                 {item.information}
               </p>
               <div className="flex gap-1">
-                <NavLink to={item.button[1].eventListener} className="border py-2 px-3 text-sm rounded-md text-gray-700">
+                <NavLink
+                  to={item.button[1].eventListener}
+                  className="border py-2 px-3 text-sm rounded-md text-gray-700"
+                >
                   {item.button[1].button}
                 </NavLink>
                 <button
