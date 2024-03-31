@@ -54,24 +54,30 @@ export const postApiData = async (endpoint, data) => {
 
 // Fungsi untuk melakukan POST request denngan file
 export const postApiDataAndFile = async (endpoint, data) => {
-  // try {
-  const response = await axios.post(
-    `${import.meta.env.VITE_API_URL}${endpoint}`,
-    data,
-    {
-      withXSRFToken: true,
-      headers: {
-        Authorization: `Bearer ${Cookies.get("token")}`,
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return response.data;
-  // } catch (error) {
-  //   // Handle error
-  //   console.log('Error in API request:', error);
-  //   throw error;
-  // }
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}${endpoint}`,
+      data,
+      {
+        withXSRFToken: true,
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    displayToast({
+      icon: "success",
+      title: response.data.message,
+    });
+    return response.data;
+  } catch (error) {
+    displayToast({
+      icon: "error",
+      title: response.data.message,
+    });
+    throw error;
+  }
 };
 
 export const putApiData = async (endpoint, data) => {
@@ -86,10 +92,16 @@ export const putApiData = async (endpoint, data) => {
         },
       }
     );
+    displayToast({
+      icon: "success",
+      title: response.data.message,
+    });
     return response.data;
   } catch (error) {
-    // Handle error
-    console.log("Error in API request:", error);
+    displayToast({
+      icon: "error",
+      title: response.data.message,
+    });
     throw error;
   }
 };
@@ -105,10 +117,16 @@ export const deleteApiData = async (endpoint) => {
         },
       }
     );
+    displayToast({
+      icon: "success",
+      title: response.data.message,
+    });
     return response.data;
   } catch (error) {
-    // Handle error
-    console.log("Error in DELETE API request:", error);
+    displayToast({
+      icon: "error",
+      title: response.data.message,
+    });
     throw error;
   }
 };
