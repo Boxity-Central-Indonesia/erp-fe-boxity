@@ -27,7 +27,7 @@ export const getApiData = async (endpoint) => {
 
 // Fungsi untuk melakukan POST request
 export const postApiData = async (endpoint, data) => {
-  try {
+  // try {
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}${endpoint}`,
       data,
@@ -43,18 +43,18 @@ export const postApiData = async (endpoint, data) => {
       title: response.data.message,
     });
     return response.data;
-  } catch (error) {
-    displayToast({
-      icon: "error",
-      title: response.data.message,
-    });
-    throw error;
-  }
+  // } catch (error) {
+  //   displayToast({
+  //     icon: "error",
+  //     title: response.data.message,
+  //   });
+  //   throw error;
+  // }
 };
 
 // Fungsi untuk melakukan POST request denngan file
 export const postApiDataAndFile = async (endpoint, data) => {
-  try {
+  // try {
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}${endpoint}`,
       data,
@@ -71,17 +71,17 @@ export const postApiDataAndFile = async (endpoint, data) => {
       title: response.data.message,
     });
     return response.data;
-  } catch (error) {
-    displayToast({
-      icon: "error",
-      title: response.data.message,
-    });
-    throw error;
-  }
+  // } catch (error) {
+  //   displayToast({
+  //     icon: "error",
+  //     title: response.data.message,
+  //   });
+  //   throw error;
+  // }
 };
 
 export const putApiData = async (endpoint, data) => {
-  try {
+  // try {
     const response = await axios.put(
       `${import.meta.env.VITE_API_URL}${endpoint}`,
       data,
@@ -97,13 +97,13 @@ export const putApiData = async (endpoint, data) => {
       title: response.data.message,
     });
     return response.data;
-  } catch (error) {
-    displayToast({
-      icon: "error",
-      title: response.data.message,
-    });
-    throw error;
-  }
+  // } catch (error) {
+  //   displayToast({
+  //     icon: "error",
+  //     title: response.data.message,
+  //   });
+  //   throw error;
+  // }
 };
 
 export const deleteApiData = async (endpoint) => {

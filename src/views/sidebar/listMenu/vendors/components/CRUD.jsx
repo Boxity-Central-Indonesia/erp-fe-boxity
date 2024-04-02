@@ -29,6 +29,9 @@ export const CRUD = () => {
   const [skeleton, setSkeleton] = useState(false);
   const [dataHeading, setDataHeading] = useState([{}]);
   const [path, setPath] = useState("vendors");
+  const [defaultEdit,setDefaultEdit] = useState(true)
+  const [dataDetailVendor, setDataDetailVendor] = useState({})
+  const [dataDetailVendorContact, setDataDetailVendorContact] = useState([])
 
   // EmployesList
 
@@ -192,17 +195,17 @@ export const CRUD = () => {
     ]);
 
     setInputVendorContact([
-      {
-        element: "select",
-        ref: refBody.vendors_idRef,
-        name: "vendors_id",
-        label: "Vendors",
-        htmlFor: "vendors-id",
-        id: "vendors-id",
-        dataSelect: dataVendorsSelect,
-        value: dataEdit.vendors_id,
-        onchange: handleChange,
-      },
+      // {
+      //   element: "select",
+      //   ref: refBody.vendors_idRef,
+      //   name: "vendors_id",
+      //   label: "Vendors",
+      //   htmlFor: "vendors-id",
+      //   id: "vendors-id",
+      //   dataSelect: dataVendorsSelect,
+      //   value: dataEdit.vendors_id,
+      //   onchange: handleChange,
+      // },
       {
         element: "input",
         type: "text",
@@ -350,16 +353,6 @@ export const CRUD = () => {
     }));
   };
 
-  const dataVendorsContact = (data) => {
-    return data.map((item) => ({
-      id: item.id,
-      name: item.name,
-      position: item.position,
-      "phone number": item.phone_number,
-      vendors: item.vendor.name,
-    }));
-  };
-
   const READ = () => {
     const [data, setData] = useState();
     useEffect(() => {
@@ -381,28 +374,6 @@ export const CRUD = () => {
                 showNavHeading: true,
                 dataNavHeading: [
                   { path: "vendors", label: "Vendors" },
-                  { path: "vendor-contacts", label: "Contacts" },
-                  { path: "vendor-transactions", label: "Vendor Transactions" },
-                ],
-                activeButton: path,
-              },
-            ]);
-          } else if (path === "vendor-contacts") {
-            const newData = dataVendorsContact(data);
-            setData(() => newData);
-            setDataHeading([
-              {
-                label: "Add new vendors",
-                icon: IconAdd(),
-                heading: "Vendors list",
-                information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
-                eventToggleModal: handleCreate,
-                onclick: handleClickHeading,
-                showNavHeading: true,
-                dataNavHeading: [
-                  { path: "vendors", label: "Vendors" },
-                  { path: "vendor-contacts", label: "Contacts" },
                   { path: "vendor-transactions", label: "Vendor Transactions" },
                 ],
                 activeButton: path,
@@ -488,7 +459,6 @@ export const CRUD = () => {
           showNavHeading: true,
           dataNavHeading: [
             { path: "vendors", label: "Vendors" },
-            { path: "vendor-contacts", label: "Contacts" },
             { path: "vendor-transactions", label: "Vendor Transactions" },
           ],
           activeButton: param,
@@ -507,11 +477,7 @@ export const CRUD = () => {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataVendorsTransactions(data);
             setData(newData);
-          } else if (param === "vendor-contacts") {
-            setSkeleton((prevSkeleton) => !prevSkeleton);
-            const newData = dataVendorsContact(data);
-            setData(newData);
-          }
+          } 
         }
       } catch (error) {
         console.log(error);
@@ -522,6 +488,244 @@ export const CRUD = () => {
 
     return { data, handleClickHeading };
   };
+
+  const EDIT = () => {
+    const handleEdit = async (param, routes, param2) => {
+      const id = param.textContent;
+      if (path === "vendors" && routes !== 'vendors-edit' && routes !== 'vendor-contacts') {
+       setDefaultEdit(false)
+       setDataHeading([
+        {
+          label: "Add",
+          icon: IconAdd(),
+          eventToggleModal: handleCreate,
+          onclick: handleClickHeading,
+          showNavHeading: false,
+        },
+      ]);
+       try {
+        const {status, data} = await getApiData('vendors/' + id)
+        if(status === 200) {
+          setDataDetailVendor(data)
+          setDataEdit({
+            name: data.name,
+            address: data.address,
+            phone_number: data.phone_number,
+            transaction_type: data.transaction_type,
+            email: data.email,
+            id: data.id,
+          });
+          setIdDelete(data.id);
+          localStorage.setItem("dataIdVendor", data.id)
+          try {
+            const {status, data} = await getApiData('vendors/' + id + '/contacts')
+            if(status === 200) {
+              setDataDetailVendorContact(data)
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+       } catch (error) {
+        console.log(error);
+       }
+      } else if (path === "vendor-transactions") {
+        setDataModal({
+          labelModal: "Update transaction",
+          labelBtnModal: "Save",
+          labelBtnSecondaryModal: "Delete",
+          handleBtn: edit,
+        });
+        setValidationError({
+          vendors_id: "",
+          amount: "",
+          product_id: "",
+          unit_price: "",
+          total_price: "",
+          taxes: "",
+          shipping_cost: "",
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        try {
+          const { data, status } = await getApiData(path + "/" + id);
+          if (status === 200) {
+            setDataEdit({
+              vendors_id: data.vendors_id,
+              amount: data.amount,
+              product_id: data.product_id,
+              unit_price: data.unit_price,
+              total_price: data.total_price,
+              taxes: data.taxes,
+              shipping_cost: data.shipping_cost,
+              id: data.id,
+            });
+
+            setIdDelete(data.id);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      } else if(routes === 'vendors-edit'){
+        setPath('vendors')
+        setDataModal({
+          size: "2xl",
+          labelModal: "Edit vendor",
+          labelBtnModal: "Save",
+          hidden: true,
+          handleBtn: edit,
+        });
+        setOpenModal(prevOpenModal => !prevOpenModal)
+      } else if(routes === 'vendor-contacts') {
+        setPath('vendor-contacts')
+        localStorage.setItem('path', 'vendor-contacts')
+        setOpenModal(prevOpenModal => !prevOpenModal)
+        setDataModal({
+          size: "xl",
+          labelModal: "Edit Kontak",
+          labelBtnModal: "Save",
+          labelBtnSecondaryModal: "Delete",
+          hidden: false,
+          handleBtn: edit,
+        });
+        try {
+          const {data, status} = await getApiData('vendor-contacts/' + param2)
+          if(status === 200) {
+            setDataEdit({
+              // vendors_id: data.vendors_id,
+              name: data.name,
+              position: data.position,
+              phone_number: data.phone_number,
+              id: data.id,
+            });
+
+            setIdDelete(data.id);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    const edit = async () => {
+      setLoading((prevLoading) => !prevLoading);
+      let dataBody = {};
+
+      if (path === "vendors" && localStorage.getItem('path') !== 'vendor-contacts') {
+        dataBody = {
+          name: refBody.nameRef.current.value,
+          address: refBody.addressRef.current.value,
+          phone_number: refBody.phone_numberRef.current.value,
+          transaction_type: refBody.transaction_typeRef.current.value,
+          email: refBody.emailRef.current.value,
+        };
+        try {
+          const response = await putApiData(
+            path + "/" + refBody.idRef.current.value,
+            dataBody
+          );
+          if (response.status === 201) {
+            setLoading((prevLoading) => !prevLoading);
+            setRefresh(!refresh);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const {status, data} = await getApiData('vendors/' + refBody.idRef.current.value)
+              if(status === 200) {
+                setDataDetailVendor(data)
+                setDataEdit({
+                  name: data.name,
+                  address: data.address,
+                  phone_number: data.phone_number,
+                  transaction_type: data.transaction_type,
+                  email: data.email,
+                  id: data.id,
+                });
+      
+                setIdDelete(data.id);
+                try {
+                  const {status, data} = await getApiData('vendors/' + refBody.idRef.current.value + '/contacts')
+                  if(status === 200) {
+                    setDataDetailVendorContact(data)
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
+              }
+             } catch (error) {
+              console.log(error);
+             }
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (localStorage.getItem('path') === 'vendor-contacts') {
+        dataBody = {
+          vendors_id: localStorage.getItem('dataIdVendor'),
+          name: refBody.nameRef.current.value,
+          position: refBody.positionRef.current.value,
+          phone_number: refBody.phone_numberRef.current.value,
+        };
+        try {
+          const response = await putApiData(
+           "vendor-contacts/" + refBody.idRef.current.value,
+            dataBody
+          );
+          if (response.status === 201) {
+            setLoading((prevLoading) => !prevLoading);
+            setRefresh(!refresh);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+           
+             // ini seharusnya bisa di refactore lagi
+             try {
+              const {status, data} = await getApiData('vendors/' + localStorage.getItem("dataIdVendor") + '/contacts')
+              if(status === 200) {
+                setDataDetailVendorContact(data)
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          // ini seharusnya bisa di refactore lagi end
+
+            
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (path === "vendor-transactions") {
+        dataBody = {
+          vendors_id: refBody.vendors_idRef.current.value,
+          amount: refBody.amountRef.current.value,
+          product_id: refBody.product_idRef.current.value,
+          unit_price: refBody.unit_priceRef.current.value,
+          total_price: refBody.total_priceRef.current.value,
+          taxes: refBody.taxesRef.current.value,
+          shipping_cost: refBody.shipping_costRef.current.value,
+        };
+        try {
+          const response = await putApiData(
+            path + "/" + refBody.idRef.current.value,
+            dataBody
+          );
+          console.log(response);
+          if (response.status === 201) {
+            setLoading((prevLoading) => !prevLoading);
+            setRefresh(!refresh);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      }
+    };
+
+    return {
+      handleEdit,
+      edit,
+    };
+  };
+
 
   const CREATE = () => {
     const handleCreate = (param) => {
@@ -545,27 +749,6 @@ export const CRUD = () => {
           size: "2xl",
           labelModal: "Add New vendor",
           labelBtnModal: "Add new vendor",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      } else if (param === "vendor-contacts") {
-        setDataEdit({
-          vendors_id: "",
-          name: "",
-          position: "",
-          phone_number: "",
-        });
-        setValidationError({
-          vendors_id: "",
-          name: "",
-          position: "",
-          phone_number: "",
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "lg",
-          labelModal: "Add New contact",
-          labelBtnModal: "Add new contact",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -593,6 +776,28 @@ export const CRUD = () => {
           size: "2xl",
           labelModal: "Add New transactions",
           labelBtnModal: "Add new transactions",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "vendor-contacts") {
+        setPath(param)
+        setDataEdit({
+          vendors_id: "",
+          name: "",
+          position: "",
+          phone_number: "",
+        });
+        setValidationError({
+          vendors_id: "",
+          name: "",
+          position: "",
+          phone_number: "",
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "lg",
+          labelModal: "Add New contact",
+          labelBtnModal: "Add new contact",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -646,26 +851,6 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
         }
-      } else if (param === "vendor-contacts") {
-        dataBody = {
-          vendors_id: refBody.vendors_idRef.current.value,
-          name: refBody.nameRef.current.value,
-          position: refBody.positionRef.current.value,
-          phone_number: refBody.phone_numberRef.current.value,
-        };
-
-        try {
-          const store = await postApiData(param, dataBody);
-          if (store.status === 201) {
-            setPath(() => param);
-            setRefresh((prevRevresh) => !prevRevresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
       } else if (param === "vendor-transactions") {
         dataBody = {
           vendors_id: refBody.vendors_idRef.current.value,
@@ -689,7 +874,39 @@ export const CRUD = () => {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
         }
-      } else {
+      } else if (param === "vendor-contacts") {
+        dataBody = {
+          vendors_id: localStorage.getItem("dataIdVendor"),
+          name: refBody.nameRef.current.value,
+          position: refBody.positionRef.current.value,
+          phone_number: refBody.phone_numberRef.current.value,
+        };
+
+        try {
+          const {data, status} = await postApiData(param, dataBody);
+          if (status === 201) {
+            setPath(() => param);
+            setRefresh((prevRevresh) => !prevRevresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+
+            // ini seharusnya bisa di refactore lagi
+              try {
+                const {status, data} = await getApiData('vendors/' + localStorage.getItem("dataIdVendor") + '/contacts')
+                if(status === 200) {
+                  setDataDetailVendorContact(data)
+                }
+              } catch (error) {
+                console.log(error);
+              }
+            // ini seharusnya bisa di refactore lagi end
+
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      }else {
         dataBody = {
           name: refBody.nameRef.current.value,
           address: refBody.addressRef.current.value,
@@ -715,193 +932,6 @@ export const CRUD = () => {
     return {
       handleCreate,
       create,
-    };
-  };
-
-  const EDIT = () => {
-    const handleEdit = async (param) => {
-      const id = param.textContent;
-      if (path === "vendors") {
-        setDataModal({
-          labelModal: "Update vendors",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        setValidationError({
-          name: "",
-          address: "",
-          phone_number: "",
-          transaction_type: "",
-          email: "",
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        try {
-          const { data, status } = await getApiData(path + "/" + id);
-          if (status === 200) {
-            setDataEdit({
-              name: data.name,
-              address: data.address,
-              phone_number: data.phone_number,
-              transaction_type: data.transaction_type,
-              email: data.email,
-              id: data.id,
-            });
-
-            setIdDelete(data.id);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      } else if (path === "vendor-contacts") {
-        setDataModal({
-          labelModal: "Update contact",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        setValidationError({
-          vendors_id: "",
-          name: "",
-          position: "",
-          phone_number: "",
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        try {
-          const { data, status } = await getApiData(path + "/" + id);
-          if (status === 200) {
-            setDataEdit({
-              vendors_id: data.vendors_id,
-              name: data.name,
-              position: data.position,
-              phone_number: data.phone_number,
-              id: data.id,
-            });
-
-            setIdDelete(data.id);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      } else if (path === "vendor-transactions") {
-        setDataModal({
-          labelModal: "Update transaction",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        setValidationError({
-          vendors_id: "",
-          amount: "",
-          product_id: "",
-          unit_price: "",
-          total_price: "",
-          taxes: "",
-          shipping_cost: "",
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        try {
-          const { data, status } = await getApiData(path + "/" + id);
-          if (status === 200) {
-            setDataEdit({
-              vendors_id: data.vendors_id,
-              amount: data.amount,
-              product_id: data.product_id,
-              unit_price: data.unit_price,
-              total_price: data.total_price,
-              taxes: data.taxes,
-              shipping_cost: data.shipping_cost,
-              id: data.id,
-            });
-
-            setIdDelete(data.id);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-
-    const edit = async () => {
-      setLoading((prevLoading) => !prevLoading);
-      let dataBody = {};
-
-      if (path === "vendors") {
-        dataBody = {
-          name: refBody.nameRef.current.value,
-          address: refBody.addressRef.current.value,
-          phone_number: refBody.phone_numberRef.current.value,
-          transaction_type: refBody.transaction_typeRef.current.value,
-          email: refBody.emailRef.current.value,
-        };
-        try {
-          const response = await putApiData(
-            path + "/" + refBody.idRef.current.value,
-            dataBody
-          );
-          console.log(response);
-          if (response.status === 201) {
-            setLoading((prevLoading) => !prevLoading);
-            setRefresh(!refresh);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (path === "vendor-contacts") {
-        dataBody = {
-          vendors_id: refBody.vendors_idRef.current.value,
-          name: refBody.nameRef.current.value,
-          position: refBody.positionRef.current.value,
-          phone_number: refBody.phone_numberRef.current.value,
-        };
-        try {
-          const response = await putApiData(
-            path + "/" + refBody.idRef.current.value,
-            dataBody
-          );
-          console.log(response);
-          if (response.status === 201) {
-            setLoading((prevLoading) => !prevLoading);
-            setRefresh(!refresh);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (path === "vendor-transactions") {
-        dataBody = {
-          vendors_id: refBody.vendors_idRef.current.value,
-          amount: refBody.amountRef.current.value,
-          product_id: refBody.product_idRef.current.value,
-          unit_price: refBody.unit_priceRef.current.value,
-          total_price: refBody.total_priceRef.current.value,
-          taxes: refBody.taxesRef.current.value,
-          shipping_cost: refBody.shipping_costRef.current.value,
-        };
-        try {
-          const response = await putApiData(
-            path + "/" + refBody.idRef.current.value,
-            dataBody
-          );
-          console.log(response);
-          if (response.status === 201) {
-            setLoading((prevLoading) => !prevLoading);
-            setRefresh(!refresh);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      }
-    };
-
-    return {
-      handleEdit,
-      edit,
     };
   };
 
@@ -1036,5 +1066,9 @@ export const CRUD = () => {
     loading,
     skeleton,
     path,
+    defaultEdit,
+    setDefaultEdit,
+    dataDetailVendor,
+    dataDetailVendorContact
   };
 };

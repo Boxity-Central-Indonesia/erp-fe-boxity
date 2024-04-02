@@ -5,6 +5,7 @@ import { TextArea } from "../../../layouts/FormInput"
 import TabelComponent from "../../../layouts/Tabel"
 import { Spinner } from "../../../layouts/Spinner"
 import { CRUD } from "./components/CRUD"
+import { VendorDetail } from "./components/vendorDetail"
 
 export const Vendors = () => {
     const {
@@ -24,7 +25,11 @@ export const Vendors = () => {
         loading,
         handleCreate,
         skeleton,
-        path
+        path,
+        defaultEdit,
+        setDefaultEdit,
+        dataDetailVendor,
+        dataDetailVendorContact
     } = CRUD()
 
     const dataModalBody = () => {
@@ -35,6 +40,42 @@ export const Vendors = () => {
                     {inputBody(path)}
                 </form>
 
+            </>
+        )
+    }
+
+    if(!defaultEdit){
+        return(
+            <>
+                <ModalContainer 
+                    openModal={openModal}
+                    onToggleModal={setOpenModal}
+                    modalBody={dataModalBody}
+                    sizeModal={dataModal.size}
+                    labelModal={dataModal.labelModal}
+                    labelBtnModal={dataModal.labelBtnModal}
+                    labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
+                    handleBtnModal={dataModal.handleBtn}
+                    parameter={path}
+                    openModalDelete={openModalDelete}
+                    hidden={dataModal.hidden}
+                />
+
+                <Spinner loading={loading} />
+
+                < ModalConfirmDelete 
+                modalDelete={modalDelete}
+                closeModalDelete={closeModalDelete}
+                handleDelete={handleDelete}
+                />
+
+                <VendorDetail
+                    data={dataDetailVendor}
+                    setDefaultEdit={setDefaultEdit}
+                    dataVendorContact={dataDetailVendorContact}
+                    handleEdit={handleEdit}
+                    dataHeading={dataHeading}
+                />
             </>
         )
     }

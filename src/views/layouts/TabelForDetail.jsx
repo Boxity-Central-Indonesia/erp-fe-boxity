@@ -11,6 +11,7 @@ export const TabelForDetail = ({
   hiddenBtnEdit,
 }) => {
   const { globalColor, changeColor } = useColor();
+  
 
   if (!data) {
     // Tampilkan pesan "Loading..." jika data masih undifined

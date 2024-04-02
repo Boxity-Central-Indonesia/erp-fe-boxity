@@ -20,6 +20,7 @@ export const ModalContainer = ({
   openModalDelete,
   typeModal,
   parameter,
+  hidden
 }) => {
   const closeModal = () => {
     onToggleModal(!openModal);
@@ -57,6 +58,7 @@ export const ModalContainer = ({
             paddingY={"3"}
           />
           <Button
+            className={`${hidden ? `hidden` : ``}`}
             event={
               labelBtnSecondaryModal === "Delete" ? openModalDelete : closeModal
             }
