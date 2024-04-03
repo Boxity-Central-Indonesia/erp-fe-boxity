@@ -516,6 +516,7 @@ export const CRUD = () => {
       const id = param.textContent;
       if (path === "vendors" && routes !== 'vendors-edit' && routes !== 'vendor-contacts') {
        setDefaultEdit(false)
+       localStorage.setItem('path', 'vendors')
        setDataHeading([
         {
           label: "Add",
@@ -588,7 +589,8 @@ export const CRUD = () => {
           console.log(error);
         }
       } else if(routes === 'vendors-edit'){
-        setPath('vendors')
+       localStorage.setItem('path', 'vendors')
+       setPath('vendors')
         setDataModal({
           size: "2xl",
           labelModal: "Edit vendor",
@@ -598,6 +600,24 @@ export const CRUD = () => {
         });
         setValidationError({})
         setOpenModal(prevOpenModal => !prevOpenModal)
+        try {
+          const {status, data} = await getApiData('vendors/' + param)
+          if(status === 200) {
+            setDataEdit({
+              name: data.name,
+              address: data.address,
+              phone_number: data.phone_number,
+              transaction_type: data.transaction_type,
+              email: data.email,
+              id: data.id,
+            });
+            setIdDelete(data.id);
+            localStorage.setItem("dataIdVendor", data.id)
+          }
+
+        } catch (error) {
+          console.log(error);
+        }
       } else if(routes === 'vendor-contacts') {
         setPath('vendor-contacts')
         localStorage.setItem('path', 'vendor-contacts')
@@ -633,8 +653,7 @@ export const CRUD = () => {
     const edit = async () => {
       setLoading((prevLoading) => !prevLoading);
       let dataBody = {};
-
-      if (path === "vendors" && localStorage.getItem('path') !== 'vendor-contacts') {
+      if (localStorage.getItem('path') === 'vendors') {
         dataBody = {
           name: refBody.nameRef.current.value,
           address: refBody.addressRef.current.value,
@@ -644,7 +663,7 @@ export const CRUD = () => {
         };
         try {
           const response = await putApiData(
-            path + "/" + refBody.idRef.current.value,
+            "vendors/" + refBody.idRef.current.value,
             dataBody
           );
           if (response.status === 201) {
@@ -704,6 +723,7 @@ export const CRUD = () => {
               const {status, data} = await getApiData('vendors/' + localStorage.getItem("dataIdVendor") + '/contacts')
               if(status === 200) {
                 setDataDetailVendorContact(data)
+                localStorage.removeItem("path")
               }
             } catch (error) {
               console.log(error);
