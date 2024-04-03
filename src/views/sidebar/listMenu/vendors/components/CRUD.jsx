@@ -358,8 +358,8 @@ export const CRUD = () => {
     useEffect(() => {
       const getData = async () => {
         try {
-          const { data } = await getApiData(path);
           if (path === "vendors") {
+            const { data } = await getApiData('vendors');
             const newData = dataVendors(data);
             setData(() => newData);
             setDataHeading([
@@ -380,6 +380,7 @@ export const CRUD = () => {
               },
             ]);
           } else if (path === "vendor-transactions") {
+            const { data } = await getApiData('vendor-transactions');
             const newData = dataVendorsTransactions(data);
             setData(() => newData);
             setDataHeading([
@@ -395,6 +396,27 @@ export const CRUD = () => {
                 dataNavHeading: [
                   { path: "vendors", label: "Vendors" },
                   { path: "vendor-contacts", label: "Contacts" },
+                  { path: "vendor-transactions", label: "Vendor Transactions" },
+                ],
+                activeButton: path,
+              },
+            ]);
+          } else {
+            const { data } = await getApiData('vendors');
+            const newData = dataVendors(data);
+            setData(() => newData);
+            setDataHeading([
+              {
+                label: "Add new vendors",
+                icon: IconAdd(),
+                heading: "Vendors list",
+                information:
+                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                eventToggleModal: handleCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "vendors", label: "Vendors" },
                   { path: "vendor-transactions", label: "Vendor Transactions" },
                 ],
                 activeButton: path,
@@ -574,10 +596,12 @@ export const CRUD = () => {
           hidden: true,
           handleBtn: edit,
         });
+        setValidationError({})
         setOpenModal(prevOpenModal => !prevOpenModal)
       } else if(routes === 'vendor-contacts') {
         setPath('vendor-contacts')
         localStorage.setItem('path', 'vendor-contacts')
+        setValidationError({})
         setOpenModal(prevOpenModal => !prevOpenModal)
         setDataModal({
           size: "xl",
@@ -948,6 +972,18 @@ export const CRUD = () => {
     const handleDelete = async () => {
       try {
         await deleteApiData(path + "/" + idDelete);
+        if(path === 'vendor-contacts'){
+           // ini seharusnya bisa di refactore lagi
+           try {
+            const {status, data} = await getApiData('vendors/' + localStorage.getItem("dataIdVendor") + '/contacts')
+            if(status === 200) {
+              setDataDetailVendorContact(data)
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        // ini seharusnya bisa di refactore lagi end
+        }
         setRefresh(!refresh);
         closeModalDelete();
       } catch (error) {
@@ -1069,6 +1105,9 @@ export const CRUD = () => {
     defaultEdit,
     setDefaultEdit,
     dataDetailVendor,
-    dataDetailVendorContact
+    dataDetailVendorContact,
+    setPath,
+    setDataHeading,
+    handleClickHeading
   };
 };

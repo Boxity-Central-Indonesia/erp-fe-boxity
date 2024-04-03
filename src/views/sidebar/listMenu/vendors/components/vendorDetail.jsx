@@ -1,12 +1,17 @@
 import Button from "../../../../layouts/Button"
 import { TabelForDetail } from "../../../../layouts/TabelForDetail"
+import IconAdd from "../../../../layouts/icons/IconAdd"
 
 export const VendorDetail = ({
     data,
     setDefaultEdit,
     dataVendorContact,
     dataHeading,
-    handleEdit
+    handleEdit,
+    setPath,
+    setDataHeading,
+    handleCreate,
+    handleClickHeading,
 }) => {
 
     const dataVendorContactFinal = dataVendorContact && dataVendorContact?.map(item => ({
@@ -15,6 +20,29 @@ export const VendorDetail = ({
         posisi: item?.position,
         "Nomor handphone": item?.phone_number,
     }))
+
+
+    const handleBack = () => {
+        setDataHeading([
+            {
+              label: "Add new vendors",
+              icon: IconAdd(),
+              heading: "Vendors list",
+              information:
+                "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+              eventToggleModal: handleCreate,
+              onclick: handleClickHeading,
+              showNavHeading: true,
+              dataNavHeading: [
+                { path: "vendors", label: "Vendors" },
+                { path: "vendor-transactions", label: "Vendor Transactions" },
+              ],
+              activeButton: 'vendors',
+            },
+        ])
+        setPath(() => 'vendors')
+        setDefaultEdit(true)
+    }
 
     return (
         <>
@@ -62,7 +90,7 @@ export const VendorDetail = ({
                     </div>
                 </div>
                 <div className="flex gap-3 mt-5">
-                    <Button bgColour={""} label={"Back"} paddingX={"4"} paddingY={"2.5"} event={()=> setDefaultEdit(true)}
+                    <Button bgColour={""} label={"Back"} paddingX={"4"} paddingY={"2.5"} event={() => handleBack()}
                         icon={
                         <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 24">
