@@ -38,7 +38,7 @@ export const TabelForActivityType = ({
     <>
       <section>
         <div className="overflow-x-auto">
-          <Table>
+          <Table striped>
             <Table.Head className="bg-none">
               <Table.HeadCell>Details</Table.HeadCell>
               <Table.HeadCell>Values</Table.HeadCell>

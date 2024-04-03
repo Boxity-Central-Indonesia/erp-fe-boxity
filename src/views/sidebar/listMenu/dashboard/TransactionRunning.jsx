@@ -25,7 +25,7 @@ export const TransactionRunning = ({ dataOrdersNotCompleted }) => {
           <h1 className="text-xl font-semibold mb-5">Ongoing transactions</h1>
         </div>
         <div className="px-2">
-          <Table>
+          <Table striped>
             <Table.Head className="text-xs">
               {dataHeading.map((heading, index) => (
                 <Table.HeadCell key={index}>{heading}</Table.HeadCell>

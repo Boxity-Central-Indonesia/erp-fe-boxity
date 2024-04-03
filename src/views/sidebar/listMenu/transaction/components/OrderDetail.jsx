@@ -13,20 +13,29 @@ export const OrderDetail = ({
   setPath,
 }) => {
   const dataProducts = data?.products
-    ? data.products.map((item) => ({
-        id: item.id,
-        name: item.name,
-        quantity: item.quantity + " Kg",
+    ? data.products.map((product) => ({
+        id: product.id,
+        name: product.name,
+        quantity: product.quantity_pesanan + " Kg",
         "harga satuan": new Intl.NumberFormat("id-ID", {
           style: "currency",
           currency: "IDR",
-        }).format(item.price_per_unit),
+        }).format(product.price_per_unit),
         "total price": new Intl.NumberFormat("id-ID", {
           style: "currency",
           currency: "IDR",
-        }).format(item.total_price),
+        }).format(product.total_price),
+        "timbang kotor": product.timbang_kotor + " Kg",
+        "total keranjang": product.total_keranjang + " Pcs",
+        "total berat keranjang": product.total_berat_keranjang + " Kg",
+        "selisih jumlah": product.selisih_quantity + " Kg",
+        "timbang bersih": product.timbang_bersih + " Kg",
+        "jumlah hewan": product.total_jumlah_item + " Pcs",
+        "rata-rata berat hewan":
+          product.rata_rata_berat_hewan.toFixed(2) + " Kg",
+        susut: product.susut_percentage.toFixed(2) + " %",
       }))
-    : []; // Use an empty array if data.departments is null
+    : [];
 
   const handleBack = () => {
     defaultEdit(true);
@@ -75,9 +84,9 @@ export const OrderDetail = ({
         Order detail
       </h1>
       <section className="bg-white dark:bg-gray-800 dark:text-white rounded-md shadow-md p-5 mb-16">
-        <div className="grid lg:grid-cols-2 text-base">
+        <div className="grid lg:grid-cols-2 text-base mb-2">
           <div className="col-span-1">
-            <table className={`w-full`}>
+            <table className={`w-full responsive`}>
               <tr className="">
                 <td className="py-1">Kode Transaksi</td>
                 <td>

@@ -39,7 +39,7 @@ export const TabelForProducts = ({
   return (
     <div className="overflow-x-auto">
       <h3 className="mb-5 mt-1 text-sm font-medium">Tabel for products</h3>
-      <Table>
+      <Table striped>
         <Table.Head>
           <Table.HeadCell>Product name</Table.HeadCell>
           <Table.HeadCell>quantity</Table.HeadCell>
@@ -58,50 +58,43 @@ export const TabelForProducts = ({
               >
                 <Table.Cell>{item.name}</Table.Cell>
                 <Table.Cell>
-                    <QtyInput
-                      value={item.quantity}
-                      onChange={(e) =>
-                        handleInputChange(index, "quantity", e.target.value)
-                      }
-                    />
+                  <QtyInput
+                    value={item.quantity}
+                    onChange={(e) =>
+                      handleInputChange(index, "quantity", e.target.value)
+                    }
+                  />
                 </Table.Cell>
                 <Table.Cell>
-                    <PriceInput
-                      value={item.price_per_unit}
-                      onChange={(e) =>
-                        handleInputChange(
-                          index,
-                          "price_per_unit",
-                          e.target.value
-                        )
-                      }
-                    />
+                  <PriceInput
+                    value={item.price_per_unit}
+                    onChange={(e) =>
+                      handleInputChange(index, "price_per_unit", e.target.value)
+                    }
+                  />
                 </Table.Cell>
                 <Table.Cell>
                   <div className="flex items-center gap-2">
                     <>
-                        <button
-                          type="button"
-                          onClick={() => handleDelete(index)}
+                      <button type="button" onClick={() => handleDelete(index)}>
+                        <svg
+                          style={{ color: globalColor }}
+                          className="w-6 h-6 dark:text-white"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 30 24"
                         >
-                          <svg
-                            style={{ color: globalColor }}
-                            className="w-6 h-6 dark:text-white"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 30 24"
-                          >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M6 18L18 6M6 6l12 12"
-                            ></path>
-                          </svg>
-                        </button>
-                      </>
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M6 18L18 6M6 6l12 12"
+                          ></path>
+                        </svg>
+                      </button>
+                    </>
                   </div>
                 </Table.Cell>
               </Table.Row>

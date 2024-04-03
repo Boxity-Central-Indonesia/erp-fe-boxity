@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState, useMemo, useEffect } from "react";
+import ReactDOM from "react-dom";
 
 // import './index.css';
 
@@ -21,15 +21,15 @@ import {
   // ColumnDef,
   flexRender,
   // FilterFns,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 
 import {
   // RankingInfo,
   rankItem,
   compareItems,
-} from '@tanstack/match-sorter-utils';
+} from "@tanstack/match-sorter-utils";
 
-import { makeData, newPerson } from './makeData';
+import { makeData, newPerson } from "./makeData";
 
 const FilterFns = {
   fuzzy: (row, columnId, value, addMeta) => {
@@ -43,12 +43,12 @@ const FilterFns = {
 
     // Return if the item should be filtered in/out
     return itemRank.passed;
-  }
+  },
 };
 
 // Meta data declaration
 const FilterMeta = {
-  itemRank: null // or initialize it with some default value
+  itemRank: null, // or initialize it with some default value
 };
 
 // Fuzzy filter function
@@ -70,13 +70,13 @@ const fuzzySort = (rowA, rowB, columnId) => {
   let dir = 0;
 
   // Only sort by rank if the column has ranking information
-// Only sort by rank if the column has ranking information
-if (rowA.columnFiltersMeta[columnId]) {
-  dir = compareItems(
-    rowA.columnFiltersMeta[columnId].itemRank,
-    rowB.columnFiltersMeta[columnId].itemRank
-  );
-}
+  // Only sort by rank if the column has ranking information
+  if (rowA.columnFiltersMeta[columnId]) {
+    dir = compareItems(
+      rowA.columnFiltersMeta[columnId].itemRank,
+      rowB.columnFiltersMeta[columnId].itemRank
+    );
+  }
 
   // Provide an alphanumeric fallback for when the item ranks are equal
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
@@ -86,72 +86,74 @@ export function Test() {
   const rerender = React.useReducer(() => ({}), {})[1];
 
   const [columnFilters, setColumnFilters] = useState([]);
-  const [globalFilter, setGlobalFilter] = useState('');
+  const [globalFilter, setGlobalFilter] = useState("");
 
-  const columns = useMemo(() => [
-    {
-      header: 'Name',
-      footer: props => props.column.id,
-      columns: [
-        {
-          accessorKey: 'firstName',
-          cell: info => info.getValue(),
-          footer: props => props.column.id,
-        },
-        {
-          accessorFn: row => row.lastName,
-          id: 'lastName',
-          cell: info => info.getValue(),
-          header: () => <span>Last Name</span>,
-          footer: props => props.column.id,
-        },
-        {
-          accessorFn: row => `${row.firstName} ${row.lastName}`,
-          id: 'fullName',
-          header: 'Full Name',
-          cell: info => info.getValue(),
-          footer: props => props.column.id,
-          filterFn: 'fuzzy',
-          sortingFn: fuzzySort,
-        },
-      ],
-    },
-    {
-      header: 'Info',
-      footer: props => props.column.id,
-      columns: [
-        {
-          accessorKey: 'age',
-          header: () => 'Age',
-          footer: props => props.column.id,
-        },
-        {
-          header: 'More Info',
-          columns: [
-            {
-              accessorKey: 'visits',
-              header: () => <span>Visits</span>,
-              footer: props => props.column.id,
-            },
-            {
-              accessorKey: 'status',
-              header: 'Status',
-              footer: props => props.column.id,
-            },
-            {
-              accessorKey: 'progress',
-              header: 'Profile Progress',
-              footer: props => props.column.id,
-            },
-          ],
-        },
-      ],
-    },
-  ], []);
-  
+  const columns = useMemo(
+    () => [
+      {
+        header: "Name",
+        footer: (props) => props.column.id,
+        columns: [
+          {
+            accessorKey: "firstName",
+            cell: (info) => info.getValue(),
+            footer: (props) => props.column.id,
+          },
+          {
+            accessorFn: (row) => row.lastName,
+            id: "lastName",
+            cell: (info) => info.getValue(),
+            header: () => <span>Last Name</span>,
+            footer: (props) => props.column.id,
+          },
+          {
+            accessorFn: (row) => `${row.firstName} ${row.lastName}`,
+            id: "fullName",
+            header: "Full Name",
+            cell: (info) => info.getValue(),
+            footer: (props) => props.column.id,
+            filterFn: "fuzzy",
+            sortingFn: fuzzySort,
+          },
+        ],
+      },
+      {
+        header: "Info",
+        footer: (props) => props.column.id,
+        columns: [
+          {
+            accessorKey: "age",
+            header: () => "Age",
+            footer: (props) => props.column.id,
+          },
+          {
+            header: "More Info",
+            columns: [
+              {
+                accessorKey: "visits",
+                header: () => <span>Visits</span>,
+                footer: (props) => props.column.id,
+              },
+              {
+                accessorKey: "status",
+                header: "Status",
+                footer: (props) => props.column.id,
+              },
+              {
+                accessorKey: "progress",
+                header: "Profile Progress",
+                footer: (props) => props.column.id,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    []
+  );
 
   const [data, setData] = useState(() => makeData(5000));
-  const refreshData = () => setData(old => makeData(5000));
+  const refreshData = () => setData((old) => makeData(5000));
 
   const table = useReactTable({
     data,
@@ -179,9 +181,9 @@ export function Test() {
   });
 
   useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === 'fullName') {
-      if (table.getState().sorting[0]?.id !== 'fullName') {
-        table.setSorting([{ id: 'fullName', desc: false }]);
+    if (table.getState().columnFilters[0]?.id === "fullName") {
+      if (table.getState().sorting[0]?.id !== "fullName") {
+        table.setSorting([{ id: "fullName", desc: false }]);
       }
     }
   }, [table.getState().columnFilters[0]?.id]);
@@ -190,8 +192,8 @@ export function Test() {
     <div className="p-2">
       <div>
         <DebouncedInput
-          value={globalFilter ?? ''}
-          onChange={value => setGlobalFilter(String(value))}
+          value={globalFilter ?? ""}
+          onChange={(value) => setGlobalFilter(String(value))}
           className="p-2 font-lg shadow border border-block"
           placeholder="Search all columns..."
         />
@@ -199,17 +201,17 @@ export function Test() {
       <div className="h-2" />
       <table>
         <thead>
-          {table.getHeaderGroups().map(headerGroup => (
+          {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
+              {headerGroup.headers.map((header) => (
                 <th key={header.id} colSpan={header.colSpan}>
                   {header.isPlaceholder ? null : (
                     <>
                       <div
                         {...{
                           className: header.column.getCanSort()
-                            ? 'cursor-pointer select-none'
-                            : '',
+                            ? "cursor-pointer select-none"
+                            : "",
                           onClick: header.column.getToggleSortingHandler(),
                         }}
                       >
@@ -218,8 +220,8 @@ export function Test() {
                           header.getContext()
                         )}
                         {{
-                          asc: ' 🔼',
-                          desc: ' 🔽',
+                          asc: " 🔼",
+                          desc: " 🔽",
                         }[header.column.getIsSorted()] ?? null}
                       </div>
                       {header.column.getCanFilter() && (
@@ -235,9 +237,9 @@ export function Test() {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map(row => (
+          {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
+              {row.getVisibleCells().map((cell) => (
                 <td key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
@@ -253,33 +255,33 @@ export function Test() {
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
-          {'<<'}
+          {"<<"}
         </button>
         <button
           className="border rounded p-1"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          {'<'}
+          {"<"}
         </button>
         <button
           className="border rounded p-1"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          {'>'}
+          {">"}
         </button>
         <button
           className="border rounded p-1"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
         >
-          {'>>'}
+          {">>"}
         </button>
         <span className="flex items-center gap-1">
           <div>Page</div>
           <strong>
-            {table.getState().pagination.pageIndex + 1} of{' '}
+            {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </strong>
         </span>
@@ -288,7 +290,7 @@ export function Test() {
           <input
             type="number"
             defaultValue={table.getState().pagination.pageIndex + 1}
-            onChange={e => {
+            onChange={(e) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               table.setPageIndex(page);
             }}
@@ -297,11 +299,11 @@ export function Test() {
         </span>
         <select
           value={table.getState().pagination.pageSize}
-          onChange={e => {
+          onChange={(e) => {
             table.setPageSize(Number(e.target.value));
           }}
         >
-          {[10, 20, 30, 40, 50].map(pageSize => (
+          {[10, 20, 30, 40, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>
@@ -320,52 +322,51 @@ export function Test() {
   );
 }
 
-function Filter({
-  column,
-  table,
-}) {
-  const firstValue = table.getPreFilteredRowModel().flatRows[0]?.getValue(column.id);
+function Filter({ column, table }) {
+  const firstValue = table
+    .getPreFilteredRowModel()
+    .flatRows[0]?.getValue(column.id);
 
   const columnFilterValue = column.getFilterValue();
 
   const sortedUniqueValues = useMemo(
     () =>
-      typeof firstValue === 'number'
+      typeof firstValue === "number"
         ? []
         : Array.from(column.getFacetedUniqueValues().keys()).sort(),
     [column.getFacetedUniqueValues()]
   );
 
-  return typeof firstValue === 'number' ? (
+  return typeof firstValue === "number" ? (
     <div>
       <div className="flex space-x-2">
         <DebouncedInput
           type="number"
-          min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
-          max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
-          value={(columnFilterValue)?.[0] ?? ''}
-          onChange={value =>
+          min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
+          max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
+          value={columnFilterValue?.[0] ?? ""}
+          onChange={(value) =>
             column.setFilterValue((old) => [value, old?.[1]])
           }
           placeholder={`Min ${
             column.getFacetedMinMaxValues()?.[0]
               ? `(${column.getFacetedMinMaxValues()?.[0]})`
-              : ''
+              : ""
           }`}
           className="w-24 border shadow rounded"
         />
         <DebouncedInput
           type="number"
-          min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
-          max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
-          value={(columnFilterValue)?.[1] ?? ''}
-          onChange={value =>
+          min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
+          max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
+          value={columnFilterValue?.[1] ?? ""}
+          onChange={(value) =>
             column.setFilterValue((old) => [old?.[0], value])
           }
           placeholder={`Max ${
             column.getFacetedMinMaxValues()?.[1]
               ? `(${column.getFacetedMinMaxValues()?.[1]})`
-              : ''
+              : ""
           }`}
           className="w-24 border shadow rounded"
         />
@@ -374,18 +375,18 @@ function Filter({
     </div>
   ) : (
     <>
-      <datalist id={column.id + 'list'}>
+      <datalist id={column.id + "list"}>
         {sortedUniqueValues.slice(0, 5000).map((value) => (
           <option value={value} key={value} />
         ))}
       </datalist>
       <DebouncedInput
         type="text"
-        value={(columnFilterValue ?? '')}
-        onChange={value => column.setFilterValue(value)}
+        value={columnFilterValue ?? ""}
+        onChange={(value) => column.setFilterValue(value)}
         placeholder={`Search... (${column.getFacetedUniqueValues().size})`}
         className="w-36 border shadow rounded"
-        list={column.id + 'list'}
+        list={column.id + "list"}
       />
       <div className="h-1" />
     </>
@@ -413,7 +414,13 @@ function DebouncedInput({
     return () => clearTimeout(timeout);
   }, [value]);
 
-  return <input {...props} value={value} onChange={e => setValue(e.target.value)} />;
+  return (
+    <input
+      {...props}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  );
 }
 
 // const rootElement = document.getElementById('root');

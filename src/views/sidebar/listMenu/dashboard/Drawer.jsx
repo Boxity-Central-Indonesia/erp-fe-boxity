@@ -1,9 +1,9 @@
 import { Table } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { useColor } from "../../../config/GlobalColour";
-import IconPrint from "../../../layouts/icons/IconPrint"
+import IconPrint from "../../../layouts/icons/IconPrint";
 import { downloadReport } from "../reports/downloadReport";
-import uuid from 'uuid-random'; 
+import uuid from "uuid-random";
 
 export const Drawer = ({
   openDrawer,
@@ -189,7 +189,7 @@ export const Drawer = ({
       return (
         <>
           <div className="overflow-x-auto">
-            <Table>
+            <Table striped>
               <Table.Head className="border-b">
                 {dataProducts &&
                   dataProducts[0] &&
@@ -250,7 +250,13 @@ export const Drawer = ({
           >
             Order Detail
           </h5>
-          <button onClick={() => downloadReport({endPoint: 'download/orders/' + dataDrawer.id})} style={{backgroundColor: globalColor}} className="flex gap-1 border py-2.5 px-4 rounded-md">
+          <button
+            onClick={() =>
+              downloadReport({ endPoint: "download/orders/" + dataDrawer.id })
+            }
+            style={{ backgroundColor: globalColor }}
+            className="flex gap-1 border py-2.5 px-4 rounded-md"
+          >
             <IconPrint />
             <p className="text-sm text-white">Print</p>
           </button>

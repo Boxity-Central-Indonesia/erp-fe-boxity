@@ -11,7 +11,6 @@ export const TabelForDetail = ({
   hiddenBtnEdit,
 }) => {
   const { globalColor, changeColor } = useColor();
-  
 
   if (!data) {
     // Tampilkan pesan "Loading..." jika data masih undifined
@@ -73,20 +72,7 @@ export const TabelForDetail = ({
           routes={routes}
           hidden={hidden}
         />
-        <table
-          className={`w-full ${data && data?.length === 0 ? `` : `hidden`}`}
-        >
-          <tbody>
-            <tr className="w-full flex justify-center border-t-[1px] border-b">
-              <td className="flex gap-1 py-8">
-                <p className="flex items-center text-gray-700 text-sm">
-                  No data found
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <Table>
+        <Table striped>
           <Table.Head className="border-b">
             {data &&
               data[0] &&

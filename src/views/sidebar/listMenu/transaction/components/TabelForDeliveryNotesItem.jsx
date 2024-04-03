@@ -48,7 +48,7 @@ export const TabelForDeliveryNoteItem = ({
       <h3 className="mb-5 mt-1 text-sm font-medium">
         Tabel for delivery note items
       </h3>
-      <Table>
+      <Table striped>
         <Table.Head>
           <Table.HeadCell>order</Table.HeadCell>
           <Table.HeadCell>product</Table.HeadCell>

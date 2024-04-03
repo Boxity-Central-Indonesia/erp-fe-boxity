@@ -829,7 +829,7 @@ export const CRUD = () => {
           console.log(data);
           if (status === 200) {
             const newData = data
-              .filter((item) => item.order_status !== "Completed") // Filter item dengan status bukan "Completed"
+              .filter((item) => item.order_status == "Completed") // Filter item dengan status bukan "Completed"
               .map((item) => ({
                 id: item.id,
                 name: item.kode_order,
