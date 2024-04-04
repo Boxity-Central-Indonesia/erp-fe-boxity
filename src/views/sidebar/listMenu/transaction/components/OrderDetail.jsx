@@ -270,6 +270,20 @@ export const OrderDetail = ({
               routes={"products"}
             />
           </div>
+
+            <hr className="my-3" />
+
+          <div>
+            <h2 className="text-xl font-medium dark:text-white mb-4">
+              Timbangan
+            </h2>
+            <TabelForDetail
+              data={[]}
+              dataHeading={dataHeading}
+              handleEdit={handleEdit}
+              routes={"products"}
+            />
+          </div>
         </div>
         <hr className="my-7" />
       </section>

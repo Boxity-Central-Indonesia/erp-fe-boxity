@@ -75,6 +75,8 @@ export const CRUD = () => {
     idRef: useRef(),
     directOrderRef: useRef(),
     ProductionOrderRef: useRef(),
+    no_refRef : useRef(),
+    unit_of_measureRef: useRef(),
 
     //invoices
     invoice_dateRef: useRef(),
@@ -287,20 +289,18 @@ export const CRUD = () => {
         dataSelect: dataSelectWarehouses,
         onchange: handleChange,
       },
-      // {
-      //   element: "radio",
-      //   name: "order_type",
-      //   // ref: refBody.order_typeRef,
-      //   value: dataEdit.order_type,
-      //   label: "Order type",
-      //   htmlFor: "order_type",
-      //   id: "order_type",
-      //   dataSelect: [
-      //     { id: 1, name: "Direct Order", ref: refBody.directOrderRef },
-      //     { id: 2, name: "Production Order", ref: refBody.ProductionOrderRef },
-      //   ],
-      //   onchange: handleChange,
-      // },
+      {
+        element: "input",
+        type: "text",
+        name: "no_ref",
+        ref: refBody.no_refRef,
+        value: dataEdit.no_ref,
+        label: "No referensi",
+        htmlFor: "no_ref",
+        id: "no_ref",
+        onchange: handleChange,
+        placeholder: "No referensi",
+      },
     ]);
 
     setInputEditOrder([
@@ -329,6 +329,18 @@ export const CRUD = () => {
     ]);
 
     setInputProducts([
+      {
+        element: "input",
+        type: "text",
+        name: "unit_of_measure",
+        ref: refBody.unit_of_measureRef,
+        value: dataEdit.unit_of_measure,
+        label: "Unit of measure",
+        htmlFor: "unit_of_measure",
+        id: "unit_of_measure",
+        onchange: handleChange,
+        placeholder: "Unit of measure",
+      },
       {
         element: "select",
         name: "product_id",
@@ -2117,13 +2129,15 @@ export const CRUD = () => {
               />
             ))}
 
-            <RadioButtons
-              onChange={handleChange}
-              selectedOption={selectedOption}
-              setSelectedOption={setSelectedOption}
-              referens={refBody.order_typeRef}
-              name={"order_type"}
-            />
+            <div className="col-span-2">
+              <RadioButtons
+                onChange={handleChange}
+                selectedOption={selectedOption}
+                setSelectedOption={setSelectedOption}
+                referens={refBody.order_typeRef}
+                name={"order_type"}
+              />
+            </div>
 
             <TextArea
               span={`col-span-2`}

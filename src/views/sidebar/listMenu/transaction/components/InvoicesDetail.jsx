@@ -25,7 +25,7 @@ export const InvoicesDetail = ({
                 'kode payment': item.kode_payment,
                 'metode pembayaran': item.payment_method,
                 'tanggal terbayar': item.payment_date,
-                'tagihan terbayar': item.amount_paid
+                'tagihan terbayar': numberToCurrency(item.amount_paid)
               }))
             : []
         )
@@ -135,6 +135,18 @@ export const InvoicesDetail = ({
                       </h2>
                       <TabelForDetail 
                         data={dataInvoicesPayments}
+                        dataHeading={dataHeading}
+                        handleEdit={handleEdit}
+                        routes={"invoices-payments"} 
+                        />
+                  </div>
+                  <hr className="my-3" />
+                  <div>
+                      <h2 className="text-xl font-medium dark:text-white mb-4">
+                          Timbangan
+                      </h2>
+                      <TabelForDetail 
+                        data={[]}
                         dataHeading={dataHeading}
                         handleEdit={handleEdit}
                         routes={"invoices-payments"} 
