@@ -75,7 +75,7 @@ export const CRUD = () => {
     idRef: useRef(),
     directOrderRef: useRef(),
     ProductionOrderRef: useRef(),
-    no_refRef : useRef(),
+    no_refRef: useRef(),
     unit_of_measureRef: useRef(),
 
     //invoices
@@ -330,18 +330,6 @@ export const CRUD = () => {
 
     setInputProducts([
       {
-        element: "input",
-        type: "text",
-        name: "unit_of_measure",
-        ref: refBody.unit_of_measureRef,
-        value: dataEdit.unit_of_measure,
-        label: "Unit of measure",
-        htmlFor: "unit_of_measure",
-        id: "unit_of_measure",
-        onchange: handleChange,
-        placeholder: "Unit of measure",
-      },
-      {
         element: "select",
         name: "product_id",
         ref: refBody.product_idRef,
@@ -410,9 +398,8 @@ export const CRUD = () => {
         htmlFor: "status",
         id: "status",
         dataSelect: [
-          { value: "unpaid", name: "unpaid" },
-          { value: "partial", name: "partial" },
-          { value: "paid", name: "paid" },
+          { value: "unpaid", name: "Belum Lunas" },
+          { value: "partial", name: "Cicilan" },
         ],
         onchange: handleChange,
       },
@@ -581,11 +568,11 @@ export const CRUD = () => {
         name: "number",
         ref: refBody.numberRef,
         value: dataEdit.number,
-        label: "Number",
+        label: "Kode Ref Transaksi",
         htmlFor: "number",
         id: "number",
         onchange: handleChange,
-        placeholder: "Number",
+        placeholder: "Kode Ref Transaksi",
       },
       {
         element: "input",

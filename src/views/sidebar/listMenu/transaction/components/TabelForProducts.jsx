@@ -42,8 +42,9 @@ export const TabelForProducts = ({
       <Table striped>
         <Table.Head>
           <Table.HeadCell>Product name</Table.HeadCell>
-          <Table.HeadCell>quantity</Table.HeadCell>
+          <Table.HeadCell>Jumlah</Table.HeadCell>
           <Table.HeadCell>harga satuan</Table.HeadCell>
+          <Table.HeadCell>Unit Satuan</Table.HeadCell>
           {/* <Table.HeadCell>id</Table.HeadCell> */}
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
@@ -70,6 +71,18 @@ export const TabelForProducts = ({
                     value={item.price_per_unit}
                     onChange={(e) =>
                       handleInputChange(index, "price_per_unit", e.target.value)
+                    }
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <unit_of_measureInput
+                    value={item.unit_of_measure}
+                    onChange={(e) =>
+                      handleInputChange(
+                        index,
+                        "unit_of_measure",
+                        e.target.value
+                      )
                     }
                   />
                 </Table.Cell>
@@ -123,6 +136,17 @@ const PriceInput = ({ value, onChange }) => {
       type="number"
       value={value}
       name="price_per_unit" // Corrected the name attribute
+      onChange={onChange}
+      className="border-none w-20 h-7 px-0"
+    />
+  );
+};
+const unit_of_measureInput = ({ value, onChange }) => {
+  return (
+    <input
+      type="text"
+      value={value}
+      name="unit_of_measure" // Corrected the name attribute
       onChange={onChange}
       className="border-none w-20 h-7 px-0"
     />

@@ -38,7 +38,7 @@ export const ProccesActivityDetail = ({
   return (
     <>
       <h1 className="text-2xl my-5 dark:text-white font-semibold">
-        Procces activity detail
+        process activity detail
       </h1>
       <section className="bg-white dark:bg-gray-800 dark:text-white rounded-md shadow-md p-5 mb-16">
         <div className="grid lg:grid-cols-2 text-base">

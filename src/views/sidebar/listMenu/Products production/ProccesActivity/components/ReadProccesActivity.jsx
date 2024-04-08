@@ -37,9 +37,9 @@ export const ReadProccesActivity = ({
   useEffect(() => {
     setDataHeading([
       {
-        label: "Add procces activity",
+        label: "Add process activity",
         icon: IconAdd(),
-        heading: "Procces activity list",
+        heading: "process activity list",
         information:
           "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
         eventToggleModal: handleOpenModal,

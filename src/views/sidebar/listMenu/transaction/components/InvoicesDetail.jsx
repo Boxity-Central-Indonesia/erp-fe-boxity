@@ -222,7 +222,7 @@ export const InvoicesDetail = ({
         <div className="grid grid-cols-1 gap-5">
           <div>
             <h2 className="text-xl font-medium dark:text-white mb-4">
-              Payments
+              Riwayat Pembayaran
             </h2>
             <TabelForDetail
               data={dataInvoicesPayments}

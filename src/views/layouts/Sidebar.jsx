@@ -77,7 +77,7 @@ function Sidebar() {
       ],
     },
     {
-      label: "Warehouses",
+      label: "Warehouse Management",
       icon: (
         <svg
           className="w-[15px] h-[15px] text-gray-800 dark:text-white"
@@ -120,11 +120,7 @@ function Sidebar() {
           />
         </svg>
       ),
-      subMenu: [
-        { path: "/transactions", label: "Transactions" },
-        // { path: "/invoices/list", label: "Invoices" },
-        // { path: "/payments/list", label: "Payments" },
-      ],
+      path: "/transactions",
     },
     {
       label: "Manufacturer",
