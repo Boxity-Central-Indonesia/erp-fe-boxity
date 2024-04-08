@@ -640,7 +640,7 @@ export const CRUD = () => {
     return data.map((item) => ({
       "kode transaksi": item.kode_order,
       "vendor name": item.vendor.name,
-      "transaction type": item.vendor.transaction_type,
+      tipe: item.vendor.transaction_type,
       // 'product name': item.products.name,
       "tujuan/asal gudang": item.warehouse.name,
       // status: item.status,

@@ -5,23 +5,22 @@ import { Read } from "../read";
 import { downloadReport } from "../downloadReport";
 
 export const Pembelian = () => {
-
   const dataTabel = (data) => {
-    return data.map(item => ({
-      'order code': item.kode_order,
+    return data.map((item) => ({
+      "order code": item.kode_order,
       customer: item.vendor_name,
-      'purchase date': item.invoice_date,
-      'purchase status' : item.invoice_status,
-      'total price': item.total_price,
-      'paid amount': item.paid_amount,
-    }))
-  }
-  
-  const {data} = Read({dataTabel, endPoint: 'purchase-report'})
+      "Tanggal Pembelian": item.invoice_date,
+      status: item.invoice_status,
+      "Total Tagihan": item.total_price,
+      "Tagihan Terbayar": item.paid_amount,
+    }));
+  };
+
+  const { data } = Read({ dataTabel, endPoint: "purchase-report" });
 
   const print = () => {
-    downloadReport({endPoint: 'download/purchase-report' })
-  }
+    downloadReport({ endPoint: "download/purchase-report" });
+  };
 
   const [dataHeading, setDataHeading] = useState([
     {
@@ -34,10 +33,7 @@ export const Pembelian = () => {
 
   return (
     <>
-      <TabelComponent
-        data={data}
-        dataHeading={dataHeading}
-      />
+      <TabelComponent data={data} dataHeading={dataHeading} />
     </>
   );
 };

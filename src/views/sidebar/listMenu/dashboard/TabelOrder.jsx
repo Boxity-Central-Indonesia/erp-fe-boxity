@@ -1,12 +1,11 @@
-import React, { useState, useRef,useMemo } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import { Table, TableCell } from "flowbite-react";
 import { useColor } from "../../../config/GlobalColour";
 import { Drawer } from "./Drawer";
 import { numberToCurrency } from "../../../config/FormatCurrency";
 import { getApiData } from "../../../../function/Api";
 import Paginate from "../../../layouts/PaginateTest";
-import uuid from 'uuid-random'; 
-
+import uuid from "uuid-random";
 
 import {
   createColumnHelper,
@@ -14,17 +13,16 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 
-const columnHelper = createColumnHelper()
+const columnHelper = createColumnHelper();
 
 export const TabelOrder = ({ data }) => {
-
   const columns = [
     {
-      accessorKey: 'id',
-      Header: 'Edit',
-      cell: (cell) => checkbox(cell.getValue())
+      accessorKey: "id",
+      Header: "Edit",
+      cell: (cell) => checkbox(cell.getValue()),
     },
     {
       accessorKey: "kode_order",
@@ -33,35 +31,39 @@ export const TabelOrder = ({ data }) => {
     {
       accessorKey: "vendor",
       Header: "vendor name",
-      cell: (cell) => cell.getValue().name
+      cell: (cell) => cell.getValue().name,
     },
     {
-      accessorKey: 'vendor',
-      Header: 'type',
-      cell: (cell) => cell.getValue().transaction_type === 'outbound' ? 'Sales' : 'Purchase'
+      accessorKey: "vendor",
+      Header: "type",
+      cell: (cell) =>
+        cell.getValue().transaction_type === "outbound" ? "Sales" : "Purchase",
     },
     {
-      accessorKey: 'created_at',
-      Header: 'Date',
-      cell: (cell) => new Date(cell.getValue()).toISOString().slice(0, 19).replace("T", " "),
+      accessorKey: "created_at",
+      Header: "Date",
+      cell: (cell) =>
+        new Date(cell.getValue()).toISOString().slice(0, 19).replace("T", " "),
     },
     {
-      accessorKey: 'warehouse',
-      Header: 'Tujuan/asal gudang',
-      cell: (cell) => cell.getValue().name
+      accessorKey: "warehouse",
+      Header: "Tujuan/asal gudang",
+      cell: (cell) => cell.getValue().name,
     },
     {
-      accessorKey: 'order_status',
-      Header: 'order status',
+      accessorKey: "order_status",
+      Header: "order status",
     },
     {
-      accessorKey: 'order_type',
-      Header: 'order type',
+      accessorKey: "order_type",
+      Header: "order type",
     },
     {
-      accessorKey: 'total_price',
-      Header: 'total price',
-      cell: (cell) => <p className="text-right">{numberToCurrency(cell.getValue())}</p>
+      accessorKey: "total_price",
+      Header: "total tagihan",
+      cell: (cell) => (
+        <p className="text-right">{numberToCurrency(cell.getValue())}</p>
+      ),
     },
   ];
 
@@ -69,10 +71,10 @@ export const TabelOrder = ({ data }) => {
     data,
     columns,
     initialState: {
-        pagination: {
-          pageSize: 5,
-        },
+      pagination: {
+        pageSize: 5,
       },
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getColumnHelpers: () => [
@@ -81,7 +83,7 @@ export const TabelOrder = ({ data }) => {
         setFilterValue: setGlobalFilter,
       }),
       ({ column }) => {
-        if (column.id === 'status') {
+        if (column.id === "status") {
           return {
             filterValue: selectedStatus,
             setFilterValue: (value) => {
@@ -93,7 +95,6 @@ export const TabelOrder = ({ data }) => {
       },
     ],
   });
-
 
   const { globalColor } = useColor();
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -129,7 +130,14 @@ export const TabelOrder = ({ data }) => {
         <Table hoverable>
           <Table.Head className="text-xs">
             {columns.map((col) => (
-              <Table.HeadCell className={`${col.Header === 'total price' ? `text-right` : ``}`} key={uuid()}>{col.Header}</Table.HeadCell>
+              <Table.HeadCell
+                className={`${
+                  col.Header === "total price" ? `text-right` : ``
+                }`}
+                key={uuid()}
+              >
+                {col.Header}
+              </Table.HeadCell>
             ))}
           </Table.Head>
           <Table.Body>
@@ -146,7 +154,7 @@ export const TabelOrder = ({ data }) => {
         </Table>
         <hr className="my-2" />
         <div className="px-5 mt-5">
-          <Paginate table={table} itemsPagination={[5, 10 , 15]}/>
+          <Paginate table={table} itemsPagination={[5, 10, 15]} />
         </div>
       </div>
     );

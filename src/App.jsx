@@ -42,7 +42,7 @@ import { Account } from "./views/sidebar/listMenu/account/Account";
 import { User } from "./views/sidebar/listMenu/user/User";
 // import { CompanyDetail } from "./views/sidebar/listMenu/company/organization/components/companyDetail";
 import { RoleAndPermission } from "./views/sidebar/listMenu/role&permission/role&permission";
-import { Asset } from "./views/sidebar/listMenu/asset/Asset"; 
+import { Asset } from "./views/sidebar/listMenu/asset/Asset";
 import { VendorTransaction } from "./views/sidebar/listMenu/reports/vendorTransaction/VendorTransaction";
 
 function App() {

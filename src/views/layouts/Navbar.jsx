@@ -3,8 +3,10 @@ import { Avatar, Dropdown, DarkThemeToggle, Flowbite } from "flowbite-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { getApiData } from "../../function/Api";
+import { postApiData } from "../../function/Api";
 import { AppsForNavbar } from "../layouts/AppForNavbar";
-
+import Swal from "sweetalert2";
+import { displayToast } from "./displayToast";
 function Navbar({ onToggleSidebar, setAuth }) {
   const [isOpenSideBar, setIsOpenSideBar] = useState();
   const navigate = useNavigate();
@@ -100,6 +102,28 @@ function Navbar({ onToggleSidebar, setAuth }) {
         </Dropdown.Item>
         <Dropdown.Divider />
         <Dropdown.Item
+          className="flex item-center gap-2 text-red-600"
+          onClick={handleResetData}
+        >
+          <svg
+            className="w-4 h-4 text-gray-500 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 22 22"
+          >
+            <path
+              stroke="red"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M18 9V4a1 1 0 0 0-1-1H8.914a1 1 0 0 0-.707.293L4.293 7.207A1 1 0 0 0 4 7.914V20a1 1 0 0 0 1 1h6M9 3v4a1 1 0 0 1-1 1H4m11 13a11.426 11.426 0 0 1-3.637-3.99A11.139 11.139 0 0 1 10 11.833L15 10l5 1.833a11.137 11.137 0 0 1-1.363 5.176A11.425 11.425 0 0 1 15.001 21Z"
+            />
+          </svg>
+          Reset Data
+        </Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item
           className="flex item-center gap-2"
           onClick={handleLogout}
         >
@@ -128,6 +152,42 @@ function Navbar({ onToggleSidebar, setAuth }) {
     Cookies.remove("token");
     setAuth(false);
     navigate("/login");
+  };
+
+  const handleResetData = () => {
+    Swal.fire({
+      title:
+        "<span class='text-red-600'>Are you sure want to reset data?</span>",
+      html: `
+    <p><strong>Peringatan:</strong><br>
+    Anda akan melakukan tindakan reset data. Ini akan menghapus semua data yang ada dan tindakan ini tidak dapat dibatalkan.
+    Harap pastikan untuk mencadangkan data penting Anda sebelum melanjutkan.</p>
+  `,
+      icon: "error",
+      showCancelButton: true,
+      confirmButtonColor: "#e53e3e",
+      cancelButtonColor: "#4299e1",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const { status, message } = await postApiData("reset-data", {});
+          if (status === 201) {
+            displayToast({
+              icon: "success",
+              title: message,
+            });
+          }
+        } catch (error) {
+          console.log(error);
+          Swal.fire({
+            title: "Error!",
+            text: "Failed to delete data.",
+            icon: "error",
+          });
+        }
+      }
+    });
   };
 
   return (

@@ -146,7 +146,7 @@ export const InvoicesDetail = ({
                 </td>
               </tr>
               <tr>
-                <td className="py-1">Paid amount</td>
+                <td className="py-1">Tagihan Terbayar</td>
                 <td>
                   {" "}
                   :{" "}
@@ -156,7 +156,7 @@ export const InvoicesDetail = ({
                 </td>
               </tr>
               <tr>
-                <td className="py-1">Balance due</td>
+                <td className="py-1">Sisa Tagihan</td>
                 <td>
                   {" "}
                   :{" "}

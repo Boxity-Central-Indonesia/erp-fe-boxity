@@ -438,7 +438,7 @@ export const CRUD = () => {
   const dataProducts = (data) => {
     return data.map((item) => ({
       id: item.id,
-      "kode barang": item.code,
+      kode: item.code,
       image: (
         <img
           src={item.image_product}
@@ -447,12 +447,10 @@ export const CRUD = () => {
         />
       ),
       name: item.name,
-      description: item.description,
       "lokasi gudang": item.warehouse?.name || "--",
       category: item.category?.name || "--",
-      type: item.type,
-      weight: (item.weight ?? 0.0) + " " + item.unit_of_measure,
-      quantity: item.stock + " pcs",
+      berat: (item.weight ?? 0.0) + " " + item.unit_of_measure,
+      jumlah: item.stock + " pcs",
       "harga satuan": item.price,
       "HPP Balance": item.price * item.stock,
     }));

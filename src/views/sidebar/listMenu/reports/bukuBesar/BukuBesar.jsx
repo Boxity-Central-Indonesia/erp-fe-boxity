@@ -5,19 +5,19 @@ import { Read } from "../read";
 import { downloadReport } from "../downloadReport";
 
 export const BukuBesar = () => {
-
   const dataTabel = (data) => {
-    return data.map(item => ({
-      "account name": item.account_name,
+    return data.map((item) => ({
+      akun: item.account_name,
+      "tipe akun": item.account_type,
       type: item.type,
-    }))
-  }
+    }));
+  };
 
-  const {data} = Read({dataTabel, endPoint: 'ledger-report'})
+  const { data } = Read({ dataTabel, endPoint: "ledger-report" });
 
   const print = () => {
-    downloadReport("download/ledger-report")
-  }
+    downloadReport("download/ledger-report");
+  };
 
   const [dataHeading, setDataHeading] = useState([
     {
@@ -30,10 +30,7 @@ export const BukuBesar = () => {
 
   return (
     <>
-      <TabelComponent
-        data={data}
-        dataHeading={dataHeading}
-      />
+      <TabelComponent data={data} dataHeading={dataHeading} />
     </>
   );
 };

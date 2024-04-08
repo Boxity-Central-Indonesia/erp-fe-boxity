@@ -5,29 +5,25 @@ import { Read } from "../read";
 import { downloadReport } from "../downloadReport";
 
 export const Penjualan = () => {
-
   const dataTabel = (data) => {
-    return data.map(item => ({
-      'order code': item.kode_order,
+    return data.map((item) => ({
+      "order code": item.kode_order,
       customer: item.vendor_name,
-      'Invoice date': item.invoice_date,
-      'invoice status' : item.invoice_status,
-      'total price': item.total_price,
-      'paid amount': item.paid_amount,
-    }))
-  }
+      "Tanggal Penjualan": item.invoice_date,
+      status: item.invoice_status,
+      "total Tagihan": item.total_price,
+      "Tagihan Terbayar": item.paid_amount,
+    }));
+  };
 
   const print = () => {
-    downloadReport({endPoint: 'download/sales-report' })
-  }
+    downloadReport({ endPoint: "download/sales-report" });
+  };
 
-  const {
-    data
-  } = Read({
+  const { data } = Read({
     dataTabel,
-    endPoint: 'sales-report'
-  })
-
+    endPoint: "sales-report",
+  });
 
   const [dataHeading, setDataHeading] = useState([
     {
@@ -40,10 +36,7 @@ export const Penjualan = () => {
 
   return (
     <>
-      <TabelComponent
-        data={data}
-        dataHeading={dataHeading}
-      />
+      <TabelComponent data={data} dataHeading={dataHeading} />
     </>
   );
 };
