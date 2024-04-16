@@ -713,20 +713,20 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Tambah pesanan",
+                label: "Tambah order",
                 icon: IconAdd(),
                 heading: "Manajemen Pesanan",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "pesanan", label: "Pesanan" },
+                  { path: "orders", label: "Pesanan" },
                   { path: "invoices", label: "Faktur Tagihan" },
                   { path: "payments", label: "Pembayaran" },
                   { path: "goods-receipt", label: "Penerimaan Barang" },
                   { path: "delivery-notes", label: "Pengiriman Barang" },
                 ],
-                activeButton: "pesanan",
+                activeButton: "orders",
               },
             ]);
           } else if (path === "invoices") {
