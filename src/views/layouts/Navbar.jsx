@@ -232,15 +232,15 @@ function Navbar({ onToggleSidebar, setAuth }) {
           </button>
           <a href="/" className="flex items-center justify-between mr-4">
             <img
-              src="https://res.cloudinary.com/boxity-id/image/upload/v1678791965/asset_boxity/logo/logo_primary_um5cgb.png"
+              src={import.meta.env.VITE_CLIENT_LOGO_DARK}
               className="mr-3 h-5 md:h-10 dark:hidden"
-              alt="PT. Boxity Central Indonesina"
+              alt={import.meta.env.VITE_CLIENTS_NAME}
             />
             {/* <p>PT Boxity Central Indonesia</p> */}
             <img
-              src="https://res.cloudinary.com/boxity-id/image/upload/v1678791550/asset_boxity/logo/Asset_36_i0dcvz.png"
+              src={import.meta.env.VITE_CLIENT_LOGO_DARK}
               className="mr-3 h-5 md:h-12 hidden dark:block"
-              alt="PT. Boxity Central Indonesina"
+              alt={import.meta.env.VITE_CLIENTS_NAME}
             />
             {/* <p>PT Boxity Central Indonesia</p> */}
           </a>

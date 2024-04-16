@@ -6,8 +6,9 @@
     <meta name="csrf-token" id="csrfToken" content="" />
     <link
       rel="icon"
-      href="https://res.cloudinary.com/boxity-id/image/upload/w_1000/q_auto:best/f_auto/v1678791753/asset_boxity/logo/icon-web_qusdsv.png"
+      href="https://res.cloudinary.com/boxity-id/image/upload/v1713274875/ptDHKManufacturing/icon_taauqv.png"
       type="image/png"
+      id="favicon"
     />
     <title>ERP - Boxity</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,6 +28,10 @@
   </style>
   <body>
     <div id="root"></div>
+    <script>
+      document.getElementById('favicon').href = import.meta.env.VITE_CLIENTS_ICON;
+      console.log(import.meta.env.VITE_CLIENTS_ICON)
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
