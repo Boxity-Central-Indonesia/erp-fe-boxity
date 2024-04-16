@@ -43,39 +43,37 @@ export const CRUD = () => {
     // Mendapatkan nama dan nilai input yang berubah
     const { name, value } = event.target;
 
-    if(name === 'balance' || name === 'amount'){
+    if (name === "balance" || name === "amount") {
       // Konversi nilai menjadi format mata uang
       const currencyToNumber = (currencyString) => {
         // Menghapus karakter non-numeric dari string (seperti koma dan simbol mata uang)
-        const numericString = currencyString.replace(/[^0-9-]+/g, '');
-    
+        const numericString = currencyString.replace(/[^0-9-]+/g, "");
+
         // Mengonversi string menjadi integer atau float
         return parseFloat(numericString);
-    };
+      };
 
-      const fixValue = currencyToNumber(value)
+      const fixValue = currencyToNumber(value);
       console.log(fixValue);
-      const formattedValue = parseFloat(fixValue || 0).toLocaleString('id-ID', {
-        style: 'currency',
-        currency: 'IDR'
-      }).replace(/\,00$/, ''); // Menghapus ,00 di akhir string jika ada
-    
+      const formattedValue = parseFloat(fixValue || 0)
+        .toLocaleString("id-ID", {
+          style: "currency",
+          currency: "IDR",
+        })
+        .replace(/\,00$/, ""); // Menghapus ,00 di akhir string jika ada
 
       // Memperbarui state sesuai dengan nilai input yang berubah
       setDataEdit((prevDataEdit) => ({
         ...prevDataEdit,
         [name]: formattedValue,
       }));
-    }else {
+    } else {
       setDataEdit((prevDataEdit) => ({
         ...prevDataEdit,
         [name]: value,
       }));
     }
-
-    
-};
-
+  };
 
   useEffect(() => {
     if (!!responseError) {
@@ -255,17 +253,17 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: "Add new account",
+                label: "Tambah account",
                 icon: IconAdd(),
-                heading: "Accounts list",
+                heading: "Daftar Akun",
                 information:
                   "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "accounts", label: "Accounts" },
-                  { path: "accounts-transactions", label: "Transactions" },
+                  { path: "accounts", label: "Daftar Akun" },
+                  { path: "accounts-transactions", label: "Transaksi Akun" },
                 ],
                 activeButton: path,
               },
@@ -276,17 +274,17 @@ export const CRUD = () => {
             console.log(data);
             setDataHeading([
               {
-                label: "Add new category",
+                label: "Tambah category",
                 icon: IconAdd(),
-                heading: "Categories list",
+                heading: "Daftar Kategori",
                 information:
                   "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "accounts", label: "Accounts" },
-                  { path: "accounts-transactions", label: "Transactions" },
+                  { path: "accounts", label: "Daftar Akun" },
+                  { path: "accounts-transactions", label: "Transaksi Akun" },
                 ],
                 activeButton: path,
               },
@@ -321,7 +319,8 @@ export const CRUD = () => {
       setPath(param);
       setDataHeading([
         {
-          label: param === "accounts" ? "Add accounts" : "Add transaction",
+          label:
+            param === "accounts" ? "Tambah accounts" : "Tambah transaction",
           icon: IconAdd(),
           heading: param === "accounts" ? "Accounts" : "Transactions" + " list",
           information:
@@ -331,8 +330,8 @@ export const CRUD = () => {
           parameter: param,
           showNavHeading: true,
           dataNavHeading: [
-            { path: "accounts", label: "Accounts" },
-            { path: "accounts-transactions", label: "Transactions" },
+            { path: "accounts", label: "Daftar Akun" },
+            { path: "accounts-transactions", label: "Transaksi Akun" },
           ],
           activeButton: param,
         },
@@ -379,8 +378,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Add New account",
-          labelBtnModal: "Add new account",
+          labelModal: "Tambah account",
+          labelBtnModal: "Tambah account",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -400,8 +399,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Add New category",
-          labelBtnModal: "Add new category",
+          labelModal: "Tambah category",
+          labelBtnModal: "Tambah category",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -415,7 +414,7 @@ export const CRUD = () => {
         dataBody = {
           name: refBody.nameRef.current.value,
           type: refBody.typeRef.current.value,
-          balance: refBody.balanceRef.current.value.replace(/[^0-9-]+/g, ''),
+          balance: refBody.balanceRef.current.value.replace(/[^0-9-]+/g, ""),
         };
 
         try {
@@ -435,7 +434,7 @@ export const CRUD = () => {
           type: refBody.typeRef.current.value,
           date: refBody.dateRef.current.value,
           account_id: refBody.account_idRef.current.value,
-          amount: refBody.amountRef.current.value.replace(/[^0-9-]+/g, ''),
+          amount: refBody.amountRef.current.value.replace(/[^0-9-]+/g, ""),
         };
 
         try {
@@ -454,7 +453,7 @@ export const CRUD = () => {
         dataBody = {
           name: refBody.nameRef.current.value,
           type: refBody.typeRef.current.value,
-          balance: refBody.balanceRef.current.valuereplace(/[^0-9-]+/g, ''),
+          balance: refBody.balanceRef.current.valuereplace(/[^0-9-]+/g, ""),
         };
 
         try {
@@ -502,10 +501,12 @@ export const CRUD = () => {
             setDataEdit({
               name: data.name,
               type: data.type,
-              balance: parseFloat(data.balance).toLocaleString('id-ID' ,{
-                style: 'currency',
-                currency: 'IDR'
-              }).replace(/\,00$/, ''),
+              balance: parseFloat(data.balance)
+                .toLocaleString("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                })
+                .replace(/\,00$/, ""),
               id: data.id,
             });
 
@@ -537,10 +538,12 @@ export const CRUD = () => {
               type: data.type,
               date: data.date,
               account_id: data.account_id,
-              amount: parseFloat(data.amount).toLocaleString('id-ID', {
-                style: 'currency',
-                currency: 'IDR'
-              }).replace(/\,00$/, ''),
+              amount: parseFloat(data.amount)
+                .toLocaleString("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                })
+                .replace(/\,00$/, ""),
               id: data.id,
             });
 

@@ -8,7 +8,7 @@ export const MostSales = () => {
   return (
     <>
       <div className="bg-white h-fit p-5 rounded-md border">
-        <div className="font-semibold text-xl">Most Sales Products</div>
+        <div className="font-semibold text-xl">Produk Penjualan Terlaku</div>
         <div className="my-3 flex items-center justify-center">
           <PieChart />
         </div>

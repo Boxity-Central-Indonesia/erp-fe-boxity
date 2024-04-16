@@ -334,7 +334,7 @@ export const CRUD = () => {
         name: "product_id",
         ref: refBody.product_idRef,
         value: dataEdit.product_id,
-        label: "products",
+        label: "Produk",
         htmlFor: "product_id",
         id: "product_id",
         dataSelect: dataSelectProducts,
@@ -371,11 +371,11 @@ export const CRUD = () => {
         name: "invoice_date",
         ref: refBody.invoice_dateRef,
         value: dataEdit.invoice_date,
-        label: "Invoice date",
+        label: "tanggal tagihan",
         htmlFor: "invoice_date",
         id: "invoice_date",
         onchange: handleChange,
-        placeholder: "Invoice date",
+        placeholder: "tanggal tagihan",
       },
       {
         element: "input",
@@ -383,11 +383,11 @@ export const CRUD = () => {
         name: "due_date",
         ref: refBody.due_dateRef,
         value: dataEdit.due_date,
-        label: "Due date",
+        label: "Tenggat waktu",
         htmlFor: "due_date",
         id: "due_date",
         onchange: handleChange,
-        placeholder: "Due date",
+        placeholder: "Tenggat waktu",
       },
       {
         element: "select",
@@ -423,18 +423,18 @@ export const CRUD = () => {
         name: "amount_paid",
         ref: refBody.amount_paidRef,
         value: dataEdit.amount_paid,
-        label: "Amount paid",
+        label: "Tagihan Terbayar",
         htmlFor: "amount_paid",
         id: "amount_paid",
         onchange: handleChange,
-        placeholder: "Amount paid",
+        placeholder: "Tagihan Terbayar",
       },
       {
         element: "select",
         name: "payment_method",
         ref: refBody.payment_methodRef,
         value: dataEdit.payment_method,
-        label: "Payment methode",
+        label: "Payment metode",
         htmlFor: "payment_method",
         id: "payment_method",
         dataSelect: [
@@ -451,11 +451,11 @@ export const CRUD = () => {
         name: "payment_date",
         ref: refBody.payment_dateRef,
         value: dataEdit.payment_date,
-        label: "Payment date",
+        label: "tanggal pembayaran",
         htmlFor: "payment_date",
         id: "payment_date",
         onchange: handleChange,
-        placeholder: "Payment date",
+        placeholder: "tanggal pembayaran",
       },
     ]);
 
@@ -490,7 +490,7 @@ export const CRUD = () => {
         name: "product_id",
         ref: refBody.product_idRef,
         value: dataEdit.product_id,
-        label: "Products",
+        label: "Produk",
         htmlFor: "product_id",
         id: "product_id",
         dataSelect: dataSelectProducts,
@@ -627,7 +627,7 @@ export const CRUD = () => {
         name: "product_id",
         ref: refBody.product_idRef,
         value: dataEdit.product_id,
-        label: "products",
+        label: "Produk",
         htmlFor: "product_id",
         id: "product_id",
         dataSelect: dataSelectProducts,
@@ -657,8 +657,8 @@ export const CRUD = () => {
 
   const dataPayments = (data) => {
     return data.map((item) => ({
-      "kode invoice": item.invoice.kode_invoice,
-      "kode payment": item.kode_payment,
+      "kode tagihan": item.invoice.kode_invoice,
+      "kode pembayaran": item.kode_payment,
       "Metode pembayaran": item.payment_method,
       "Tanggal terbayar": item.payment_date,
       "Tagihan terbayar": item.amount_paid,
@@ -669,8 +669,8 @@ export const CRUD = () => {
   const dataInvoices = (data) => {
     return data.map((item) => ({
       "kode order": item.order.kode_order,
-      "kode invoices": item.kode_invoice,
-      "tanggal invoice": item.invoice_date,
+      "kode tagihan": item.kode_invoice,
+      "tanggal tagihan": item.invoice_date,
       "tanggal jatuh tempo": item.due_date,
       status: item.status,
       "sisa tagihan": item.balance_due,
@@ -713,20 +713,20 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new orders",
+                label: "Tambah pesanan",
                 icon: IconAdd(),
-                heading: "Orders list",
+                heading: "Manajemen Pesanan",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "orders", label: "Orders" },
-                  { path: "invoices", label: "Invoices" },
-                  { path: "payments", label: "Payments" },
-                  { path: "goods-receipt", label: "Good Receipts" },
-                  { path: "delivery-notes", label: "Delivery notes" },
+                  { path: "pesanan", label: "Pesanan" },
+                  { path: "invoices", label: "Faktur Tagihan" },
+                  { path: "payments", label: "Pembayaran" },
+                  { path: "goods-receipt", label: "Penerimaan Barang" },
+                  { path: "delivery-notes", label: "Pengiriman Barang" },
                 ],
-                activeButton: "orders",
+                activeButton: "pesanan",
               },
             ]);
           } else if (path === "invoices") {
@@ -734,18 +734,18 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new invoice",
+                label: "Tambah invoice",
                 icon: IconAdd(),
                 heading: "Invoices list",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "orders", label: "Orders" },
-                  { path: "invoices", label: "Invoices" },
-                  { path: "payments", label: "Payments" },
-                  { path: "goods-receipt", label: "Good Receipts" },
-                  { path: "delivery-notes", label: "Delivery notes" },
+                  { path: "pesanan", label: "Pesanan" },
+                  { path: "invoices", label: "Faktur Tagihan" },
+                  { path: "payments", label: "Pembayaran" },
+                  { path: "goods-receipt", label: "Penerimaan Barang" },
+                  { path: "delivery-notes", label: "Pengiriman Barang" },
                 ],
                 activeButton: "invoices",
               },
@@ -755,18 +755,18 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new payment",
+                label: "Tambah payment",
                 icon: IconAdd(),
                 heading: "Payments list",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "orders", label: "Orders" },
-                  { path: "invoices", label: "Invoices" },
-                  { path: "payments", label: "Payments" },
-                  { path: "goods-receipt", label: "Good Receipts" },
-                  { path: "delivery-notes", label: "Delivery notes" },
+                  { path: "pesanan", label: "Pesanan" },
+                  { path: "invoices", label: "Faktur Tagihan" },
+                  { path: "payments", label: "Pembayaran" },
+                  { path: "goods-receipt", label: "Penerimaan Barang" },
+                  { path: "delivery-notes", label: "Pengiriman Barang" },
                 ],
                 activeButton: "payments",
               },
@@ -776,18 +776,18 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new good receipts",
+                label: "Tambah good receipts",
                 icon: IconAdd(),
                 heading: "Good Receipts list",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "orders", label: "Orders" },
-                  { path: "invoices", label: "Invoices" },
-                  { path: "payments", label: "Payments" },
-                  { path: "goods-receipt", label: "Good Receipts" },
-                  { path: "delivery-notes", label: "Delivery notes" },
+                  { path: "pesanan", label: "Pesanan" },
+                  { path: "invoices", label: "Faktur Tagihan" },
+                  { path: "payments", label: "Pembayaran" },
+                  { path: "goods-receipt", label: "Penerimaan Barang" },
+                  { path: "delivery-notes", label: "Pengiriman Barang" },
                 ],
                 activeButton: "goods-receipt",
               },
@@ -797,18 +797,18 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new Delivery notes list",
+                label: "Tambah Delivery notes list",
                 icon: IconAdd(),
                 heading: "Good Delivery notes list",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "orders", label: "Orders" },
-                  { path: "invoices", label: "Invoices" },
-                  { path: "payments", label: "Payments" },
-                  { path: "goods-receipt", label: "Good Receipts" },
-                  { path: "delivery-notes", label: "Delivery notes" },
+                  { path: "pesanan", label: "Pesanan" },
+                  { path: "invoices", label: "Faktur Tagihan" },
+                  { path: "payments", label: "Pembayaran" },
+                  { path: "goods-receipt", label: "Penerimaan Barang" },
+                  { path: "delivery-notes", label: "Pengiriman Barang" },
                 ],
                 activeButton: "delivery-notes",
               },
@@ -883,19 +883,19 @@ export const CRUD = () => {
         {
           label:
             param === "orders"
-              ? "Add orders"
+              ? "Tambah orders"
               : param === "invoices"
-              ? "Add invoices"
+              ? "Tambah invoices"
               : param === "goods-receipt"
-              ? "Add Goods Receipt"
+              ? "Tambah Goods Receipt"
               : param === "delivery-notes"
-              ? "Add delivery note"
-              : "Add payments",
+              ? "Tambah delivery note"
+              : "Tambah payments",
 
           icon: IconAdd(),
           heading:
             param === "orders"
-              ? "Orders list"
+              ? "Manajemen Pesanan"
               : param === "invoices"
               ? "Invoices list"
               : param === "goods-receipt"
@@ -908,11 +908,11 @@ export const CRUD = () => {
           parameter: param,
           showNavHeading: true,
           dataNavHeading: [
-            { path: "orders", label: "Orders" },
-            { path: "invoices", label: "Invoices" },
-            { path: "payments", label: "Payments" },
-            { path: "goods-receipt", label: "Good Receipts" },
-            { path: "delivery-notes", label: "Delivery notes" },
+            { path: "pesanan", label: "Pesanan" },
+            { path: "invoices", label: "Faktur Tagihan" },
+            { path: "payments", label: "Pembayaran" },
+            { path: "goods-receipt", label: "Penerimaan Barang" },
+            { path: "delivery-notes", label: "Pengiriman Barang" },
           ],
           activeButton: param,
         },
@@ -975,7 +975,7 @@ export const CRUD = () => {
         routes !== "products"
       ) {
         setDataModal({
-          labelModal: "Edit orders",
+          labelModal: "Edit pesanan",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
@@ -1712,8 +1712,8 @@ export const CRUD = () => {
         });
         setDataModal({
           size: "2xl",
-          labelModal: "Add new orders",
-          labelBtnModal: "Add new orders",
+          labelModal: "Tambah pesanan",
+          labelBtnModal: "Tambah pesanan",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1734,8 +1734,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New invoices",
-          labelBtnModal: "Add new invoices",
+          labelModal: "Tambah invoices",
+          labelBtnModal: "Tambah invoices",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1755,8 +1755,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New payments",
-          labelBtnModal: "Add new payments",
+          labelModal: "Tambah payments",
+          labelBtnModal: "Tambah payments",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1778,8 +1778,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add new products",
-          labelBtnModal: "Add new products",
+          labelModal: "Tambah products",
+          labelBtnModal: "Tambah products",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1792,8 +1792,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New good receipt",
-          labelBtnModal: "Add new good receipt",
+          labelModal: "Tambah good receipt",
+          labelBtnModal: "Tambah good receipt",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1807,8 +1807,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New delivery notes",
-          labelBtnModal: "Add new delivery notes",
+          labelModal: "Tambah delivery notes",
+          labelBtnModal: "Tambah delivery notes",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1822,8 +1822,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Add New delivery notes item",
-          labelBtnModal: "Add new delivery notes item",
+          labelModal: "Tambah delivery notes item",
+          labelBtnModal: "Tambah delivery notes item",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1838,8 +1838,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New Payment",
-          labelBtnModal: "Add new Payment",
+          labelModal: "Tambah Payment",
+          labelBtnModal: "Tambah Payment",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

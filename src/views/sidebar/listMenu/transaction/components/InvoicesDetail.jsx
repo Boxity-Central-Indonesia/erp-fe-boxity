@@ -23,7 +23,7 @@ export const InvoicesDetail = ({
       data?.payments
         ? data.payments.map((item) => ({
             id: item.id,
-            "kode payment": (
+            "kode pembayaran": (
               <a
                 href="#"
                 onClick={(e) => downloadPayment(e, item.id)}

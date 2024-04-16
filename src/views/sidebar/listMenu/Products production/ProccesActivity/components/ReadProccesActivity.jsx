@@ -15,7 +15,7 @@ export const ReadProccesActivity = ({
     return Object.values(data).flatMap((innerObj) =>
       Object.values(innerObj).map((item) => ({
         "transaction code": item[item.length - 1].order.kode_order,
-        "product name": item[item.length - 1].product.name,
+        "nama produk": item[item.length - 1].product.name,
         "status activity": item[item.length - 1].status_activities,
         "last activity": item[item.length - 1].activity_type.replace(/_/g, " "),
         "activity date": item[item.length - 1].activity_date,
@@ -37,7 +37,7 @@ export const ReadProccesActivity = ({
   useEffect(() => {
     setDataHeading([
       {
-        label: "Add process activity",
+        label: "Tambah process activity",
         icon: IconAdd(),
         heading: "Process Activity List",
         information:

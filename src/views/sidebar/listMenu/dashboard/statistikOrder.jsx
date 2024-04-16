@@ -25,7 +25,7 @@ export const StatistikOrder = ({ data }) => {
   return (
     <div className="bg-white rounded-md p-5 max-h-68 border">
       <h2 className="text-xl font-semibold mb-1 capitalize">
-        Transaction statistics
+        Statistik Transaksi
       </h2>
       {totalSalesThisMonth !== null && (
         <h4 className="text-md text-gray-600">{totalSalesThisMonth}</h4>

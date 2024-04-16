@@ -8,7 +8,10 @@ import {
 import IconAdd from "../../../../layouts/icons/IconAdd";
 import { TextArea } from "../../../../layouts/FormInput";
 import FormInput from "../../../../layouts/FormInput";
-import {FormatCurrency, numberToCurrency} from "../../../../config/FormatCurrency"
+import {
+  FormatCurrency,
+  numberToCurrency,
+} from "../../../../config/FormatCurrency";
 
 export const CRUD = () => {
   const [refresh, setRefresh] = useState(false);
@@ -55,14 +58,14 @@ export const CRUD = () => {
     // Mendapatkan nama dan nilai input yang berubah
     const { name, value } = event.target;
 
-    if(name === 'acquisition_cost' || name === 'book_value'){
-       // Memperbarui state sesuai dengan nilai input yang berubah
+    if (name === "acquisition_cost" || name === "book_value") {
+      // Memperbarui state sesuai dengan nilai input yang berubah
       setDataEdit((prevDataEdit) => ({
         ...prevDataEdit,
-        [name]: FormatCurrency({value}),
+        [name]: FormatCurrency({ value }),
       }));
-    }else {
-       // Memperbarui state sesuai dengan nilai input yang berubah
+    } else {
+      // Memperbarui state sesuai dengan nilai input yang berubah
       setDataEdit((prevDataEdit) => ({
         ...prevDataEdit,
         [name]: value,
@@ -133,7 +136,7 @@ export const CRUD = () => {
         name: "location_id",
         ref: refBody.location_idRef,
         value: dataEdit.location_id,
-        label: "Locations",
+        label: "Lokasi",
         htmlFor: "location_id",
         id: "location_id",
         dataSelect: dataSelectLocation,
@@ -280,7 +283,7 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: "Add new asset",
+                label: "Tambah asset",
                 icon: IconAdd(),
                 information:
                   "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
@@ -303,11 +306,11 @@ export const CRUD = () => {
             console.log(data);
             setDataHeading([
               {
-                label: "Add new category",
+                label: "Tambah category",
                 icon: IconAdd(),
                 information:
                   "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
-                heading: "Categories list",
+                heading: "Daftar Kategori",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -326,11 +329,11 @@ export const CRUD = () => {
             console.log(data);
             setDataHeading([
               {
-                label: "Add new category",
+                label: "Tambah category",
                 icon: IconAdd(),
                 information:
                   "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
-                heading: "Categories list",
+                heading: "Daftar Kategori",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -349,11 +352,11 @@ export const CRUD = () => {
             console.log(data);
             setDataHeading([
               {
-                label: "Add new category",
+                label: "Tambah category",
                 icon: IconAdd(),
                 information:
                   "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
-                heading: "Categories list",
+                heading: "Daftar Kategori",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -426,12 +429,12 @@ export const CRUD = () => {
         {
           label:
             param === "assets"
-              ? "Add assets"
+              ? "Tambah assets"
               : param === "asset-locations"
-              ? "Add locations"
+              ? "Tambah locations"
               : param === "asset-depreciations"
-              ? "Add depereciations"
-              : "Add condition",
+              ? "Tambah depereciations"
+              : "Tambah condition",
           icon: IconAdd(),
           heading:
             param === "assets"
@@ -502,8 +505,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New asset",
-          labelBtnModal: "Add new asset",
+          labelModal: "Tambah asset",
+          labelBtnModal: "Tambah asset",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -513,8 +516,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Add New location",
-          labelBtnModal: "Add new location",
+          labelModal: "Tambah location",
+          labelBtnModal: "Tambah location",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -524,8 +527,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Add New condition",
-          labelBtnModal: "Add new condition",
+          labelModal: "Tambah condition",
+          labelBtnModal: "Tambah condition",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -646,7 +649,7 @@ export const CRUD = () => {
               type: data.type ?? "",
               description: data.description ?? "",
               acquisition_date: data.acquisition_date ?? "",
-              acquisition_cost:  numberToCurrency(data.acquisition_cost),
+              acquisition_cost: numberToCurrency(data.acquisition_cost),
               book_value: numberToCurrency(data.book_value),
               location_id: data.location_id ?? "",
               condition_id: data.condition_id ?? "",

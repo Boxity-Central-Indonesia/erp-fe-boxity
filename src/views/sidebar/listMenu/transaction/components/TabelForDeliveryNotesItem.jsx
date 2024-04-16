@@ -161,7 +161,7 @@ const SelectOrder = ({ value, onChange }) => {
       onChange={onChange}
       className="w-full border-none focus:outline-none focus:ring-black text-sm"
     >
-      <option value="">Select Order</option>
+      <option value="">Pilih Order</option>
       {dataOrder &&
         dataOrder.map((item, index) => (
           <option key={index} value={item.id}>
@@ -205,7 +205,7 @@ const SelectProduct = ({ value, onChange }) => {
       onChange={onChange}
       className="w-full border-none focus:outline-none focus:ring-black text-sm"
     >
-      <option value="">Select Product</option>
+      <option value="">Pilih Product</option>
 
       {dataProduct &&
         dataProduct.map((item, index) => (

@@ -161,7 +161,7 @@ export const CRUD = () => {
           setData(() => newData);
           setDataHeading([
             {
-              label: "Add new leads",
+              label: "Tambah leads",
               icon: IconAdd(),
               heading: "Leads list",
               information:
@@ -245,8 +245,8 @@ export const CRUD = () => {
       setOpenModal((prevOpenModal) => !prevOpenModal);
       setDataModal({
         size: "lg",
-        labelModal: "Add New leads",
-        labelBtnModal: "Add new leads",
+        labelModal: "Tambah leads",
+        labelBtnModal: "Tambah leads",
         labelBtnSecondaryModal: "Back",
         handleBtn: create,
       });

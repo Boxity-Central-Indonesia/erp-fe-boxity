@@ -105,7 +105,7 @@ export const CRUD = () => {
             const newData = data.map((item) => ({
               "kode transaksi": item.kode_order,
               "vendor name": item.nama_vendor,
-              "product name": item.nama_product,
+              "nama produk": item.nama_product,
               amount: item.amount,
               "harga satuan": item.unit_price,
               // taxes: item.taxes ?? 0,
@@ -129,8 +129,8 @@ export const CRUD = () => {
   const CREATE = () => {
     const handleCreate = () => {
       setDataModal({
-        labelModal: "Add New account",
-        labelBtnModal: "Add new account",
+        labelModal: "Tambah account",
+        labelBtnModal: "Tambah account",
         labelBtnSecondaryModal: "Back",
         handleBtn: () => create(),
       });

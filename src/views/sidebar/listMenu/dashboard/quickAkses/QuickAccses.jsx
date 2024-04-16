@@ -19,66 +19,63 @@ export const QuickAcces = () => {
 
   const [data, setData] = useState([
     {
-      label: "Transactions",
+      label: "Transaksi",
       icon: "https://res.cloudinary.com/boxity-id/image/upload/v1711653128/svg/o3dvkjrlrlk43ceiyg9b.svg",
-
       information:
-        "Track order status, manage shipments, and view purchase details.",
+        "Lacak status pesanan, kelola pengiriman, dan lihat detail pembelian.",
       button: [
         {
-          button: "New order",
+          button: "Pesanan baru",
           eventListener: handleOpenDrawer,
         },
         {
-          button: "Manage transactions",
+          button: "Kelola transaksi",
           eventListener: "/transactions",
         },
       ],
     },
     {
-      label: "Products",
+      label: "Produk",
       icon: "https://res.cloudinary.com/boxity-id/image/upload/v1711653127/svg/loczxkm20okxelzl4tfk.svg",
-
-      information:
-        "Manage product catalog, add stock, and organize categories.",
+      information: "Kelola katalog produk, tambah stok, dan atur kategori.",
       button: [
         {
-          button: "View product",
+          button: "Lihat produk",
           eventListener: "/transactions",
         },
         {
-          button: "Product Catalogue",
+          button: "Katalog produk",
           eventListener: "/transactions",
         },
       ],
     },
     {
-      label: "Reports",
+      label: "Laporan",
       icon: "https://res.cloudinary.com/boxity-id/image/upload/v1711653128/svg/pbeivhrxpsjythbsr03v.svg",
       information:
-        "Monitor your business performance with easy-to-understand and accessible reports.",
+        "Pantau kinerja bisnis Anda dengan laporan yang mudah dipahami dan mudah diakses.",
       button: [
         {
-          button: "See sales report",
+          button: "Lihat laporan penjualan",
           eventListener: "/reports/sales",
         },
         {
-          button: "See purchase report",
+          button: "Lihat laporan pembelian",
           eventListener: "/reports/purchases",
         },
       ],
     },
     {
-      label: "Logistics",
+      label: "Logistik",
       icon: "https://res.cloudinary.com/boxity-id/image/upload/v1711653128/svg/v0q2qsjyvxbxrv87jjj9.svg",
-      information: "Manage goods receipt, check stock, and verify invoices.",
+      information: "Kelola penerimaan barang, cek stok, dan verifikasi faktur.",
       button: [
         {
-          button: "Goods Receipt",
+          button: "Penerimaan barang",
           eventListener: "/transactions",
         },
         {
-          button: "Delivery Notes",
+          button: "Catatan pengiriman",
           eventListener: "/transactions",
         },
       ],

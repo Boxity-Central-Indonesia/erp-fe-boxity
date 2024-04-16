@@ -35,13 +35,13 @@ export const TabelOrder = ({ data }) => {
     },
     {
       accessorKey: "vendor",
-      Header: "type",
+      Header: "Tipe Transaksi",
       cell: (cell) =>
         cell.getValue().transaction_type === "outbound" ? "Sales" : "Purchase",
     },
     {
       accessorKey: "created_at",
-      Header: "Date",
+      Header: "Tanggal",
       cell: (cell) =>
         new Date(cell.getValue()).toISOString().slice(0, 19).replace("T", " "),
     },
@@ -179,7 +179,7 @@ export const TabelOrder = ({ data }) => {
   return (
     <section className="bg-white rounded-md border p-5">
       <h1 className="text-xl font-semibold mb-5 capitalize">
-        All transaction list
+        Daftar Transaksi
       </h1>
       {Drawer({
         openDrawer,

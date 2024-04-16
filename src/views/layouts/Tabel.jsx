@@ -456,7 +456,7 @@ const TabelComponent = ({
                       className="flex items-center text-gray-700 text-sm"
                       onClick={() => setOpenModal(dataHeading[0].activeButton)}
                     >
-                      No data found, you should
+                      Tidak ada data ditemukan disini, mungkin kamu bisa
                     </p>
                     <button
                       onClick={() => setOpenModal(dataHeading[0].activeButton)}
@@ -464,7 +464,7 @@ const TabelComponent = ({
                       style={{ color: globalColor }}
                     >
                       {" "}
-                      add new data here.
+                      menambah data disini.
                     </button>
                   </td>
                 </tr>
@@ -489,8 +489,8 @@ const TabelComponent = ({
                       "account balance": "text-right",
                       "book value": "text-right",
                       price: "text-right",
-                      "buying price": "text-right",
-                      "selling price": "text-right",
+                      "harga beli": "text-right",
+                      "harga jual": "text-right",
                       "unit price": "text-right",
                       "balance due": "text-right",
                       taxes: "text-right",
@@ -500,10 +500,10 @@ const TabelComponent = ({
                       kapasitas: "text-right",
                       "tagihan terbayar": "text-right",
                       "total amount": "text-right",
-                      "amount paid": "text-right",
+                      "Tagihan Terbayar": "text-right",
                       "sisa tagihan": "text-right",
                       "total tagihan": "text-right",
-                      "discount price": "text-right",
+                      "harga diskon": "text-right",
                       assets: "text-right",
                       liabilities: "text-right",
                       equity: "text-right",

@@ -52,7 +52,7 @@ export const Ringkasan = ({ data }) => {
           </div>
         ),
 
-      label: "Total Sales",
+      label: "Total Penjualan",
       amount: data.length > 0 ? data[0].amount : "Loading...",
       information: data.length > 0 ? data[0].information : "Loading...",
       secondaryIcon: (
@@ -122,7 +122,7 @@ export const Ringkasan = ({ data }) => {
           </div>
         ),
 
-      label: "Total Purchases",
+      label: "Total Pembelian",
       amount: data.length > 0 ? data[1].amount : "Loading...",
       information: data.length > 0 ? data[1].information : "Loading...",
       secondaryIcon: (
@@ -191,7 +191,7 @@ export const Ringkasan = ({ data }) => {
             </svg>
           </div>
         ),
-      label: "Total Paid",
+      label: "Total Tagihan Terbayar",
       amount: data.length > 0 ? data[2].amount : "Loading...",
       information: data.length > 0 ? data[2].information : "Loading...",
       secondaryIcon: (
@@ -260,7 +260,7 @@ export const Ringkasan = ({ data }) => {
             </svg>
           </div>
         ),
-      label: "Total Profit",
+      label: "Laba Profit",
       amount: data.length > 0 ? data[3].amount : "Loading...",
       information: data.length > 0 ? data[3].information : "Loading...",
       secondaryIcon: (
@@ -287,7 +287,9 @@ export const Ringkasan = ({ data }) => {
 
   return (
     <>
-      <h1 className="text-xl font-medium mb-3 capitalize">Overall summary</h1>
+      <h1 className="text-xl font-medium mb-3 capitalize">
+        Ringkasan Keseluruhan
+      </h1>
       <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
         {dataElement &&
           dataElement.map((item, index) => (

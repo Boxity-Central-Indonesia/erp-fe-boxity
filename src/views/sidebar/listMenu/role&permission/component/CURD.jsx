@@ -158,7 +158,7 @@ export const CRUD = () => {
           setData(() => newData);
           setDataHeading([
             {
-              label: "Add new role",
+              label: "Tambah role",
               icon: IconAdd(),
               heading: "Role & permission",
               information:
@@ -242,8 +242,8 @@ export const CRUD = () => {
       setOpenModal((prevOpenModal) => !prevOpenModal);
       setDataModal({
         size: "lg",
-        labelModal: "Add New leads",
-        labelBtnModal: "Add new leads",
+        labelModal: "Tambah leads",
+        labelBtnModal: "Tambah leads",
         labelBtnSecondaryModal: "Back",
         handleBtn: create,
       });

@@ -67,17 +67,17 @@ export const Dates = () => {
         const hour = new Date().getHours();
         const newTimeGreetings =
           hour < 12
-            ? ["Good morning 🌅,", "Hello 👋,", "Morning vibes ☀️,"]
+            ? ["Selamat pagi 🌅,", "Halo 👋,", "Semangat pagi ☀️,"]
             : hour < 18
-            ? ["Good afternoon 🌞,", "Hello 👋,", "Afternoon vibes 🌻,"]
-            : ["Good evening 🌙,", "Hello 👋,", "Evening vibes 🌠,"];
+            ? ["Selamat siang 🌞,", "Halo 👋,", "Semangat siang 🌻,"]
+            : ["Selamat malam 🌙,", "Halo 👋,", "Semangat malam 🌠,"];
         setTimeGreetings(newTimeGreetings);
 
         // Simpan data salam berdasarkan tujuan fokus
         const newFocusGreetings = [
-          "Let's boost your sales and profits today 💼",
-          "Utilize Quick Access to reach your targets 🚀",
-          "Quick Access is ready to help manage your business effortlessly 💡",
+          "Mari tingkatkan penjualan dan keuntungan Anda hari ini 💼",
+          "Manfaatkan Akses Cepat untuk mencapai target Anda 🚀",
+          "Akses Cepat siap membantu mengelola bisnis Anda dengan mudah 💡",
         ];
         setFocusGreetings(newFocusGreetings);
       } catch (error) {

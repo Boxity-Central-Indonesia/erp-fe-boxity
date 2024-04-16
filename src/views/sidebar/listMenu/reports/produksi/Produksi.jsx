@@ -9,7 +9,7 @@ export const Produksi = () => {
   const dataTabel = (data) => {
     return data.map((item) => ({
       "order code": item.kodeOrder,
-      "product name": item.product_name,
+      "nama produk": item.product_name,
       "Activity type": item.activities[0].activity_type,
       "production status": item.activities[0].status_production,
       "production date": item.activities[0].tanggal_aktifitas,

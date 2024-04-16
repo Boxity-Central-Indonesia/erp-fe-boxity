@@ -14,7 +14,7 @@ export const GoodReceiptDetail = ({
     ? data.goods_receipt_items.map((item) => ({
         id: item.id,
         "product code": item.product.code,
-        "product name": item.product.name,
+        "nama produk": item.product.name,
         "quantity ordered": item.quantity_ordered + " pcs",
         "quantity received": item.quantity_received + " pcs",
         "quantity due": item.quantity_due + " pcs",

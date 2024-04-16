@@ -41,7 +41,7 @@ export const TabelForProducts = ({
       <h3 className="mb-5 mt-1 text-sm font-medium">Tabel for products</h3>
       <Table striped>
         <Table.Head>
-          <Table.HeadCell>Product name</Table.HeadCell>
+          <Table.HeadCell>Nama produk</Table.HeadCell>
           <Table.HeadCell>Jumlah</Table.HeadCell>
           <Table.HeadCell>harga satuan</Table.HeadCell>
           <Table.HeadCell>Unit Satuan</Table.HeadCell>

@@ -402,11 +402,11 @@ export const CRUD = () => {
         name: "selling_price",
         ref: refBody.selling_priceRef,
         value: dataEdit.selling_price,
-        label: "Selling price",
+        label: "harga jual",
         htmlFor: "selling_price",
         id: "selling_price",
         onchange: handleChange,
-        placeholder: "Selling price",
+        placeholder: "harga jual",
       },
       {
         element: "input",
@@ -414,11 +414,11 @@ export const CRUD = () => {
         name: "buying_price",
         ref: refBody.buying_priceRef,
         value: dataEdit.buying_price,
-        label: "Buying price",
+        label: "harga beli",
         htmlFor: "buying_price",
         id: "buying_price",
         onchange: handleChange,
-        placeholder: "Buying price",
+        placeholder: "harga beli",
       },
       {
         element: "input",
@@ -426,11 +426,11 @@ export const CRUD = () => {
         name: "discount_price",
         ref: refBody.discount_priceRef,
         value: dataEdit.discount_price,
-        label: "Discount price",
+        label: "harga diskon",
         htmlFor: "discount_price",
         id: "discount_price",
         onchange: handleChange,
-        placeholder: "Discount price",
+        placeholder: "harga diskon",
       },
     ]);
   }, [dataEdit]);
@@ -467,17 +467,17 @@ export const CRUD = () => {
   const dataProductPrices = (data) => {
     return data.map((item) => ({
       id: item.id,
-      "product name": item.product.name,
-      "discount price": item.discount_price,
-      "buying price": item.buying_price,
-      "selling price": item.selling_price,
+      "nama produk": item.product.name,
+      "harga diskon": item.discount_price,
+      "harga beli": item.buying_price,
+      "harga jual": item.selling_price,
     }));
   };
 
   const dataProductMovements = (data) => {
     return data.map((item) => ({
       id: item.id,
-      "product name": item.product.name,
+      "nama produk": item.product.name,
       warhouses: item.warehouse.name,
       "movement type": item.movement_type,
       quantity: item.quantity + " Pcs",
@@ -496,7 +496,7 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new product",
+                label: "Tambah product",
                 icon: IconAdd(),
                 heading: "Product list",
                 information:
@@ -505,10 +505,10 @@ export const CRUD = () => {
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "product-categories", label: "Categories" },
-                  { path: "products", label: "Products" },
-                  { path: "product-prices", label: "Products prices" },
-                  { path: "product-movements", label: "Track Movements" },
+                  { path: "product-categories", label: "Kategori Produk" },
+                  { path: "products", label: "Produk" },
+                  { path: "product-prices", label: "Harga Perubahan Produk" },
+                  { path: "product-movements", label: "Pantau Pergerakan" },
                 ],
                 activeButton: "products",
               },
@@ -518,7 +518,7 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new category",
+                label: "Tambah category",
                 icon: IconAdd(),
                 heading: "Categoires list",
                 information:
@@ -527,10 +527,10 @@ export const CRUD = () => {
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "product-categories", label: "Categories" },
-                  { path: "products", label: "Products" },
-                  { path: "product-prices", label: "Products prices" },
-                  { path: "product-movements", label: "Track Movements" },
+                  { path: "product-categories", label: "Kategori Produk" },
+                  { path: "products", label: "Produk" },
+                  { path: "product-prices", label: "Harga Perubahan Produk" },
+                  { path: "product-movements", label: "Pantau Pergerakan" },
                 ],
                 activeButton: path,
               },
@@ -540,7 +540,7 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new price",
+                label: "Tambah price",
                 icon: IconAdd(),
                 heading: "Prices list",
                 information:
@@ -549,10 +549,10 @@ export const CRUD = () => {
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "product-categories", label: "Categories" },
-                  { path: "products", label: "Products" },
-                  { path: "product-prices", label: "Products prices" },
-                  { path: "product-movements", label: "Track Movements" },
+                  { path: "product-categories", label: "Kategori Produk" },
+                  { path: "products", label: "Produk" },
+                  { path: "product-prices", label: "Harga Perubahan Produk" },
+                  { path: "product-movements", label: "Pantau Pergerakan" },
                 ],
                 activeButton: path,
               },
@@ -562,7 +562,7 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new movement",
+                label: "Tambah movement",
                 icon: IconAdd(),
                 heading: "Movements list",
                 information:
@@ -571,10 +571,10 @@ export const CRUD = () => {
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "product-categories", label: "Categories" },
-                  { path: "products", label: "Products" },
-                  { path: "product-prices", label: "Products prices" },
-                  { path: "product-movements", label: "Track Movements" },
+                  { path: "product-categories", label: "Kategori Produk" },
+                  { path: "products", label: "Produk" },
+                  { path: "product-prices", label: "Harga Perubahan Produk" },
+                  { path: "product-movements", label: "Pantau Pergerakan" },
                 ],
                 activeButton: path,
               },
@@ -632,13 +632,13 @@ export const CRUD = () => {
         {
           label:
             param === "products"
-              ? "Add products"
+              ? "Tambah products"
               : param === "product-categories"
-              ? "Add categories"
+              ? "Tambah categories"
               : param === "product-prices"
-              ? "Add product prices"
+              ? "Tambah product prices"
               : param === "product-movements"
-              ? "Add product movement"
+              ? "Tambah product movement"
               : "",
           icon: IconAdd(),
           heading:
@@ -656,10 +656,10 @@ export const CRUD = () => {
           parameter: param,
           showNavHeading: true,
           dataNavHeading: [
-            { path: "product-categories", label: "Categories" },
-            { path: "products", label: "Products" },
+            { path: "product-categories", label: "Kategori Produk" },
+            { path: "products", label: "Produk" },
             { path: "product-prices", label: "Product Prices" },
-            { path: "product-movements", label: "Track Movements" },
+            { path: "product-movements", label: "Pantau Pergerakan" },
           ],
           activeButton: param,
         },
@@ -733,8 +733,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add New product",
-          labelBtnModal: "Add new product",
+          labelModal: "Tambah product",
+          labelBtnModal: "Tambah product",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -751,8 +751,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "md",
-          labelModal: "Add New category",
-          labelBtnModal: "Add new category",
+          labelModal: "Tambah category",
+          labelBtnModal: "Tambah category",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -774,8 +774,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New movements",
-          labelBtnModal: "Add new movements",
+          labelModal: "Tambah movements",
+          labelBtnModal: "Tambah movements",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -795,8 +795,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Add New prices",
-          labelBtnModal: "Add new prices",
+          labelModal: "Tambah prices",
+          labelBtnModal: "Tambah prices",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -836,8 +836,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add New products",
-          labelBtnModal: "Add new products",
+          labelModal: "Tambah products",
+          labelBtnModal: "Tambah products",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

@@ -433,7 +433,7 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: "Add New Employees",
+                label: "Tambah Employees",
                 icon: IconAdd(),
                 heading: "Employes list",
                 information:
@@ -453,9 +453,9 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: "Add new category",
+                label: "Tambah category",
                 icon: IconAdd(),
-                heading: "Categories list",
+                heading: "Daftar Kategori",
                 information:
                   "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
                 eventToggleModal: handleCreate,
@@ -480,7 +480,7 @@ export const CRUD = () => {
       setPath(param);
       setDataHeading([
         {
-          label: param === "employees" ? "Add employees" : "Add category",
+          label: param === "employees" ? "Tambah employees" : "Tambah category",
           icon: IconAdd(),
           heading:
             param === "employees" ? "Employees" : "Category employes" + " list",
@@ -571,8 +571,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add New Employees",
-          labelBtnModal: "Add New Employees",
+          labelModal: "Tambah Employees",
+          labelBtnModal: "Tambah Employees",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -589,8 +589,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "md",
-          labelModal: "Add New category",
-          labelBtnModal: "Add new category",
+          labelModal: "Tambah category",
+          labelBtnModal: "Tambah category",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -640,8 +640,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add New Employees",
-          labelBtnModal: "Add New Employees",
+          labelModal: "Tambah Employees",
+          labelBtnModal: "Tambah Employees",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

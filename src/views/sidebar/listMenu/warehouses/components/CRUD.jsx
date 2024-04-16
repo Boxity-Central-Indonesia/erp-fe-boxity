@@ -261,7 +261,7 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new warehouses",
+                label: "Tambah warehouses",
                 icon: IconAdd(),
                 heading: "Warehouses list",
                 information:
@@ -270,8 +270,8 @@ export const CRUD = () => {
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "warehouses", label: "List" },
-                  { path: "warehouse-locations", label: "Locations" },
+                  { path: "warehouses", label: "Daftar Gudang" },
+                  { path: "warehouse-locations", label: "Lokasi" },
                 ],
                 activeButton: path,
               },
@@ -281,7 +281,7 @@ export const CRUD = () => {
             setData(newData);
             setDataHeading([
               {
-                label: "Add new warehouses",
+                label: "Tambah warehouses",
                 icon: IconAdd(),
                 heading: "Warehouses list",
                 information:
@@ -290,8 +290,8 @@ export const CRUD = () => {
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "warehouses", label: "List" },
-                  { path: "warehouse-locations", label: "Locations" },
+                  { path: "warehouses", label: "Daftar Gudang" },
+                  { path: "warehouse-locations", label: "Lokasi" },
                 ],
                 activeButton: path,
               },
@@ -324,8 +324,8 @@ export const CRUD = () => {
         {
           label:
             param === "warehouses"
-              ? "Add warehouses"
-              : "Add warehouse locations",
+              ? "Tambah warehouses"
+              : "Tambah warehouse locations",
           icon: IconAdd(),
           heading:
             param === "warehouses"
@@ -338,8 +338,8 @@ export const CRUD = () => {
           parameter: param,
           showNavHeading: true,
           dataNavHeading: [
-            { path: "warehouses", label: "List" },
-            { path: "warehouse-locations", label: "Locations" },
+            { path: "warehouses", label: "Daftar Gudang" },
+            { path: "warehouse-locations", label: "Lokasi" },
           ],
           activeButton: param,
         },
@@ -388,8 +388,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "md",
-          labelModal: "Add New warehouees",
-          labelBtnModal: "Add new warehouees",
+          labelModal: "Tambah Gudang",
+          labelBtnModal: "Tambah Gudang",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -413,8 +413,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "md",
-          labelModal: "Add New locations",
-          labelBtnModal: "Add new locations",
+          labelModal: "Tambah locations",
+          labelBtnModal: "Tambah locations",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -436,8 +436,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "md",
-          labelModal: "Add New warehouees",
-          labelBtnModal: "Add new warehouees",
+          labelModal: "Tambah Gudang",
+          labelBtnModal: "Tambah Gudang",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

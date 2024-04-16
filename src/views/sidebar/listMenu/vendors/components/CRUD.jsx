@@ -261,7 +261,7 @@ export const CRUD = () => {
         element: "select",
         ref: refBody.product_idRef,
         name: "product_id",
-        label: "Products",
+        label: "Produk",
         htmlFor: "product-id",
         id: "product-id",
         dataSelect: dataProductsSelect,
@@ -364,7 +364,7 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: "Add new vendors",
+                label: "Tambah vendors",
                 icon: IconAdd(),
                 heading: "Vendors list",
                 information:
@@ -374,7 +374,7 @@ export const CRUD = () => {
                 showNavHeading: true,
                 dataNavHeading: [
                   { path: "vendors", label: "Vendors" },
-                  { path: "vendor-transactions", label: "Vendor Transactions" },
+                  { path: "vendor-transactions", label: "Vendor Transaksi" },
                 ],
                 activeButton: path,
               },
@@ -385,7 +385,7 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: "Add new vendors",
+                label: "Tambah vendors",
                 icon: IconAdd(),
                 heading: "Vendors list",
                 information:
@@ -396,7 +396,7 @@ export const CRUD = () => {
                 dataNavHeading: [
                   { path: "vendors", label: "Vendors" },
                   { path: "vendor-contacts", label: "Contacts" },
-                  { path: "vendor-transactions", label: "Vendor Transactions" },
+                  { path: "vendor-transactions", label: "Vendor Transaksi" },
                 ],
                 activeButton: path,
               },
@@ -407,7 +407,7 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: "Add new vendors",
+                label: "Tambah vendors",
                 icon: IconAdd(),
                 heading: "Vendors list",
                 information:
@@ -417,7 +417,7 @@ export const CRUD = () => {
                 showNavHeading: true,
                 dataNavHeading: [
                   { path: "vendors", label: "Vendors" },
-                  { path: "vendor-transactions", label: "Vendor Transactions" },
+                  { path: "vendor-transactions", label: "Vendor Transaksi" },
                 ],
                 activeButton: path,
               },
@@ -462,10 +462,10 @@ export const CRUD = () => {
         {
           label:
             param === "vendors"
-              ? "Add vendors"
+              ? "Tambah vendors"
               : param === "vendor-transactions"
-              ? "Add transactions"
-              : "Add contacts",
+              ? "Tambah Transaksi"
+              : "Tambah contacts",
           icon: IconAdd(),
           heading:
             param === "vendors"
@@ -481,7 +481,7 @@ export const CRUD = () => {
           showNavHeading: true,
           dataNavHeading: [
             { path: "vendors", label: "Vendors" },
-            { path: "vendor-transactions", label: "Vendor Transactions" },
+            { path: "vendor-transactions", label: "Vendor Transaksi" },
           ],
           activeButton: param,
         },
@@ -801,8 +801,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New vendor",
-          labelBtnModal: "Add new vendor",
+          labelModal: "Tambah vendor",
+          labelBtnModal: "Tambah vendor",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -828,8 +828,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New transactions",
-          labelBtnModal: "Add new transactions",
+          labelModal: "Tambah Transaksi",
+          labelBtnModal: "Tambah Transaksi",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -850,8 +850,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Add New contact",
-          labelBtnModal: "Add new contact",
+          labelModal: "Tambah contact",
+          labelBtnModal: "Tambah contact",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -873,8 +873,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New vendor",
-          labelBtnModal: "Add new vendor",
+          labelModal: "Tambah vendor",
+          labelBtnModal: "Tambah vendor",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

@@ -77,14 +77,14 @@ export function LineChart() {
           },
           series: [
             {
-              name: "Sales",
+              name: "Penjualan",
               data: allDates.map((date) => {
                 const sales = sales_data.find((data) => data.date === date);
                 return sales ? parseFloat(sales.total_sales) : 0;
               }),
             },
             {
-              name: "Purchase",
+              name: "Pembelian",
               data: allDates.map((date) => {
                 const purchase = purchase_data.find(
                   (data) => data.date === date

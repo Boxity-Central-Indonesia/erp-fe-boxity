@@ -68,16 +68,16 @@ function Sidebar() {
         </svg>
       ),
       subMenu: [
-        { path: "/user", label: "Users" },
-        { path: "/company", label: "Companies" },
-        { path: "/employees", label: "Employees" },
+        { path: "/user", label: "Data Pengguna" },
+        { path: "/company", label: "Data Perusahaan" },
+        { path: "/employees", label: "Data Karyawan" },
         { path: "/leads/list", label: "Leads Prospect" },
-        { label: "Role & Permission", path: "/role-permission" },
+        { label: "Aturan Pengguna", path: "/role-permission" },
         // { label: "Test", path: "/user/test" },
       ],
     },
     {
-      label: "Warehouse Management",
+      label: "Manajemen Pergudangan",
       icon: (
         <svg
           className="w-[15px] h-[15px] text-gray-800 dark:text-white"
@@ -96,13 +96,13 @@ function Sidebar() {
         </svg>
       ),
       subMenu: [
-        { path: "warehouses/list", label: "Warehouse" },
-        { path: "products/list", label: "Product" },
-        { path: "vendors", label: "Vendor" },
+        { path: "warehouses/list", label: "Data Pergudangan" },
+        { path: "products/list", label: "Data Produk" },
+        { path: "vendors", label: "Data Customer & Supplier" },
       ],
     },
     {
-      label: "Transactions",
+      label: "Transaksi",
       icon: (
         <svg
           className="w-[15px] h-[15px] text-gray-800 dark:text-white"
@@ -123,7 +123,7 @@ function Sidebar() {
       path: "/transactions",
     },
     {
-      label: "Manufacturer",
+      label: "Pabrik",
       icon: (
         <svg
           className="w-[15px] h-[15px] text-gray-800 dark:text-white"
@@ -144,12 +144,12 @@ function Sidebar() {
       subMenu: [
         {
           path: "/products-production/proses-activity",
-          label: "Process Activity",
+          label: "Proses Aktifitas Pabrik",
         },
-        {
-          path: "/products-production/packages-data",
-          label: "Packaging Data",
-        },
+        // {
+        //   path: "/products-production/packages-data",
+        //   label: "Packaging Data",
+        // },
       ],
     },
     {
@@ -173,7 +173,7 @@ function Sidebar() {
       ),
       subMenu: [
         { path: "accounts", label: "Akun" },
-        { path: "asset", label: "Aset Management" },
+        { path: "asset", label: "Manajemen Aset" },
         { path: "/reports/balance-sheet", label: "Laporan Neraca" },
         { path: "/reports/debt", label: "Laporan Hutang" },
         { path: "/reports/accounts-receivable", label: "Laporan Piutang" },
@@ -183,7 +183,7 @@ function Sidebar() {
       ],
     },
     {
-      label: "Reports",
+      label: "Laporan",
       icon: (
         <svg
           className="w-[15px] h-[15px] text-gray-800 dark:text-white"

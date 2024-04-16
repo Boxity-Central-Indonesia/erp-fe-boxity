@@ -389,7 +389,7 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: defaultEdit === true ? "Add company" : "Add",
+                label: defaultEdit === true ? "Tambah company" : "Add",
                 icon: IconAdd(),
                 heading: "Company list",
                 information:
@@ -686,8 +686,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Add New branch",
-          labelBtnModal: "Add new branch",
+          labelModal: "Tambah branch",
+          labelBtnModal: "Tambah branch",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -708,8 +708,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Add New departments",
-          labelBtnModal: "Add new departments",
+          labelModal: "Tambah departments",
+          labelBtnModal: "Tambah departments",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -746,8 +746,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Add New companies",
-          labelBtnModal: "Add new companies",
+          labelModal: "Tambah companies",
+          labelBtnModal: "Tambah companies",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

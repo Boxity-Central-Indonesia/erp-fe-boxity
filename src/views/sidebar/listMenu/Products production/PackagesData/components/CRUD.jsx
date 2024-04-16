@@ -27,7 +27,7 @@ export const CRUD = () => {
   const [dataPackagesSelect, setDataPackagesSelect] = useState();
   const [dataHeading, setDataHeading] = useState([
     {
-      label: "Add new Packagest",
+      label: "Tambah Packagest",
       icon: IconAdd(),
       heading: "Packages list",
       showNavHeading: true,
@@ -185,7 +185,7 @@ export const CRUD = () => {
               setData(() => newData);
               setDataHeading([
                 {
-                  label: "Add new Packagest",
+                  label: "Tambah Packagest",
                   icon: IconAdd(),
                   heading: "Packages list",
                   information:
@@ -206,7 +206,7 @@ export const CRUD = () => {
               setData(() => newData);
               setDataHeading([
                 {
-                  label: "Add new packaging",
+                  label: "Tambah packaging",
                   icon: IconAdd(),
                   heading: "Packaging list",
                   information:
@@ -227,7 +227,7 @@ export const CRUD = () => {
               setData(() => newData);
               setDataHeading([
                 {
-                  label: "Add new packages product",
+                  label: "Tambah packages product",
                   icon: IconAdd(),
                   heading: "Packages product list",
                   information:
@@ -292,7 +292,7 @@ export const CRUD = () => {
     const dataPackaging = (data) => {
       return data.map((item) => ({
         id: item.id,
-        'product name': item.product.name,
+        "nama produk": item.product.name,
         weight: item.weight,
         "package type": item.package_type,
       }));
@@ -312,10 +312,10 @@ export const CRUD = () => {
         {
           label:
             param === "packages"
-              ? "Add package"
+              ? "Tambah package"
               : param === "packaging"
-              ? "Add packaging"
-              : "Add package product",
+              ? "Tambah packaging"
+              : "Tambah package product",
           icon: IconAdd(),
           heading:
             param === "packages"
@@ -389,8 +389,8 @@ export const CRUD = () => {
       if (param === "packages") {
         setDataModal({
           size: "lg",
-          labelModal: "Add New packages",
-          labelBtnModal: "Add new packages",
+          labelModal: "Tambah packages",
+          labelBtnModal: "Tambah packages",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -398,8 +398,8 @@ export const CRUD = () => {
       } else if (param === "packaging") {
         setDataModal({
           size: "lg",
-          labelModal: "Add New packaging",
-          labelBtnModal: "Add new packaging",
+          labelModal: "Tambah packaging",
+          labelBtnModal: "Tambah packaging",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -407,8 +407,8 @@ export const CRUD = () => {
       } else if (param === "packages-product") {
         setDataModal({
           size: "lg",
-          labelModal: "Add New package product",
-          labelBtnModal: "Add new package product",
+          labelModal: "Tambah package product",
+          labelBtnModal: "Tambah package product",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

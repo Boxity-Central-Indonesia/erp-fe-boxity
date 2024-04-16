@@ -262,14 +262,14 @@ export const CRUD = () => {
             name: item.name,
             username: item.username,
             email: item.email,
-            "number phone": item.no_handphone ?? "+62 xxx xxxx xxxx",
+            "No. HP": item.no_handphone ?? "+62 xxx xxxx xxxx",
           }));
           setData(() => newData);
           setDataHeading([
             {
               information:
-                "A user list is a way to organize and manage groups of users on a website or platform. It helps you target specific messages, personalize experiences, streamline management tasks, and gain better insights into how different segments of your users behave. In the user list section, you can typically create new lists, view existing ones, add or remove users, and edit list details.",
-              label: "Add new User",
+                "Daftar pengguna adalah cara untuk mengatur dan mengelola kelompok pengguna pada sebuah situs web atau platform. Ini membantu Anda menyasar pesan-pesan tertentu, personalisasi pengalaman, menyederhanakan tugas-tugas manajemen, dan memperoleh wawasan yang lebih baik tentang bagaimana perilaku segmen pengguna yang berbeda. Di bagian daftar pengguna, Anda biasanya dapat membuat daftar baru, melihat yang sudah ada, menambahkan atau menghapus pengguna, dan mengedit detail daftar.",
+              label: "Tambah User",
               icon: IconAdd(),
               heading: "User list",
               eventToggleModal: handleCreate,
@@ -295,8 +295,8 @@ export const CRUD = () => {
       setOpenModal((prevOpenModal) => !prevOpenModal);
       setDataModal({
         size: "2xl",
-        labelModal: "Add New users",
-        labelBtnModal: "Add new users",
+        labelModal: "Tambah users",
+        labelBtnModal: "Tambah users",
         labelBtnSecondaryModal: "Back",
         handleBtn: create,
       });
