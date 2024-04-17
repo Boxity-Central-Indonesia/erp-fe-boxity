@@ -1132,7 +1132,7 @@ export const CRUD = () => {
         dataBody = {
           name: refBody.nameRef.current.value,
           description: refBody.descriptionRef.current.value,
-          price: refBody.priceRef.current.value,
+          price: currencyToNumber(refBody.priceRef.current.value),
           type: refBody.typeRef.current.value,
           animal_type: refBody.animal_typeRef.current.value,
           age: refBody.ageRef.current.value,

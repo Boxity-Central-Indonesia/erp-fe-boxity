@@ -60,7 +60,8 @@ export const CRUD = () => {
   const [dataDetailInvoices, setDetailInvoices] = useState([]);
   const [dataFilterProduct, setDataFilterProduct] = useState([])
   const [disabledInput, setDisabledInput] = useState(false)
-  const [dataHeadingForDetail, setDataHeadingForDetail] = useState([{}])
+  const [dataHeadingForProduct, setDataHeadingForProduct] = useState([{}])
+  const [dataHeadingForInvoices, setDataHeadingForInvoices] = useState([{}])
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -754,7 +755,7 @@ export const CRUD = () => {
                 activeButton: "orders",
               },
             ]);
-            setDataHeadingForDetail([
+            setDataHeadingForProduct([
               {
                 label: "Tambah produk",
                 icon: IconAdd(),
@@ -762,14 +763,18 @@ export const CRUD = () => {
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
-                dataNavHeading: [
-                  { path: "orders", label: "Pesanan" },
-                  { path: "invoices", label: "Faktur Tagihan" },
-                  { path: "payments", label: "Pembayaran" },
-                  { path: "goods-receipt", label: "Penerimaan Barang" },
-                  { path: "delivery-notes", label: "Pengiriman Barang" },
-                ],
                 activeButton: "orders",
+              },
+            ])
+            setDataHeadingForInvoices([
+              {
+                label: "Tambah pembayaran",
+                icon: IconAdd(),
+                heading: "Manajemen Pesanan",
+                eventToggleModal: handleCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                activeButton: "invoices",
               },
             ])
           } else if (path === "invoices") {
@@ -793,24 +798,6 @@ export const CRUD = () => {
                 activeButton: "invoices",
               },
             ]);
-            setDataHeadingForDetail([
-              {
-                label: "Tambah pembayaran",
-                icon: IconAdd(),
-                heading: "Manajemen Pesanan",
-                eventToggleModal: handleCreate,
-                onclick: handleClickHeading,
-                showNavHeading: true,
-                dataNavHeading: [
-                  { path: "orders", label: "Pesanan" },
-                  { path: "invoices", label: "Faktur Tagihan" },
-                  { path: "payments", label: "Pembayaran" },
-                  { path: "goods-receipt", label: "Penerimaan Barang" },
-                  { path: "delivery-notes", label: "Pengiriman Barang" },
-                ],
-                activeButton: "orders",
-              },
-            ])
           } else if (path === "payments") {
             const newData = dataPayments(data);
             setData(newData);
@@ -2589,6 +2576,7 @@ export const CRUD = () => {
     dataDetailDeliveryNotes,
     setDataDetailDeliveryNotes,
     dataDetailInvoices,
-    dataHeadingForDetail
+    dataHeadingForProduct,
+    dataHeadingForInvoices
   };
 };

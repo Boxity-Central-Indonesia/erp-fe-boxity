@@ -281,7 +281,8 @@ export const OrderDetail = ({
               data={[]}
               dataHeading={dataHeading}
               handleEdit={handleEdit}
-              routes={"products"}
+              hidden={true}
+              // routes={"products"}
             />
           </div>
         </div>
