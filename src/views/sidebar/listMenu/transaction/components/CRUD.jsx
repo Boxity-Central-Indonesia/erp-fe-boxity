@@ -677,7 +677,6 @@ export const CRUD = () => {
       // 'product name': item.products.name,
       "tujuan/asal gudang": item.warehouse?.name || "--",
       // status: item.status,
-      "order status": item.order_status,
       "order type": item.order_type,
       // taxes: item.taxes ?? "--",
       // quantity: item.quantity,
@@ -2164,7 +2163,7 @@ export const CRUD = () => {
     if (param === "orders") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2">
             {inputOrder.map((item, index) => (
               <FormInput
                 key={item.id}
@@ -2249,7 +2248,7 @@ export const CRUD = () => {
     } else if (param === "invoices") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2">
             {inputInvoices.map((item, index) => (
               <FormInput
                 key={item.id}
@@ -2274,7 +2273,7 @@ export const CRUD = () => {
     } else if (param === "payments") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2">
             {inputPayments.map((item, index) => (
               <FormInput
                 key={item.id}
@@ -2299,7 +2298,7 @@ export const CRUD = () => {
     } else if (param === "goods-receipt") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2">
             {inputGoodReceipt.map((item, index) => (
               <FormInput
                 key={item.id}
@@ -2337,7 +2336,7 @@ export const CRUD = () => {
     } else if (param === "products") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2">
             <input
               type="hidden"
               name="order_id"
@@ -2414,7 +2413,7 @@ export const CRUD = () => {
     } else if (param === "goods-receipt-items") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1">
+          <div className="grid grid-cols-1 gap-4 mb-4">
             {inputEditGoodReceiptItem &&
               inputEditGoodReceiptItem.map((item, index) => (
                 <div className={`col-span-1`}>
@@ -2442,7 +2441,7 @@ export const CRUD = () => {
     } else if (param === "delivery-notes") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2">
             <input
               type="hidden"
               ref={refBody.deliveryNoteItemsRef}
@@ -2496,7 +2495,7 @@ export const CRUD = () => {
     } else if (param === "delivery-notes-item") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1">
+          <div className="grid grid-cols-1 gap-4 mb-4">
             <input
               type="hidden"
               ref={refBody.deliveryNoteItemsRef}
@@ -2529,7 +2528,7 @@ export const CRUD = () => {
     } else if (param === "invoices-payments") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2">
             <input
               type="hidden"
               name="invoice_id"

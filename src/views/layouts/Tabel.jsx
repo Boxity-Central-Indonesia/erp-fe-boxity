@@ -98,6 +98,9 @@ const TabelComponent = ({
             paid: "bg-green-600 text-center",
             partial: "bg-yellow-600 text-center",
             unpaid: "bg-primary-600 text-center",
+            lunas: "bg-green-600 text-center",
+            cicilan: "bg-yellow-600 text-center",
+            "belum lunas": "bg-primary-600 text-center",
           };
           // Definisi objek pemetaan untuk status transaksi penerimaan barang
           const goodReceiptMap = {
@@ -372,18 +375,18 @@ const TabelComponent = ({
   }
 
   return (
-    <section className="bg-gray-100 dark:bg-gray-900 mb-32">
-      <h3 className="text-2xl font-semibold mb-3 dark:text-white">
+    <section className="mb-32 bg-gray-100 dark:bg-gray-900">
+      <h3 className="mb-3 text-2xl font-semibold dark:text-white">
         {dataHeading && dataHeading[0].heading}
       </h3>
       <p
-        className="text-gray-600 dark:text-gray-300 mb-6"
+        className="mb-6 text-gray-600 dark:text-gray-300"
         style={{ paddingRight: "10rem" }}
       >
         {dataHeading && dataHeading[0].information}
       </p>
       <div className="mx-auto">
-        <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+        <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
           <div className={`${showHeading === false ? `hidden` : ``}`}>
             <TabelHeading
               toggleOpenModal={dataHeading && dataHeading[0].eventToggleModal}
@@ -397,14 +400,14 @@ const TabelComponent = ({
               dataNavHeading={dataHeading && dataHeading[0].dataNavHeading}
             />
           </div>
-          <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className={`w-full ${skeleton ? `` : `hidden`}`}>
               <tbody>
                 <tr className="w-full border-t-[1px]">
                   <td className="flex gap-1">
                     <div
                       role="status"
-                      className="max-w-full w-full p-4 space-y-4 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
+                      className="w-full max-w-full p-4 space-y-4 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
                     >
                       <div className="flex items-center justify-between">
                         <div>
@@ -453,7 +456,7 @@ const TabelComponent = ({
                 <tr className="w-full flex justify-center border-t-[1px]">
                   <td className="flex gap-1 py-8">
                     <p
-                      className="flex items-center text-gray-700 text-sm"
+                      className="flex items-center text-sm text-gray-700"
                       onClick={() => setOpenModal(dataHeading[0].activeButton)}
                     >
                       Tidak ada data ditemukan disini, mungkin kamu bisa
@@ -564,7 +567,7 @@ const TabelComponent = ({
                         return (
                           <Table.Cell
                             key={cell.id}
-                            className="whitespace-nowrap font-small text-sm text-gray-900"
+                            className="text-sm text-gray-900 whitespace-nowrap font-small"
                           >
                             {flexRender(
                               cell.column.columnDef.cell,
@@ -662,7 +665,7 @@ function Filter({ column, table }) {
               ? `(${column.getFacetedMinMaxValues()?.[0]})`
               : ""
           }`}
-          className="w-24 border shadow rounded"
+          className="w-24 border rounded shadow"
         />
         <DebouncedInput
           type="number"
@@ -677,7 +680,7 @@ function Filter({ column, table }) {
               ? `(${column.getFacetedMinMaxValues()?.[1]})`
               : ""
           }`}
-          className="w-24 border shadow rounded"
+          className="w-24 border rounded shadow"
         />
       </div>
       <div className="h-1" />
@@ -694,7 +697,7 @@ function Filter({ column, table }) {
         value={columnFilterValue ?? ""}
         onChange={(value) => column.setFilterValue(value)}
         placeholder={`Search... (${column.getFacetedUniqueValues().size})`}
-        className="w-36 border shadow rounded"
+        className="border rounded shadow w-36"
         list={column.id + "list"}
       />
       <div className="h-1" />
