@@ -7,7 +7,7 @@ export const TabelForProducts = ({
   refBody,
   onChange,
   setDataTabelProducts,
-  handleSaveClick,
+  // handleSaveClick,
   saveDataToLocalStorage,
 }) => {
   const { globalColor } = useColor();
@@ -31,10 +31,10 @@ export const TabelForProducts = ({
     saveDataToLocalStorage(newData);
   };
 
-  const Save = () => {
-    handleSaveClick();
-    setEditingItemId(null);
-  };
+  // const Save = () => {
+  //   handleSaveClick();
+  //   setEditingItemId(null);
+  // };
 
   return (
     <div className="overflow-x-auto">
@@ -71,19 +71,15 @@ export const TabelForProducts = ({
                     value={item.price_per_unit}
                     onChange={(e) =>
                       handleInputChange(index, "price_per_unit", e.target.value)
-                    }
+                    } 
                   />
                 </Table.Cell>
                 <Table.Cell>
-                  <unit_of_measureInput
+                  <UnitOfMeasureInput
                     value={item.unit_of_measure}
                     onChange={(e) =>
-                      handleInputChange(
-                        index,
-                        "unit_of_measure",
-                        e.target.value
-                      )
-                    }
+                      handleInputChange(index, "unit_of_measure", e.target.value)
+                    } 
                   />
                 </Table.Cell>
                 <Table.Cell>
@@ -141,27 +137,11 @@ const PriceInput = ({ value, onChange }) => {
     />
   );
 };
-const unit_of_measureInput = ({ value, onChange }) => {
+const UnitOfMeasureInput = ({ value, onChange }) => {
   return (
-    <input
-      type="text"
-      value={value}
-      name="unit_of_measure" // Corrected the name attribute
-      onChange={onChange}
-      className="border-none w-20 h-7 px-0"
-    />
+    <select onChange={onChange} className="border-none" name="unit_of_measure">
+      <option value="kg" selected={value === "kg"}>Kg</option>
+      <option value="pcs" selected={value === "pcs"}>pcs</option>
+    </select>
   );
 };
-
-// const IdInput = React.forwardRef(({ value, onChange }, ref) => {
-//     return (
-//         <input
-//             type="text"
-//             value={value}
-//             name='id'
-//             onChange={onChange}
-//             ref={ref}
-//             className='border-none w-20 h-7 px-0'
-//         />
-//     );
-// });

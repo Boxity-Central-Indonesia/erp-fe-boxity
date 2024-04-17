@@ -19,6 +19,9 @@ export const NewOrder = ({ setOpenDrawer }) => {
   const [dataSelectProducts, setDataSelectProducts] = useState();
   const [responseError, setResponseError] = useState();
   const [validationError, setValidationError] = useState();
+  const [dataFilterProduct, setDataFilterProduct] = useState([])
+  const [disabledInput, setDisabledInput] = useState(false)
+
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -26,6 +29,7 @@ export const NewOrder = ({ setOpenDrawer }) => {
     order_typeRef: useRef(),
     detailsRef: useRef(),
     product_idRef: useRef(),
+    no_refRef: useRef()
   });
 
   const { globalColor, changeColor } = useColor();
@@ -38,6 +42,7 @@ export const NewOrder = ({ setOpenDrawer }) => {
           const newData = data.map((item) => ({
             id: item.id,
             name: item.name,
+            raw_material: item?.raw_material || null
           }));
           state(newData);
         }
@@ -74,6 +79,19 @@ export const NewOrder = ({ setOpenDrawer }) => {
         id: "warehouse_id",
         dataSelect: dataSelectWarehouses,
         onchange: handleChange,
+        disabled: disabledInput
+      },
+      {
+        element: "input",
+        type: "text",
+        name: "no_ref",
+        ref: refBody.no_refRef,
+        value: dataEdit.no_ref,
+        label: "No referensi",
+        htmlFor: "no_ref",
+        id: "no_ref",
+        onchange: handleChange,
+        placeholder: "No referensi",
       },
       // {
       //   element: "radio",
@@ -100,7 +118,7 @@ export const NewOrder = ({ setOpenDrawer }) => {
         label: "Produk",
         htmlFor: "product_id",
         id: "product_id",
-        dataSelect: dataSelectProducts,
+        dataSelect: dataFilterProduct,
         onchange: handleChangeAndPushProducts,
       },
       // {
@@ -117,8 +135,27 @@ export const NewOrder = ({ setOpenDrawer }) => {
     ]);
   }, [dataEdit, dataSelectVendor]);
 
-  const handleChange = (event) => {
+  const handleChange = async (event) => {
     const { name, value } = event.target;
+
+    if(name === 'vendor_id') {
+      try {
+        const {data, status} = await getApiData('vendors/' + value)
+        if(status === 200) {
+          if(data.transaction_type === 'inbound' || data.transaction_type === 'supplier') {
+            const filterDataSelectProduct = dataSelectProducts.filter(item => item.raw_material === 1)
+            setDataFilterProduct(filterDataSelectProduct)
+            setDisabledInput(true)
+          }else{
+            const filterDataSelectProduct = dataSelectProducts.filter(item => item.raw_material === 0 || item.raw_material === null)
+            setDataFilterProduct(filterDataSelectProduct)
+            setDisabledInput(false)
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
     setDataEdit((prevDataEdit) => ({
       ...prevDataEdit,
@@ -130,17 +167,13 @@ export const NewOrder = ({ setOpenDrawer }) => {
     localStorage.setItem("dataTabelProducts", JSON.stringify(data));
   };
 
-  const handleSaveClick = () => {
+  useEffect(() => {
     console.log("Edited dataTabelProducts:", dataTabelProducts);
 
     // Simpan ke Local Storage sebelum pembaruan state
     saveDataToLocalStorage(dataTabelProducts);
 
-    // Perbarui state dan re-render jika diperlukan
-    setDataTabelProducts([...dataTabelProducts]);
-    // setRender(!render); // Hanya jika re-render diperlukan
-    // setEditingItemId(null);
-  };
+  }, [dataTabelProducts])
 
   const handleChangeAndPushProducts = async (event) => {
     // Mendapatkan nama dan nilai input yang berubah
@@ -206,6 +239,7 @@ export const NewOrder = ({ setOpenDrawer }) => {
       status: "pending",
       order_type: localStorage.getItem("order_type"),
       products: JSON.parse(localStorage.getItem("dataTabelProducts")),
+      no_ref: refBody.no_refRef.current.value
     };
 
     try {
@@ -213,30 +247,10 @@ export const NewOrder = ({ setOpenDrawer }) => {
       if (store.status === 201) {
         localStorage.removeItem("dataTabelProducts");
         setDataTabelProducts([]);
-        Swal.fire({
-          title: "Error!",
-          text: "Do you want to continue",
-          icon: "error",
-          confirmButtonText: "Cool",
-        });
+        setOpenDrawer(prevOpenDrawer => !prevOpenDrawer)
       }
     } catch (error) {
       setResponseError(error.response.data.errors);
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Signed in successfully",
-      });
     }
   };
 
@@ -261,6 +275,7 @@ export const NewOrder = ({ setOpenDrawer }) => {
                 dataSelect={item.dataSelect}
                 uniqueId={index}
                 validationError={validationError}
+                disabled={item.disabled}
               />
             ))}
         </div>
@@ -315,7 +330,6 @@ export const NewOrder = ({ setOpenDrawer }) => {
             setDataTabelProducts={setDataTabelProducts}
             refBody={refBody}
             onChange={handleChange}
-            handleSaveClick={handleSaveClick}
             saveDataToLocalStorage={saveDataToLocalStorage}
           />
         </div>

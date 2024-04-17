@@ -60,6 +60,7 @@ export const CRUD = () => {
   const [dataDetailInvoices, setDetailInvoices] = useState([]);
   const [dataFilterProduct, setDataFilterProduct] = useState([])
   const [disabledInput, setDisabledInput] = useState(false)
+  const [dataHeadingForDetail, setDataHeadingForDetail] = useState([{}])
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -151,6 +152,7 @@ export const CRUD = () => {
           name: data.name,
           quantity: previousData ? previousData.quantity : 0, // Gunakan nilai qty dari data sebelumnya jika ditemukan
           price_per_unit: data.price_per_unit || 0, // Gunakan harga dari API, jika tidak ada, gunakan nilai kosong
+          unit_of_measure: data.unit_of_measure || 'kg', // Gunakan harga dari API, jika tidak ada, gunakan nilai kosong
         };
 
         // Tambahkan data baru ke dataTabelProducts
@@ -170,18 +172,6 @@ export const CRUD = () => {
     }));
   };
 
-  const handleSaveClick = () => {
-    console.log("Edited dataTabelProducts:", dataTabelProducts);
-
-    // Simpan ke Local Storage sebelum pembaruan state
-    saveDataToLocalStorage(dataTabelProducts);
-
-    // Perbarui state dan re-render jika diperlukan
-    setDataTabelProducts([...dataTabelProducts]);
-    setRender(!render); // Hanya jika re-render diperlukan
-    // setEditingItemId(null);
-  };
-
   // var dataOrderType = undefined
 
   const handleChange = async(event) => {
@@ -196,12 +186,10 @@ export const CRUD = () => {
         const {data, status} = await getApiData('vendors/' + value)
         if(status === 200) {
           if(data.transaction_type === 'inbound' || data.transaction_type === 'supplier') {
-            console.log(dataSelectProducts);
             const filterDataSelectProduct = dataSelectProducts.filter(item => item.raw_material === 1)
             setDataFilterProduct(filterDataSelectProduct)
             setDisabledInput(true)
           }else{
-            console.log(dataSelectProducts);
             const filterDataSelectProduct = dataSelectProducts.filter(item => item.raw_material === 0 || item.raw_material === null)
             setDataFilterProduct(filterDataSelectProduct)
             setDisabledInput(false)
@@ -228,6 +216,18 @@ export const CRUD = () => {
       }));
     }
   };
+
+  useEffect(() => {
+    console.log("Edited dataTabelProducts:", dataTabelProducts);
+
+    // Simpan ke Local Storage sebelum pembaruan state
+    saveDataToLocalStorage(dataTabelProducts);
+
+    // Perbarui state dan re-render jika diperlukan
+    // setDataTabelProducts([...dataTabelProducts]);
+    // setRender(!render); // Hanya jika re-render diperlukan
+    // setEditingItemId(null);
+  },[dataTabelProducts])
 
   useEffect(() => {
     if (!!responseError) {
@@ -667,7 +667,7 @@ export const CRUD = () => {
       "vendor name": item.vendor.name,
       tipe: item.vendor.transaction_type,
       // 'product name': item.products.name,
-      "tujuan/asal gudang": item.warehouse.name,
+      "tujuan/asal gudang": item.warehouse?.name || '--',
       // status: item.status,
       "order status": item.order_status,
       "order type": item.order_type,
@@ -754,6 +754,24 @@ export const CRUD = () => {
                 activeButton: "orders",
               },
             ]);
+            setDataHeadingForDetail([
+              {
+                label: "Tambah produk",
+                icon: IconAdd(),
+                heading: "Manajemen Pesanan",
+                eventToggleModal: handleCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "orders", label: "Pesanan" },
+                  { path: "invoices", label: "Faktur Tagihan" },
+                  { path: "payments", label: "Pembayaran" },
+                  { path: "goods-receipt", label: "Penerimaan Barang" },
+                  { path: "delivery-notes", label: "Pengiriman Barang" },
+                ],
+                activeButton: "orders",
+              },
+            ])
           } else if (path === "invoices") {
             const newData = dataInvoices(data);
             setData(newData);
@@ -766,7 +784,7 @@ export const CRUD = () => {
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "pesanan", label: "Pesanan" },
+                  { path: "orders", label: "Pesanan" },
                   { path: "invoices", label: "Faktur Tagihan" },
                   { path: "payments", label: "Pembayaran" },
                   { path: "goods-receipt", label: "Penerimaan Barang" },
@@ -775,6 +793,24 @@ export const CRUD = () => {
                 activeButton: "invoices",
               },
             ]);
+            setDataHeadingForDetail([
+              {
+                label: "Tambah pembayaran",
+                icon: IconAdd(),
+                heading: "Manajemen Pesanan",
+                eventToggleModal: handleCreate,
+                onclick: handleClickHeading,
+                showNavHeading: true,
+                dataNavHeading: [
+                  { path: "orders", label: "Pesanan" },
+                  { path: "invoices", label: "Faktur Tagihan" },
+                  { path: "payments", label: "Pembayaran" },
+                  { path: "goods-receipt", label: "Penerimaan Barang" },
+                  { path: "delivery-notes", label: "Pengiriman Barang" },
+                ],
+                activeButton: "orders",
+              },
+            ])
           } else if (path === "payments") {
             const newData = dataPayments(data);
             setData(newData);
@@ -787,7 +823,7 @@ export const CRUD = () => {
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "pesanan", label: "Pesanan" },
+                  { path: "orders", label: "Pesanan" },
                   { path: "invoices", label: "Faktur Tagihan" },
                   { path: "payments", label: "Pembayaran" },
                   { path: "goods-receipt", label: "Penerimaan Barang" },
@@ -808,7 +844,7 @@ export const CRUD = () => {
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "pesanan", label: "Pesanan" },
+                  { path: "orders", label: "Pesanan" },
                   { path: "invoices", label: "Faktur Tagihan" },
                   { path: "payments", label: "Pembayaran" },
                   { path: "goods-receipt", label: "Penerimaan Barang" },
@@ -829,7 +865,7 @@ export const CRUD = () => {
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "pesanan", label: "Pesanan" },
+                  { path: "orders", label: "Pesanan" },
                   { path: "invoices", label: "Faktur Tagihan" },
                   { path: "payments", label: "Pembayaran" },
                   { path: "goods-receipt", label: "Penerimaan Barang" },
@@ -933,7 +969,7 @@ export const CRUD = () => {
           parameter: param,
           showNavHeading: true,
           dataNavHeading: [
-            { path: "pesanan", label: "Pesanan" },
+            { path: "orders", label: "Pesanan" },
             { path: "invoices", label: "Faktur Tagihan" },
             { path: "payments", label: "Pembayaran" },
             { path: "goods-receipt", label: "Penerimaan Barang" },
@@ -1000,7 +1036,7 @@ export const CRUD = () => {
         routes !== "products"
       ) {
         setDataModal({
-          labelModal: "Edit pesanan",
+          labelModal: "Edit orders",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
           handleBtn: edit,
@@ -1737,8 +1773,8 @@ export const CRUD = () => {
         });
         setDataModal({
           size: "2xl",
-          labelModal: "Tambah pesanan",
-          labelBtnModal: "Tambah pesanan",
+          labelModal: "Tambah orders",
+          labelBtnModal: "Tambah orders",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1880,6 +1916,7 @@ export const CRUD = () => {
           warehouse_id: refBody.warehouse_idRef.current.value,
           details: refBody.detailsRef.current.value,
           status: "pending",
+          no_ref: refBody.no_refRef.current.value,
           order_type: localStorage.getItem("order_type"),
           products: JSON.parse(localStorage.getItem("dataTabelProducts")),
         };
@@ -2196,7 +2233,7 @@ export const CRUD = () => {
                 setDataTabelProducts={setDataTabelProducts}
                 refBody={refBody}
                 onChange={handleChange}
-                handleSaveClick={handleSaveClick}
+                // handleSaveClick={handleSaveClick}
                 saveDataToLocalStorage={saveDataToLocalStorage}
               />
             </div>
@@ -2335,7 +2372,7 @@ export const CRUD = () => {
                 setDataTabelProducts={setDataTabelProducts}
                 refBody={refBody}
                 onChange={handleChange}
-                handleSaveClick={handleSaveClick}
+                // handleSaveClick={handleSaveClick}
                 saveDataToLocalStorage={saveDataToLocalStorage}
               />
             </div>
@@ -2552,5 +2589,6 @@ export const CRUD = () => {
     dataDetailDeliveryNotes,
     setDataDetailDeliveryNotes,
     dataDetailInvoices,
+    dataHeadingForDetail
   };
 };

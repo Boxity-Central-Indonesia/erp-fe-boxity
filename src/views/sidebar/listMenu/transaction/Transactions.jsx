@@ -35,7 +35,8 @@ export const Transactions = () => {
         dataDetailGoodReceipt,
         setPath,
         dataDetailDeliveryNotes,
-        dataDetailInvoices
+        dataDetailInvoices,
+        dataHeadingForDetail,
     } = CRUD()
 
     const dataModalBody = () => {
@@ -79,7 +80,7 @@ export const Transactions = () => {
                     data={dataDetailOrders}
                     defaultEdit={setDefaultEdit}
                     handleEdit={handleEdit}
-                    dataHeading={dataHeading}
+                    dataHeading={dataHeadingForDetail}
                     setPath={setPath}
                 />
         </>
@@ -179,7 +180,7 @@ export const Transactions = () => {
                     data={dataDetailInvoices} 
                     defaultEdit={setDefaultEdit}
                     handleEdit={handleEdit}
-                    dataHeading={dataHeading}
+                    dataHeading={dataHeadingForDetail}
                     setPath={setPath}
                     refBody={refBody}
                 />

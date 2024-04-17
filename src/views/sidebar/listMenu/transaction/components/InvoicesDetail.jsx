@@ -240,7 +240,8 @@ export const InvoicesDetail = ({
               data={[]}
               dataHeading={dataHeading}
               handleEdit={handleEdit}
-              routes={"invoices-payments"}
+              routes={""}
+              hidden={true}
             />
           </div>
         </div>

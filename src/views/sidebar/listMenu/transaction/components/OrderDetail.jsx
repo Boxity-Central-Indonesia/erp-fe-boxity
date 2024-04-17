@@ -261,7 +261,7 @@ export const OrderDetail = ({
         <div className="grid grid-cols-1 gap-5">
           <div>
             <h2 className="text-xl font-medium dark:text-white mb-4">
-              Laporan Ringkas Produk
+              Daftar Produk
             </h2>
             <TabelForDetail
               data={dataProducts}
@@ -271,11 +271,11 @@ export const OrderDetail = ({
             />
           </div>
 
-          <hr className="my-3" />
+            <hr className="my-3" />
 
           <div>
             <h2 className="text-xl font-medium dark:text-white mb-4">
-              Laporan Timbangan
+              Timbangan
             </h2>
             <TabelForDetail
               data={[]}

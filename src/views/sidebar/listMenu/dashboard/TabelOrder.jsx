@@ -48,7 +48,7 @@ export const TabelOrder = ({ data }) => {
     {
       accessorKey: "warehouse",
       Header: "Tujuan/asal gudang",
-      cell: (cell) => cell.getValue().name,
+      cell: (cell) => cell.getValue()?.name || '--',
     },
     {
       accessorKey: "order_status",
