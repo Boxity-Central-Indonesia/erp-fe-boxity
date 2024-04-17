@@ -98,9 +98,9 @@ const TabelComponent = ({
             paid: "bg-green-600 text-center",
             partial: "bg-yellow-600 text-center",
             unpaid: "bg-primary-600 text-center",
-            lunas: "bg-green-600 text-center",
-            cicilan: "bg-yellow-600 text-center",
-            "belum lunas": "bg-primary-600 text-center",
+            Lunas: "bg-green-600 text-center",
+            Cicilan: "bg-yellow-600 text-center",
+            "Belum Lunas": "bg-primary-600 text-center",
           };
           // Definisi objek pemetaan untuk status transaksi penerimaan barang
           const goodReceiptMap = {
