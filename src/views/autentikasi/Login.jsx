@@ -117,7 +117,7 @@ const Login = ({ setAuth }) => {
           <div className="logo-container">
             {" "}
             <img
-              src="https://res.cloudinary.com/boxity-id/image/upload/v1678791965/asset_boxity/logo/logo_primary_um5cgb.png"
+              src={import.meta.env.VITE_CLIENT_LOGO_DARK}
               className="mr-3 h-5 md:h-12"
               alt="Logo image"
             />
