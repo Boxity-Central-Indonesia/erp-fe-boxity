@@ -15,6 +15,7 @@ export const DeliveryNotesDetail = ({
         id: item.id,
         order: item.order.kode_order,
         product: item.product.name,
+        quantity: item.quantity + " Kg",
       }))
     : []; // Use an empty array if data.departments is null
 

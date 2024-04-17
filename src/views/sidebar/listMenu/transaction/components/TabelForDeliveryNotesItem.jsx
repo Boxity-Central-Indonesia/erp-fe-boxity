@@ -33,7 +33,7 @@ export const TabelForDeliveryNoteItem = ({
   const handleAddRow = () => {
     const newData = [
       ...dataTabelDeliveryNotes,
-      { order_id: "", product_id: "" },
+      { order_id: "", product_id: "", quantity: "" },
     ];
     setDataTabelDeliveryNotes(newData);
     setRowCount((prevCount) => prevCount + 1);
@@ -52,6 +52,7 @@ export const TabelForDeliveryNoteItem = ({
         <Table.Head>
           <Table.HeadCell>order</Table.HeadCell>
           <Table.HeadCell>product</Table.HeadCell>
+          <Table.HeadCell>quantity</Table.HeadCell>
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
           </Table.HeadCell>
@@ -75,6 +76,14 @@ export const TabelForDeliveryNoteItem = ({
                   value={item.product_id}
                   onChange={(e) =>
                     handleInputChange(index, "product_id", e.target.value)
+                  }
+                />
+              </Table.Cell>
+              <Table.Cell className="p-0">
+                <QtyInput
+                  value={item.quantity}
+                  onChange={(e) =>
+                    handleInputChange(index, "quantity", e.target.value)
                   }
                 />
               </Table.Cell>
@@ -127,7 +136,17 @@ export const TabelForDeliveryNoteItem = ({
     </div>
   );
 };
-
+const QtyInput = ({ value, onChange }) => {
+  return (
+    <input
+      type="number"
+      value={value}
+      name="quantity" // Corrected the name attribute
+      onChange={onChange}
+      className="border-none w-20 h-7 px-0"
+    />
+  );
+};
 const SelectOrder = ({ value, onChange }) => {
   const [dataOrder, setDataOrder] = useState(null);
 
