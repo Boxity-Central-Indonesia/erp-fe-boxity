@@ -196,10 +196,12 @@ export const CRUD = () => {
         const {data, status} = await getApiData('vendors/' + value)
         if(status === 200) {
           if(data.transaction_type === 'inbound' || data.transaction_type === 'supplier') {
+            console.log(dataSelectProducts);
             const filterDataSelectProduct = dataSelectProducts.filter(item => item.raw_material === 1)
             setDataFilterProduct(filterDataSelectProduct)
             setDisabledInput(true)
           }else{
+            console.log(dataSelectProducts);
             const filterDataSelectProduct = dataSelectProducts.filter(item => item.raw_material === 0 || item.raw_material === null)
             setDataFilterProduct(filterDataSelectProduct)
             setDisabledInput(false)
