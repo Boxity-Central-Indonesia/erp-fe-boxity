@@ -5,7 +5,7 @@
 
 .logo-container img {
   display: block; /* Ensure image behaves like a block element */
-  width: 200px; /* Scale image to fit container width */
+  width: 350px; /* Scale image to fit container width */
   height: auto; /* Maintain aspect ratio */
 }
 .login-form {
@@ -22,7 +22,7 @@
     max-width: 150px;
   }
   .logo-container img {
-    max-width: 150px; /* Set a maximum width for smaller screens */
+    max-width: 350px; /* Set a maximum width for smaller screens */
   }
 }
 .capitalize{
