@@ -1,3 +1,4 @@
+import { fa } from "@faker-js/faker";
 import { useRef, useState } from "react";
 // import uuid from 'uuid-random';
 
@@ -15,6 +16,7 @@ const FormInput = ({
   dataSelect,
   uniqueId,
   validationError,
+  disabled,
   selectedValue,
 }) => {
   const [selectedRadio, setSelectedRadio] = useState(value); // State untuk menyimpan nilai radio yang dipilih
@@ -80,6 +82,7 @@ const FormInput = ({
               onChange={onChange}
               ref={referens}
               value={value} // Menggunakan value yang diatur dari state
+              disabled={disabled}
             >
               <option value="">Pilih {label}</option>
               {dataSelect &&

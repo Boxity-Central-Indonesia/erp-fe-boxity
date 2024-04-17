@@ -58,6 +58,8 @@ export const CRUD = () => {
   const [idDeliveryNoteItem, setIdDeliveryNoteItem] = useState();
   const [idGoodsReceiptItem, setIdGoodReceiptItem] = useState();
   const [dataDetailInvoices, setDetailInvoices] = useState([]);
+  const [dataFilterProduct, setDataFilterProduct] = useState([])
+  const [disabledInput, setDisabledInput] = useState(false)
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -182,11 +184,30 @@ export const CRUD = () => {
 
   // var dataOrderType = undefined
 
-  const handleChange = (event) => {
+  const handleChange = async(event) => {
     const { name, value } = event.target;
 
     if (name === "order_type") {
       localStorage.setItem("order_type", value);
+    }
+
+    if(name === 'vendor_id') {
+      try {
+        const {data, status} = await getApiData('vendors/' + value)
+        if(status === 200) {
+          if(data.transaction_type === 'inbound' || data.transaction_type === 'supplier') {
+            const filterDataSelectProduct = dataSelectProducts.filter(item => item.raw_material === 1)
+            setDataFilterProduct(filterDataSelectProduct)
+            setDisabledInput(true)
+          }else{
+            const filterDataSelectProduct = dataSelectProducts.filter(item => item.raw_material === 0 || item.raw_material === null)
+            setDataFilterProduct(filterDataSelectProduct)
+            setDisabledInput(false)
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     if (
@@ -235,6 +256,7 @@ export const CRUD = () => {
           const newData = data.map((item) => ({
             id: item.id,
             name: item.name,
+            raw_material: item?.raw_material || null
           }));
           state(newData);
         }
@@ -288,6 +310,7 @@ export const CRUD = () => {
         id: "warehouse_id",
         dataSelect: dataSelectWarehouses,
         onchange: handleChange,
+        disabled: disabledInput
       },
       {
         element: "input",
@@ -337,7 +360,7 @@ export const CRUD = () => {
         label: "Produk",
         htmlFor: "product_id",
         id: "product_id",
-        dataSelect: dataSelectProducts,
+        dataSelect: dataFilterProduct,
         onchange: handleChangeAndPushProducts,
       },
       // {
@@ -2113,6 +2136,7 @@ export const CRUD = () => {
                 dataSelect={item.dataSelect}
                 uniqueId={index}
                 validationError={validationError}
+                disabled={item.disabled}
               />
             ))}
 
