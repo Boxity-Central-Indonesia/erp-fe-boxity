@@ -5,19 +5,7 @@ import Cookies from "js-cookie"; // Import js-cookie untuk mengakses cookie
 
 export const AppsForNavbar = () => {
   const handleLink = async () => {
-    try {
-      // Ambil token autentikasi dari cookie
-      const token = Cookies.get("token"); // Ganti 'nama_token' dengan nama yang sesuai
-      // Buat header Authorization dengan token autentikasi
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      // Buat permintaan HTTP dengan header yang disertakan
-      const response = await fetch("http://localhost:5174", { headers });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+    localStorage.setItem('bearer', Cookies.get("token"))
   };
 
   return (
@@ -36,7 +24,7 @@ export const AppsForNavbar = () => {
       </div>
       <div className="w-80 grid grid-cols-3 p-2">
         <a
-          //   onClick={handleLink}
+          onClick={handleLink}
           href={import.meta.env.VITE_URL_LIVESTOCK}
           target="_blank"
           className="block p-4 text-center h-fit w-fit rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600"

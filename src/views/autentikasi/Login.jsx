@@ -63,7 +63,7 @@ const Login = ({ setAuth }) => {
 
       if (response.data.status === 200) {
         setAuth(true); // Update auth state
-        Cookies.set("token", response.data.access_token);
+        Cookies.set("token", response.data.access_token, {secure: true, expires:1});
         navigate("/");
       }
     } catch (error) {

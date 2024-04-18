@@ -26,6 +26,10 @@ export const CRUD = () => {
   const [dataHeading, setDataHeading] = useState([{}]);
   const [path, setPath] = useState("warehouses");
   const [dataWarehouseesSelect, setDataWarehouseesSelect] = useState([]);
+  const [defaultEdit, setDefaultEdit] = useState(true)
+  const [dataDetailWarehouses, setDataDetailWarehouses] = useState()
+  const [disabledInput, setDisabledInput] = useState(false)
+  
 
   // EmployesList
 
@@ -167,6 +171,7 @@ export const CRUD = () => {
         id: "warehouse_id",
         dataSelect: dataWarehouseesSelect,
         onchange: handleChange,
+        disabled: disabledInput
       },
       {
         element: "input",
@@ -387,7 +392,7 @@ export const CRUD = () => {
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
-          size: "md",
+          size: "lg",
           labelModal: "Tambah Gudang",
           labelBtnModal: "Tambah Gudang",
           labelBtnSecondaryModal: "Back",
@@ -412,7 +417,7 @@ export const CRUD = () => {
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
-          size: "md",
+          size: "2xl",
           labelModal: "Tambah locations",
           labelBtnModal: "Tambah locations",
           labelBtnSecondaryModal: "Back",
@@ -522,41 +527,27 @@ export const CRUD = () => {
     const handleEdit = async (param) => {
       const id = param.textContent;
       if (path === "warehouses") {
-        setDataModal({
-          size: "lg",
-          labelModal: "Update warehouses",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        setValidationError({
-          name: "",
-          address: "",
-          capacity: "",
-          description: "",
-          id: "",
-        });
-
-        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDefaultEdit(false)
         try {
           const { data, status } = await getApiData(path + "/" + id);
           if (status === 200) {
-            setDataEdit({
-              name: data.name,
-              address: data.address,
-              capacity: data.capacity,
-              description: data.description,
-              id: data.id,
+            setDataDetailWarehouses({
+              name: data.warehouse.name,
+              address: data.warehouse.address,
+              capacity: data.warehouse.capacity,
+              description: data.warehouse.description,
+              location: data.locations,
+              id: data.warehouse.id,
             });
 
-            setIdDelete(data.id);
+            setIdDelete(data.warehouse.id);
           }
         } catch (error) {
           console.log(error);
         }
       } else if (path === "warehouse-locations") {
         setDataModal({
-          size: "lg",
+          size: "2xl",
           labelModal: "Update warehouse-locations",
           labelBtnModal: "Save",
           labelBtnSecondaryModal: "Delete",
@@ -665,6 +656,7 @@ export const CRUD = () => {
       try {
         await deleteApiData(path + "/" + idDelete);
         setRefresh(!refresh);
+        setDefaultEdit(true)
         closeModalDelete();
       } catch (error) {
         console.log(error.response);
@@ -718,7 +710,7 @@ export const CRUD = () => {
     } else if (param === "warehouse-locations") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1">
+          <div className="grid gap-4 mb-4 grid-cols-2">
             {inputWarehouseesLocations.map((item, index) => (
               <FormInput
                 key={item.id}
@@ -735,6 +727,7 @@ export const CRUD = () => {
                 dataSelect={item.dataSelect}
                 uniqueId={index}
                 validationError={validationError}
+                disabled={item.disabled}
               />
             ))}
           </div>
@@ -770,5 +763,16 @@ export const CRUD = () => {
     loading,
     skeleton,
     path,
+    defaultEdit,
+    setDefaultEdit,
+    dataDetailWarehouses,
+    setDataDetailWarehouses,
+    setDataModal,
+    setDataEdit,
+    setResponseError,
+    setValidationError,
+    setLoading,
+    setPath,
+    setDisabledInput
   };
 };

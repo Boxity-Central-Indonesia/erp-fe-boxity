@@ -5,6 +5,7 @@ import { TextArea } from "../../../layouts/FormInput"
 import TabelComponent from "../../../layouts/Tabel"
 import { Spinner } from "../../../layouts/Spinner"
 import { CRUD } from "./components/CRUD"
+import { DetailWarehouses } from "./components/detailWarehouses"
 
 export const Warehouses = () => {
     const {
@@ -24,7 +25,18 @@ export const Warehouses = () => {
         loading,
         handleCreate,
         skeleton,
-        path
+        path,
+        defaultEdit,
+        setDefaultEdit,
+        dataDetailWarehouses,
+        setDataDetailWarehouses,
+        setDataModal,
+        setDataEdit,
+        setResponseError,
+        setValidationError,
+        setLoading,
+        setPath,
+        setDisabledInput
     } = CRUD()
 
     const dataModalBody = () => {
@@ -35,6 +47,52 @@ export const Warehouses = () => {
                     {inputBody(path)}
                 </form>
 
+            </>
+        )
+    }
+
+    if(!defaultEdit){
+        return(
+            <>
+                 <ModalContainer 
+                    openModal={openModal}
+                    onToggleModal={setOpenModal}
+                    modalBody={dataModalBody}
+                    sizeModal={dataModal.size}
+                    labelModal={dataModal.labelModal}
+                    labelBtnModal={dataModal.labelBtnModal}
+                    labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
+                    handleBtnModal={dataModal.handleBtn}
+                    parameter={path}
+                    openModalDelete={openModalDelete}
+                />
+
+                <Spinner loading={loading} />
+
+                < ModalConfirmDelete 
+                    modalDelete={modalDelete}
+                    closeModalDelete={closeModalDelete}
+                    handleDelete={handleDelete}
+                />
+
+                 <DetailWarehouses
+                    data={dataDetailWarehouses}
+                    defaultEdit={setDefaultEdit}
+                    setOpenModal={setOpenModal}
+                    openModal={openModal}
+                    setDataModal={setDataModal}
+                    setDataEdit={setDataEdit}
+                    refBody={refBody}
+                    setResponseError={setResponseError}
+                    setValidationError={setValidationError}
+                    setLoading={setLoading}
+                    setData={setDataDetailWarehouses}
+                    setPath={setPath}
+                    setDisabledInput={setDisabledInput}
+                    // handleEdit={handleEdit}
+                    // dataHeading={dataHeadingForProduct}
+                    // setPath={setPath}
+                />
             </>
         )
     }
