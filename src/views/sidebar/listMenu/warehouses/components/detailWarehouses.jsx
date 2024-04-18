@@ -20,7 +20,6 @@ export const DetailWarehouses = ({
   setValidationError,
   setResponseError,
   setLoading,
-  setDisabledInput
 }) => {
   const handleBack = () => {
     defaultEdit(true);
@@ -184,7 +183,7 @@ export const DetailWarehouses = ({
                 setOpenModal={setOpenModal}
                 setPath={setPath}
                 setDataModal={setDataModal}
-                setDisabledInput={setDisabledInput}
+                refBody={refBody}
             />
           </div>
           <hr className="my-3" />

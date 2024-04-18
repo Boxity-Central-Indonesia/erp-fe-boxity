@@ -70,10 +70,6 @@ export const CRUD = () => {
   };
 
   useEffect(() => {
-    console.log(disabledInput);
-  }, [disabledInput])
-
-  useEffect(() => {
     if (!!responseError) {
       setValidationError({
         name: responseError?.name?.[0] || "",
@@ -544,6 +540,10 @@ export const CRUD = () => {
               id: data.warehouse.id,
             });
 
+            setDataEdit({
+              warehouse_id: data.warehouse.id
+            })
+
             setIdDelete(data.warehouse.id);
           }
         } catch (error) {
@@ -731,7 +731,7 @@ export const CRUD = () => {
                 dataSelect={item.dataSelect}
                 uniqueId={index}
                 validationError={validationError}
-                disabled={item.disabled}
+                disabled={item.name === 'warehouse_id' && !defaultEdit ? true : false}
               />
             ))}
           </div>

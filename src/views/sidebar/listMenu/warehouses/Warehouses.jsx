@@ -88,7 +88,6 @@ export const Warehouses = () => {
                     setLoading={setLoading}
                     setData={setDataDetailWarehouses}
                     setPath={setPath}
-                    setDisabledInput={setDisabledInput}
                     // handleEdit={handleEdit}
                     // dataHeading={dataHeadingForProduct}
                     // setPath={setPath}
