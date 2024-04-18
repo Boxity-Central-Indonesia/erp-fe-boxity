@@ -70,6 +70,10 @@ export const CRUD = () => {
   };
 
   useEffect(() => {
+    console.log(disabledInput);
+  }, [disabledInput])
+
+  useEffect(() => {
     if (!!responseError) {
       setValidationError({
         name: responseError?.name?.[0] || "",
