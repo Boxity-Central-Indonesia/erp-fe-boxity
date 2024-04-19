@@ -4,10 +4,12 @@ import {
   postApiData,
   putApiData,
   deleteApiData,
+  postApiDataAndFile
 } from "../../../../../function/Api";
 import IconAdd from "../../../../layouts/icons/IconAdd";
 import { TextArea } from "../../../../layouts/FormInput";
 import FormInput from "../../../../layouts/FormInput";
+import { currencyToNumber, numberToCurrency } from "../../../../config/FormatCurrency";
 
 export const CRUD = () => {
   const [refresh, setRefresh] = useState(false);
@@ -28,8 +30,13 @@ export const CRUD = () => {
   const [dataWarehouseesSelect, setDataWarehouseesSelect] = useState([]);
   const [defaultEdit, setDefaultEdit] = useState(true)
   const [dataDetailWarehouses, setDataDetailWarehouses] = useState()
-  const [disabledInput, setDisabledInput] = useState(false)
-  
+  const [disabledInput, setDisabledInput] = useState(false)  
+  const [refreshForDetial, setRefreshForDetail] = useState(false)
+  const [inputProducts, setInputProducts] = useState([]);
+  const [imageUrl, setImageUrl] = useState(
+    "https://res.cloudinary.com/du0tz73ma/image/upload/v1700279273/building_z7thy7.png"
+  );
+  const [dataCategorySelect, setDataCategorySelect] = useState();
 
   // EmployesList
 
@@ -44,6 +51,20 @@ export const CRUD = () => {
     lengthRef: useRef(),
     widthRef: useRef(),
     heightRef: useRef(),
+
+    // produk
+    priceRef: useRef(),
+    typeRef: useRef(),
+    animal_typeRef: useRef(),
+    ageRef: useRef(),
+    weightRef: useRef(),
+    health_statusRef: useRef(),
+    stockRef: useRef(),
+    category_idRef: useRef(),
+    warehouse_idRef: useRef(),
+    unit_of_measureRef: useRef(),
+    raw_materialRef: useRef(),
+    image_productRef: useRef(),
   });
   const [dataEdit, setDataEdit] = useState({
     name: "",
@@ -62,12 +83,22 @@ export const CRUD = () => {
     // Mendapatkan nama dan nilai input yang berubah
     const { name, value } = event.target;
 
+    if (name === "image_product") {
+      const newImageUrl = URL.createObjectURL(refBody.image_productRef.current.files[0]);
+      setImageUrl(newImageUrl);
+      setDataEdit(prevData => ({
+        ...prevData,
+        image_product: newImageUrl,
+      }));
+    }
+
     // Memperbarui state sesuai dengan nilai input yang berubah
     setDataEdit((prevDataEdit) => ({
       ...prevDataEdit,
       [name]: value,
     }));
   };
+
 
   useEffect(() => {
     if (!!responseError) {
@@ -81,6 +112,24 @@ export const CRUD = () => {
         description: responseError?.description?.[0] || "",
         warehouse_id: responseError?.warehouse_id?.[0] || "",
         number: responseError?.number?.[0] || "",
+        price: responseError?.price?.[0] || "",
+        type: responseError?.type?.[0] || "",
+        animal_type: responseError?.animal_type?.[0] || "",
+        age: responseError?.age?.[0] || "",
+        weight: responseError?.weight?.[0] || "",
+        health_status: responseError?.health_status?.[0] || "",
+        stock: responseError?.stock?.[0] || "",
+        category_id: responseError?.category_id?.[0] || "",
+        warehouse_id: responseError?.warehouse_id?.[0] || "",
+        unit_of_measure: responseError?.unit_of_measure?.[0] || "",
+        raw_material: responseError?.raw_material?.[0] || "",
+        image_product: responseError?.image_product?.[0] || "",
+        product_id: responseError?.product_id?.[0] || "",
+        selling_price: responseError?.selling_price?.[0] || "",
+        buying_price: responseError?.buying_price?.[0] || "",
+        discount_price: responseError?.discount_price?.[0] || "",
+        movement_type: responseError?.movement_type?.[0] || "",
+        quantity: responseError?.quantity?.[0] || "",
       });
     }
   }, [responseError]);
@@ -165,7 +214,7 @@ export const CRUD = () => {
         element: "select",
         name: "warehouse_id",
         ref: refBody.warehouse_idRef,
-        value: dataEdit.warehouse_id,
+        value: !defaultEdit ? localStorage.getItem('idWarehouse') : dataEdit.warehouse_id,
         label: "Warehouse",
         htmlFor: "warehouse_id",
         id: "warehouse_id",
@@ -234,6 +283,168 @@ export const CRUD = () => {
         placeholder: "Height",
       },
     ]);
+
+    setInputProducts([
+      {
+        element: "file",
+        type: "file",
+        name: "image_product",
+        ref: refBody.image_productRef,
+        value: dataEdit.Files,
+        label: "Product Image",
+        htmlFor: "image_product",
+        id: "image_product",
+        onchange: handleChange,
+        placeholder: "Product Image",
+      },
+      {
+        element: "input",
+        type: "text",
+        name: "name",
+        ref: refBody.nameRef,
+        value: dataEdit.name,
+        label: "Name",
+        htmlFor: "name",
+        id: "name",
+        onchange: handleChange,
+        placeholder: "Name",
+      },
+      {
+        element: "input",
+        type: "text",
+        name: "price",
+        ref: refBody.priceRef,
+        value: dataEdit.price,
+        label: "Price",
+        htmlFor: "price",
+        id: "price",
+        onchange: handleChange,
+        placeholder: "Price",
+      },
+      {
+        element: "input",
+        type: "text",
+        name: "type",
+        ref: refBody.typeRef,
+        value: dataEdit.type,
+        label: "Type",
+        htmlFor: "type",
+        id: "type",
+        onchange: handleChange,
+        placeholder: "Type",
+      },
+      {
+        element: "input",
+        type: "text",
+        name: "animal_type",
+        ref: refBody.animal_typeRef,
+        value: dataEdit.animal_type,
+        label: "Animal type",
+        htmlFor: "animal_type",
+        id: "animal_type",
+        onchange: handleChange,
+        placeholder: "Animal type",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "age",
+        ref: refBody.ageRef,
+        value: dataEdit.age,
+        label: "Age",
+        htmlFor: "age",
+        id: "age",
+        onchange: handleChange,
+        placeholder: "Age",
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "weight",
+        ref: refBody.weightRef,
+        value: dataEdit.weight,
+        label: "Weight",
+        htmlFor: "weight",
+        id: "weight",
+        onchange: handleChange,
+        placeholder: "Weight",
+      },
+      {
+        element: "select",
+        name: "health_status",
+        ref: refBody.health_statusRef,
+        value: dataEdit.health_status,
+        label: "Kesehatan Barang",
+        htmlFor: "health_status",
+        id: "health_status",
+        dataSelect: [
+          { id: "1", name: "Healthy" },
+          { id: "0", name: "Half Healthy" },
+        ],
+        onchange: handleChange,
+      },
+      {
+        element: "input",
+        type: "number",
+        name: "stock",
+        ref: refBody.stockRef,
+        value: dataEdit.stock,
+        label: "Stock Quantity",
+        htmlFor: "stock",
+        id: "stock",
+        onchange: handleChange,
+        placeholder: "Stock",
+      },
+
+      {
+        element: "select",
+        name: "category_id",
+        ref: refBody.category_idRef,
+        value: dataEdit.category_id,
+        label: "Kategori Barang",
+        htmlFor: "category_id",
+        id: "category_id",
+        dataSelect: dataCategorySelect,
+        onchange: handleChange,
+      },
+      {
+        element: "select",
+        name: "warehouse_id",
+        ref: refBody.warehouse_idRef,
+        value: localStorage.getItem('idWarehouse'),
+        label: "Penempatan Gudang",
+        htmlFor: "warehouse_id",
+        id: "warehouse_id",
+        dataSelect: dataWarehouseesSelect,
+        onchange: handleChange,
+      },
+      {
+        element: "input",
+        type: "text",
+        name: "unit_of_measure",
+        ref: refBody.unit_of_measureRef,
+        value: dataEdit.unit_of_measure,
+        label: "Unit of measure",
+        htmlFor: "unit_of_measure",
+        id: "unit_of_measure",
+        onchange: handleChange,
+        placeholder: "Unit of measure",
+      },
+      {
+        element: "select",
+        name: "raw_material",
+        ref: refBody.raw_materialRef,
+        value: dataEdit.raw_material,
+        label: "Bahan Baku atau Tidak",
+        htmlFor: "raw_material",
+        id: "raw_material",
+        dataSelect: [
+          { id: "1", name: "True" },
+          { id: "0", name: "False" },
+        ],
+        onchange: handleChange,
+      },
+    ]);
   }, [dataEdit]);
 
   const dataWarehouses = (data) => {
@@ -255,6 +466,27 @@ export const CRUD = () => {
     }));
   };
 
+  const getWarehouseById = async (id) => {
+    try {
+      const {data, status} = await getApiData('warehouses/' + id)
+      if(status === 200){
+        setDataDetailWarehouses(data)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const deletePreviewImage = () => {
+    setImageUrl(
+      "https://res.cloudinary.com/du0tz73ma/image/upload/v1700279273/building_z7thy7.png"
+    );
+    setDataEdit(prevData => ({
+      ...prevData,
+      image_product: "",
+    }));
+    refBody.image_productRef.current.value = "";
+  };
   const READ = () => {
     const [data, setData] = useState();
     useEffect(() => {
@@ -398,7 +630,7 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
-      } else if (param === "warehouse-locations") {
+      } else if (param === "warehouse-locations" && defaultEdit) {
         setDataEdit({
           warehouse_id: "",
           number: "",
@@ -423,7 +655,59 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
-      } else {
+      } else if (param === "warehouse-locations" && !defaultEdit) {
+        setPath('warehouse-locations')
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataEdit({
+          warehouse_id: "",
+          number: "",
+          capacity: "",
+          length: "",
+          width: "",
+          height: "",
+        });
+        setValidationError({
+          warehouse_id: "",
+          number: "",
+          capacity: "",
+          length: "",
+          width: "",
+          height: "",
+        });
+        setDataModal({
+          size: "2xl",
+          labelModal: "Tambah locations",
+          labelBtnModal: "Tambah locations",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "products" && !defaultEdit) {
+        setPath('products')
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataEdit({
+          warehouse_id: "",
+          number: "",
+          capacity: "",
+          length: "",
+          width: "",
+          height: "",
+        });
+        setValidationError({
+          warehouse_id: "",
+          number: "",
+          capacity: "",
+          length: "",
+          width: "",
+          height: "",
+        });
+        setDataModal({
+          size: "6xl",
+          labelModal: "Tambah produk",
+          labelBtnModal: "Tambah locations",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+        } else {
         setDataEdit({
           name: "",
           address: "",
@@ -448,6 +732,7 @@ export const CRUD = () => {
         });
       }
     };
+
 
     const create = async (param) => {
       setLoading((prevLoading) => !prevLoading);
@@ -474,7 +759,7 @@ export const CRUD = () => {
         }
       } else if (param === "warehouse-locations") {
         dataBody = {
-          warehouse_id: refBody.warehouse_idRef.current.value,
+          warehouse_id: !defaultEdit ? localStorage.getItem('idWarehouse') : refBody.warehouse_idRef.current.value,
           number: refBody.numberRef.current.value,
           capacity: refBody.capacityRef.current.value,
           length: refBody.lengthRef.current.value,
@@ -489,12 +774,44 @@ export const CRUD = () => {
             setRefresh(!refresh);
             setLoading((prevLoading) => !prevLoading);
             setOpenModal((prevOpenModal) => !prevOpenModal);
+            getWarehouseById(dataBody.warehouse_id)
           }
         } catch (error) {
           setLoading((prevLoading) => !prevLoading);
           setResponseError(error.response.data.errors);
         }
-      } else {
+      } else if (param === "products") {
+        let dataBody = {
+          name: refBody.nameRef.current.value,
+          description: refBody.descriptionRef.current.value,
+          price: currencyToNumber(refBody.priceRef.current.value),
+          type: refBody.typeRef.current.value,
+          animal_type: refBody.animal_typeRef.current.value,
+          age: refBody.ageRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          weight: refBody.weightRef.current.value,
+          health_status: refBody.health_statusRef.current.value,
+          stock: refBody.stockRef.current.value,
+          category_id: refBody.category_idRef.current.value,
+          unit_of_measure: refBody.unit_of_measureRef.current.value,
+          raw_material: refBody.raw_materialRef.current.value,
+          image_product: refBody.image_productRef.current.files[0],
+        };
+
+        try {
+          const store = await postApiDataAndFile('products', dataBody);
+          if (store.status === 201) {
+            setPath(() => param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            getWarehouseById(localStorage.getItem('idWarehouse'))
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      }else {
         dataBody = {
           name: refBody.nameRef.current.value,
           address: refBody.addressRef.current.value,
@@ -527,22 +844,24 @@ export const CRUD = () => {
     const handleEdit = async (param) => {
       const id = param.textContent;
       if (path === "warehouses") {
+        const getSelectKategory = async () => {
+          const { data, status } = await getApiData("product-categories");
+          if (status === 200) {
+            const newData = data.map((item) => ({
+              id: item.id,
+              name: item.name,
+            }));
+            setDataCategorySelect(newData);
+          }
+        };
+        getSelectKategory();
         setDefaultEdit(false)
         try {
           const { data, status } = await getApiData(path + "/" + id);
           if (status === 200) {
-            setDataDetailWarehouses({
-              name: data.warehouse.name,
-              address: data.warehouse.address,
-              capacity: data.warehouse.capacity,
-              description: data.warehouse.description,
-              location: data.locations,
-              id: data.warehouse.id,
-            });
+            setDataDetailWarehouses(() => data)
 
-            setDataEdit({
-              warehouse_id: data.warehouse.id
-            })
+            localStorage.setItem('idWarehouse', data.warehouse.id)
 
             setIdDelete(data.warehouse.id);
           }
@@ -588,10 +907,110 @@ export const CRUD = () => {
       }
     };
 
+
+    const handleEditDetailWarehouseLocations = async (param) => {
+      setPath('warehouse-locations')
+      localStorage.setItem('path', 'warehouse-locations')
+      setDataModal({
+        size: "2xl",
+        labelModal: "Update warehouse-locations",
+        labelBtnModal: "Save",
+        labelBtnSecondaryModal: "Delete",
+        handleBtn: edit,
+      });
+      setValidationError({
+        warehouse_id: "",
+        number: "",
+        capacity: "",
+        length: "",
+        width: "",
+        height: "",
+      });
+      setOpenModal((prevOpenModal) => !prevOpenModal);
+      try {
+        const { data, status } = await getApiData('warehouse-locations' + "/" + param);
+        if (status === 200) {
+          setDataEdit({
+            warehouse_id: data.warehouse_id,
+            number: data.number,
+            capacity: data.capacity,
+            length: data.length,
+            width: data.width,
+            height: data.height,
+            id: data.id,
+          });
+
+          setIdDelete(data.id);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+
+    const handleEditDetailForProduct = async (param) => {
+      setPath('products')
+      localStorage.setItem('path', 'products')
+      setDataModal({
+        size: "6xl",
+        labelModal: "Edit products",
+        labelBtnModal: "Save",
+        labelBtnSecondaryModal: "Delete",
+        handleBtn: edit,
+      });
+      setValidationError({
+        name: "",
+        description: "",
+        price: "",
+        type: "",
+        animal_type: "",
+        age: "",
+        weight: "",
+        health_status: "",
+        stock: "",
+        category_id: "",
+        warehouse_id: "",
+        movement_type: "",
+        unit_of_measure: "",
+        raw_material: "",
+        image_product: "",
+      });
+      setOpenModal((prevOpenModal) => !prevOpenModal);
+      try {
+        const { data, status } = await getApiData("products/" + param);
+        if (status === 200) {
+          setDataEdit({
+            name: data.name,
+            description: data.description,
+            price: numberToCurrency(data.price),
+            type: data.type,
+            animal_type: data.animal_type,
+            age: data.age,
+            weight: data.weight,
+            health_status: data.health_status,
+            stock: data.stock,
+            category_id: data.category_id,
+            warehouse_id: data.warehouse_id,
+            movement_type: data.movement_type,
+            unit_of_measure: data.unit_of_measure,
+            raw_material: data.raw_material,
+            image_product: data.image_product,
+            id: data.id,
+          });
+
+          setImageUrl(data.image_product);
+
+          setIdDelete(data.id);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     const edit = async () => {
       setLoading((prevLoading) => !prevLoading);
       let dataBody = {};
-      if (path === "warehouses") {
+      if (path === "warehouses" && defaultEdit) {
         dataBody = {
           name: refBody.nameRef.current.value,
           address: refBody.addressRef.current.value,
@@ -613,7 +1032,7 @@ export const CRUD = () => {
           setResponseError(error.response.data);
           setLoading((prevLoading) => !prevLoading);
         }
-      } else if (path === "warehouse-locations") {
+      } else if (path === "warehouse-locations" && defaultEdit) {
         dataBody = {
           warehouse_id: refBody.warehouse_idRef.current.value,
           number: refBody.numberRef.current.value,
@@ -625,13 +1044,71 @@ export const CRUD = () => {
 
         try {
           const response = await putApiData(
-            path + "/" + refBody.idRef.current.value,
+            "warehouse-locations/" + refBody.idRef.current.value,
             dataBody
           );
           if (response.status === 201) {
             setLoading((prevLoading) => !prevLoading);
             setRefresh(!refresh);
             setOpenModal((prevOpenModal) => !prevOpenModal);
+            getWarehouseById(dataBody.warehouse_id)
+          }
+        } catch (error) {
+          setResponseError(error.response.data.errors);
+          setLoading((prevLoading) => !prevLoading);
+        }
+      } else if (!defaultEdit && localStorage.getItem('path') === 'warehouse-locations') {
+        dataBody = {
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          number: refBody.numberRef.current.value,
+          capacity: refBody.capacityRef.current.value,
+          length: refBody.lengthRef.current.value,
+          width: refBody.widthRef.current.value,
+          height: refBody.heightRef.current.value,
+        };
+
+        try {
+          const response = await putApiData(
+            "warehouse-locations/" + refBody.idRef.current.value,
+            dataBody
+          );
+          if (response.status === 201) {
+            setLoading((prevLoading) => !prevLoading);
+            setRefresh(!refresh);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            getWarehouseById(dataBody.warehouse_id)
+          }
+        } catch (error) {
+          setResponseError(error.response.data.errors);
+          setLoading((prevLoading) => !prevLoading);
+        }
+      } else if(!defaultEdit && localStorage.getItem('path') === 'products'){
+        let dataBody = {
+          name: refBody.nameRef.current.value,
+          description: refBody.descriptionRef.current.value,
+          price: currencyToNumber(refBody.priceRef.current.value),
+          type: refBody.typeRef.current.value,
+          animal_type: refBody.animal_typeRef.current.value,
+          age: refBody.ageRef.current.value,
+          weight: refBody.weightRef.current.value,
+          health_status: refBody.health_statusRef.current.value,
+          stock: refBody.stockRef.current.value,
+          category_id: refBody.category_idRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          unit_of_measure: refBody.unit_of_measureRef.current.value,
+          raw_material: refBody.raw_materialRef.current.value,
+          image_product: refBody.image_productRef.current.value,
+        };
+        try {
+          const response = await putApiData(
+            "products/" + refBody.idRef.current.value,
+            dataBody
+          );
+          if (response.status === 201) {
+            setLoading((prevLoading) => !prevLoading);
+            setRefresh(!refresh);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            getWarehouseById(localStorage.getItem('idWarehouse'))
           }
         } catch (error) {
           setResponseError(error.response.data.errors);
@@ -642,6 +1119,8 @@ export const CRUD = () => {
 
     return {
       handleEdit,
+      handleEditDetailWarehouseLocations,
+      handleEditDetailForProduct,
       edit,
     };
   };
@@ -658,10 +1137,17 @@ export const CRUD = () => {
 
     const handleDelete = async () => {
       try {
-        await deleteApiData(path + "/" + idDelete);
-        setRefresh(!refresh);
-        setDefaultEdit(true)
-        closeModalDelete();
+        if(defaultEdit){
+          await deleteApiData(path + "/" + idDelete);
+          setRefresh(!refresh);
+          setDefaultEdit(true)
+          closeModalDelete();
+        }else {
+          await deleteApiData(path + "/" + idDelete);
+          setRefresh(!refresh);
+          getWarehouseById(localStorage.getItem('idWarehouse'))
+          closeModalDelete();
+        }
       } catch (error) {
         console.log(error.response);
       }
@@ -737,12 +1223,113 @@ export const CRUD = () => {
           </div>
         </>
       );
+    } else if(param === "products") {
+      return (
+        <>
+          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-3">
+            <div className="col-span-1">
+              <div className="w-fit relative">
+                <svg
+                  className={`w-6 h-6 text-gray-800 dark:text-white absolute right-[-10px] top-[-10px] cursor-pointer ${
+                    imageUrl ===
+                    "https://res.cloudinary.com/du0tz73ma/image/upload/v1700279273/building_z7thy7.png"
+                      ? `hidden`
+                      : ``
+                  }`}
+                  onClick={deletePreviewImage}
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 30 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+                <img
+                  id="preview-image"
+                  className="w-72 h-72 mb-3 rounded-sm"
+                  src={imageUrl}
+                  alt=""
+                />
+              </div>
+              {inputProducts
+                .filter((item) => item.name === "image_product") // Filter item dengan name bukan 'name'
+                .map((item, index) => (
+                  <>
+                    <FormInput
+                      key={item.id}
+                      element={item.element}
+                      htmlFor={item.htmlFor}
+                      label={item.label}
+                      type={item.type}
+                      name={item.name}
+                      referens={item.ref}
+                      value={item.value}
+                      id={item.id}
+                      onChange={(event) => item.onchange(event)}
+                      placeholder={item.placeholder}
+                      dataSelect={item.dataSelect}
+                      uniqueId={index}
+                      validationError={validationError}
+                      disabled={item.name === 'warehouse_id' && !defaultEdit ? true : false}
+                    />
+                    <div className="mt-3">
+                      <TextArea
+                        rows={8}
+                        span={`col-span-3`}
+                        label={"Description"}
+                        htmlFor={"description"}
+                        id={"description"}
+                        name={"description"}
+                        referens={refBody.descriptionRef}
+                        placeholder={"Write description here"}
+                        value={dataEdit.description}
+                        onChange={handleChange}
+                        validationError={validationError}
+                      />
+                    </div>
+                  </>
+                ))}
+            </div>
+            <div className="col-span-2">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {inputProducts
+                  .filter((item) => item.name !== "image_product") // Filter item dengan name bukan 'name'
+                  .map((item, index) => (
+                    <FormInput
+                      key={item.id}
+                      element={item.element}
+                      htmlFor={item.htmlFor}
+                      label={item.label}
+                      type={item.type}
+                      name={item.name}
+                      referens={item.ref}
+                      value={item.value}
+                      id={item.id}
+                      onChange={(event) => item.onchange(event)}
+                      placeholder={item.placeholder}
+                      dataSelect={item.dataSelect}
+                      uniqueId={index}
+                      validationError={validationError}
+                      disabled={item.name === 'warehouse_id' && !defaultEdit ? true : false}
+                    />
+                  ))}
+              </div>
+            </div>
+          </div>
+        </>
+      );
     }
   };
 
   const { data, handleClickHeading } = READ();
   const { handleCreate } = CREATE();
-  const { handleEdit } = EDIT();
+  const { handleEdit, handleEditDetailWarehouseLocations, handleEditDetailForProduct } = EDIT();
   const { openModalDelete, closeModalDelete, handleDelete } = DELETE();
 
   return {
@@ -777,6 +1364,10 @@ export const CRUD = () => {
     setValidationError,
     setLoading,
     setPath,
-    setDisabledInput
+    setDisabledInput,
+    setRefreshForDetail,
+    handleEditDetailWarehouseLocations,
+    getWarehouseById,
+    handleEditDetailForProduct
   };
 };

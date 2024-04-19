@@ -106,6 +106,47 @@ export const putApiData = async (endpoint, data) => {
   // }
 };
 
+export const putApiDataAndFile = async (endpoint, data) => {
+  // Membuat objek FormData
+  const formData = new FormData();
+
+  // Menambahkan semua bidang ke FormData
+  Object.entries(data).forEach(([key, value]) => {
+    // Jika nilai adalah objek File, tambahkan dengan kunci yang benar
+    if (value instanceof File) {
+      formData.append('image_product', value, value.name); // Pastikan nama bidang untuk gambar benar
+    } else {
+      // Sesuaikan kunci yang diharapkan oleh server untuk properti non-file
+      formData.append(key, value);
+    }
+  }); 
+
+  console.log(data);
+  console.log(formData);
+
+  // Mengirim permintaan PUT tanpa try-catch
+  const response = await axios.put(
+    `${import.meta.env.VITE_API_URL}${endpoint}`,
+    formData,
+    {
+      withXSRFToken: true,
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  displayToast({
+    icon: "success",
+    title: response.data.message,
+  });
+
+  return response.data;
+};
+
+
+
 export const deleteApiData = async (endpoint) => {
   try {
     const response = await axios.delete(

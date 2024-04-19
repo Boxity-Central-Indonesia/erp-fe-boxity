@@ -36,7 +36,10 @@ export const Warehouses = () => {
         setValidationError,
         setLoading,
         setPath,
-        setDisabledInput
+        setRefreshForDetail,
+        handleEditDetailWarehouseLocations,
+        getWarehouseById,
+        handleEditDetailForProduct
     } = CRUD()
 
     const dataModalBody = () => {
@@ -88,7 +91,12 @@ export const Warehouses = () => {
                     setLoading={setLoading}
                     setData={setDataDetailWarehouses}
                     setPath={setPath}
-                    // handleEdit={handleEdit}
+                    setRefreshForDetail={setRefreshForDetail}
+                    handleCreate={handleCreate}
+                    handleEdit={handleEdit}
+                    handleEditWarehouseLocations={handleEditDetailWarehouseLocations}
+                    getWarehouseById={getWarehouseById}
+                    handleEditDetailForProduct={handleEditDetailForProduct}
                     // dataHeading={dataHeadingForProduct}
                     // setPath={setPath}
                 />

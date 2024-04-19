@@ -3,12 +3,14 @@ import { numberToCurrency } from "../../../../config/FormatCurrency";
 import { useEffect, useState } from "react";
 import { getApiData, putApiData } from "../../../../../function/Api";
 import { WarehousesLocations } from "./warehousesLocations";
+import { Produk } from "./product";
 
 export const DetailWarehouses = ({
   data,
   setData,
   defaultEdit,
-//   handleEdit,
+  handleEditWarehouseLocations,
+  handleEditDetailForProduct,
   dataHeading,
   setPath,
   setOpenModal,
@@ -20,7 +22,22 @@ export const DetailWarehouses = ({
   setValidationError,
   setResponseError,
   setLoading,
+  setRefreshForDetail,
+  handleCreate,
+  getWarehouseById
 }) => {
+
+  const dataDetail = {
+    name: data?.warehouse?.name,
+    address: data?.warehouse?.address,
+    capacity: data?.warehouse?.capacity,
+    description: data?.warehouse?.description,
+    location: data?.locations,
+    products: data?.products,
+    id: data?.warehouse?.id,
+  }
+
+
   const handleBack = () => {
     defaultEdit(true);
     setPath("warehouses");
@@ -40,12 +57,7 @@ export const DetailWarehouses = ({
         if(status === 201) {
             setOpenModal(prevOpenModal => !prevOpenModal)
             setLoading((prevLoading) => !prevLoading);
-            setData({
-                name: data.name,
-                address: data.address,
-                capacity: data.capacity,
-                description: data.description,
-            })
+            getWarehouseById(refBody.idRef.current.value, dataBody)
         }
     } catch (error) {
         setResponseError(error.response.data);
@@ -54,6 +66,7 @@ export const DetailWarehouses = ({
   }
 
   const handleEdit = () => {
+      setPath('warehouses')
       setDataModal({
           size: "lg",
           labelModal: "Update gudang",
@@ -70,11 +83,11 @@ export const DetailWarehouses = ({
         });
         setOpenModal(prevOpenModal => !prevOpenModal)
         setDataEdit({
-            name: data.name,
-            address: data.address,
-            capacity: data.capacity,
-            description: data.description,
-            id: data.id,
+            name: dataDetail.name,
+            address: dataDetail.address,
+            capacity: dataDetail.capacity,
+            description: dataDetail.description,
+            id: dataDetail.id,
         })
     }
 
@@ -93,7 +106,7 @@ export const DetailWarehouses = ({
                   {" "}
                   :{" "}
                   <span className="ml-5">
-                    {data?.name || "--"}
+                    {dataDetail && dataDetail?.name || "--"}
                   </span>
                 </td>
               </tr>
@@ -101,21 +114,21 @@ export const DetailWarehouses = ({
                 <td className="py-1">Alamat</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.address || "--"}</span>
+                  : <span className="ml-5">{dataDetail && dataDetail?.address || "--"}</span>
                 </td>
               </tr>
               <tr>
                 <td className="py-1">Kapasitas</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.capacity || "--"}</span>
+                  : <span className="ml-5">{dataDetail && dataDetail?.capacity || "--"}</span>
                 </td>
               </tr>
               <tr>
                 <td className="py-1">Deskripsi</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{data?.description || "--"}</span>
+                  : <span className="ml-5">{dataDetail && dataDetail?.description || "--"}</span>
                 </td>
               </tr>
             </table>
@@ -178,27 +191,36 @@ export const DetailWarehouses = ({
               Lokasi gudang
             </h2>
             <WarehousesLocations
-                data={data}
+                data={dataDetail}
+                setData={setData}
                 openModal={openModal}
                 setOpenModal={setOpenModal}
                 setPath={setPath}
                 setDataModal={setDataModal}
                 refBody={refBody}
+                setRefreshForDetail={setRefreshForDetail}
+                handleCreate={handleCreate}
+                handleEdit={handleEditWarehouseLocations}
             />
           </div>
           <hr className="my-3" />
-          {/* <div>
+          <div>
             <h2 className="text-xl font-medium dark:text-white mb-4">
-              Timbangan
+              Daftar produk
             </h2>
-            <TabelForDetail
-              data={[]}
-              dataHeading={dataHeading}
-              handleEdit={handleEdit}
-              routes={""}
-              hidden={true}
+            <Produk
+                data={dataDetail}
+                setData={setData}
+                openModal={openModal}
+                setOpenModal={setOpenModal}
+                setPath={setPath}
+                setDataModal={setDataModal}
+                refBody={refBody}
+                setRefreshForDetail={setRefreshForDetail}
+                handleCreate={handleCreate}
+                handleEdit={handleEditDetailForProduct}
             />
-          </div> */}
+          </div>
         </div>
         <hr className="my-7" />
       </section>

@@ -5,6 +5,7 @@ import {
   putApiData,
   deleteApiData,
   postApiDataAndFile,
+  putApiDataAndFile,
 } from "../../../../../function/Api";
 import IconAdd from "../../../../layouts/icons/IconAdd";
 import { TextArea } from "../../../../layouts/FormInput";
@@ -76,15 +77,14 @@ export const CRUD = () => {
     const { name, value } = event.target;
 
     if (name === "image_product") {
-      setImageUrl(
-        URL.createObjectURL(refBody.image_productRef.current.files[0])
-      );
-      setDataEdit({
-        image_product: URL.createObjectURL(
-          refBody.image_productRef.current.files[0]
-        ),
-      });
+      const newImageUrl = URL.createObjectURL(refBody.image_productRef.current.files[0]);
+      setImageUrl(newImageUrl);
+      setDataEdit(prevData => ({
+        ...prevData,
+        image_product: newImageUrl,
+      }));
     }
+    
 
     if (
       name === "price" ||
@@ -109,9 +109,10 @@ export const CRUD = () => {
     setImageUrl(
       "https://res.cloudinary.com/du0tz73ma/image/upload/v1700279273/building_z7thy7.png"
     );
-    setDataEdit({
+    setDataEdit(prevData => ({
+      ...prevData,
       image_product: "",
-    });
+    }));
     refBody.image_productRef.current.value = "";
   };
 
@@ -953,7 +954,7 @@ export const CRUD = () => {
           category_id: refBody.category_idRef.current.value,
           unit_of_measure: refBody.unit_of_measureRef.current.value,
           raw_material: refBody.raw_materialRef.current.value,
-          image_product: refBody.image_productRef.current.value,
+          image_product: refBody.image_productRef.current.files[0]
         };
         console.log(dataBody);
         try {
@@ -1141,17 +1142,17 @@ export const CRUD = () => {
           type: refBody.typeRef.current.value,
           animal_type: refBody.animal_typeRef.current.value,
           age: refBody.ageRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
           weight: refBody.weightRef.current.value,
           health_status: refBody.health_statusRef.current.value,
           stock: refBody.stockRef.current.value,
           category_id: refBody.category_idRef.current.value,
-          warehouse_id: refBody.warehouse_idRef.current.value,
           unit_of_measure: refBody.unit_of_measureRef.current.value,
           raw_material: refBody.raw_materialRef.current.value,
-          image_product: refBody.image_productRef.current.value,
+          image_product: refBody.image_productRef.current.files[0],
         };
         try {
-          const response = await putApiData(
+          const response = await putApiDataAndFile(
             path + "/" + refBody.idRef.current.value,
             dataBody
           );
