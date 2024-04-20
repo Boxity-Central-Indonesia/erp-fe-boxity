@@ -114,6 +114,10 @@ export const CRUD = () => {
     localStorage.setItem("dataTabelProducts", JSON.stringify(data));
   };
 
+  useEffect(() => {
+    setDataFilterProduct([])
+  }, [defaultEdit])
+
   // Fungsi untuk mengambil dataTabelProducts dari Local Storage saat komponen dimuat
   useEffect(() => {
     const storedData = localStorage.getItem("dataTabelProducts");
@@ -127,10 +131,6 @@ export const CRUD = () => {
       setDataTabelDeliveryNotes(JSON.parse(dataDeliveryNotesAtLocalStorage));
     }
   }, [render]);
-
-  useEffect(() => {
-    console.log(defaultEdit);
-  }, [defaultEdit]);
 
   useEffect(() => {
     localStorage.removeItem("dataTabelProducts");
@@ -173,7 +173,31 @@ export const CRUD = () => {
     }));
   };
 
-  // var dataOrderType = undefined
+  const getFilterWarehouseByTypeTransaction = async (value) => {
+    try {
+      const { data, status } = await getApiData("vendors/" + value);
+      if (status === 200) {
+        if (
+          data.transaction_type === "inbound" ||
+          data.transaction_type === "supplier"
+        ) {
+          const filterDataSelectProduct = dataSelectProducts.filter(
+            (item) => item.raw_material === 1
+          );
+          setDataFilterProduct(filterDataSelectProduct);
+          setDisabledInput(true);
+        } else {
+          const filterDataSelectProduct = dataSelectProducts.filter(
+            (item) => item.raw_material === 0 || item.raw_material === null
+          );
+          setDataFilterProduct(filterDataSelectProduct);
+          setDisabledInput(false);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleChange = async (event) => {
     const { name, value } = event.target;
@@ -879,7 +903,6 @@ export const CRUD = () => {
       const getDataOrders = async () => {
         try {
           const { data, status } = await getApiData("orders");
-          console.log(data);
           if (status === 200) {
             const newData = data
               .filter((item) => item.order_status == "Completed") // Filter item dengan status bukan "Completed"
@@ -1016,7 +1039,7 @@ export const CRUD = () => {
           );
           if (status === 200) {
             setDataDetailOrders(() => data);
-            // setDataEdit
+            getFilterWarehouseByTypeTransaction(data.vendor.id)
             setIdDelete(data.id);
             setOrderId(data.id);
           }

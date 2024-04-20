@@ -1,7 +1,7 @@
 import { TabelForDetail } from "../../../../layouts/TabelForDetail"
 import { useState } from "react"
 import IconAdd from "../../../../layouts/icons/IconAdd"
-import { FormatCurrency } from "../../../../config/FormatCurrency"
+import { numberToCurrency } from "../../../../config/FormatCurrency"
 
 export const Produk = ({
     data,
@@ -42,8 +42,8 @@ export const Produk = ({
         category: item.category?.name || "--",
         berat: (item.weight ?? 0.0) + " " + item.unit_of_measure,
         jumlah: item.stock + " pcs",
-        "harga satuan": item.price,
-        "HPP Balance": item.price * item.stock,
+        "harga satuan": numberToCurrency(item.price),
+        "HPP Balance": numberToCurrency(item.price * item.stock),
       }))
 
     return (
