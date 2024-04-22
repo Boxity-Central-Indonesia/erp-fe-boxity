@@ -55,33 +55,33 @@ export const InvoicesDetail = ({
     );
   }, [data]);
 
-  const downloadInvoices = async (e, paymentId) => {
+  const downloadPayment = async (e, paymentId) => {
     e.preventDefault();
-    // try {
-    //   const { data: pdfData, status } = await getApiData(
-    //     `download/payments/${paymentId}`
-    //   );
-    //   if (status === 200) {
-    //     const pdfUrl = pdfData;
+    try {
+      const { data: pdfData, status } = await getApiData(
+        `download/payments/${paymentId}`
+      );
+      if (status === 200) {
+        const pdfUrl = pdfData;
 
-    //     // Create a hidden link
-    //     const link = document.createElement("a");
-    //     link.href = pdfUrl;
-    //     link.target = "_blank"; // Open in a new tab/window
-    //     link.download = `payment_detail_${paymentId}.pdf`; // Set the desired file name
+        // Create a hidden link
+        const link = document.createElement("a");
+        link.href = pdfUrl;
+        link.target = "_blank"; // Open in a new tab/window
+        link.download = `payment_detail_${paymentId}.pdf`; // Set the desired file name
 
-    //     // Append the link to the document
-    //     document.body.appendChild(link);
+        // Append the link to the document
+        document.body.appendChild(link);
 
-    //     // Simulate a click to trigger the download
-    //     link.click();
+        // Simulate a click to trigger the download
+        link.click();
 
-    //     // Remove the link from the document
-    //     document.body.removeChild(link);
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+        // Remove the link from the document
+        document.body.removeChild(link);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -222,7 +222,7 @@ export const InvoicesDetail = ({
             textColour={"#fff"}
             label={"Print"}
             paddingX={"3"}
-            event={downloadInvoices}
+            // event={}
             paddingY={"2"}
             icon={
               <svg
