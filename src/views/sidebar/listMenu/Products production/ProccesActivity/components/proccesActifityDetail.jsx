@@ -37,11 +37,11 @@ export const ProccesActivityDetail = ({
 
   return (
     <>
-      <h1 className="text-2xl my-5 dark:text-white font-semibold">
+      <h1 className="my-5 text-2xl font-semibold dark:text-white">
         process activity detail
       </h1>
-      <section className="bg-white dark:bg-gray-800 dark:text-white rounded-md shadow-md p-5 mb-16">
-        <div className="grid lg:grid-cols-2 text-base">
+      <section className="p-5 mb-16 bg-white rounded-md shadow-md dark:bg-gray-800 dark:text-white">
+        <div className="grid text-base lg:grid-cols-2">
           <div className="col-span-1">
             <table className={`w-full`}>
               <tbody>
@@ -177,7 +177,7 @@ export const ProccesActivityDetail = ({
         <hr className="my-7" />
         <div className="grid grid-cols-1">
           <div>
-            {/* <h2 className="text-xl font-medium dark:text-white mb-4">
+            {/* <h2 className="mb-4 text-xl font-medium dark:text-white">
               Company branch
             </h2> */}
             <TabelForDetail

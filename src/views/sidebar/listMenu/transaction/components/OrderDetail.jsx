@@ -12,7 +12,7 @@ export const OrderDetail = ({
   dataHeading,
   setPath,
 }) => {
-  const [dataTimbangan, setDataTimbangan] = useState([])
+  const [dataTimbangan, setDataTimbangan] = useState([]);
   const dataProducts = data?.products
     ? data.products.map((product) => ({
         id: product.id,
@@ -79,49 +79,54 @@ export const OrderDetail = ({
     }
   };
 
-
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await getApiData('processing-activities/by-order/' + data?.id)
+        const response = await getApiData(
+          "processing-activities/by-order/" + data?.id
+        );
         if (response.status === 200) {
-          const newData = response.data.filter(item => item.activity_type === 'weighing').map(item => {
-            const formattedDetails = formatDetails(item.details);
-            return {
-              id: item.id,
-              'kode order': item.kodeOrder,
-              nama: item.product_name,
-              deskripsi: <div dangerouslySetInnerHTML={{ __html: formattedDetails }} />
-            };
-          });
+          const newData = response.data
+            .filter((item) => item.activity_type === "weighing")
+            .map((item) => {
+              const formattedDetails = formatDetails(item.details);
+              return {
+                id: item.id,
+                "kode order": item.kodeOrder,
+                nama: item.product_name,
+                deskripsi: (
+                  <div dangerouslySetInnerHTML={{ __html: formattedDetails }} />
+                ),
+              };
+            });
           setDataTimbangan(newData);
-        }else if(response.status === 404){
-          setDataTimbangan([])
-          console.log('okeee');
+        } else if (response.status === 404) {
+          setDataTimbangan([]);
+          console.log("okeee");
         }
       } catch (error) {
-        setDataTimbangan([])
+        setDataTimbangan([]);
       }
     };
-  
+
     // Function to format details
     const formatDetails = (details) => {
       // Parse the JSON string into an object
       const parsedDetails = JSON.parse(details);
-      
+
       // Construct the formatted details string
-      let detailsString = parsedDetails.description; // Start with the description
-      if (parsedDetails.ordered_quantity) { // If ordered_quantity exists, append it
-        detailsString += "<br />Ordered Quantity: " + parsedDetails.ordered_quantity;
+      let detailsString = parsedDetails.description;
+      if (parsedDetails.ordered_quantity) {
+        // If ordered_quantity exists, append it
+        detailsString += "<br />No Kendaraan: " + parsedDetails.vehicle_no;
       }
-      
+
       return detailsString;
     };
-  
+
     getData();
   }, [data]);
-  
-  
+
   return (
     <>
       <h1 className="my-5 text-2xl font-semibold dark:text-white">
