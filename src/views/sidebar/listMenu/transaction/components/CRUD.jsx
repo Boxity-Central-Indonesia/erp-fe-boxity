@@ -1063,11 +1063,11 @@ export const CRUD = () => {
           if (status === 200) {
             setSelectedOption(data.order_type);
             setDataEdit({
-              id: data.id,
-              vendor_id: data.vendor.id,
-              warehouse_id: data.warehouse.id,
-              order_type: data.order_type,
-              invoice: data.invoice,
+              id: data?.id,
+              vendor_id: data?.vendor.id,
+              warehouse_id: data?.warehouse.id,
+              order_type: data?.order_type,
+              invoice: data?.invoice,
             });
           }
         } catch (error) {}
