@@ -55,33 +55,33 @@ export const InvoicesDetail = ({
     );
   }, [data]);
 
-  const downloadPayment = async (e, paymentId) => {
+  const downloadInvoices = async (e, paymentId) => {
     e.preventDefault();
-    try {
-      const { data: pdfData, status } = await getApiData(
-        `download/payments/${paymentId}`
-      );
-      if (status === 200) {
-        const pdfUrl = pdfData;
+    // try {
+    //   const { data: pdfData, status } = await getApiData(
+    //     `download/payments/${paymentId}`
+    //   );
+    //   if (status === 200) {
+    //     const pdfUrl = pdfData;
 
-        // Create a hidden link
-        const link = document.createElement("a");
-        link.href = pdfUrl;
-        link.target = "_blank"; // Open in a new tab/window
-        link.download = `payment_detail_${paymentId}.pdf`; // Set the desired file name
+    //     // Create a hidden link
+    //     const link = document.createElement("a");
+    //     link.href = pdfUrl;
+    //     link.target = "_blank"; // Open in a new tab/window
+    //     link.download = `payment_detail_${paymentId}.pdf`; // Set the desired file name
 
-        // Append the link to the document
-        document.body.appendChild(link);
+    //     // Append the link to the document
+    //     document.body.appendChild(link);
 
-        // Simulate a click to trigger the download
-        link.click();
+    //     // Simulate a click to trigger the download
+    //     link.click();
 
-        // Remove the link from the document
-        document.body.removeChild(link);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    //     // Remove the link from the document
+    //     document.body.removeChild(link);
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   return (
@@ -213,6 +213,30 @@ export const InvoicesDetail = ({
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="m14.3 4.8 2.9 2.9M7 7H4a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h11c.6 0 1-.4 1-1v-4.5m2.4-10a2 2 0 0 1 0 3l-6.8 6.8L8 14l.7-3.6 6.9-6.8a2 2 0 0 1 2.8 0Z"
+                />
+              </svg>
+            }
+          />
+          <Button
+            bgColour={"#040d1d"}
+            textColour={"#fff"}
+            label={"Print"}
+            paddingX={"3"}
+            event={downloadInvoices}
+            paddingY={"2"}
+            icon={
+              <svg
+                className="w-5 h-5 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 30 24"
+              >
+                <path
+                  stroke="white"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M16.4 18H19c.6 0 1-.4 1-1v-5c0-.6-.4-1-1-1H5a1 1 0 0 0-1 1v5c0 .6.4 1 1 1h2.6m9.4-7V5c0-.6-.4-1-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4c0 .6-.4 1-1 1H8a1 1 0 0 1-1-1v-4Z"
                 />
               </svg>
             }
