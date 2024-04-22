@@ -30,7 +30,7 @@ export const InvoicesDetail = ({
                 className="flex items-center"
               >
                 <svg
-                  className="w-5 h-5 text-gray-800 dark:text-white mr-1"
+                  className="w-5 h-5 mr-1 text-gray-800 dark:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -86,11 +86,11 @@ export const InvoicesDetail = ({
 
   return (
     <>
-      <h1 className="text-2xl my-5 dark:text-white font-semibold">
+      <h1 className="my-5 text-2xl font-semibold dark:text-white">
         Invoices detail
       </h1>
-      <section className="bg-white dark:bg-gray-800 dar00k:text-white rounded-md shadow-md p-5 mb-16">
-        <div className="grid lg:grid-cols-2 text-base">
+      <section className="p-5 mb-16 bg-white rounded-md shadow-md dark:bg-gray-800 dar00k:text-white">
+        <div className="grid text-base lg:grid-cols-2">
           <div className="col-span-1">
             <table className={`w-full`}>
               <tr>
@@ -221,7 +221,7 @@ export const InvoicesDetail = ({
         <hr className="my-7" />
         <div className="grid grid-cols-1 gap-5">
           <div>
-            <h2 className="text-xl font-medium dark:text-white mb-4">
+            <h2 className="mb-4 text-xl font-medium dark:text-white">
               Riwayat Pembayaran
             </h2>
             <TabelForDetail
@@ -229,19 +229,6 @@ export const InvoicesDetail = ({
               dataHeading={dataHeading}
               handleEdit={handleEdit}
               routes={"invoices-payments"}
-            />
-          </div>
-          <hr className="my-3" />
-          <div>
-            <h2 className="text-xl font-medium dark:text-white mb-4">
-              Timbangan
-            </h2>
-            <TabelForDetail
-              data={[]}
-              dataHeading={dataHeading}
-              handleEdit={handleEdit}
-              routes={""}
-              hidden={true}
             />
           </div>
         </div>
