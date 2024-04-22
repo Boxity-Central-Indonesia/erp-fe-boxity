@@ -95,9 +95,12 @@ export const OrderDetail = ({
             };
           });
           setDataTimbangan(newData);
+        }else if(response.status === 404){
+          setDataTimbangan([])
+          console.log('okeee');
         }
       } catch (error) {
-        console.log(error);
+        setDataTimbangan([])
       }
     };
   
