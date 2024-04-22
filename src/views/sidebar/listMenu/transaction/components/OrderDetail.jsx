@@ -1,5 +1,5 @@
 import { CRUD } from "./CRUD";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../../../layouts/Button";
 import { TabelForDetail } from "../../../../layouts/TabelForDetail";
 import { getApiData } from "../../../../../function/Api";
@@ -12,6 +12,7 @@ export const OrderDetail = ({
   dataHeading,
   setPath,
 }) => {
+  const [dataTimbangan, setDataTimbangan] = useState([])
   const dataProducts = data?.products
     ? data.products.map((product) => ({
         id: product.id,
@@ -78,6 +79,46 @@ export const OrderDetail = ({
     }
   };
 
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await getApiData('processing-activities/by-order/' + data?.id)
+        if (response.status === 200) {
+          const newData = response.data.filter(item => item.activity_type === 'weighing').map(item => {
+            const formattedDetails = formatDetails(item.details);
+            return {
+              id: item.id,
+              'kode order': item.kodeOrder,
+              nama: item.product_name,
+              deskripsi: <div dangerouslySetInnerHTML={{ __html: formattedDetails }} />
+            };
+          });
+          setDataTimbangan(newData);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    // Function to format details
+    const formatDetails = (details) => {
+      // Parse the JSON string into an object
+      const parsedDetails = JSON.parse(details);
+      
+      // Construct the formatted details string
+      let detailsString = parsedDetails.description; // Start with the description
+      if (parsedDetails.ordered_quantity) { // If ordered_quantity exists, append it
+        detailsString += "<br />Ordered Quantity: " + parsedDetails.ordered_quantity;
+      }
+      
+      return detailsString;
+    };
+  
+    getData();
+  }, [data]);
+  
+  
   return (
     <>
       <h1 className="text-2xl my-5 dark:text-white font-semibold">
@@ -278,10 +319,11 @@ export const OrderDetail = ({
               Timbangan
             </h2>
             <TabelForDetail
-              data={[]}
+              data={dataTimbangan}
               dataHeading={dataHeading}
               handleEdit={handleEdit}
               hidden={true}
+              hiddenBtnEdit={true}
               // routes={"products"}
             />
           </div>

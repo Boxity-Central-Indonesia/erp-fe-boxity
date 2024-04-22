@@ -1058,6 +1058,11 @@ export const CRUD = () => {
           handleBtn: edit,
         });
 
+        setDataEdit({
+          warehouse_id: [],
+          vendor_id: [],
+        })
+
         try {
           const { data, status } = await getApiData("orders/" + param);
           if (status === 200) {
@@ -1065,7 +1070,7 @@ export const CRUD = () => {
             setDataEdit({
               id: data?.id,
               vendor_id: data?.vendor.id,
-              warehouse_id: data?.warehouse.id,
+              warehouse_id: data?.warehouse?.id ,
               order_type: data?.order_type,
               invoice: data?.invoice,
             });
