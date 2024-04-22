@@ -16,19 +16,19 @@ export const OrderDetail = ({
     ? data.products.map((product) => ({
         id: product.id,
         name: product.name,
-        quantity: product.quantity_pesanan + " Kg",
+        "jumlah pesanan": product.quantity_pesanan + " Kg",
         "harga satuan": new Intl.NumberFormat("id-ID", {
           style: "currency",
           currency: "IDR",
         }).format(product.price_per_unit),
-        "total price": new Intl.NumberFormat("id-ID", {
+        "total tagihan": new Intl.NumberFormat("id-ID", {
           style: "currency",
           currency: "IDR",
         }).format(product.total_price),
+        "selisih jumlah": product.selisih_quantity + " Kg",
         "timbang kotor": product.timbang_kotor + " Kg",
         "total keranjang": product.total_keranjang + " Pcs",
         "total berat keranjang": product.total_berat_keranjang + " Kg",
-        "selisih jumlah": product.selisih_quantity + " Kg",
         "timbang bersih": product.timbang_bersih + " Kg",
         "jumlah hewan": product.total_jumlah_item + " Pcs",
         "rata-rata berat hewan":
@@ -80,11 +80,11 @@ export const OrderDetail = ({
 
   return (
     <>
-      <h1 className="text-2xl my-5 dark:text-white font-semibold">
+      <h1 className="my-5 text-2xl font-semibold dark:text-white">
         Order detail
       </h1>
-      <section className="bg-white dark:bg-gray-800 dark:text-white rounded-md shadow-md p-5 mb-16">
-        <div className="grid lg:grid-cols-2 text-base mb-2">
+      <section className="p-5 mb-16 bg-white rounded-md shadow-md dark:bg-gray-800 dark:text-white">
+        <div className="grid mb-2 text-base lg:grid-cols-2">
           <div className="col-span-1">
             <table className={`w-full responsive`}>
               <tr className="">
@@ -260,7 +260,7 @@ export const OrderDetail = ({
         <hr className="my-7" />
         <div className="grid grid-cols-1 gap-5">
           <div>
-            <h2 className="text-xl font-medium dark:text-white mb-4">
+            <h2 className="mb-4 text-xl font-medium dark:text-white">
               Daftar Produk
             </h2>
             <TabelForDetail
@@ -271,10 +271,10 @@ export const OrderDetail = ({
             />
           </div>
 
-            <hr className="my-3" />
+          <hr className="my-3" />
 
           <div>
-            <h2 className="text-xl font-medium dark:text-white mb-4">
+            <h2 className="mb-4 text-xl font-medium dark:text-white">
               Timbangan
             </h2>
             <TabelForDetail
