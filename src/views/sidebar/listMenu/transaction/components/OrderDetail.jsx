@@ -97,6 +97,7 @@ export const OrderDetail = ({
                 deskripsi: (
                   <div dangerouslySetInnerHTML={{ __html: formattedDetails }} />
                 ),
+                "waktu timbang": item.created_at,
               };
             });
           setDataTimbangan(newData);
@@ -113,14 +114,47 @@ export const OrderDetail = ({
     const formatDetails = (details) => {
       // Parse the JSON string into an object
       const parsedDetails = JSON.parse(details);
-
+      console.log(details);
       // Construct the formatted details string
-      let detailsString = parsedDetails.description;
-      if (parsedDetails.ordered_quantity) {
-        // If ordered_quantity exists, append it
-        detailsString += "<br />No Kendaraan: " + parsedDetails.vehicle_no;
+      let detailsString = "Timbang melalui Livestock";
+      // If ordered_quantity exists, append it
+      detailsString += "<br />No Kendaraan: " + parsedDetails.vehicle_no;
+      detailsString +=
+        "<br />Timbang Berat Kotor: " +
+        parsedDetails.qty_weighing +
+        " " +
+        parsedDetails.noa_weighing;
+      detailsString +=
+        "<br />Jumlah ayam terhitung: " +
+        parsedDetails.number_of_item +
+        " " +
+        parsedDetails.noa_numberofitem;
+      detailsString +=
+        "<br />Berat keranjang per pcs: " +
+        parsedDetails.basket_weight +
+        " " +
+        parsedDetails.noa_basket_weight;
+      // Memastikan bahwa average_weight_per_animal ada dan merupakan angka
+      if (
+        parsedDetails.average_weight_per_animal &&
+        !isNaN(parsedDetails.average_weight_per_animal)
+      ) {
+        // Memformat nilai dengan dua digit di belakang koma dan membulatkannya
+        const roundedAverageWeight = parseFloat(
+          parsedDetails.average_weight_per_animal
+        ).toFixed(2);
+        detailsString +=
+          "<br />Hitung rata-rata berat ayam timbang: " +
+          roundedAverageWeight +
+          " " +
+          parsedDetails.noa_weighing;
+      } else {
+        detailsString +=
+          "<br />Hitung rata-rata berat ayam timbang: " +
+          parsedDetails.average_weight_per_animal +
+          " " +
+          parsedDetails.noa_weighing;
       }
-
       return detailsString;
     };
 
