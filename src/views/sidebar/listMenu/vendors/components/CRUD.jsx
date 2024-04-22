@@ -182,12 +182,12 @@ export const CRUD = () => {
         element: "select",
         ref: refBody.transaction_typeRef,
         name: "transaction_type",
-        label: "Transaction type",
-        htmlFor: "Transaction type",
-        id: "Transaction type",
+        label: "Tipe vendor",
+        htmlFor: "Tipe vendor",
+        id: "Tipe vendor",
         dataSelect: [
-          { id: "inbound", name: "inbound" },
-          { id: "outbound", name: "outbound" },
+          { id: "inbound", name: "Supplier" },
+          { id: "outbound", name: "Customer" },
         ],
         value: dataEdit.transaction_type,
         onchange: handleChange,
@@ -1035,7 +1035,7 @@ export const CRUD = () => {
     if (param === "vendors") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2">
             {inputVendors.map((item, index) => (
               <FormInput
                 key={item.id}
@@ -1060,7 +1060,7 @@ export const CRUD = () => {
     } else if (param === "vendor-contacts") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1">
+          <div className="grid grid-cols-1 gap-4 mb-4">
             {inputVendorContact.map((item, index) => (
               <FormInput
                 key={item.id}
@@ -1085,7 +1085,7 @@ export const CRUD = () => {
     } else if (param === "vendor-transactions") {
       return (
         <>
-          <div className="grid gap-4 mb-4 grid-cols-1 xl:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 mb-4 xl:grid-cols-2">
             {inputVendorTransaction.map((item, index) => (
               <FormInput
                 key={item.id}
