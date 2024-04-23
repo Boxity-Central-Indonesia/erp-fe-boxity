@@ -1,5 +1,5 @@
 import Button from "../../../../layouts/Button";
-import { numberToCurrency } from "../../../../config/FormatCurrency";
+import { numberToCurrency, stringToDecimal } from "../../../../config/FormatCurrency";
 import { useEffect, useState } from "react";
 import { getApiData, putApiData } from "../../../../../function/Api";
 import { WarehousesLocations } from "./warehousesLocations";
@@ -30,12 +30,13 @@ export const DetailWarehouses = ({
   const dataDetail = {
     name: data?.warehouse?.name,
     address: data?.warehouse?.address,
-    capacity: data?.warehouse?.capacity,
+    capacity: data?.warehouse?.capacity ? stringToDecimal({ value: data.warehouse.capacity }) + ' ton' : null,
     description: data?.warehouse?.description,
     location: data?.locations,
     products: data?.products,
     id: data?.warehouse?.id,
-  }
+};
+
 
 
   const handleBack = () => {

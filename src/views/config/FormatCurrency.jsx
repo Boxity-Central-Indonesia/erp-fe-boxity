@@ -38,3 +38,22 @@ export const numberToDecimal = ({value}) => {
 
     return formattedValue
 }
+
+
+export const stringToDecimal = ({ value }) => {
+    // Mengecek apakah value adalah string
+    if (typeof value !== 'string') {
+        throw new Error('Input harus berupa string');
+    }
+
+    // Membuang karakter non-angka
+    const numericString = value.replace(/\D/g, '');
+
+    // Mengubah string menjadi bilangan bulat
+    const intValue = parseInt(numericString, 10);
+
+    // Mengubah bilangan bulat menjadi format desimal dengan pemisah ribuan
+    const decimalString = intValue.toLocaleString('id-ID'); // Menggunakan 'id-ID' untuk format desimal di Indonesia
+
+    return decimalString;
+};
