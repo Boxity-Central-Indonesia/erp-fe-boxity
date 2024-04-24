@@ -14,7 +14,7 @@ export const ReadProccesActivity = ({
   const dataTabel = (data) => {
     return Object.values(data).flatMap((innerObj) =>
       Object.values(innerObj).map((item) => ({
-        "transaction code": item[item.length - 1].order.kode_order,
+        "transaction code": item[item.length - 1].order?.kode_order,
         "nama produk": item[item.length - 1].product.name,
         "status activity": item[item.length - 1].status_activities,
         "last activity": item[item.length - 1].activity_type.replace(/_/g, " "),

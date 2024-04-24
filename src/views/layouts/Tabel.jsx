@@ -25,6 +25,7 @@ const TabelComponent = ({
   handleEdit,
   setOpenModal,
   skeleton,
+  hiddenButton
 }) => {
   const { globalColor, changeColor } = useColor();
   const [sorting, setSorting] = useState([]);
@@ -398,6 +399,7 @@ const TabelComponent = ({
               showNavHeading={dataHeading && dataHeading[0].showNavHeading}
               activeButton={dataHeading && dataHeading[0].activeButton}
               dataNavHeading={dataHeading && dataHeading[0].dataNavHeading}
+              hidden={hiddenButton}
             />
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

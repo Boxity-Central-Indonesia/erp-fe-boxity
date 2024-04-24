@@ -146,10 +146,10 @@ function Sidebar() {
           path: "/products-production/proses-activity",
           label: "Proses Aktifitas Pabrik",
         },
-        // {
-        //   path: "/products-production/packages-data",
-        //   label: "Packaging Data",
-        // },
+        {
+          path: "/products-production/stock-balance-report",
+          label: "Laporan timbangan stock",
+        },
       ],
     },
     {

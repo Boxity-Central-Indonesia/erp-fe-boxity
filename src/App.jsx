@@ -44,6 +44,7 @@ import { User } from "./views/sidebar/listMenu/user/User";
 import { RoleAndPermission } from "./views/sidebar/listMenu/role&permission/role&permission";
 import { Asset } from "./views/sidebar/listMenu/asset/Asset";
 import { VendorTransaction } from "./views/sidebar/listMenu/reports/vendorTransaction/VendorTransaction";
+import { LaporanTimbanganStock } from "./views/sidebar/listMenu/Laporan timbangan stock/laporanTimbanganStock";
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -208,10 +209,10 @@ function App() {
                     }
                   />
                   <Route
-                    path="products-production/packages-data"
+                    path="products-production/stock-balance-report"
                     element={
                       <Auth.ProtectedRoute>
-                        <PackagesData />
+                        <LaporanTimbanganStock />
                       </Auth.ProtectedRoute>
                     }
                   />

@@ -16,6 +16,7 @@ const TabelHeading = ({
   dataNavHeading,
   activeButton,
   routes,
+  hidden
 }) => {
   const { globalColor, changeColor } = useColor();
 
@@ -87,6 +88,7 @@ const TabelHeading = ({
           </div>
           <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
             <Button
+              className={`${hidden ? `hidden` : ``}`}
               event={() => toggleOpenModal(activeButton || routes)}
               label={label}
               icon={icon}
