@@ -24,7 +24,7 @@ export const LaporanTimbanganStock = () => {
                 const {data, status} = await getApiData("orders/weighing/exordered")
                 if(status === 200){
                     const newData = data
-                    .filter(item => item.activity_type === "weighing")
+                    .filter(item => item.activity_type === "weighing" && item.details.type_of_item !== null)
                     .map(item => {
                         const formattedDetails = formatDetails(item.details);
                         return {
