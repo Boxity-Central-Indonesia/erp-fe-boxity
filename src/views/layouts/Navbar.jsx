@@ -149,7 +149,7 @@ function Navbar({ onToggleSidebar, setAuth }) {
   };
 
   const handleLogout = () => {
-    Cookies.remove("token");
+    Cookies.remove("token", {domain: import.meta.env.VITE_SESSION_URL});
     setAuth(false);
     navigate("/login");
   };
