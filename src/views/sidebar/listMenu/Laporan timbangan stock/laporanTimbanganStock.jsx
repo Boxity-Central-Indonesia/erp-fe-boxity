@@ -39,10 +39,10 @@ export const LaporanTimbanganStock = () => {
                     setData(newData)
                 } else if(status === 404){
                     console.log('okeeee');
-                    setData([])
+                    setData(() =>[])
                 }
             } catch (error) {
-                console.log(error);
+                setData([])
             }
         }
 
