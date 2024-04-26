@@ -37,6 +37,8 @@ export const LaporanTimbanganStock = () => {
                         }
                     })
                     setData(newData)
+                } else if(status === 404){
+                    setData([])
                 }
             } catch (error) {
                 console.log(error);
@@ -54,27 +56,48 @@ export const LaporanTimbanganStock = () => {
                 detailsString += "<br />Jenis item: " + parsedDetails.type_of_item;
             }
             // Append other details
-            detailsString += "<br />No Kendaraan: " + parsedDetails.vehicle_no;
-            detailsString +=
-                "<br />Timbang Berat Kotor: " +
-                parsedDetails.qty_weighing +
-                " " +
-                parsedDetails.noa_weighing;
-            detailsString +=
-                "<br />Jumlah ayam terhitung: " +
-                parsedDetails.number_of_item +
-                " " +
-                parsedDetails.noa_numberofitem;
-            detailsString +=
-                "<br />Berat keranjang per pcs: " +
-                parsedDetails.basket_weight +
-                " " +
-                parsedDetails.noa_basket_weight;
-                detailsString +=
-                "<br />Tipe item: " +
-                (parsedDetails.type_of_item || '') +
-                "";
-            detailsString += ""
+            // detailsString += "<br />No Kendaraan: " + parsedDetails.vehicle_no;
+            if (parsedDetails) {
+                let tempDetailsString = "";
+                
+                tempDetailsString +=
+                  "Timbang Melalui Livestock";
+                
+                if (parsedDetails.qty_weighing || parsedDetails.noa_weighing) {
+                  tempDetailsString +=
+                    "Timbang Berat Kotor: " +
+                    (parsedDetails.qty_weighing || "") +
+                    (parsedDetails.noa_weighing ? " " + parsedDetails.noa_weighing : "") +
+                    "<br />";
+                }
+                
+                tempDetailsString +=
+                  `Jumlah ${
+                    parsedDetails?.type_of_item ? parsedDetails.type_of_item : ""
+                  } terhitung: ${parsedDetails.number_of_item || ""} <br />`;
+              
+                if (parsedDetails.basket_weight || parsedDetails.noa_basket_weight) {
+                  tempDetailsString +=
+                    "Berat Keranjang Per Pcs: " +
+                    (parsedDetails.basket_weight || "") +
+                    (parsedDetails.noa_basket_weight ? " " + parsedDetails.noa_basket_weight : "") +
+                    "<br />";
+                }
+                
+                if (parsedDetails.type_of_item) {
+                  tempDetailsString +=
+                    "Tipe Item: " + parsedDetails.type_of_item + "<br />";
+                }
+                
+                tempDetailsString +=
+                  "Hitung Rata-Rata Berat Ayam Timbang: " +
+                  (parsedDetails.avg_weight_chicken || "") +
+                  " Kg";
+                
+                detailsString += tempDetailsString;
+              }
+              
+              
             // Ensure that average_weight_per_animal exists and is a number
             if (
                 parsedDetails.average_weight_per_animal &&
@@ -91,9 +114,10 @@ export const LaporanTimbanganStock = () => {
                     parsedDetails.noa_weighing;
             } else {
                 detailsString +=
-                    "<br />Hitung rata-rata berat ayam timbang: " +
-                    parsedDetails.average_weight_per_animal +
-                    " " +
+  "Hitung Rata-Rata Berat Ayam Timbang: " +
+  (parsedDetails.avg_weight_chicken === "Kg" ? "0 Kg" : parsedDetails.avg_weight_chicken);
+
+                    +
                     parsedDetails.noa_weighing;
             }
             return detailsString;
