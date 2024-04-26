@@ -37,10 +37,7 @@ export const LaporanTimbanganStock = () => {
                         }
                     })
                     setData(newData)
-                } else if(status === 404){
-                    console.log('okeeee');
-                    setData(() =>[])
-                }
+                } 
             } catch (error) {
                 setData([])
             }
@@ -49,57 +46,41 @@ export const LaporanTimbanganStock = () => {
         const formatDetails = (details) => {
             // Parse the JSON string into an object
             const parsedDetails = JSON.parse(details);
-            console.log(details);
+            
             // Construct the formatted details string
             let detailsString = "Timbang melalui Livestock";
+        
             // If type_of_item exists, append it
             if (parsedDetails.type_of_item) {
                 detailsString += "<br />Jenis item: " + parsedDetails.type_of_item;
             }
-            // Append other details
-            // detailsString += "<br />No Kendaraan: " + parsedDetails.vehicle_no;
-            if (parsedDetails) {
-                let tempDetailsString = "";
-                
-                tempDetailsString +=
-                  "Timbang Melalui Livestock";
-                
-                if (parsedDetails.qty_weighing || parsedDetails.noa_weighing) {
-                  tempDetailsString +=
-                    "Timbang Berat Kotor: " +
+            
+            // Create an unordered list to store other details
+            detailsString += "<ul>";
+        
+            if (parsedDetails.qty_weighing || parsedDetails.noa_weighing) {
+                detailsString += "<li>Timbang Berat Kotor: " +
                     (parsedDetails.qty_weighing || "") +
                     (parsedDetails.noa_weighing ? " " + parsedDetails.noa_weighing : "") +
-                    "<br />";
-                }
-                
-                tempDetailsString +=
-                  `Jumlah ${
-                    parsedDetails?.type_of_item ? parsedDetails.type_of_item : ""
-                  } terhitung: ${parsedDetails.number_of_item || ""} <br />`;
-              
-                if (parsedDetails.basket_weight || parsedDetails.noa_basket_weight) {
-                  tempDetailsString +=
-                    "Berat Keranjang Per Pcs: " +
+                    "</li>";
+            }
+        
+            detailsString += `<li>Jumlah ${
+                parsedDetails?.type_of_item ? parsedDetails.type_of_item : ""
+                } terhitung: ${parsedDetails.number_of_item || ""}</li>`;
+        
+            if (parsedDetails.basket_weight || parsedDetails.noa_basket_weight) {
+                detailsString += "<li>Berat Keranjang Per Pcs: " +
                     (parsedDetails.basket_weight || "") +
                     (parsedDetails.noa_basket_weight ? " " + parsedDetails.noa_basket_weight : "") +
-                    "<br />";
-                }
-                
-                if (parsedDetails.type_of_item) {
-                  tempDetailsString +=
-                    "Tipe Item: " + parsedDetails.type_of_item + "<br />";
-                }
-                
-                tempDetailsString +=
-                  "Hitung Rata-Rata Berat Ayam Timbang: " +
-                  (parsedDetails.avg_weight_chicken || "") +
-                  " Kg";
-                
-                detailsString += tempDetailsString;
-              }
-              
-              
-            // Ensure that average_weight_per_animal exists and is a number
+                    "</li>";
+            }
+        
+            if (parsedDetails.type_of_item) {
+                detailsString += "<li>Tipe Item: " + parsedDetails.type_of_item + "</li>";
+            }
+        
+            // Check if average_weight_per_animal exists and is a number
             if (
                 parsedDetails.average_weight_per_animal &&
                 !isNaN(parsedDetails.average_weight_per_animal)
@@ -108,21 +89,24 @@ export const LaporanTimbanganStock = () => {
                 const roundedAverageWeight = parseFloat(
                     parsedDetails.average_weight_per_animal
                 ).toFixed(2);
-                detailsString +=
-                    "<br />Hitung rata-rata berat ayam timbang: " +
+                detailsString += "<li>Hitung rata-rata berat ayam timbang: " +
                     roundedAverageWeight +
                     " " +
-                    parsedDetails.noa_weighing;
+                    parsedDetails.noa_weighing +
+                    "</li>";
             } else {
-                detailsString +=
-  "Hitung Rata-Rata Berat Ayam Timbang: " +
-  (parsedDetails.avg_weight_chicken === "Kg" ? "0 Kg" : parsedDetails.avg_weight_chicken);
-
-                    +
-                    parsedDetails.noa_weighing;
+                // If average_weight_per_animal doesn't exist or is not a number
+                detailsString += "<li>Hitung Rata-Rata Berat Ayam Timbang: " +
+                    (parsedDetails.avg_weight_chicken === "Kg" ? "0 Kg" : parsedDetails.avg_weight_chicken) +
+                    parsedDetails.noa_weighing +
+                    "</li>";
             }
+            
+            detailsString += "</ul>";
+        
             return detailsString;
         };
+        
         
         getData()
     }, [])
