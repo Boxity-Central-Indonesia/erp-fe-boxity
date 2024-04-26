@@ -348,8 +348,11 @@ function Sidebar() {
             <p className="mb-3 text-xs text-blue-800 dark:text-blue-400">
               Aplikasi ini masih dalam tahap Uji Terima Pengguna (UAT) dan
               mungkin tidak stabil. Bantu kami meningkatkannya dengan melaporkan
-              masalah dan memberikan umpan balik Anda. Kirim email ke
-              feedback@boxity.id. Terima kasih!
+              masalah dan memberikan umpan balik Anda. Kirim email ke&nbsp;
+              <a href="mailto:boxitycentralindonesia@gmail.com" target="_blank">
+                email ini
+              </a>
+              . Terima kasih!
             </p>
           </div>
         </nav>
