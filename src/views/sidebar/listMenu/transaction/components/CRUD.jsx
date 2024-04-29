@@ -1228,36 +1228,36 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
-      } else if (routes === "products") {
-        setPath("products");
-        localStorage.setItem("path", routes);
-        setEditProduct(true);
-        setDefaultEdit(() => false);
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "lg",
-          labelModal: "Edit products",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        setIdDelete(param);
-        setDataEdit({
-          id: param,
-        });
-        try {
-          const { data, status } = await getApiData(
-            "orders/" + orderId + "/products/" + param2
-          );
-          if (status === 200) {
-            setDataEdit({
-              quantity: data.quantity,
-              price_per_unit: data.price_per_unit,
-            });
-          }
-        } catch (error) {
-          console.log(error);
-        }
+      // } else if (routes === "products") {
+      //   setPath("products");
+      //   localStorage.setItem("path", routes);
+      //   setEditProduct(true);
+      //   setDefaultEdit(() => false);
+      //   setOpenModal((prevOpenModal) => !prevOpenModal);
+      //   setDataModal({
+      //     size: "lg",
+      //     labelModal: "Edit products",
+      //     labelBtnModal: "Save",
+      //     labelBtnSecondaryModal: "Delete",
+      //     handleBtn: edit,
+      //   });
+      //   setIdDelete(param);
+      //   setDataEdit({
+      //     id: param,
+      //   });
+      //   try {
+      //     const { data, status } = await getApiData(
+      //       "orders/" + orderId + "/products/" + param2
+      //     );
+      //     if (status === 200) {
+      //       setDataEdit({
+      //         quantity: data.quantity,
+      //         price_per_unit: data.price_per_unit,
+      //       });
+      //     }
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
       } else if (path === "delivery-notes" && defaultEdit === true) {
         setDefaultEdit(false);
         try {
@@ -1845,29 +1845,29 @@ export const CRUD = () => {
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
-      } else if (param === "products") {
-        setEditProduct(false);
-        setPath(param);
-        setDataEdit({
-          invoice_id: "",
-          amount_paid: "",
-          payment_method: "",
-          payment_date: "",
-        });
-        setValidationError({
-          invoice_id: "",
-          amount_paid: "",
-          payment_method: "",
-          payment_date: "",
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Tambah products",
-          labelBtnModal: "Tambah products",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
+      // } else if (param === "products") {
+      //   setEditProduct(false);
+      //   setPath(param);
+      //   setDataEdit({
+      //     invoice_id: "",
+      //     amount_paid: "",
+      //     payment_method: "",
+      //     payment_date: "",
+      //   });
+      //   setValidationError({
+      //     invoice_id: "",
+      //     amount_paid: "",
+      //     payment_method: "",
+      //     payment_date: "",
+      //   });
+      //   setOpenModal((prevOpenModal) => !prevOpenModal);
+      //   setDataModal({
+      //     size: "2xl",
+      //     labelModal: "Tambah products",
+      //     labelBtnModal: "Tambah products",
+      //     labelBtnSecondaryModal: "Back",
+      //     handleBtn: create,
+      //   });
       } else if (param === "goods-receipt") {
         setDataEdit({
           order_id: "",

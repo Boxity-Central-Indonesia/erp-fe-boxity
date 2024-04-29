@@ -37,6 +37,7 @@ export const CRUD = () => {
     "https://res.cloudinary.com/du0tz73ma/image/upload/v1700279273/building_z7thy7.png"
   );
   const [dataCategorySelect, setDataCategorySelect] = useState();
+  const [messages, setMessages] = useState([]);
 
   // EmployesList
 
