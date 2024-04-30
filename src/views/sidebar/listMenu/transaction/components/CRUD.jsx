@@ -779,7 +779,7 @@ export const CRUD = () => {
                   { path: "orders", label: "Pesanan" },
                   { path: "invoices", label: "Faktur Tagihan" },
                   { path: "payments", label: "Pembayaran" },
-                  { path: "goods-receipt", label: "Penerimaan Barang" },
+                  // { path: "goods-receipt", label: "Penerimaan Barang" },
                   { path: "delivery-notes", label: "Pengiriman Barang" },
                 ],
                 activeButton: "orders",
