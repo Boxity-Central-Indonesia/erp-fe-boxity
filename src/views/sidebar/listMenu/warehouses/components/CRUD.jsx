@@ -37,6 +37,7 @@ export const CRUD = () => {
     "https://res.cloudinary.com/du0tz73ma/image/upload/v1700279273/building_z7thy7.png"
   );
   const [dataCategorySelect, setDataCategorySelect] = useState();
+  const [messages, setMessages] = useState([]);
 
   // EmployesList
 
@@ -99,6 +100,21 @@ export const CRUD = () => {
     }));
   };
 
+  useEffect(() => {
+    // Membuka koneksi WebSocket saat komponen dimuat
+    const socket = new WebSocket('ws://localhost:6001'); // Ganti dengan URL WebSocket server Anda
+    
+    // Menangani pesan yang diterima dari server
+    socket.onmessage = event => {
+      const messageFromServer = event.data;
+      setMessages(prevMessages => [...prevMessages, messageFromServer]);
+    };
+    
+    // Menutup koneksi WebSocket saat komponen dibongkar
+    return () => {
+      socket.close();
+    };
+  }, []);
 
   useEffect(() => {
     if (!!responseError) {
