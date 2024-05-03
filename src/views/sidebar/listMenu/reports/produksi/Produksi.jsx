@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TabelComponent from "../../../../layouts/Tabel";
 import IconDownload from "../../../../layouts/icons/IconDownload";
 import { getApiData } from "../../../../../function/Api";
 import { Read } from "../read";
 import { downloadReport } from "../downloadReport";
+import { Spinner } from "../../../../layouts/Spinner";
 
 export const Produksi = () => {
   const dataTabel = (data) => {
@@ -16,7 +17,11 @@ export const Produksi = () => {
     }));
   };
 
-  const { data } = Read({ dataTabel, endPoint: "production-report" });
+  const { data, setRefresh, setLoading, loading } = Read({ dataTabel, endPoint: "production-report" });
+
+  useEffect(() => {
+    document.title = 'Laporan Production - DHKJ Manufacturer'
+  }, [])
 
   const print = () => {
     downloadReport("download/production-report");
@@ -32,7 +37,8 @@ export const Produksi = () => {
 
   return (
     <>
-      <TabelComponent data={data} dataHeading={dataHeading} />
+      <Spinner loading={loading}/>
+      <TabelComponent data={data} dataHeading={dataHeading} setRefresh={setRefresh} setLoading={setLoading}/>
     </>
   );
 };

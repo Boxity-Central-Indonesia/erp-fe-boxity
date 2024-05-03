@@ -133,6 +133,7 @@ export const CRUD = () => {
   }, [responseError]);
 
   useEffect(() => {
+    document.title = "Employees - DHKJ Manufacturer";
     const fetchData = async () => {
       try {
         const response = await getApiData("companies");
@@ -431,6 +432,7 @@ export const CRUD = () => {
           if (path === "employees") {
             const newData = dataEmployes(data);
             setData(() => newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah Employees",
@@ -451,6 +453,7 @@ export const CRUD = () => {
           } else if (path === "employee-categories") {
             const newData = dataEmployesCategories(data);
             setData(() => newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah category",
@@ -1061,5 +1064,7 @@ export const CRUD = () => {
     loading,
     skeleton,
     path,
+    setLoading,
+    setRefresh
   };
 };

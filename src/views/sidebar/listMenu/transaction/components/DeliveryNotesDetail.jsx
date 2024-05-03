@@ -29,7 +29,7 @@ export const DeliveryNotesDetail = ({
       <h1 className="text-2xl my-5 dark:text-white font-semibold">
         Delivery notes detail
       </h1>
-      <section className="bg-white dark:bg-gray-800 dar00k:text-white rounded-md shadow-md p-5 mb-16">
+      <section className="bg-white dark:bg-gray-800 dar00k:text-white rounded-md shadow-md p-5 mb-7">
         <div className="grid lg:grid-cols-2 text-base">
           <div className="col-span-1">
             <table className={`w-full`}>
@@ -129,22 +129,24 @@ export const DeliveryNotesDetail = ({
             }
           />
         </div>
-        <hr className="my-7" />
-        <div className="grid grid-cols-1 gap-5">
-          <div>
-            <h2 className="text-xl font-medium dark:text-white mb-4">
+      </section>
+
+      <h2 className="text-xl font-medium dark:text-white mb-4">
               Delivery notes item
             </h2>
-            <TabelForDetail
-              data={dataDeliveryNotesItem}
-              dataHeading={dataHeading}
-              handleEdit={handleEdit}
-              routes={"delivery-notes-item"}
-            />
+
+       <div className="bg-white rounded-md border shadow-md mb-16">
+        <div className="grid grid-cols-1 gap-5">
+            <div>
+              <TabelForDetail
+                data={dataDeliveryNotesItem}
+                dataHeading={dataHeading}
+                handleEdit={handleEdit}
+                routes={"delivery-notes-item"}
+              />
+            </div>
           </div>
-        </div>
-        <hr className="my-7" />
-      </section>
+       </div>
     </>
   );
 };

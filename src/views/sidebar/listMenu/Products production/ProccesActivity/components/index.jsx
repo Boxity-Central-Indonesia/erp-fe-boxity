@@ -156,6 +156,7 @@ export const index = () => {
 
  
     useEffect(() => {
+        document.title = 'Proses aktifitas - DHKJ Manufacturer'
         const fetchData = async () => {
           try {
             const { data, status } = await getApiData("orders");
@@ -238,20 +239,6 @@ export const index = () => {
 
     // store dataDetailActivity to localstorage end
 
-    // read company
-
-    ReadProccesActivity({
-        refresh, 
-        setDataHeading, 
-        setOpenModal, 
-        openModal,
-        data,
-        setData,
-        setParameter
-    })
-
-    // read company end
-
     // edit procces
 
     const {
@@ -277,6 +264,22 @@ export const index = () => {
         setDataDetailsActivity,
         setDataProccesActivity
     })
+
+
+    // read company
+
+    ReadProccesActivity({
+        refresh, 
+        setDataHeading, 
+        setOpenModal, 
+        openModal,
+        data,
+        setData,
+        setParameter,
+        setLoading
+    })
+
+    // read company end
 
     // edit procces end
 
@@ -313,6 +316,8 @@ export const index = () => {
         openModalDelete,
         closeModalDelete,
         handleDelete,
-        dataTabelProccesActivity
+        dataTabelProccesActivity,
+        setRefresh,
+        setLoading
     }
 }

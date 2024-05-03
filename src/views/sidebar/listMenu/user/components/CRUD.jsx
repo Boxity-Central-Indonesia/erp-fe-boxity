@@ -62,6 +62,7 @@ export const CRUD = () => {
   }, [responseError]);
 
   useEffect(() => {
+    document.title = "User - DHKJ Manufacturer";
     const fetchData = async () => {
       try {
         const response = await getApiData("companies");
@@ -264,6 +265,7 @@ export const CRUD = () => {
             email: item.email,
             "No. HP": item.no_handphone ?? "+62 xxx xxxx xxxx",
           }));
+          setLoading(true)
           setData(() => newData);
           setDataHeading([
             {
@@ -510,5 +512,8 @@ export const CRUD = () => {
     loading,
     skeleton,
     path,
+    setRefresh,
+    refresh,
+    setLoading
   };
 };

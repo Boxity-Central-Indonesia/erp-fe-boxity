@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TabelComponent from "../../../../layouts/Tabel";
 import IconDownload from "../../../../layouts/icons/IconDownload";
 import { Read } from "../read";
 import { downloadReport } from "../downloadReport";
+import {Spinner} from '../../../../layouts/Spinner'
 
 export const VendorTransaction = () => {
   const dataTabel = (data) => {
@@ -16,7 +17,11 @@ export const VendorTransaction = () => {
     }));
   };
 
-  const { data } = Read({ dataTabel, endPoint: "vendor-report" });
+  const { data, loading, setLoading, setRefresh } = Read({ dataTabel, endPoint: "vendor-report" });
+
+  useEffect(() => {
+    document.title = 'Laporan Vendor - DHKJ Manufacturer'
+  }, [])
 
   const print = () => {
     downloadReport("download/vendor-report");
@@ -33,7 +38,8 @@ export const VendorTransaction = () => {
 
   return (
     <>
-      <TabelComponent data={data} dataHeading={dataHeading} />
+      <Spinner loading={loading}/>
+      <TabelComponent data={data} dataHeading={dataHeading} setRefresh={setRefresh} setLoading={setLoading}/>
     </>
   );
 };

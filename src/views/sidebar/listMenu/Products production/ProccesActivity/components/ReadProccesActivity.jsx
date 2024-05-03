@@ -10,6 +10,7 @@ export const ReadProccesActivity = ({
   data,
   setData,
   setParameter,
+  setLoading
 }) => {
   const dataTabel = (data) => {
     return Object.values(data).flatMap((innerObj) =>
@@ -49,6 +50,7 @@ export const ReadProccesActivity = ({
   }, []);
 
   useEffect(() => {
+    setLoading(true)
     Read({
       dataTabel,
       endPoint: "processing-activities",

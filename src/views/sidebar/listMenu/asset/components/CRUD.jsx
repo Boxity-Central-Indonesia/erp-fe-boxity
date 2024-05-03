@@ -274,6 +274,7 @@ export const CRUD = () => {
   const READ = () => {
     const [data, setData] = useState();
     useEffect(() => {
+      document.title = 'Manajemen assets - DHKJ Manufacturer'
       const getData = async () => {
         try {
           const { data } = await getApiData(path);
@@ -281,6 +282,7 @@ export const CRUD = () => {
             const newData = dataAssets(data);
             console.log(data);
             setData(() => newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah asset",
@@ -303,7 +305,7 @@ export const CRUD = () => {
           } else if (path === "asset-locations") {
             const newData = dataAssetLocations(data);
             setData(() => newData);
-            console.log(data);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah category",
@@ -326,7 +328,7 @@ export const CRUD = () => {
           } else if (path === "asset-depreciations") {
             const newData = dataAssetsDepresiations(data);
             setData(() => newData);
-            console.log(data);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah category",
@@ -349,7 +351,7 @@ export const CRUD = () => {
           } else if (path === "asset-conditions") {
             const newData = dataAssetsConditions(data);
             setData(() => newData);
-            console.log(data);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah category",
@@ -929,5 +931,7 @@ export const CRUD = () => {
     loading,
     skeleton,
     path,
+    setLoading,
+    setRefresh
   };
 };

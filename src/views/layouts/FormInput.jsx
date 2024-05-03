@@ -1,6 +1,7 @@
 import { fa } from "@faker-js/faker";
 import { useRef, useState } from "react";
-// import uuid from 'uuid-random';
+import Select from 'react-select'
+import AsyncSelect from 'react-select/async'
 
 const FormInput = ({
   element,
@@ -92,6 +93,12 @@ const FormInput = ({
                   </option>
                 ))}
             </select>
+            {/* <Select
+             name={name} 
+             onChange={onChange} 
+             isDisabled={disabled} 
+             options={dataSelect}
+            /> */}
 
             <p
               className={`text-red-500 mt-2 text-sm ${

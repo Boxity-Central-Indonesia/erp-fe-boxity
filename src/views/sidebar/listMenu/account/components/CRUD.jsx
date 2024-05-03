@@ -89,6 +89,7 @@ export const CRUD = () => {
   }, [responseError]);
 
   useEffect(() => {
+    document.title = 'Daftar akun - DHKJ Manufacturer'
     const fetchData = async () => {
       try {
         const response = await getApiData("companies");
@@ -249,7 +250,7 @@ export const CRUD = () => {
           const { data } = await getApiData(path);
           if (path === "accounts") {
             const newData = dataAccounts(data);
-            console.log(data);
+            setLoading(true)
             setData(() => newData);
             setDataHeading([
               {
@@ -271,7 +272,7 @@ export const CRUD = () => {
           } else if (path === "accounts-transactions") {
             const newData = dataAccountTransactions(data);
             setData(() => newData);
-            console.log(data);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah category",
@@ -715,5 +716,7 @@ export const CRUD = () => {
     loading,
     skeleton,
     path,
+    setLoading,
+    setRefresh
   };
 };

@@ -22,7 +22,9 @@ export const EmployesList = () => {
         loading,
         handleCreate,
         skeleton,
-        path
+        path,
+        setLoading,
+        setRefresh
     } = CRUD()
 
     const dataModalBody = () => {
@@ -66,6 +68,8 @@ export const EmployesList = () => {
         skeleton={skeleton}
         setOpenModal={handleCreate}
         handleEdit={handleEdit}
+        setLoading={setLoading}
+        setRefresh={setRefresh}
         />
        </>
     )

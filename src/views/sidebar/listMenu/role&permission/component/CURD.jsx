@@ -55,6 +55,7 @@ export const CRUD = () => {
   }, [responseError]);
 
   useEffect(() => {
+    document.title = "Role - DHKJ Manufacturer";
     const fetchData = async () => {
       try {
         const response = await getApiData("companies");
@@ -156,6 +157,7 @@ export const CRUD = () => {
             name: item.name,
           }));
           setData(() => newData);
+          setLoading(true)
           setDataHeading([
             {
               label: "Tambah role",
@@ -427,5 +429,7 @@ export const CRUD = () => {
     loading,
     skeleton,
     path,
+    setLoading,
+    setRefresh
   };
 };

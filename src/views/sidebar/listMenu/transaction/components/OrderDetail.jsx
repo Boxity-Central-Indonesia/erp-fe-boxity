@@ -165,7 +165,7 @@ export const OrderDetail = ({
       <h1 className="my-5 text-2xl font-semibold dark:text-white">
         Order detail
       </h1>
-      <section className="p-5 mb-16 bg-white rounded-md shadow-md dark:bg-gray-800 dark:text-white">
+      <section className="p-5 mb-7 bg-white rounded-md shadow-md dark:bg-gray-800 dark:text-white">
         <div className="grid mb-2 text-base lg:grid-cols-2">
           <div className="col-span-1">
             <table className={`w-full responsive`}>
@@ -339,38 +339,39 @@ export const OrderDetail = ({
             }
           />
         </div>
-        <hr className="my-7" />
-        <div className="grid grid-cols-1 gap-5">
-          <div>
-            <h2 className="mb-4 text-xl font-medium dark:text-white">
-              Daftar Produk
-            </h2>
-            <TabelForDetail
-              data={dataProducts}
-              dataHeading={dataHeading}
-              handleEdit={handleEdit}
-              routes={"products"}
-            />
-          </div>
-
-          <hr className="my-3" />
-
-          <div>
-            <h2 className="mb-4 text-xl font-medium dark:text-white">
-              Timbangan
-            </h2>
-            <TabelForDetail
-              data={dataTimbangan}
-              dataHeading={dataHeading}
-              handleEdit={handleEdit}
-              hidden={true}
-              hiddenBtnEdit={true}
-              // routes={"products"}
-            />
-          </div>
-        </div>
-        <hr className="my-7" />
       </section>
+
+      <h2 className="mb-4 text-xl font-medium dark:text-white">
+                Daftar Produk
+        </h2>
+      <div className="bg-white rounded-md border shadow-md py-1 mb-7">
+          <div className="grid grid-cols-1 gap-5">
+            <div>
+              <TabelForDetail
+                data={dataProducts}
+                dataHeading={dataHeading}
+                handleEdit={handleEdit}
+                routes={"products"}
+              />
+            </div>
+        </div>
+      </div>
+
+      <h2 className="mb-4 text-xl rounded font-medium dark:text-white">
+          Timbangan
+      </h2>       
+      <div className="bg-white rounded px-1 mb-16">   
+        <div>
+          <TabelForDetail
+            data={dataTimbangan}
+            dataHeading={dataHeading}
+            handleEdit={handleEdit}
+            hidden={true}
+            hiddenBtnEdit={true}
+            // routes={"products"}
+          />
+        </div>
+      </div>
     </>
   );
 };

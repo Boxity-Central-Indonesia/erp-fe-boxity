@@ -32,7 +32,7 @@ export const GoodReceiptDetail = ({
       <h1 className="text-2xl my-5 dark:text-white font-semibold">
         Good receipt detail
       </h1>
-      <section className="bg-white dark:bg-gray-800 dar00k:text-white rounded-md shadow-md p-5 mb-16">
+      <section className="bg-white dark:bg-gray-800 dar00k:text-white rounded-md shadow-md p-5 mb-7">
         <div className="grid lg:grid-cols-2 text-base">
           <div className="col-span-1">
             <table className={`w-full`}>
@@ -149,12 +149,14 @@ export const GoodReceiptDetail = ({
             }
           />
         </div>
-        <hr className="my-7" />
+      </section>
+
+      <h2 className="text-xl font-medium dark:text-white mb-4">
+        Good receipt item
+      </h2>
+      <div className="bg-white rounded-md border mb-16">
         <div className="grid grid-cols-1 gap-5">
           <div>
-            <h2 className="text-xl font-medium dark:text-white mb-4">
-              Good receipt item
-            </h2>
             <TabelForDetail
               data={dataGoodReceiptItem}
               dataHeading={dataHeading}
@@ -164,8 +166,7 @@ export const GoodReceiptDetail = ({
             />
           </div>
         </div>
-        <hr className="my-7" />
-      </section>
+      </div>
     </>
   );
 };

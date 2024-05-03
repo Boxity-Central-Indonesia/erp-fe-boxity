@@ -94,6 +94,7 @@ export const CRUD = () => {
   }, [responseError]);
 
   useEffect(() => {
+    document.title = 'Vendor - DHKJ Manufacturer'
     const fetchData = async () => {
       try {
         const response = await getApiData("companies");
@@ -362,6 +363,7 @@ export const CRUD = () => {
             const { data } = await getApiData("vendors");
             const newData = dataVendors(data);
             setData(() => newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah vendors",
@@ -383,6 +385,7 @@ export const CRUD = () => {
             const { data } = await getApiData("vendor-transactions");
             const newData = dataVendorsTransactions(data);
             setData(() => newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah vendors",
@@ -405,6 +408,7 @@ export const CRUD = () => {
             const { data } = await getApiData("vendors");
             const newData = dataVendors(data);
             setData(() => newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah vendors",
@@ -1142,5 +1146,7 @@ export const CRUD = () => {
     setPath,
     setDataHeading,
     handleClickHeading,
+    setLoading,
+    setRefresh
   };
 };

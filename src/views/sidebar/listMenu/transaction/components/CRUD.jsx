@@ -283,6 +283,7 @@ export const CRUD = () => {
   }, [responseError]);
 
   useEffect(() => {
+    document.title = "Transaction - DHKJ Manufacturer";
     const fetchData = async (param, state) => {
       try {
         const { data, status } = await getApiData(param);
@@ -767,6 +768,7 @@ export const CRUD = () => {
           if (path === "orders") {
             const newData = dataOrders(data);
             setData(newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah order",
@@ -810,6 +812,7 @@ export const CRUD = () => {
           } else if (path === "invoices") {
             const newData = dataInvoices(data);
             setData(newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah invoice",
@@ -831,6 +834,7 @@ export const CRUD = () => {
           } else if (path === "payments") {
             const newData = dataPayments(data);
             setData(newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah payment",
@@ -852,6 +856,7 @@ export const CRUD = () => {
           } else if (path === "goods-receipt") {
             const newData = dataGoodReceipts(data);
             setData(newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah good receipts",
@@ -873,6 +878,7 @@ export const CRUD = () => {
           } else if (path === "delivery-notes") {
             const newData = dataDeliveryNotes(data);
             setData(newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah Delivery notes list",
@@ -2617,5 +2623,7 @@ export const CRUD = () => {
     dataDetailInvoices,
     dataHeadingForProduct,
     dataHeadingForInvoices,
+    setLoading,
+    setRefresh
   };
 };

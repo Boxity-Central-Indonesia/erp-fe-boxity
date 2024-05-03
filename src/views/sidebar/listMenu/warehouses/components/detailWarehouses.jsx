@@ -97,7 +97,7 @@ export const DetailWarehouses = ({
       <h1 className="text-2xl my-5 dark:text-white font-semibold">
         Detail gudang
       </h1>
-      <section className="bg-white dark:bg-gray-800 dar00k:text-white rounded-md shadow-md p-5 mb-16">
+      <section className="bg-white dark:bg-gray-800 dar00k:text-white rounded-md shadow-md p-5 mb-7">
         <div className="grid lg:grid-cols-2 text-base">
           <div className="col-span-1">
             <table className={`w-full`}>
@@ -185,46 +185,49 @@ export const DetailWarehouses = ({
             }
           />
         </div>
-        <hr className="my-7" />
-        <div className="grid grid-cols-1 gap-5">
-          <div>
+      </section>
             <h2 className="text-xl font-medium dark:text-white mb-4">
               Lokasi gudang
             </h2>
-            <WarehousesLocations
-                data={dataDetail}
-                setData={setData}
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-                setPath={setPath}
-                setDataModal={setDataModal}
-                refBody={refBody}
-                setRefreshForDetail={setRefreshForDetail}
-                handleCreate={handleCreate}
-                handleEdit={handleEditWarehouseLocations}
-            />
-          </div>
-          <hr className="my-3" />
-          <div>
+         <div className="bg-white rounded-md border mb-7">
+          <div className="grid grid-cols-1 gap-5">
+            <div>
+              <WarehousesLocations
+                  data={dataDetail}
+                  setData={setData}
+                  openModal={openModal}
+                  setOpenModal={setOpenModal}
+                  setPath={setPath}
+                  setDataModal={setDataModal}
+                  refBody={refBody}
+                  setRefreshForDetail={setRefreshForDetail}
+                  handleCreate={handleCreate}
+                  handleEdit={handleEditWarehouseLocations}
+              />
+            </div>
+            </div>
+         </div>
+
+
             <h2 className="text-xl font-medium dark:text-white mb-4">
               Daftar produk
             </h2>
-            <Produk
-                data={dataDetail}
-                setData={setData}
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-                setPath={setPath}
-                setDataModal={setDataModal}
-                refBody={refBody}
-                setRefreshForDetail={setRefreshForDetail}
-                handleCreate={handleCreate}
-                handleEdit={handleEditDetailForProduct}
-            />
+          <div className="bg-white rounded-md shadow-md mb-16">
+            <div>
+              <Produk
+                  data={dataDetail}
+                  setData={setData}
+                  openModal={openModal}
+                  setOpenModal={setOpenModal}
+                  setPath={setPath}
+                  setDataModal={setDataModal}
+                  refBody={refBody}
+                  setRefreshForDetail={setRefreshForDetail}
+                  handleCreate={handleCreate}
+                  handleEdit={handleEditDetailForProduct}
+              />
+            </div>
           </div>
-        </div>
-        <hr className="my-7" />
-      </section>
     </>
   );
 };

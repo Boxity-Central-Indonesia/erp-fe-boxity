@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TabelComponent from "../../../../layouts/Tabel";
 import IconDownload from "../../../../layouts/icons/IconDownload";
 import { Read } from "../read";
 import { downloadReport } from "../downloadReport";
+import { Spinner } from "../../../../layouts/Spinner";
 
 export const Pendapatan = () => {
   const dataTabel = (data) => {
@@ -15,7 +16,11 @@ export const Pendapatan = () => {
     }));
   };
 
-  const { data } = Read({ dataTabel, endPoint: "revenue-report" });
+  const { data, loading, setLoading, setRefresh} = Read({ dataTabel, endPoint: "revenue-report" });
+
+  useEffect(() => {
+    document.title = 'Laporan Pendapatan - DHKJ Manufacturer'
+  }, [])
 
   const print = () => {
     downloadReport({ endPoint: "download/revenue-report" });
@@ -32,7 +37,8 @@ export const Pendapatan = () => {
 
   return (
     <>
-      <TabelComponent data={data} dataHeading={dataHeading} />
+      <Spinner loading={loading} />
+      <TabelComponent data={data} dataHeading={dataHeading} setLoading={setLoading} setRefresh={setRefresh}/>
     </>
   );
 };

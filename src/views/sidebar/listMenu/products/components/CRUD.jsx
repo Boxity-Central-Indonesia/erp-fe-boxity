@@ -489,12 +489,14 @@ export const CRUD = () => {
   const READ = () => {
     const [data, setData] = useState();
     useEffect(() => {
+      document.title = "Products - DHKJ Manufacturer";
       const getData = async () => {
         try {
           const { data } = await getApiData(path);
           if (path === "products") {
             const newData = dataProducts(data);
             setData(newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah product",
@@ -517,6 +519,7 @@ export const CRUD = () => {
           } else if (path === "product-categories") {
             const newData = dataProductCategories(data);
             setData(newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah category",
@@ -539,6 +542,7 @@ export const CRUD = () => {
           } else if (path === "product-prices") {
             const newData = dataProductPrices(data);
             setData(newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah price",
@@ -561,6 +565,7 @@ export const CRUD = () => {
           } else if (path === "product-movements") {
             const newData = dataProductMovements(data);
             setData(newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah movement",
@@ -1500,5 +1505,7 @@ export const CRUD = () => {
     loading,
     skeleton,
     path,
+    setRefresh,
+    setLoading
   };
 };

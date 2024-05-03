@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import TabelComponent from "../../../../layouts/Tabel"
 import IconDownload from "../../../../layouts/icons/IconDownload"
 import { Read } from "../read";
 import { downloadReport } from "../downloadReport";
+import { Spinner } from "../../../../layouts/Spinner";
 
 
 export const LeadsProspek = () => {
@@ -16,7 +17,12 @@ export const LeadsProspek = () => {
         }))
     }
 
-    const {data} = Read({dataTabel, endPoint: 'leads-report'})
+    const {data, loading, setRefresh, setLoading} = Read({dataTabel, endPoint: 'leads-report'})
+
+    useEffect(() => {
+        document.title = 'Laporan Leads - DHKJ Manufacturer'
+      }, [])
+
     const print = () => {
         downloadReport("download/")
     }
@@ -30,7 +36,8 @@ export const LeadsProspek = () => {
 
     return (
         <>
-        < TabelComponent data={data}  dataHeading={dataHeading}/>
+        <Spinner loading={loading} />
+        < TabelComponent data={data}  dataHeading={dataHeading} setRefresh={setRefresh} setLoading={setLoading}/>
         </>
     )
 

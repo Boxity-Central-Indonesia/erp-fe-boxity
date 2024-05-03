@@ -25,7 +25,9 @@ export const Company = () => {
         path,
         dataDetailCompany,
         defaultEdit,
-        setDefaultEdit
+        setDefaultEdit,
+        setRefresh,
+        setLoading
     } = CRUD()
 
     const dataModalBody = () => {
@@ -103,6 +105,8 @@ export const Company = () => {
         skeleton={skeleton}
         setOpenModal={handleCreate}
         handleEdit={handleEdit}
+        setRefresh={setRefresh}
+        setLoading={setLoading}
         />
        </>
     )

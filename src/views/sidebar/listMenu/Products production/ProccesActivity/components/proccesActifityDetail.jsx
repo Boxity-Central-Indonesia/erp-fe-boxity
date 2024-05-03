@@ -40,7 +40,7 @@ export const ProccesActivityDetail = ({
       <h1 className="my-5 text-2xl font-semibold dark:text-white">
         process activity detail
       </h1>
-      <section className="p-5 mb-16 bg-white rounded-md shadow-md dark:bg-gray-800 dark:text-white">
+      <section className="p-5 mb-7 bg-white rounded-md shadow-md dark:bg-gray-800 dark:text-white">
         <div className="grid text-base lg:grid-cols-2">
           <div className="col-span-1">
             <table className={`w-full`}>
@@ -174,24 +174,24 @@ export const ProccesActivityDetail = ({
             }
           />
         </div>
-        <hr className="my-7" />
-        <div className="grid grid-cols-1">
-          <div>
-            {/* <h2 className="mb-4 text-xl font-medium dark:text-white">
-              Company branch
-            </h2> */}
-            <TabelForDetail
-              data={tableData}
-              dataHeading={dataHeading}
-              handleEdit={handleEdit}
-              routes={""}
-              hidden={true}
-              hiddenBtnEdit={true}
-            />
-          </div>
-        </div>
-        <hr className="my-7" />
       </section>
+       <div className="bg-white rounded-md border shadow-md">
+        <div className="grid grid-cols-1">
+            <div>
+              {/* <h2 className="mb-4 text-xl font-medium dark:text-white">
+                Company branch
+              </h2> */}
+              <TabelForDetail
+                data={tableData}
+                dataHeading={dataHeading}
+                handleEdit={handleEdit}
+                routes={""}
+                hidden={true}
+                hiddenBtnEdit={true}
+              />
+            </div>
+          </div>
+       </div>
     </>
   );
 };

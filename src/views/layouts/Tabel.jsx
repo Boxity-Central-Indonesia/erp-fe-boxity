@@ -25,7 +25,10 @@ const TabelComponent = ({
   handleEdit,
   setOpenModal,
   skeleton,
-  hiddenButton
+  hiddenButton,
+  setRefresh,
+  refresh,
+  setLoading
 }) => {
   const { globalColor, changeColor } = useColor();
   const [sorting, setSorting] = useState([]);
@@ -36,6 +39,11 @@ const TabelComponent = ({
   const handleEditClick = (param, param2) => {
     handleEdit(param, param2);
   };
+
+  const handleRefresh = () => {
+    setLoading(false)
+    setRefresh(prevRefresh => !prevRefresh)
+  }
 
   function formatToRupiah(value) {
     // Check if the value is a number
@@ -377,9 +385,17 @@ const TabelComponent = ({
 
   return (
     <section className="mb-32 bg-gray-100 dark:bg-gray-900">
-      <h3 className="mb-3 text-2xl font-semibold dark:text-white">
-        {dataHeading && dataHeading[0].heading}
-      </h3>
+     <div className="flex items-center gap-5 mb-3">
+        <h3 className="text-2xl font-semibold dark:text-white">
+          {dataHeading && dataHeading[0].heading}
+        </h3>
+        <div onClick={() => handleRefresh()} className="flex gap-1 items-center cursor-pointer">
+          <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
+          </svg>
+          <p>Refresh</p>
+        </div>
+     </div>
       <p
         className="mb-6 text-gray-600 dark:text-gray-300"
         style={{ paddingRight: "10rem" }}

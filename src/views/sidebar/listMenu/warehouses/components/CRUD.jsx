@@ -151,6 +151,7 @@ export const CRUD = () => {
   }, [responseError]);
 
   useEffect(() => {
+    document.title = "Warehouses - DHKJ Manufacturer";
     const fetchData = async () => {
       try {
         const response = await getApiData("companies");
@@ -512,6 +513,7 @@ export const CRUD = () => {
           if (path === "warehouses") {
             const newData = dataWarehouses(data);
             setData(newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah warehouses",
@@ -532,6 +534,7 @@ export const CRUD = () => {
           } else if (path === "warehouse-locations") {
             const newData = dataWarehousesLocation(data);
             setData(newData);
+            setLoading(true)
             setDataHeading([
               {
                 label: "Tambah warehouses",
@@ -1384,6 +1387,9 @@ export const CRUD = () => {
     setRefreshForDetail,
     handleEditDetailWarehouseLocations,
     getWarehouseById,
-    handleEditDetailForProduct
+    handleEditDetailForProduct,
+    refresh,
+    setRefresh,
+    setLoading
   };
 };

@@ -1,10 +1,7 @@
 import { useState } from "react";
 import TabelComponent from "../../../../layouts/Tabel";
 import { CRUD } from "./components/CRUD";
-import IconAdd from "../../../../layouts/icons/IconAdd";
-import { ModalContainer } from "../../../../layouts/ModalContainer";
 import FormInput from "../../../../layouts/FormInput";
-import { ModalConfirmDelete } from "../../../../layouts/ModalContainer";
 import { Spinner } from "../../../../layouts/Spinner";
 
 import IconDownload from "../../../../layouts/icons/IconDownload";
@@ -13,19 +10,14 @@ import { getApiData } from "../../../../../function/Api";
 export const Hutang = () => {
   const {
     data,
-    openModal,
-    handleCreate,
-    dataModal,
     input,
     validationError,
     handleEdit,
     dataEdit,
     refBody,
-    openModalDelete,
-    handleDelete,
-    closeModalDelete,
-    modalDelete,
     loading,
+    setLoading,
+    setRefresh
   } = CRUD();
   const downloadReport = async () => {
     try {
@@ -98,30 +90,14 @@ export const Hutang = () => {
   };
   return (
     <>
-      <ModalContainer
-        openModal={openModal}
-        onToggleModal={handleCreate}
-        modalBody={modalBody}
-        sizeModal={"md"}
-        labelModal={dataModal.labelModal}
-        labelBtnModal={dataModal.labelBtnModal}
-        labelBtnSecondaryModal={dataModal.labelBtnSecondaryModal}
-        handleBtnModal={dataModal.handleBtn}
-        openModalDelete={openModalDelete}
-      />
-
-      <ModalConfirmDelete
-        modalDelete={modalDelete}
-        closeModalDelete={closeModalDelete}
-        handleDelete={handleDelete}
-      />
-
       <Spinner loading={loading} />
 
       <TabelComponent
         data={data}
         dataHeading={dataHeading}
         handleEdit={handleEdit}
+        setLoading={setLoading}
+        setRefresh={setRefresh}
       />
     </>
   );

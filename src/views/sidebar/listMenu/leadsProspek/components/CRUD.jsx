@@ -55,6 +55,7 @@ export const CRUD = () => {
   }, [responseError]);
 
   useEffect(() => {
+    document.title = "Leads - DHKJ Manufacturer";
     const fetchData = async () => {
       try {
         const response = await getApiData("companies");
@@ -158,6 +159,7 @@ export const CRUD = () => {
             "number phone": item.nomor_telepon_prospek,
             "prospek type": item.tipe_prospek,
           }));
+          setLoading(true)
           setData(() => newData);
           setDataHeading([
             {
@@ -430,5 +432,7 @@ export const CRUD = () => {
     loading,
     skeleton,
     path,
+    setLoading,
+    setRefresh
   };
 };

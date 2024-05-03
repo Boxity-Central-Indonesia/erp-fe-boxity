@@ -59,6 +59,25 @@ export const TabelForDetail = ({
     );
   }
 
+  if (data.length === 0) {
+    // Tampilkan pesan "Loading..." jika data masih undifined
+    return (
+      <table className={`w-full`}>
+              <tbody>
+                <tr className="w-full flex justify-center">
+                  <td className="flex gap-1 py-8">
+                    <p
+                      className="flex items-center text-sm text-gray-700"
+                    >
+                        Tidak ada data untuk ditampilkan
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+    );
+  }
+
   return (
     <>
       <div className="overflow-x-auto">

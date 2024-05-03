@@ -21,7 +21,9 @@ export const Asset = () => {
         loading,
         handleCreate,
         skeleton,
-        path
+        path,
+        setRefresh,
+        setLoading
     } = CRUD()
 
     const dataModalBody = () => {
@@ -65,6 +67,8 @@ export const Asset = () => {
         skeleton={skeleton}
         setOpenModal={handleCreate}
         handleEdit={handleEdit}
+        setRefresh={setRefresh}
+        setLoading={setLoading}
         />
        </>
     )

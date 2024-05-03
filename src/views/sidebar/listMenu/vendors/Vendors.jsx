@@ -32,7 +32,9 @@ export const Vendors = () => {
         dataDetailVendorContact,
         setPath,
         setDataHeading,
-        handleClickHeading
+        handleClickHeading,
+        setLoading,
+        setRefresh
     } = CRUD()
 
     const dataModalBody = () => {
@@ -116,6 +118,8 @@ export const Vendors = () => {
         skeleton={skeleton}
         setOpenModal={handleCreate}
         handleEdit={handleEdit}
+        setRefresh={setRefresh}
+        setLoading={setLoading}
         />
        </>
     )

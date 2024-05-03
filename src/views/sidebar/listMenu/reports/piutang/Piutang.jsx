@@ -3,6 +3,7 @@ import TabelComponent from "../../../../layouts/Tabel";
 import IconDownload from "../../../../layouts/icons/IconDownload";
 import { Read } from "../read";
 import { downloadReport } from "../downloadReport";
+import {Spinner} from "../../../../layouts/Spinner"
 
 export const Piutang = () => {
   const dataTabel = (data) => {
@@ -16,7 +17,7 @@ export const Piutang = () => {
     }))
   }
 
-  const {data} = Read({dataTabel, endPoint: 'receivables-report'})
+  const {data, setLoading, setRefresh, loading} = Read({dataTabel, endPoint: 'receivables-report'})
 
   const print = () => {
     downloadReport("download/receivables-report")
@@ -32,9 +33,12 @@ export const Piutang = () => {
 
   return (
     <>
+      <Spinner loading={loading}/>
       <TabelComponent
         data={data}
         dataHeading={dataHeading}
+        setLoading={setLoading}
+        setRefresh={setRefresh}
       />
     </>
   );

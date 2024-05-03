@@ -23,7 +23,9 @@ export const ProccesActifity = () => {
         openModalDelete,
         closeModalDelete,
         handleDelete,
-        dataTabelProccesActivity
+        dataTabelProccesActivity,
+        setRefresh,
+        setLoading
     } = index()
 
 
@@ -91,6 +93,8 @@ export const ProccesActifity = () => {
         // skeleton={skeleton}
         // setOpenModal={handleCreate}
         handleEdit={handleEdit}
+        setRefresh={setRefresh}
+        setLoading={setLoading}
         />
        </>
     )

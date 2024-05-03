@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TabelComponent from "../../../../layouts/Tabel";
 import IconDownload from "../../../../layouts/icons/IconDownload";
 import { getApiData } from "../../../../../function/Api";
 import { Read } from "../read";
 import { downloadReport } from "../downloadReport";
+import {Spinner} from "../../../../layouts/Spinner"
 
 export const ArusKas = () => {
 
@@ -18,11 +19,15 @@ export const ArusKas = () => {
     }))
   }
 
-  const {data} = Read({dataTabel, endPoint: 'cashflow-report'})
+  const {data, setRefresh, setLoading, loading} = Read({dataTabel, endPoint: 'cashflow-report'})
 
   const print = () => {
     downloadReport("download/cashflow-report")
   }
+
+  useEffect(() => {
+    document.title = 'Laporan Arus Kas - DHKJ Manufacturer'
+  })
 
   const [dataHeading, setDataHeading] = useState([
     {
@@ -35,9 +40,12 @@ export const ArusKas = () => {
 
   return (
     <>
+      <Spinner loading={loading}/>
       <TabelComponent
         data={data}
         dataHeading={dataHeading}
+        setRefresh={setRefresh}
+        setLoading={setLoading}
       />
     </>
   );

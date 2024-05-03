@@ -381,11 +381,13 @@ export const CRUD = () => {
   const READ = () => {
     const [data, setData] = useState();
     useEffect(() => {
+      document.title = "Company - DHKJ Manufacturer";
       const getData = async () => {
         try {
           if (path === "companies") {
             const { data } = await getApiData(path);
             const newData = dataCompany(data);
+            setLoading(true)
             setData(() => newData);
             setDataHeading([
               {
@@ -773,8 +775,6 @@ export const CRUD = () => {
           id: refBody.idRef.current.value,
         };
 
-        console.log(dataBody);
-
         try {
           const store = await postApiData("companies", dataBody);
           if (store.status === 201) {
@@ -1106,5 +1106,7 @@ export const CRUD = () => {
     dataDetailCompany,
     defaultEdit,
     setDefaultEdit,
+    setRefresh,
+    setLoading
   };
 };

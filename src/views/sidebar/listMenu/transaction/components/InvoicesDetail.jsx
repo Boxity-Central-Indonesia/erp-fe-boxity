@@ -89,7 +89,7 @@ export const InvoicesDetail = ({
       <h1 className="my-5 text-2xl font-semibold dark:text-white">
         Invoices detail
       </h1>
-      <section className="p-5 mb-16 bg-white rounded-md shadow-md dark:bg-gray-800 dar00k:text-white">
+      <section className="p-5 mb-7 bg-white rounded-md shadow-md dark:bg-gray-800 dar00k:text-white">
         <div className="grid text-base lg:grid-cols-2">
           <div className="col-span-1">
             <table className={`w-full`}>
@@ -242,22 +242,24 @@ export const InvoicesDetail = ({
             }
           />
         </div>
-        <hr className="my-7" />
-        <div className="grid grid-cols-1 gap-5">
-          <div>
-            <h2 className="mb-4 text-xl font-medium dark:text-white">
+      </section>
+
+        <h2 className="text-xl mb-4 font-medium dark:text-white">
               Riwayat Pembayaran
-            </h2>
-            <TabelForDetail
-              data={dataInvoicesPayments}
-              dataHeading={dataHeading}
-              handleEdit={handleEdit}
-              routes={"invoices-payments"}
-            />
+        </h2>
+      
+        <div className="bg-white rounded-md border shadow-md">
+          <div className="grid grid-cols-1 gap-5">
+            <div>
+              <TabelForDetail
+                data={dataInvoicesPayments}
+                dataHeading={dataHeading}
+                handleEdit={handleEdit}
+                routes={"invoices-payments"}
+              />
+            </div>
           </div>
         </div>
-        <hr className="my-7" />
-      </section>
     </>
   );
 };

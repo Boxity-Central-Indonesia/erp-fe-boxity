@@ -1,10 +1,13 @@
 import TabelComponent from "../../../layouts/Tabel"
 import { useState, useEffect } from "react"
 import { getApiData } from "../../../../function/Api"
+import { Spinner } from "../../../layouts/Spinner"
 
 export const LaporanTimbanganStock = () => {
 
     const [data, setData] = useState()
+    const [loading, setLoading] = useState(true)
+    const [refresh, setRefresh] = useState()
     const [dataHeading, setDataHeading] = useState([
         {
             // label: "Laporan timbangan stok",
@@ -19,6 +22,7 @@ export const LaporanTimbanganStock = () => {
 
 
     useEffect(() => {
+        document.title = 'Laporan timbangan - DHKJ Manufacturer'
         const getData = async () => {
             try {
                 const {data, status} = await getApiData("orders/weighing/exordered")
@@ -37,6 +41,7 @@ export const LaporanTimbanganStock = () => {
                         }
                     })
                     setData(newData)
+                    setLoading(true)
                 } 
             } catch (error) {
                 setData([])
@@ -109,14 +114,18 @@ export const LaporanTimbanganStock = () => {
         
         
         getData()
-    }, [])
+    }, [refresh])
 
     return(
         <>
+            <Spinner loading={loading} />
+
             < TabelComponent 
                 data={data}
                 dataHeading={dataHeading}
                 hiddenButton={true}
+                setRefresh={setRefresh}
+                setLoading={setLoading}
                 // skeleton={skeleton}
                 // setOpenModal={handleCreate}
                 // handleEdit={handleEdit}

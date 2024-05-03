@@ -1,7 +1,4 @@
 import { ModalConfirmDelete, ModalContainer } from "../../../layouts/ModalContainer"
-import IconAdd from "../../../layouts/icons/IconAdd"
-import { useEffect, useState, useRef } from "react"
-import { TextArea } from "../../../layouts/FormInput"
 import TabelComponent from "../../../layouts/Tabel"
 import { Spinner } from "../../../layouts/Spinner"
 import { CRUD } from "./components/CRUD"
@@ -37,8 +34,11 @@ export const Transactions = () => {
         dataDetailDeliveryNotes,
         dataDetailInvoices,
         dataHeadingForProduct,
-        dataHeadingForInvoices
+        dataHeadingForInvoices,
+        setLoading,
+        setRefresh
     } = CRUD()
+
 
     const dataModalBody = () => {
         return (
@@ -221,6 +221,8 @@ export const Transactions = () => {
         skeleton={skeleton}
         setOpenModal={handleCreate}
         handleEdit={handleEdit}
+        setLoading={setLoading}
+        setRefresh={setRefresh}
         />
        </>
     )

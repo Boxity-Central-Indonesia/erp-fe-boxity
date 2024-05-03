@@ -39,7 +39,9 @@ export const Warehouses = () => {
         setRefreshForDetail,
         handleEditDetailWarehouseLocations,
         getWarehouseById,
-        handleEditDetailForProduct
+        handleEditDetailForProduct,
+        setRefresh,
+        refresh,
     } = CRUD()
 
     const dataModalBody = () => {
@@ -133,6 +135,9 @@ export const Warehouses = () => {
         skeleton={skeleton}
         setOpenModal={handleCreate}
         handleEdit={handleEdit}
+        setRefresh={setRefresh}
+        refresh={refresh}
+        setLoading={setLoading}
         />
        </>
     )
