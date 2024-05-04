@@ -99,6 +99,7 @@ export const Warehouses = () => {
                     handleEditWarehouseLocations={handleEditDetailWarehouseLocations}
                     getWarehouseById={getWarehouseById}
                     handleEditDetailForProduct={handleEditDetailForProduct}
+                    setRefresh={setRefresh}
                     // dataHeading={dataHeadingForProduct}
                     // setPath={setPath}
                 />

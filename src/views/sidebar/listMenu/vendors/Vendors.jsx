@@ -84,6 +84,8 @@ export const Vendors = () => {
                     setDataHeading={setDataHeading}
                     handleCreate={handleCreate}
                     handleClickHeading={handleClickHeading}
+                    setLoading={setLoading}
+                    setRefresh={setRefresh}
                 />
             </>
         )

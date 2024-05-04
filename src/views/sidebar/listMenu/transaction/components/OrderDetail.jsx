@@ -11,6 +11,8 @@ export const OrderDetail = ({
   handleEdit,
   dataHeading,
   setPath,
+  setLoading,
+  setRefresh
 }) => {
   const [dataTimbangan, setDataTimbangan] = useState([]);
   const dataProducts = data?.products
@@ -42,6 +44,11 @@ export const OrderDetail = ({
     defaultEdit(true);
     setPath("orders");
   };
+
+  const handleRefresh = () => {
+    setRefresh(prevRefresh => !prevRefresh)
+    setLoading(false)
+  }
 
   const downloadReport = async () => {
     try {
@@ -162,9 +169,17 @@ export const OrderDetail = ({
 
   return (
     <>
-      <h1 className="my-5 text-2xl font-semibold dark:text-white">
-        Order detail
-      </h1>
+      <div className="flex gap-5 items-center my-5">
+        <h1 className="text-2xl dark:text-white font-semibold">
+          Detail pesanan
+        </h1>
+        <div onClick={() => handleRefresh()} className="flex gap-1 items-center cursor-pointer">
+            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
+            </svg>
+            <p>Refresh</p>
+          </div>
+      </div>
       <section className="p-5 mb-7 bg-white rounded-md shadow-md dark:bg-gray-800 dark:text-white">
         <div className="grid mb-2 text-base lg:grid-cols-2">
           <div className="col-span-1">

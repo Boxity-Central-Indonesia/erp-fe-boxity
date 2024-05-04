@@ -23,6 +23,7 @@ export const editProccesActivity = ({
   setDataProccesActivity,
 }) => {
   const [dataUpdate, setDataUpdate] = useState();
+  const [dataId, setDataId] = useState(null)
 
   const searchDataByActivityType = (searchActivityType) => {
     // Cari objek yang memiliki activity_type yang cocok
@@ -47,6 +48,20 @@ export const editProccesActivity = ({
     });
   }, [dataUpdate]);
 
+  useEffect(() => {
+    const getData =  async () => {
+      try {
+         const {data, status} = await getApiData('processing-activities/' + dataId)
+          if(status === 200){
+            setDataDetail(data)
+          };
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getData()
+  } ,[refresh])
+
   const handleEdit = async (param) => {
     if (defaultEdit === true) {
       setDefaultEdit(false);
@@ -55,6 +70,8 @@ export const editProccesActivity = ({
         refresh,
         setDataDetail,
       });
+
+      setDataId(param.textContent)
 
       try {
         const { data, status } = await getApiData("processing-activities");

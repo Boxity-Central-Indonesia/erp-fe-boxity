@@ -507,6 +507,10 @@ export const CRUD = () => {
   const READ = () => {
     const [data, setData] = useState();
     useEffect(() => {
+      if(!defaultEdit){
+        getWarehouseById(localStorage.getItem('idWarehouse'))
+        setLoading(true)
+      }
       const getData = async () => {
         try {
           const { data } = await getApiData(path);

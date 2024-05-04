@@ -12,6 +12,8 @@ export const VendorDetail = ({
   setDataHeading,
   handleCreate,
   handleClickHeading,
+  setLoading,
+  setRefresh
 }) => {
   const dataVendorContactFinal =
     dataVendorContact &&
@@ -44,12 +46,25 @@ export const VendorDetail = ({
     setDefaultEdit(true);
   };
 
+  const handleRefresh = () =>{
+    setRefresh(prevRefresh => !prevRefresh)
+    setLoading(false)
+  }
+
   return (
     <>
-      <h1 className="text-2xl my-5 dark:text-white font-semibold">
-        Detail vendor
-      </h1>
-      <section className="bg-white dark:bg-gray-800 dark:text-white rounded-md shadow-md p-5 mb-16">
+       <div className="flex gap-5 items-center my-5">
+        <h1 className="text-2xl dark:text-white font-semibold">
+          Detail vendor
+        </h1>
+        <div onClick={() => handleRefresh()} className="flex gap-1 items-center cursor-pointer">
+            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
+            </svg>
+            <p>Refresh</p>
+          </div>
+      </div>
+      <section className="bg-white dark:bg-gray-800 dark:text-white rounded-md shadow-md p-5 mb-7">
         <div className="grid lg:grid-cols-2 text-base">
           <div className="col-span-1">
             <table className={`w-full`}>
@@ -142,23 +157,22 @@ export const VendorDetail = ({
             }
           />
         </div>
-
-        <hr className="my-7" />
-        <div className="grid grid-cols-1 gap-5">
-          <div>
-            <h2 className="text-xl font-medium dark:text-white mb-4">
+      </section>
+        <h2 className="text-xl font-medium dark:text-white mb-4">
               Daftar Kontak Vendor
-            </h2>
-            <TabelForDetail
-              data={dataVendorContactFinal}
-              dataHeading={dataHeading}
-              handleEdit={handleEdit}
-              routes={"vendor-contacts"}
-            />
+        </h2>
+        <div className="bg-white rounded-md border shadow-md mb-16">
+          <div className="grid grid-cols-1 gap-5">
+            <div>
+              <TabelForDetail
+                data={dataVendorContactFinal}
+                dataHeading={dataHeading}
+                handleEdit={handleEdit}
+                routes={"vendor-contacts"}
+              />
+            </div>
           </div>
         </div>
-        <hr className="my-7" />
-      </section>
     </>
   );
 };

@@ -8,6 +8,8 @@ export const ProccesActivityDetail = ({
   handleEdit,
   dataHeading,
   dataTabelProccesActivity,
+  setLoading,
+  setRefresh
 }) => {
   const [tableData, setTableData] = useState([]);
 
@@ -35,11 +37,24 @@ export const ProccesActivityDetail = ({
     setTableData(formattedData || []);
   }, [dataTabelProccesActivity]);
 
+  const handleRefresh = () => {
+    setRefresh(prevRefresh => !prevRefresh)
+    setLoading(false)
+  }
+
   return (
     <>
-      <h1 className="my-5 text-2xl font-semibold dark:text-white">
-        process activity detail
-      </h1>
+     <div className="flex gap-5 items-center my-5">
+        <h1 className="text-2xl dark:text-white font-semibold">
+          Detail proses aktifitas
+        </h1>
+        <div onClick={() => handleRefresh()} className="flex gap-1 items-center cursor-pointer">
+            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
+            </svg>
+            <p>Refresh</p>
+          </div>
+      </div>
       <section className="p-5 mb-7 bg-white rounded-md shadow-md dark:bg-gray-800 dark:text-white">
         <div className="grid text-base lg:grid-cols-2">
           <div className="col-span-1">
@@ -175,12 +190,9 @@ export const ProccesActivityDetail = ({
           />
         </div>
       </section>
-       <div className="bg-white rounded-md border shadow-md">
+       <div className="bg-white rounded-md border shadow-md mb-16">
         <div className="grid grid-cols-1">
             <div>
-              {/* <h2 className="mb-4 text-xl font-medium dark:text-white">
-                Company branch
-              </h2> */}
               <TabelForDetail
                 data={tableData}
                 dataHeading={dataHeading}

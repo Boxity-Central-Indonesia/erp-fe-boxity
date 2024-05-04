@@ -59,6 +59,8 @@ export const ProccesActifity = () => {
                     handleEdit={handleEdit}
                     dataHeading={dataHeading}
                     dataTabelProccesActivity={dataTabelProccesActivity}
+                    setLoading={setLoading}
+                    setRefresh={setRefresh}
                 />
             </>
         )

@@ -357,6 +357,30 @@ export const CRUD = () => {
   const READ = () => {
     const [data, setData] = useState();
     useEffect(() => {
+      if(!defaultEdit){
+       const getVendors = async () => {
+        try {
+          const {data, status} = await getApiData('vendors/' + localStorage.getItem('dataIdVendor'))
+          if(status === 200) {
+            setDataDetailVendor(data)
+            setLoading(true)
+          } 
+        } catch (error) {
+          console.log(error);
+        }
+        try {
+          const { status, data } = await getApiData(
+            "vendors/" + localStorage.getItem('dataIdVendor') + "/contacts"
+          );
+          if (status === 200) {
+            setDataDetailVendorContact(data);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+       }
+       getVendors()
+      }
       const getData = async () => {
         try {
           if (path === "vendors") {

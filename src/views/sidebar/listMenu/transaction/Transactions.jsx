@@ -83,6 +83,8 @@ export const Transactions = () => {
                     handleEdit={handleEdit}
                     dataHeading={dataHeadingForProduct}
                     setPath={setPath}
+                    setLoading={setLoading}
+                    setRefresh={setRefresh}
                 />
         </>
         )
@@ -150,6 +152,8 @@ export const Transactions = () => {
                     dataHeading={dataHeading}
                     setPath={setPath}
                     refBody={refBody}
+                    setRefresh={setRefresh}
+                    setLoading={setLoading}
                 />
         </>
         )
@@ -184,6 +188,8 @@ export const Transactions = () => {
                     dataHeading={dataHeadingForInvoices}
                     setPath={setPath}
                     refBody={refBody}
+                    setLoading={setLoading}
+                    setRefresh={setRefresh}
                 />
         </>
         )

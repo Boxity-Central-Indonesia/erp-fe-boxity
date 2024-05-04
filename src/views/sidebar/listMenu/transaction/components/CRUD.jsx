@@ -250,15 +250,7 @@ export const CRUD = () => {
   };
 
   useEffect(() => {
-    console.log("Edited dataTabelProducts:", dataTabelProducts);
-
-    // Simpan ke Local Storage sebelum pembaruan state
     saveDataToLocalStorage(dataTabelProducts);
-
-    // Perbarui state dan re-render jika diperlukan
-    // setDataTabelProducts([...dataTabelProducts]);
-    // setRender(!render); // Hanya jika re-render diperlukan
-    // setEditingItemId(null);
   }, [dataTabelProducts]);
 
   useEffect(() => {
@@ -456,8 +448,9 @@ export const CRUD = () => {
         htmlFor: "status",
         id: "status",
         dataSelect: [
-          { value: "unpaid", name: "Belum Lunas" },
-          { value: "partial", name: "Cicilan" },
+          { id: "unpaid", name: "Belum Lunas" },
+          { id: "partial", name: "Cicilan" },
+          { id: "paid", name: "Lunas" },
         ],
         onchange: handleChange,
       },
@@ -691,6 +684,18 @@ export const CRUD = () => {
         dataSelect: dataSelectProducts,
         onchange: handleChange,
       },
+      {
+        element: "input",
+        type: "number",
+        name: "quantity",
+        ref: refBody.quantityRef,
+        value: dataEdit.quantity,
+        label: "Kuatntitas",
+        htmlFor: "quantity",
+        id: "quantity",
+        onchange: handleChange,
+        placeholder: "Kunatitas",
+      },
     ]);
   }, [dataEdit]);
 
@@ -762,6 +767,42 @@ export const CRUD = () => {
   const READ = () => {
     const [data, setData] = useState();
     useEffect(() => {
+      if(!defaultEdit){
+        const getDataDetail = async () => {
+         if(path === 'orders' || path === 'products'){
+          try {
+            const {data, status} = await getApiData('orders/' + orderId)
+            if(status === 200) {
+              setDataDetailOrders(data)
+              setLoading(true)
+            }
+          } catch (error) {
+            console.log(error);
+          }
+         } else if(path === 'invoices') {
+          try {
+            const {data, status} = await getApiData('invoices/' + idDelete)
+            if(status === 200) {
+              setDetailInvoices(data)
+              setLoading(true)
+            }
+          } catch (error) {
+            console.log(error);
+          }
+         } else if(path === 'delivery-notes'){
+            try {
+              const {data, status} = await getApiData('delivery-notes/' + idDelete)
+              if(status === 200) {
+                setDataDetailDeliveryNotes(data)
+                setLoading(true)
+              }
+            } catch (error) {
+              console.log(error);
+            }
+         }
+        }
+        getDataDetail()
+      }
       const getData = async () => {
         try {
           const { data } = await getApiData(path);
@@ -881,7 +922,7 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah Delivery notes list",
+                label: "Tambah Delivery note",
                 icon: IconAdd(),
                 heading: "Good Delivery notes list",
                 eventToggleModal: handleCreate,
@@ -2091,6 +2132,7 @@ export const CRUD = () => {
           product_id: parseInt(refBody.product_idRef.current.value),
           quantity: parseInt(refBody.quantityRef.current.value),
         };
+        console.log(dataBody);
         try {
           const { data, status } = await postApiData(
             "delivery-notes/" +
