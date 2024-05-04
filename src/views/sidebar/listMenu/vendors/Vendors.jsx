@@ -34,7 +34,8 @@ export const Vendors = () => {
         setDataHeading,
         handleClickHeading,
         setLoading,
-        setRefresh
+        setRefresh,
+        usePageDetal
     } = CRUD()
 
     const dataModalBody = () => {
@@ -122,6 +123,7 @@ export const Vendors = () => {
         handleEdit={handleEdit}
         setRefresh={setRefresh}
         setLoading={setLoading}
+        usePageDetail={usePageDetal}
         />
        </>
     )

@@ -62,6 +62,7 @@ export const CRUD = () => {
   const [disabledInput, setDisabledInput] = useState(false);
   const [dataHeadingForProduct, setDataHeadingForProduct] = useState([{}]);
   const [dataHeadingForInvoices, setDataHeadingForInvoices] = useState([{}]);
+  const [usePageDetail, setUsePageDetail] = useState(false)
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -810,6 +811,7 @@ export const CRUD = () => {
             const newData = dataOrders(data);
             setData(newData);
             setLoading(true)
+            setUsePageDetail(true)
             setDataHeading([
               {
                 label: "Tambah order",
@@ -853,6 +855,7 @@ export const CRUD = () => {
           } else if (path === "invoices") {
             const newData = dataInvoices(data);
             setData(newData);
+            setUsePageDetail(true)
             setLoading(true)
             setDataHeading([
               {
@@ -876,6 +879,7 @@ export const CRUD = () => {
             const newData = dataPayments(data);
             setData(newData);
             setLoading(true)
+            setUsePageDetail(false)
             setDataHeading([
               {
                 label: "Tambah payment",
@@ -919,6 +923,7 @@ export const CRUD = () => {
           } else if (path === "delivery-notes") {
             const newData = dataDeliveryNotes(data);
             setData(newData);
+            setUsePageDetail(true)
             setLoading(true)
             setDataHeading([
               {
@@ -1048,15 +1053,18 @@ export const CRUD = () => {
         if (status === 200) {
           if (param === "orders") {
             const newData = dataOrders(data);
+            setUsePageDetail(true)
             setSkeleton((prevSkeleton) => !prevSkeleton);
             setData(newData);
           } else if (param === "invoices") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataInvoices(data);
+            setUsePageDetail(true)
             setData(newData);
           } else if (param === "payments") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataPayments(data);
+            setUsePageDetail(false)
             setData(newData);
           } else if (param === "goods-receipt") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
@@ -1066,6 +1074,7 @@ export const CRUD = () => {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataDeliveryNotes(data);
             setData(newData);
+            setUsePageDetail(true)
           }
         }
       } catch (error) {
@@ -2666,6 +2675,7 @@ export const CRUD = () => {
     dataHeadingForProduct,
     dataHeadingForInvoices,
     setLoading,
-    setRefresh
+    setRefresh,
+    usePageDetail
   };
 };

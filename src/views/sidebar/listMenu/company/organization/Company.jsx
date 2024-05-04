@@ -27,7 +27,8 @@ export const Company = () => {
         defaultEdit,
         setDefaultEdit,
         setRefresh,
-        setLoading
+        setLoading,
+        usePageDetail
     } = CRUD()
 
     const dataModalBody = () => {
@@ -71,6 +72,8 @@ export const Company = () => {
                     defaultEdit={setDefaultEdit}
                     handleEdit={handleEdit}
                     dataHeading={dataHeading}
+                    setLoading={setLoading}
+                    setRefresh={setRefresh}
                 />
             </>
         )
@@ -107,6 +110,7 @@ export const Company = () => {
         handleEdit={handleEdit}
         setRefresh={setRefresh}
         setLoading={setLoading}
+        usePageDetail={usePageDetail}
         />
        </>
     )

@@ -29,6 +29,7 @@ export const ProccesActifity = () => {
     } = index()
 
 
+
     if(!defaultEdit){
         return(
             <>
@@ -97,6 +98,7 @@ export const ProccesActifity = () => {
         handleEdit={handleEdit}
         setRefresh={setRefresh}
         setLoading={setLoading}
+        usePageDetail={true}
         />
        </>
     )

@@ -38,6 +38,7 @@ export const CRUD = () => {
   );
   const [dataCategorySelect, setDataCategorySelect] = useState();
   const [messages, setMessages] = useState([]);
+  const [usePageDetail, setUsePageDetail] = useState(false)
 
   // EmployesList
 
@@ -518,6 +519,7 @@ export const CRUD = () => {
             const newData = dataWarehouses(data);
             setData(newData);
             setLoading(true)
+            setUsePageDetail(true)
             setDataHeading([
               {
                 label: "Tambah warehouses",
@@ -539,6 +541,7 @@ export const CRUD = () => {
             const newData = dataWarehousesLocation(data);
             setData(newData);
             setLoading(true)
+            setUsePageDetail(false)
             setDataHeading([
               {
                 label: "Tambah warehouses",
@@ -613,10 +616,12 @@ export const CRUD = () => {
             const newData = dataWarehouses(data);
             setSkeleton((prevSkeleton) => !prevSkeleton);
             setData(newData);
+            setUsePageDetail(true)
           } else if (param === "warehouse-locations") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataWarehousesLocation(data);
             setData(newData);
+            setUsePageDetail(false)
           }
         }
       } catch (error) {
@@ -1394,6 +1399,7 @@ export const CRUD = () => {
     handleEditDetailForProduct,
     refresh,
     setRefresh,
-    setLoading
+    setLoading,
+    usePageDetail
   };
 };

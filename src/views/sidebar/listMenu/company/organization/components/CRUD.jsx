@@ -27,6 +27,7 @@ export const CRUD = () => {
   const [dataDetailCompany, setDataDetailCompany] = useState({});
   const [idCompany, setIdCompany] = useState(null);
   const [path, setPath] = useState("companies");
+  const [usePageDetail, setUsePageDetail] = useState(false)
 
   const [refBody, setRefBody] = useState({
     nameRef: useRef(),
@@ -340,34 +341,6 @@ export const CRUD = () => {
     ]);
   }, [dataEdit]);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        if (idCompany !== null) {
-          const { data, status } = await getApiData("companies/" + idCompany);
-          if (status === 200) {
-            setDataEdit({
-              name: data.name,
-              email: data.email,
-              phone_number: data.phone_number,
-              website: data.website ?? "--",
-              address: data.address,
-              city: data.city,
-              province: data.province,
-              postal_code: data.postal_code,
-              country: data.country,
-              industry: data.industry,
-              description: data.description,
-              id: data.id,
-            });
-            setDataDetailCompany(() => data);
-          }
-        }
-      } catch (error) {}
-    };
-    getData();
-  }, [refresh]);
-
   const dataCompany = (data) => {
     return data.map((item) => ({
       id: item.id,
@@ -382,11 +355,39 @@ export const CRUD = () => {
     const [data, setData] = useState();
     useEffect(() => {
       document.title = "Company - DHKJ Manufacturer";
+      if(!defaultEdit){
+        const getDataDetail = async () => {
+          try {
+            if (idCompany !== null) {
+              const { data, status } = await getApiData("companies/" + idCompany);
+              if (status === 200) {
+                setDataEdit({
+                  name: data.name,
+                  email: data.email,
+                  phone_number: data.phone_number,
+                  website: data.website ?? "--",
+                  address: data.address,
+                  city: data.city,
+                  province: data.province,
+                  postal_code: data.postal_code,
+                  country: data.country,
+                  industry: data.industry,
+                  description: data.description,
+                  id: data.id,
+                });
+                setDataDetailCompany(() => data);
+              }
+            }
+          } catch (error) {}
+        };
+        getDataDetail();
+      }
       const getData = async () => {
         try {
           if (path === "companies") {
             const { data } = await getApiData(path);
             const newData = dataCompany(data);
+            setUsePageDetail(true)
             setLoading(true)
             setData(() => newData);
             setDataHeading([
@@ -1107,6 +1108,7 @@ export const CRUD = () => {
     defaultEdit,
     setDefaultEdit,
     setRefresh,
-    setLoading
+    setLoading,
+    usePageDetail
   };
 };

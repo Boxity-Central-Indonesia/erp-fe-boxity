@@ -36,7 +36,8 @@ export const Transactions = () => {
         dataHeadingForProduct,
         dataHeadingForInvoices,
         setLoading,
-        setRefresh
+        setRefresh,
+        usePageDetail
     } = CRUD()
 
 
@@ -229,6 +230,7 @@ export const Transactions = () => {
         handleEdit={handleEdit}
         setLoading={setLoading}
         setRefresh={setRefresh}
+        usePageDetail={usePageDetail}
         />
        </>
     )

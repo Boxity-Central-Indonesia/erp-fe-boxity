@@ -42,6 +42,7 @@ export const Warehouses = () => {
         handleEditDetailForProduct,
         setRefresh,
         refresh,
+        usePageDetail
     } = CRUD()
 
     const dataModalBody = () => {
@@ -139,6 +140,7 @@ export const Warehouses = () => {
         setRefresh={setRefresh}
         refresh={refresh}
         setLoading={setLoading}
+        usePageDetail={usePageDetail}
         />
        </>
     )

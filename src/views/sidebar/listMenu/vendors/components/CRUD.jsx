@@ -32,6 +32,7 @@ export const CRUD = () => {
   const [defaultEdit, setDefaultEdit] = useState(true);
   const [dataDetailVendor, setDataDetailVendor] = useState({});
   const [dataDetailVendorContact, setDataDetailVendorContact] = useState([]);
+  const [usePageDetal, setUsePageDetail] = useState(false)
 
   // EmployesList
 
@@ -388,6 +389,7 @@ export const CRUD = () => {
             const newData = dataVendors(data);
             setData(() => newData);
             setLoading(true)
+            setUsePageDetail(true)
             setDataHeading([
               {
                 label: "Tambah vendors",
@@ -410,6 +412,7 @@ export const CRUD = () => {
             const newData = dataVendorsTransactions(data);
             setData(() => newData);
             setLoading(true)
+            setUsePageDetail(false)
             setDataHeading([
               {
                 label: "Tambah vendors",
@@ -433,6 +436,7 @@ export const CRUD = () => {
             const newData = dataVendors(data);
             setData(() => newData);
             setLoading(true)
+            setUsePageDetail(true)
             setDataHeading([
               {
                 label: "Tambah vendors",
@@ -523,10 +527,12 @@ export const CRUD = () => {
             const newData = dataVendors(data);
             setSkeleton((prevSkeleton) => !prevSkeleton);
             setData(newData);
+            setUsePageDetail(true)
           } else if (param === "vendor-transactions") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataVendorsTransactions(data);
             setData(newData);
+            setUsePageDetail(false)
           }
         }
       } catch (error) {
@@ -1171,6 +1177,7 @@ export const CRUD = () => {
     setDataHeading,
     handleClickHeading,
     setLoading,
-    setRefresh
+    setRefresh,
+    usePageDetal
   };
 };
