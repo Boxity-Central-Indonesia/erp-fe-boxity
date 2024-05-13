@@ -59,24 +59,24 @@ export const TabelForDetail = ({
     );
   }
 
-  if (data.length === 0) {
-    // Tampilkan pesan "Loading..." jika data masih undifined
-    return (
-      <table className={`w-full`}>
-              <tbody>
-                <tr className="w-full flex justify-center">
-                  <td className="flex gap-1 py-8">
-                    <p
-                      className="flex items-center text-sm text-gray-700"
-                    >
-                        Tidak ada data untuk ditampilkan
-                    </p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-    );
-  }
+  // if (data.length === 0) {
+  //   // Tampilkan pesan "Loading..." jika data masih undifined
+  //   return (
+  //     <table className={`w-full`}>
+  //             <tbody>
+  //               <tr className="w-full flex justify-center">
+  //                 <td className="flex gap-1 py-8">
+  //                   <p
+  //                     className="flex items-center text-sm text-gray-700"
+  //                   >
+  //                       Tidak ada data untuk ditampilkan
+  //                   </p>
+  //                 </td>
+  //               </tr>
+  //             </tbody>
+  //           </table>
+  //   );
+  // }
 
   return (
     <>
@@ -111,9 +111,19 @@ export const TabelForDetail = ({
               <span className="sr-only">Edit</span>
             </Table.HeadCell>
           </Table.Head>
-          <Table.Body className="divide-y">
-            {data &&
-              data.map((item) => (
+          {data.length === 0 ? (
+            <Table.Body>
+              <tr className="w-full flex justify-center">
+                <td className="flex gap-1 py-8">
+                  <p className="flex items-center text-sm text-gray-700">
+                    Tidak ada data untuk ditampilkan
+                  </p>
+                </td>
+              </tr>
+            </Table.Body>
+          ) : (
+            <Table.Body className="divide-y">
+              {data.map((item) => (
                 <Table.Row
                   key={item.id}
                   className="bg-white dark:border-gray-700 dark:bg-gray-800 border-b"
@@ -130,9 +140,7 @@ export const TabelForDetail = ({
                       </Table.Cell>
                     ))}
                   <Table.Cell className={`${hiddenBtnEdit ? `hidden` : ``}`}>
-                    <button
-                      onClick={() => handleEdit(item.id, routes, item.id)}
-                    >
+                    <button onClick={() => handleEdit(item.id, routes, item.id)}>
                       <svg
                         style={{ color: globalColor }}
                         className="w-6 h-6 dark:text-white"
@@ -153,9 +161,10 @@ export const TabelForDetail = ({
                   </Table.Cell>
                 </Table.Row>
               ))}
-          </Table.Body>
+            </Table.Body>
+          )}
         </Table>
       </div>
     </>
-  );
+  );  
 };

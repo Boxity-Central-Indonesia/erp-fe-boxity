@@ -47,7 +47,8 @@ const Register = ({ setAuth }) => {
         import.meta.env.VITE_API_URL + "register",
         formData,
         {
-          withCredentials: true,
+          withXSRFToken: true,
+          withCredentials: false,
         }
       );
 
