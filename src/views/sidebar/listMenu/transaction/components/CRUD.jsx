@@ -1091,7 +1091,7 @@ export const CRUD = () => {
         setDefaultEdit(false);
         try {
           const { data, status } = await getApiData(
-            "orders/" + param.textContent
+            "orders/" + param.textContent.trim()
           );
           if (status === 200) {
             setDataDetailOrders(() => data);
@@ -1136,9 +1136,10 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
       } else if (path === "invoices" && defaultEdit === true) {
         setDefaultEdit(false);
+        console.log('okeee');
         try {
           const { data, status } = await getApiData(
-            path + "/" + param.textContent
+            path + "/" + param.textContent.trim()
           );
           if (status === 200) {
             setDetailInvoices(data);
@@ -1163,7 +1164,7 @@ export const CRUD = () => {
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const { data, status } = await getApiData("invoices/" + param);
+          const { data, status } = await getApiData("invoices/" + param.trim());
           if (status === 200) {
             setDataEdit({
               id: data.id,
@@ -1194,7 +1195,7 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
           const { data, status } = await getApiData(
-            path + "/" + param.textContent
+            path + "/" + param.textContent.trim()
           );
           if (status === 200) {
             setDataEdit({
@@ -1318,7 +1319,7 @@ export const CRUD = () => {
         setDefaultEdit(false);
         try {
           const { data, status } = await getApiData(
-            "delivery-notes/" + param.textContent
+            "delivery-notes/" + param.textContent.trim()
           );
           if (status === 200) {
             setDataEdit({});
