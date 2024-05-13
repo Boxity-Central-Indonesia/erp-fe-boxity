@@ -63,6 +63,7 @@ export const CRUD = () => {
   const [dataHeadingForProduct, setDataHeadingForProduct] = useState([{}]);
   const [dataHeadingForInvoices, setDataHeadingForInvoices] = useState([{}]);
   const [usePageDetail, setUsePageDetail] = useState(false)
+  const [selected, setSelected] = useState()
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -138,6 +139,8 @@ export const CRUD = () => {
     setDataTabelProducts([]);
   }, [openModal]);
 
+
+
   const handleChangeAndPushProducts = async (event) => {
     // Mendapatkan nama dan nilai input yang berubah
     const { name, value } = event.target;
@@ -201,15 +204,11 @@ export const CRUD = () => {
   }
 
   const handleChange = async (event) => {
-    const { name, value } = event.target;
 
-    if (name === "order_type") {
-      localStorage.setItem("order_type", value);
-    }
 
-    if (name === "vendor_id") {
+    if (event.nameElement === "vendor_id") {
       try {
-        const { data, status } = await getApiData("vendors/" + value);
+        const { data, status } = await getApiData("vendors/" + event.id);
         if (status === 200) {
           if (
             data.transaction_type === "inbound" ||
@@ -231,6 +230,14 @@ export const CRUD = () => {
       } catch (error) {
         console.log(error);
       }
+    }
+
+
+
+    const { name, value } = event.target;
+
+    if (name === "order_type") {
+      localStorage.setItem("order_type", value);
     }
 
     if (
@@ -285,6 +292,7 @@ export const CRUD = () => {
             id: item.id,
             name: item.name,
             raw_material: item?.raw_material || null,
+            nameElement: param === 'warehouses' ? 'warehouses_id' : param === 'vendors' ? 'vendor_id' : 'product_id'
           }));
           state(newData);
         }
@@ -2259,6 +2267,8 @@ export const CRUD = () => {
                 uniqueId={index}
                 validationError={validationError}
                 disabled={item.disabled}
+                selected={selected}
+                setSelected={setSelected}
               />
             ))}
 

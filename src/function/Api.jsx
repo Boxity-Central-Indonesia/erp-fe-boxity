@@ -131,6 +131,7 @@ export const putApiDataAndFile = async (endpoint, data) => {
     {
       withXSRFToken: true,
       headers: {
+        'X-XSRF-TOKEN': 'eyJpdiI6IlpyeHd5SXFjRktvY01ybElPWnFoQmc9PSIsInZhbHVlIjoiK3NWZ1V3YlhLRy9oNkFSaXVJckhJSzVTNWZ6cGJiT1pBVGpZdUlNVjlhSk5BeHhCcy9GWGlmL3MyV0t2d2xjWTdxb1Y2V01tYyttdXl5VTFQWkt3VmZrMU16UFl1SFcxSWorZlUyWVFsbnRRZ1drT0JDSytraG9XWG9XNldUbHAiLCJtYWMiOiJmNjAzOGE1MjZiZDEzMTM3NDVhOTRhZGVjZjU4Yjc2MTU4NDZmNmIyNGQyYmQ4OTg5N2FlMjAxNDNjYTYyYjhkIiwidGFnIjoiIn0%3D',
         Authorization: `Bearer ${Cookies.get("token")}`,
         "Content-Type": "multipart/form-data",
       },

@@ -16,6 +16,7 @@ module.exports = {
     "./src/**/*.html",
     "./src/**/*.vue",
     "./src/**/*.jsx",
+    'react-widgets/styles.css'
   ],
   // make sure to safelist these classes when using purge
   safelist: [

@@ -1,7 +1,5 @@
-import { fa } from "@faker-js/faker";
 import { useRef, useState } from "react";
-import Select from 'react-select'
-import AsyncSelect from 'react-select/async'
+import ComboBox from "./ComboBox";
 
 const FormInput = ({
   element,
@@ -19,6 +17,8 @@ const FormInput = ({
   validationError,
   disabled,
   selectedValue,
+  selected,
+  setSelected
 }) => {
   const [selectedRadio, setSelectedRadio] = useState(value); // State untuk menyimpan nilai radio yang dipilih
 
@@ -37,6 +37,11 @@ const FormInput = ({
   const classNameInputRadio = `${
     element == "radio" ? `` : `hidden`
   } w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600`;
+
+  const options = [
+    'one', 'two', 'three'
+  ];
+  const defaultOption = options[0];
 
   return (
     <>
@@ -76,7 +81,7 @@ const FormInput = ({
         )}
         {element === "select" && (
           <div key={uniqueId + 3} className="col-span-1">
-            <select
+            {/* <select
               key={`${uniqueId}-${id}`}
               className={classNameSelect}
               name={name}
@@ -92,13 +97,9 @@ const FormInput = ({
                     {item.name}
                   </option>
                 ))}
-            </select>
-            {/* <Select
-             name={name} 
-             onChange={onChange} 
-             isDisabled={disabled} 
-             options={dataSelect}
-            /> */}
+            </select> */}
+
+            <ComboBox data={dataSelect} selected={selected} setSelected={setSelected} onChange={onChange}/>
 
             <p
               className={`text-red-500 mt-2 text-sm ${
