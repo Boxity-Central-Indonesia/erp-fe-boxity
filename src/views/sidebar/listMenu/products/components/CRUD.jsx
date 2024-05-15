@@ -704,6 +704,7 @@ export const CRUD = () => {
   const CREATE = () => {
     const handleCreate = (param) => {
       if (param === "products") {
+        setImageUrl('"https://res.cloudinary.com/du0tz73ma/image/upload/v1700279273/building_z7thy7.png"')
         setDataEdit({
           name: "",
           description: "",
@@ -927,9 +928,9 @@ export const CRUD = () => {
       } else if (param === "product-prices") {
         dataBody = {
           product_id: refBody.product_idRef.current.value,
-          selling_price: refBody.selling_priceRef.current.value,
-          buying_price: refBody.buying_priceRef.current.value,
-          discount_price: refBody.discount_priceRef.current.value,
+          selling_price: currencyToNumber(refBody.selling_priceRef.current.value),
+          buying_price: currencyToNumber(refBody.buying_priceRef.current.value),
+          discount_price: currencyToNumber( refBody.discount_priceRef.current.value),
         };
 
         try {

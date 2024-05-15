@@ -6,8 +6,9 @@ import {
   deleteApiData,
 } from "../../../../../function/Api";
 import IconAdd from "../../../../layouts/icons/IconAdd";
-import { TextArea } from "../../../../layouts/FormInput";
+// import { TextArea } from "../../../../layouts/FormInput";
 import FormInput from "../../../../layouts/FormInput";
+import {numberToCurrency, currencyToNumber} from "../../../../config/FormatCurrency"
 
 export const CRUD = () => {
   const [refresh, setRefresh] = useState(false);
@@ -272,7 +273,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "amount",
         ref: refBody.amountRef,
         value: dataEdit.amount,
@@ -284,7 +285,7 @@ export const CRUD = () => {
       },
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "unit_price",
         ref: refBody.unit_priceRef,
         value: dataEdit.unit_price,
@@ -297,11 +298,11 @@ export const CRUD = () => {
 
       {
         element: "input",
-        type: "number",
+        type: "text",
         name: "total_price",
         ref: refBody.total_priceRef,
         value: dataEdit.total_price,
-        label: "w",
+        label: "Total price",
         htmlFor: "total_price",
         id: "total_price",
         onchange: handleChange,
@@ -614,10 +615,10 @@ export const CRUD = () => {
           if (status === 200) {
             setDataEdit({
               vendors_id: data.vendors_id,
-              amount: data.amount,
+              amount: numberToCurrency(data.amount),
               product_id: data.product_id,
-              unit_price: data.unit_price,
-              total_price: data.total_price,
+              unit_price: numberToCurrency(data.unit_price),
+              total_price: numberToCurrency(data.total_price),
               taxes: data.taxes,
               shipping_cost: data.shipping_cost,
               id: data.id,
