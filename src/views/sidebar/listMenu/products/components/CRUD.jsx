@@ -1273,7 +1273,6 @@ export const CRUD = () => {
   const inputBody = (param, response) => {
     // Variabel response didefinisikan di luar blok kondisional
     let imageProductElement = null;
-
     if (param === "products") {
       return (
         <>
