@@ -49,11 +49,26 @@ export const stringToDecimal = ({ value }) => {
     // Membuang karakter non-angka
     const numericString = value.replace(/\D/g, '');
 
-    // Mengubah string menjadi bilangan bulat
-    const intValue = parseInt(numericString, 10);
+    // Mengubah string menjadi bilangan desimal
+    const floatValue = parseFloat(numericString);
 
-    // Mengubah bilangan bulat menjadi format desimal dengan pemisah ribuan
-    const decimalString = intValue.toLocaleString('id-ID'); // Menggunakan 'id-ID' untuk format desimal di Indonesia
+    // // Membulatkan ke bilangan bulat terdekat
+    // const intValue = Math.round(floatValue);
+
+    // Mengubah bilangan bulat menjadi format desimal dengan pemisah ribuan dan desimal
+    // let decimalString = floatValue.toLocaleString('id-ID');
+
+    // Menghilangkan .00 di mana pun dalam string
+    let decimalString = value.replace(/.00/, '');
+
+    // // Menambahkan koma setelah kelompok angka desimal
+    // decimalString = decimalString.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+
+    // Mengganti titik dengan koma
+    // decimalString = decimalString.replace(/\./g, ',');
 
     return decimalString;
 };
+
+  
+  

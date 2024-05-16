@@ -1,10 +1,11 @@
 // Tabel.jsx
 import React, { useMemo } from "react";
-import { Table, Dropdown, TableCell, TableBody } from "flowbite-react";
+import { Table } from "flowbite-react";
 import Paginate from "./PaginateTest";
 import TabelHeading from "./TabelHeading";
 import { useColor } from "../config/GlobalColour";
 import { useState, useEffect } from "react";
+import { numberToDecimal } from "../config/FormatCurrency";
 import {
   createColumnHelper,
   flexRender,
@@ -274,11 +275,11 @@ const TabelComponent = ({
           ) {
             // Handle capacity with decimal formatting
             className = "text-right";
-            const formattedNumber = value.toLocaleString("id-ID", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            });
-            formattedValue = `${formattedNumber} ton`;
+            // const formattedNumber = value.toLocaleString("id-ID", {
+            //   minimumFractionDigits: 2,
+            //   maximumFractionDigits: 2,
+            // });
+            formattedValue = numberToDecimal({value: value}) + ' ton';
           } else if (key === "unit of measure") {
             className = "text-right";
             formattedValue = value;

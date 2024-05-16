@@ -558,7 +558,7 @@ export const CRUD = () => {
         localStorage.setItem("path", "vendors");
         setDataHeading([
           {
-            label: "Add",
+            label: "Tambah kontak",
             icon: IconAdd(),
             eventToggleModal: handleCreate,
             onclick: handleClickHeading,

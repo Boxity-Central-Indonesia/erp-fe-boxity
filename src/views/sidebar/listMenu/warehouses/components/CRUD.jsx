@@ -885,7 +885,7 @@ export const CRUD = () => {
         getSelectKategory();
         setDefaultEdit(false)
         try {
-          const { data, status } = await getApiData(path + "/" + id);
+          const { data, status } = await getApiData(path + "/" + id.trim());
           if (status === 200) {
             setDataDetailWarehouses(() => data)
 

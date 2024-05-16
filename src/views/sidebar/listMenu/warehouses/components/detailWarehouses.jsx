@@ -1,5 +1,5 @@
 import Button from "../../../../layouts/Button";
-import { numberToCurrency, stringToDecimal } from "../../../../config/FormatCurrency";
+import { numberToDecimal } from "../../../../config/FormatCurrency";
 import { useEffect, useState } from "react";
 import { getApiData, putApiData } from "../../../../../function/Api";
 import { WarehousesLocations } from "./warehousesLocations";
@@ -31,14 +31,12 @@ export const DetailWarehouses = ({
   const dataDetail = {
     name: data?.warehouse?.name,
     address: data?.warehouse?.address,
-    capacity: data?.warehouse?.capacity ? stringToDecimal({ value: data.warehouse.capacity }) + ' ton' : null,
+    capacity: data?.warehouse?.capacity,
     description: data?.warehouse?.description,
     location: data?.locations,
     products: data?.products,
     id: data?.warehouse?.id,
 };
-
-
 
   const handleBack = () => {
     defaultEdit(true);
@@ -136,7 +134,7 @@ export const DetailWarehouses = ({
                 <td className="py-1">Kapasitas</td>
                 <td>
                   {" "}
-                  : <span className="ml-5">{dataDetail && dataDetail?.capacity || "--"}</span>
+                  : <span className="ml-5">{dataDetail && numberToDecimal({value: dataDetail?.capacity}) + ' ton' || "--"}</span>
                 </td>
               </tr>
               <tr>

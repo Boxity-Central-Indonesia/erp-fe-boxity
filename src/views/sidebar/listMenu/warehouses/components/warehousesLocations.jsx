@@ -1,7 +1,7 @@
 import { TabelForDetail } from "../../../../layouts/TabelForDetail"
 import { useState } from "react"
 import IconAdd from "../../../../layouts/icons/IconAdd"
-import { stringToDecimal } from "../../../../config/FormatCurrency"
+import { numberToDecimal } from "../../../../config/FormatCurrency"
 
 export const WarehousesLocations = ({
     data,
@@ -21,11 +21,14 @@ export const WarehousesLocations = ({
         }
       ])
 
+
+
       const dataLocations = data && data?.location?.map(item => ({
         id: item.id,
         number: item.number,
-        kapasitas: stringToDecimal({value: item?.capacity}) + ' ton'
+        kapasitas: numberToDecimal({value : item?.capacity}) + ' ton'
       }))
+
 
     return (
         <>
