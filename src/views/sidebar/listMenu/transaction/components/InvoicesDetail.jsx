@@ -208,7 +208,7 @@ export const InvoicesDetail = ({
               </svg>
             }
           />
-          <Button
+          {/* <Button
             bgColour={"primary"}
             label={"Edit"}
             paddingX={"4"}
@@ -231,7 +231,7 @@ export const InvoicesDetail = ({
                 />
               </svg>
             }
-          />
+          /> */}
           <Button
             bgColour={"#040d1d"}
             textColour={"#fff"}
