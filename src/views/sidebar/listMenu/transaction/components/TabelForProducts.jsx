@@ -1,18 +1,14 @@
-import React, { useState, useRef } from "react";
 import { Table } from "flowbite-react";
 import { useColor } from "../../../../config/GlobalColour";
+import { FormatCurrency, currencyToNumber } from "../../../../config/FormatCurrency";
+
 
 export const TabelForProducts = ({
   dataTabelProducts,
-  refBody,
-  onChange,
   setDataTabelProducts,
-  // handleSaveClick,
   saveDataToLocalStorage,
 }) => {
   const { globalColor } = useColor();
-  const [editingItemId, setEditingItemId] = useState(null);
-  const idInputRefs = useRef([]);
 
   const handleInputChange = (index, key, value) => {
     let newData = [...dataTabelProducts];
@@ -22,6 +18,7 @@ export const TabelForProducts = ({
     } else {
       newData[index] = { ...newData[index], [key]: value };
     }
+    console.log(newData);
     setDataTabelProducts(newData); // Changed from setEditedData to
   };
 
@@ -31,10 +28,6 @@ export const TabelForProducts = ({
     saveDataToLocalStorage(newData);
   };
 
-  // const Save = () => {
-  //   handleSaveClick();
-  //   setEditingItemId(null);
-  // };
 
   return (
     <div className="overflow-x-auto">
@@ -50,7 +43,7 @@ export const TabelForProducts = ({
             <span className="sr-only">Edit</span>
           </Table.HeadCell>
         </Table.Head>
-        <Table.Body className="divide-y text-black">
+        <Table.Body className="text-black">
           {dataTabelProducts &&
             dataTabelProducts.map((item, index) => (
               <Table.Row
@@ -68,9 +61,9 @@ export const TabelForProducts = ({
                 </Table.Cell>
                 <Table.Cell>
                   <PriceInput
-                    value={item.price_per_unit}
+                    value={FormatCurrency({value : item.price_per_unit})}
                     onChange={(e) =>
-                      handleInputChange(index, "price_per_unit", e.target.value)
+                      handleInputChange(index, "price_per_unit", currencyToNumber(e.target.value))
                     } 
                   />
                 </Table.Cell>
@@ -121,7 +114,7 @@ const QtyInput = ({ value, onChange }) => {
       value={value}
       name="quantity" // Corrected the name attribute
       onChange={onChange}
-      className="border-none w-20 h-7 px-0"
+      className="border-none w-32 h-7 px-0"
     />
   );
 };
@@ -129,11 +122,11 @@ const QtyInput = ({ value, onChange }) => {
 const PriceInput = ({ value, onChange }) => {
   return (
     <input
-      type="number"
+      type="text"
       value={value}
       name="price_per_unit" // Corrected the name attribute
       onChange={onChange}
-      className="border-none w-20 h-7 px-0"
+      className="border-none w-32 h-7 px-0"
     />
   );
 };

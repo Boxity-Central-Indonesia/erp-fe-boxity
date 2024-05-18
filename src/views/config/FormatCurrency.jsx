@@ -18,8 +18,11 @@ export const numberToCurrency = (value) => {
 
 
 export const FormatCurrency = ({ value }) => {
-    // Ubah nilai string (Rp 500.000.000 -> 5000000000)
-    const num = currencyToNumber(value);
+    let num
+    if(typeof value === 'string'){
+        // Ubah nilai string (Rp 500.000.000 -> 5000000000)
+        num = currencyToNumber(value);
+    }
     
     // Mengonversi nilai menjadi format mata uang tanpa desimal
     const formattedValue = parseFloat(num || 0).toLocaleString('id-ID', {

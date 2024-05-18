@@ -1107,7 +1107,7 @@ export const CRUD = () => {
           products: "",
         });
         setDataModal({
-          size: "2xl",
+          size: "3xl",
           labelModal: "Tambah orders",
           labelBtnModal: "Tambah orders",
           labelBtnSecondaryModal: "Back",
@@ -1202,7 +1202,7 @@ export const CRUD = () => {
         setValidationError({});
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
-          size: "2xl",
+          size: "3xl",
           labelModal: "Tambah delivery notes",
           labelBtnModal: "Tambah delivery notes",
           labelBtnSecondaryModal: "Back",
