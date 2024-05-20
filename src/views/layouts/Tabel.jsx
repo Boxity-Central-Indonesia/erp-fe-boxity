@@ -100,6 +100,7 @@ const TabelComponent = ({
           const paymentMethodMap = {
             cash: "bg-green-600 text-center",
             credit: "bg-yellow-600 text-center",
+            debit: "bg-green-600 text-center", 
             online: "bg-primary-600 text-center",
             other: "bg-red-600 text-center",
           };
@@ -421,6 +422,9 @@ const TabelComponent = ({
             />
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+            {/* Efek loading ketika data belum selesai di muat */}
+
             <table className={`w-full ${skeleton ? `` : `hidden`}`}>
               <tbody>
                 <tr className="w-full border-t-[1px]">
@@ -471,6 +475,8 @@ const TabelComponent = ({
               </tbody>
             </table>
 
+            {/* Ketika tidak ada data di temukan */}
+
             <table className={`w-full ${data.length === 0 ? `` : `hidden`}`}>
               <tbody>
                 <tr className="w-full flex justify-center border-t-[1px]">
@@ -494,6 +500,8 @@ const TabelComponent = ({
               </tbody>
             </table>
 
+            {/* Tabel body */}
+
             <div className="min-w-full w-max 2xl:w-full">
               <Table
                 hoverable
@@ -502,10 +510,12 @@ const TabelComponent = ({
                   skeleton ? `hidden` : ``
                 } min-w-full w-max 2xl:w-full`}
               >
+                {/* Tabel heading */}
                 <Table.Head>
                   {table.getHeaderGroups()[0].headers.map((header) => {
                     const headerClassMap = {
                       "harga satuan": "text-right",
+                      "hpp balance": "text-right",
                       "shipping cost": "text-right",
                       "total price": "text-right",
                       balance: "text-right",
@@ -540,11 +550,8 @@ const TabelComponent = ({
                       "total harga": "text-right",
                       "harga pengiriman": "text-right",
                       "unit of measure": "text-right",
-                      status: "text-center",
+                      status: "text-left",
                       quantity: "text-right",
-                      // "transaction type": "text-center",
-                      // "order status": "text-center",
-                      // "order type": "text-center",
                     };
 
                     return (
@@ -568,8 +575,10 @@ const TabelComponent = ({
                       </Table.HeadCell>
                     );
                   })}
-                  <Table.HeadCell></Table.HeadCell>
+                  <Table.HeadCell className={`${!usePageDetail ? `hidden` : ``}`}></Table.HeadCell>
                 </Table.Head>
+
+                {/* Tabel body */}
 
                 <Table.Body className="divide-y">
                   {table.getRowModel().rows.map((row, rowIndex) => (
@@ -646,9 +655,14 @@ const TabelComponent = ({
                     </Table.Row>
                   ))}
                 </Table.Body>
+
               </Table>
             </div>
+
+
           </div>
+
+          {/* Nav tabel */}
           <nav
             className="flex flex-col md:flex-row border-t-[1px] justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
             aria-label="Table navigation"

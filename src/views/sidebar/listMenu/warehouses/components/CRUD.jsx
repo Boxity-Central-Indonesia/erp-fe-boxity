@@ -524,9 +524,9 @@ export const CRUD = () => {
               {
                 label: "Tambah warehouses",
                 icon: IconAdd(),
-                heading: "Warehouses list",
+                heading: "Daftar gudang",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -546,9 +546,9 @@ export const CRUD = () => {
               {
                 label: "Tambah warehouses",
                 icon: IconAdd(),
-                heading: "Warehouses list",
+                heading: "Daftar gudang",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -592,10 +592,10 @@ export const CRUD = () => {
           icon: IconAdd(),
           heading:
             param === "warehouses"
-              ? "Warehouses list"
+              ? "Daftar gudang"
               : "Warehouse Locations list",
           information:
-            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+            "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

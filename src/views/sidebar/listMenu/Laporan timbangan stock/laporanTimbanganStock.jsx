@@ -10,13 +10,9 @@ export const LaporanTimbanganStock = () => {
     const [refresh, setRefresh] = useState()
     const [dataHeading, setDataHeading] = useState([
         {
-            // label: "Laporan timbangan stok",
-            // icon: IconAdd(),
             heading: "Laporan timbangan stok",
             information:
-              "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
-            // eventToggleModal: handleOpenModal,
-            // onclick: handleClickHeading,
+              "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
         },
     ])
 
@@ -126,9 +122,6 @@ export const LaporanTimbanganStock = () => {
                 hiddenButton={true}
                 setRefresh={setRefresh}
                 setLoading={setLoading}
-                // skeleton={skeleton}
-                // setOpenModal={handleCreate}
-                // handleEdit={handleEdit}
             />
         </>
     )

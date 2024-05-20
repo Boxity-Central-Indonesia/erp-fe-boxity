@@ -6,8 +6,10 @@ import IconSave from "../../../layouts/icons/IconSave";
 import { getApiData } from "../../../../function/Api";
 import { CRUD } from "./components/CRUD";
 
-export const InfoUser = () => {
-  const { input, profileData } = CRUD(); // Mengambil input dan profileData dari CRUD
+export const InfoUser = ({setProfilePicture}) => {
+  const { input, profileData } = CRUD({setProfilePicture}); // Mengambil input dan profileData dari CRUD
+
+
 
   // Fungsi untuk mengatur nilai pada input berdasarkan profileData
   const setInputValueFromProfileData = (fieldName) => {
@@ -16,6 +18,7 @@ export const InfoUser = () => {
     }
     return ""; // Kembalikan string kosong jika tidak ada data
   };
+  
 
   return (
     <>
@@ -33,7 +36,7 @@ export const InfoUser = () => {
                 label={item.label}
                 type={item.type}
                 name={item.name}
-                value={setInputValueFromProfileData(item.name)} // Atur nilai dari profileData ke dalam input
+                value={item.value} // Atur nilai dari profileData ke dalam input
                 id={item.id}
                 placeholder={item.placeholder}
                 dataSelect={item.dataSelect}

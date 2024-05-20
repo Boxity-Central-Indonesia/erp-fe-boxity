@@ -288,7 +288,7 @@ export const CRUD = () => {
                 label: "Tambah asset",
                 icon: IconAdd(),
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 heading: "Asset list",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
@@ -311,7 +311,7 @@ export const CRUD = () => {
                 label: "Tambah category",
                 icon: IconAdd(),
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 heading: "Daftar Kategori",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
@@ -334,7 +334,7 @@ export const CRUD = () => {
                 label: "Tambah category",
                 icon: IconAdd(),
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 heading: "Daftar Kategori",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
@@ -357,7 +357,7 @@ export const CRUD = () => {
                 label: "Tambah category",
                 icon: IconAdd(),
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 heading: "Daftar Kategori",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
@@ -447,7 +447,7 @@ export const CRUD = () => {
               ? "Depresiatins"
               : "Conditions" + " list",
           information:
-            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+            "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

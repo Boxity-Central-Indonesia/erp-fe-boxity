@@ -52,11 +52,77 @@ export const TabelOrder = ({ data }) => {
     },
     {
       accessorKey: "order_status",
-      Header: "order status",
+      Header: "status order",
+      cell:(cell) => {
+        if(cell.getValue() === 'In Production') {
+          return (
+            <div className="border py-0.5 px-2 rounded bg-yellow-400 w-fit text-white text-sm flex items-center justify-center text-center"> 
+            <svg className="w-5 h-5 mr-1 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+            </svg>
+             <p>{cell.getValue()}</p>
+          </div>
+          )
+        } else  {
+          return (
+            <div className="border py-0.5 px-2 rounded bg-green-600 w-fit text-white text-sm flex items-center justify-center text-center"> 
+           <svg className="w-5 h-5 mr-1 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+          </svg>
+             <p>{cell.getValue()}</p>
+          </div>
+          )
+        }
+      }
     },
     {
       accessorKey: "order_type",
       Header: "order type",
+      cell: (cell) => {
+        if(cell.getValue() === 'Production Order'){
+          return (
+            <div className="border py-0.5 px-2 rounded bg-yellow-600 w-fit text-white text-sm flex items-center justify-center text-center"> 
+            <svg
+                className="w-5 h-5 text-white dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 30 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
+                />
+              </svg>
+             <p>{cell.getValue()}</p>
+          </div>
+          )
+        }else{
+          return (
+            <div className="border py-0.5 px-2 rounded bg-blue-600 w-fit text-white text-sm flex items-center justify-center text-center"> 
+             <svg
+                className="w-5 h-5 text-white dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 30 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 12H5m14 0-4 4m4-4-4-4"
+                />
+              </svg>
+             <p>{cell.getValue()}</p>
+          </div>
+          )
+        }
+      }
     },
     {
       accessorKey: "total_price",

@@ -453,7 +453,7 @@ export const CRUD = () => {
       berat: (item.weight ?? 0.0) + " " + item.unit_of_measure,
       jumlah: item.stock + " pcs",
       "harga satuan": item.price,
-      "HPP Balance": item.price * item.stock,
+      "hpp balance": item.price * item.stock,
     }));
   };
 
@@ -503,7 +503,7 @@ export const CRUD = () => {
                 icon: IconAdd(),
                 heading: "Product list",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -526,7 +526,7 @@ export const CRUD = () => {
                 icon: IconAdd(),
                 heading: "Categoires list",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -549,7 +549,7 @@ export const CRUD = () => {
                 icon: IconAdd(),
                 heading: "Prices list",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -572,7 +572,7 @@ export const CRUD = () => {
                 icon: IconAdd(),
                 heading: "Movements list",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -656,7 +656,7 @@ export const CRUD = () => {
               ? "product prices"
               : "Product movement" + " list",
           information:
-            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+            "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

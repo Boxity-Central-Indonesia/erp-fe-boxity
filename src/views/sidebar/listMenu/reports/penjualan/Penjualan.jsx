@@ -12,7 +12,7 @@ export const Penjualan = () => {
       customer: item.vendor_name,
       "Tanggal Penjualan": item.invoice_date,
       status: item.invoice_status,
-      "total Tagihan": item.total_price,
+      "total tagihan": item.total_price,
       "Tagihan Terbayar": item.paid_amount,
     }));
   };
@@ -42,7 +42,7 @@ export const Penjualan = () => {
   return (
     <>
       <Spinner loading={loading} />
-      <TabelComponent data={data} dataHeading={dataHeading} setLoading={setLoading} setRefresh={setRefresh}/>
+      <TabelComponent data={data} dataHeading={dataHeading} setLoading={setLoading} setRefresh={setRefresh} />
     </>
   );
 };

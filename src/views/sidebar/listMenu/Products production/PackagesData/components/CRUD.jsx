@@ -189,7 +189,7 @@ export const CRUD = () => {
                   icon: IconAdd(),
                   heading: "Packages list",
                   information:
-                    "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                    "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                   showNavHeading: true,
                   dataNavHeading: [
                     { path: "packages", label: "Packages" },
@@ -210,7 +210,7 @@ export const CRUD = () => {
                   icon: IconAdd(),
                   heading: "Packaging list",
                   information:
-                    "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                    "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                   showNavHeading: true,
                   dataNavHeading: [
                     { path: "packages", label: "Packages" },
@@ -231,7 +231,7 @@ export const CRUD = () => {
                   icon: IconAdd(),
                   heading: "Packages product list",
                   information:
-                    "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                    "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                   showNavHeading: true,
                   dataNavHeading: [
                     { path: "packages", label: "Packages" },
@@ -324,7 +324,7 @@ export const CRUD = () => {
               ? "Packaging list"
               : "Package product list",
           information:
-            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+            "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

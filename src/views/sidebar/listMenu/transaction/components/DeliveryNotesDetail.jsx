@@ -28,7 +28,7 @@ export const DeliveryNotesDetail = ({
 
   const handleRefresh = () => {
     setRefresh(prevRefresh => !prevRefresh)
-    setLoading(setLoading)
+    setLoading(false)
   }
 
   return (

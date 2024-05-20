@@ -258,7 +258,7 @@ export const CRUD = () => {
                 icon: IconAdd(),
                 heading: "Daftar Akun",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -279,7 +279,7 @@ export const CRUD = () => {
                 icon: IconAdd(),
                 heading: "Daftar Kategori",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -325,7 +325,7 @@ export const CRUD = () => {
           icon: IconAdd(),
           heading: param === "accounts" ? "Accounts" : "Transactions" + " list",
           information:
-            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+            "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

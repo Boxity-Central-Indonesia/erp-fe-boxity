@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { getApiData } from "../../../../../function/Api";
 
-export const CRUD = () => {
+export const CRUD = ({setProfilePicture}) => {
   const [input, setInput] = useState([]);
   const [profileData, setProfileData] = useState([]);
 
@@ -21,7 +21,7 @@ export const CRUD = () => {
               htmlFor: "name",
               id: "name",
               placeholder: "Name",
-              value: data.name, // Menggunakan nilai dari API
+              value: data[0]?.user?.name, // Menggunakan nilai dari API
             },
             {
               element: "input",
@@ -31,7 +31,7 @@ export const CRUD = () => {
               htmlFor: "username",
               id: "username",
               placeholder: "Username",
-              value: data.username, // Menggunakan nilai dari API
+              value: data[0]?.user?.username, // Menggunakan nilai dari API
             },
             {
               element: "input",
@@ -41,7 +41,7 @@ export const CRUD = () => {
               htmlFor: "email",
               id: "email",
               placeholder: "Email",
-              value: data.email, // Menggunakan nilai dari API
+              value: data[0]?.user?.email, // Menggunakan nilai dari API
             },
             {
               element: "input",
@@ -51,7 +51,7 @@ export const CRUD = () => {
               htmlFor: "address",
               id: "address",
               placeholder: "Address",
-              value: data.address, // Menggunakan nilai dari API
+              value: data[0].full_address, // Menggunakan nilai dari API
             },
             {
               element: "input",
@@ -61,11 +61,12 @@ export const CRUD = () => {
               htmlFor: "number_phone",
               id: "number_phone",
               placeholder: "Phone Number",
-              value: data.number_phone, // Menggunakan nilai dari API
+              value: data[0].phone_number, // Menggunakan nilai dari API
             },
           ];
           setInput(inputFields);
           setProfileData(data);
+          setProfilePicture(data[0]?.photo_profile)
         }
       } catch (error) {
         console.log(error);

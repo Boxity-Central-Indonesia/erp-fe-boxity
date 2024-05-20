@@ -165,9 +165,9 @@ export const CRUD = () => {
             {
               label: "Tambah leads",
               icon: IconAdd(),
-              heading: "Leads list",
+              heading: "Daftar list",
               information:
-                "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
               eventToggleModal: handleCreate,
               onclick: handleClickHeading,
               showNavHeading: false,
@@ -184,46 +184,6 @@ export const CRUD = () => {
       };
       getData();
     }, [refresh]);
-
-    // const handleClickHeading = async (param) => {
-    //     setPath(param)
-    //     setDataHeading([
-    //         {
-    //             label: param === 'employees' ? 'Add employees' : 'Add category',
-    //             icon: IconAdd(),
-    //             heading: param === 'employees' ? 'Employees' : 'Category employes' +' list',
-    //             eventToggleModal: handleCreate,
-    //             onclick: handleClickHeading,
-    //             parameter: param === 'employees' ? 'employees' : 'employee-categories',
-    //             showNavHeading: true,
-    //             dataNavHeading: [
-    //                 {path: 'employees', label: 'Employees'},
-    //                 {path: 'employee-categories', label: 'Employee categories'},
-    //             ],
-    //             activeButton: param,
-    //         }
-    //     ])
-    //     setData([1])
-    //     setSkeleton(prevSkeleton => !prevSkeleton)
-    //     try {
-    //         const {data,status} = await getApiData(param)
-    //         if(status === 200) {
-    //             if(param === 'employees'){
-    //                 const newData = dataEmployes(data)
-    //                 setSkeleton(prevSkeleton => !prevSkeleton)
-    //                 setData(newData)
-    //             }else if(param === 'employee-categories') {
-    //                 setSkeleton(prevSkeleton => !prevSkeleton)
-    //                 const newData = dataEmployesCategories(data)
-    //                 setData(newData)
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
-    // getDatEnd
 
     return { data };
   };

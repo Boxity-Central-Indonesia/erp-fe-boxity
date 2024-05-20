@@ -792,11 +792,12 @@ export const CRUD = () => {
             console.log(error);
           }
          } else if(path === 'delivery-notes'){
-            try {
-              const {data, status} = await getApiData('delivery-notes/' + idDelete)
-              if(status === 200) {
-                setDataDetailDeliveryNotes(data)
+           try {
+             const {data, status} = await getApiData('delivery-notes/' + idDelete)
+             if(status === 200) {
+                console.log('okeee');
                 setLoading(true)
+                setDataDetailDeliveryNotes(data)
               }
             } catch (error) {
               console.log(error);
