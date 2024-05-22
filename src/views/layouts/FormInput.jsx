@@ -62,6 +62,7 @@ const FormInput = ({
               onChange={onChange}
               placeholder={placeholder}
               className={classNameInput}
+              disabled={disabled}
             />
             <p
               className={`text-red-500 mt-2 text-sm ${

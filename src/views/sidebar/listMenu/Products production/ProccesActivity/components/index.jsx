@@ -188,9 +188,6 @@ export const index = () => {
       }, []);
 
 
-    useEffect(() => {
-        setDataTabelProccesActivity(dataProccesActivity?.[dataDetail?.order_id]?.[dataDetail?.product_id]);
-    }, [dataProccesActivity])
 
     // modal company
 
@@ -221,6 +218,27 @@ export const index = () => {
     })
 
     // modal company end
+
+
+    useEffect(() => {
+        // setDataTabelProccesActivity(dataProccesActivity?.[dataDetail?.order_id]?.[dataDetail?.product_id]);
+        const getDataProcecesActivity = async () => {
+            try {
+               if(dataDetail?.order_id !== undefined){
+                const {data, status} = await getApiData('processing-activities/by-order/' + dataDetail?.order_id)
+                if(status === 200){
+                    setDataTabelProccesActivity(data)
+                }
+               }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        
+        getDataProcecesActivity()
+
+    }, [dataProccesActivity, refresh])
+
 
     // hapus data detailActivity saat modal di triger
 

@@ -41,20 +41,24 @@ export const editProccesActivity = ({
   };
 
   useEffect(() => {
-    Read({
-      endPoint: "processing-activities/" + dataUpdate,
-      refresh,
-      setDataDetail,
-    });
+    if(dataUpdate !== undefined){
+      Read({
+        endPoint: "processing-activities/" + dataUpdate,
+        refresh,
+        setDataDetail,
+      });
+    }
   }, [dataUpdate]);
 
   useEffect(() => {
     const getData =  async () => {
       try {
-         const {data, status} = await getApiData('processing-activities/' + dataId)
+        if(dataId !== null){
+          const {data, status} = await getApiData('processing-activities/' + dataId)
           if(status === 200){
             setDataDetail(data)
           };
+        }
       } catch (error) {
         console.log(error);
       }

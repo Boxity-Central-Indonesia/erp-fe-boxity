@@ -7,7 +7,7 @@ import { getApiData } from "../../../../function/Api";
 import { CRUD } from "./components/CRUD";
 
 export const InfoUser = ({setProfilePicture}) => {
-  const { input, profileData } = CRUD({setProfilePicture}); // Mengambil input dan profileData dari CRUD
+  const { input, profileData, handleEdit, disabled } = CRUD({setProfilePicture}); // Mengambil input dan profileData dari CRUD
 
 
 
@@ -41,6 +41,8 @@ export const InfoUser = ({setProfilePicture}) => {
                 placeholder={item.placeholder}
                 dataSelect={item.dataSelect}
                 uniqueId={index}
+                onChange={item.onChange}
+                disabled={item.disabled}
               />
             ))}
         </div>
@@ -51,6 +53,8 @@ export const InfoUser = ({setProfilePicture}) => {
             icon={IconSave()}
             paddingY={"3"}
             paddingX={"5"}
+            event={handleEdit}
+            disabled={disabled}
           />
         </div>
       </div>

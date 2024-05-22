@@ -13,29 +13,102 @@ export const ProccesActivityDetail = ({
 }) => {
   const [tableData, setTableData] = useState([]);
 
+//   const formatDetails = (details) => {
+//     // Parse the JSON string into an object
+//     const parsedDetails = JSON.parse(details);
+    
+//     // Construct the formatted details string
+//     let detailsString = "Timbang melalui Livestock";
+
+//     // If type_of_item exists, append it
+//     if (parsedDetails.type_of_item) {
+//         detailsString += "<br />Jenis item: " + parsedDetails.type_of_item;
+//     }
+    
+//     // Create an unordered list to store other details
+//     detailsString += "<ul>";
+
+//     if (parsedDetails.qty_weighing || parsedDetails.noa_weighing) {
+//         detailsString += "<li>Timbang Berat Kotor: " +
+//             (parsedDetails.qty_weighing || "") +
+//             (parsedDetails.noa_weighing ? " " + parsedDetails.noa_weighing : "") +
+//             "</li>";
+//     }
+
+//     detailsString += `<li>Jumlah ${
+//         parsedDetails?.type_of_item ? parsedDetails.type_of_item : ""
+//         } terhitung: ${parsedDetails.number_of_item || ""}</li>`;
+
+//     if (parsedDetails.basket_weight || parsedDetails.noa_basket_weight) {
+//         detailsString += "<li>Berat Keranjang Per Pcs: " +
+//             (parsedDetails.basket_weight || "") +
+//             (parsedDetails.noa_basket_weight ? " " + parsedDetails.noa_basket_weight : "") +
+//             "</li>";
+//     }
+
+//     if (parsedDetails.type_of_item) {
+//         detailsString += "<li>Tipe Item: " + parsedDetails.type_of_item + "</li>";
+//     }
+
+//     // Check if average_weight_per_animal exists and is a number
+//     if (
+//         parsedDetails.average_weight_per_animal &&
+//         !isNaN(parsedDetails.average_weight_per_animal)
+//     ) {
+//         // Format the value with two decimal places and round it
+//         const roundedAverageWeight = parseFloat(
+//             parsedDetails.average_weight_per_animal
+//         ).toFixed(2);
+//         detailsString += "<li>Hitung rata-rata berat ayam timbang: " +
+//             roundedAverageWeight +
+//             " " +
+//             parsedDetails.noa_weighing +
+//             "</li>";
+//     } else {
+//         // If average_weight_per_animal doesn't exist or is not a number
+//         detailsString += "<li>Hitung Rata-Rata Berat Ayam Timbang: " +
+//             (parsedDetails.avg_weight_chicken === "Kg" ? "0 Kg" : parsedDetails.avg_weight_chicken) +
+//             parsedDetails.noa_weighing +
+//             "</li>";
+//     }
+    
+//     detailsString += "</ul>";
+
+//     return detailsString;
+// };
+  
   useEffect(() => {
     const formattedData = dataTabelProccesActivity?.map((item) => {
-      const details = item.details;
-      const detailsArray = [];
+      const details = JSON.parse(item.details); // Assuming item.details is an object
+      // const formattedDetails = formatDetails(details);
 
-      for (const [key, value] of Object.entries(details)) {
-        const formattedKey = key.replace(/_/g, " ");
-        detailsArray.push(`${formattedKey}: ${value}`);
+
+      const formatDetails = (value) => {
+        return (
+          <div>
+              <ul>
+                  {Object.entries(value).map(([key, value]) => (
+                      <li key={key}>
+                          <strong>{key.replace(/_/g, ' ')}:</strong> {value}
+                      </li>
+                  ))}
+              </ul>
+          </div>
+      );
       }
-
-      const detailsString = detailsArray.join("<br />");
-
+  
       return {
         "activities name": item.activity_type.replace(/_/g, " ") || "--",
         status: item.status_activities || "--",
         date: item.created_at || "--",
-        description:
-          <div dangerouslySetInnerHTML={{ __html: detailsString }} /> || "--",
+        description: formatDetails(details)
       };
     });
-
+  
     setTableData(formattedData || []);
   }, [dataTabelProccesActivity]);
+  
+  
 
   const handleRefresh = () => {
     setRefresh(prevRefresh => !prevRefresh)
