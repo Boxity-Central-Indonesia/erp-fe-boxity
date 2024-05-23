@@ -192,8 +192,9 @@ export const TabelOrder = ({ data }) => {
 
   const tabel = () => {
     return (
-      <div className="overflow-x-auto">
-        <Table hoverable>
+      <div className="">
+        <div className="overflow-x-auto">
+        <Table className="min-w-full w-max 2xl:w-full" hoverable>
           <Table.Head className="text-xs">
             {columns.map((col) => (
               <Table.HeadCell
@@ -218,6 +219,7 @@ export const TabelOrder = ({ data }) => {
             ))}
           </Table.Body>
         </Table>
+        </div>
         <hr className="my-2" />
         <div className="px-5 mt-5">
           <Paginate table={table} itemsPagination={[5, 10, 15]} />

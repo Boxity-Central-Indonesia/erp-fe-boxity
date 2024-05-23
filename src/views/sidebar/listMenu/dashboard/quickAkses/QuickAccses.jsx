@@ -91,7 +91,7 @@ export const QuickAcces = () => {
         bodyDrawer={dataDrawer.bodyDrawer({ setOpenDrawer })}
       />
       <h1 className="text-xl mb-3 font-medium capitalize">Quick access</h1>
-      <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
+      <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
         {data &&
           data.map((item, index) => (
             <div
@@ -110,7 +110,7 @@ export const QuickAcces = () => {
               <div className="flex gap-1">
                 <NavLink
                   to={item.button[1].eventListener}
-                  className="border py-2 px-3 text-sm rounded-md text-gray-700"
+                  className="border py-2 px-3 text-sm text-center rounded-md text-gray-700"
                 >
                   {item.button[1].button}
                 </NavLink>
