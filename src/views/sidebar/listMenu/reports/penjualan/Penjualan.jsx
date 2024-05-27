@@ -42,7 +42,7 @@ export const Penjualan = () => {
   return (
     <>
       <Spinner loading={loading} />
-      <TabelComponent data={data} dataHeading={dataHeading} setLoading={setLoading} setRefresh={setRefresh} />
+      <TabelComponent data={data} dataHeading={dataHeading} setLoading={setLoading} setRefresh={setRefresh} useReportCondition={true}/>
     </>
   );
 };

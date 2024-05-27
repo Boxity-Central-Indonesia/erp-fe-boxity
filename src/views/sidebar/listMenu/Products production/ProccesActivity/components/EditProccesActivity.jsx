@@ -70,7 +70,7 @@ export const editProccesActivity = ({
     if (defaultEdit === true) {
       setDefaultEdit(false);
       Read({
-        endPoint: "processing-activities/" + param.textContent,
+        endPoint: "processing-activities/" + param.textContent.trim(),
         refresh,
         setDataDetail,
       });

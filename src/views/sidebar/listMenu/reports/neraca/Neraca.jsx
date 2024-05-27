@@ -57,6 +57,7 @@ export const Neraca = () => {
         dataHeading={dataHeading}
         setLoading={setLoading}
         setRefresh={setRefresh}
+        usePageDetail={true}
       />
     </>
   );

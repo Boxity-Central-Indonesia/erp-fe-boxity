@@ -1,9 +1,4 @@
-import { useEffect, useState } from "react";
-import { useColor } from "../../../config/GlobalColour";
-import { getApiData } from "../../../../function/Api";
-
 export const Ringkasan = ({ data }) => {
-  const { globalColor, changeColor } = useColor();
   const dataElement = [
     {
       mainIcon:

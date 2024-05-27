@@ -23,10 +23,10 @@ const Dashboard = () => {
       </div>
       <div className="mb-4 grid grid-cols-3 gap-4">
         <div className="col-span-2">
-          <StatistikOrder />
+          <StatistikOrder data={data}/>
         </div>
         <div className="col-span-1">
-          <MostSales />
+          <MostSales data={data}/>
         </div>
         {/* <div>
           <GrossSales />

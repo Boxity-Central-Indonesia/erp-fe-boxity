@@ -795,7 +795,6 @@ export const CRUD = () => {
            try {
              const {data, status} = await getApiData('delivery-notes/' + idDelete)
              if(status === 200) {
-                console.log('okeee');
                 setLoading(true)
                 setDataDetailDeliveryNotes(data)
               }
@@ -954,24 +953,6 @@ export const CRUD = () => {
     }, [refresh]);
 
     useEffect(() => {
-      const getDataOrders = async () => {
-        try {
-          const { data, status } = await getApiData("orders");
-          if (status === 200) {
-            const newData = data
-              .filter((item) => item.order_status == "Completed") // Filter item dengan status bukan "Completed"
-              .map((item) => ({
-                id: item.id,
-                name: item.kode_order,
-              }));
-            setDataOrdersSelect(newData);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      getDataOrders();
-
       const getDataInvoice = async () => {
         try {
           const { data, status } = await getApiData("invoices");
@@ -1008,6 +989,22 @@ export const CRUD = () => {
       getDataGoodReceipts();
     }, [refresh]);
 
+    const getDataOrders = async () => {
+      try {
+        const { data, status } = await getApiData("orders");
+        if (status === 200) {
+          const newData = data
+            .filter((item) => item.order_status == "Completed") // Filter item dengan status bukan "Completed"
+            .map((item) => ({
+              id: item.id,
+              name: item.kode_order,
+            }));
+          setDataOrdersSelect(newData);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
     const handleClickHeading = async (param) => {
       setPath(param);
       setTab(param)
@@ -1063,6 +1060,7 @@ export const CRUD = () => {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataInvoices(data);
             setUsePageDetail(true)
+            getDataOrders();
             setData(newData);
           } else if (param === "payments") {
             setSkeleton((prevSkeleton) => !prevSkeleton);

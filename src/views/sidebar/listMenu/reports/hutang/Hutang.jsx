@@ -98,6 +98,7 @@ export const Hutang = () => {
         handleEdit={handleEdit}
         setLoading={setLoading}
         setRefresh={setRefresh}
+        useReportCondition={true}
       />
     </>
   );

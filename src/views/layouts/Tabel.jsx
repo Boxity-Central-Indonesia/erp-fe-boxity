@@ -30,7 +30,8 @@ const TabelComponent = ({
   setRefresh,
   refresh,
   setLoading,
-  usePageDetail
+  usePageDetail,
+  useReportCondition
 }) => {
   const { globalColor, changeColor } = useColor();
   const [sorting, setSorting] = useState([]);
@@ -477,28 +478,39 @@ const TabelComponent = ({
 
             {/* Ketika tidak ada data di temukan */}
 
-            <table className={`w-full ${data.length === 0 ? `` : `hidden`}`}>
+            <table className={`w-full ${data.length === 0 ? '' : 'hidden'}`}>
               <tbody>
                 <tr className="w-full flex justify-center border-t-[1px]">
                   <td className="flex gap-1 py-8">
-                    <p
-                      className="flex items-center text-sm text-gray-700"
-                      onClick={() => setOpenModal(dataHeading[0].activeButton)}
-                    >
-                      Tidak ada data ditemukan disini, mungkin kamu bisa
-                    </p>
-                    <button
-                      onClick={() => setOpenModal(dataHeading[0].activeButton)}
-                      className="text-sm"
-                      style={{ color: globalColor }}
-                    >
-                      {" "}
-                      menambah data disini.
-                    </button>
+                    {useReportCondition ? (
+                      <p
+                        className="flex items-center text-sm text-gray-700"
+                        onClick={() => setOpenModal(dataHeading[0].activeButton)}
+                      >
+                        Tidak ada data ditemukan disini
+                      </p>
+                    ) : (
+                      <>
+                        <p
+                          className="flex items-center text-sm text-gray-700"
+                          onClick={() => setOpenModal(dataHeading[0].activeButton)}
+                        >
+                          Tidak ada data ditemukan disini, mungkin kamu bisa
+                        </p>
+                        <button
+                          onClick={() => setOpenModal(dataHeading[0].activeButton)}
+                          className="text-sm"
+                          style={{ color: globalColor }}
+                        >
+                          menambah data disini.
+                        </button>
+                      </>
+                    )}
                   </td>
                 </tr>
               </tbody>
             </table>
+
 
             {/* Tabel body */}
 
@@ -575,7 +587,7 @@ const TabelComponent = ({
                       </Table.HeadCell>
                     );
                   })}
-                  <Table.HeadCell className={`${!usePageDetail ? `hidden` : ``}`}></Table.HeadCell>
+                  <Table.HeadCell className={`${!useReportCondition ? `` : `hidden`}`}></Table.HeadCell>
                 </Table.Head>
 
                 {/* Tabel body */}

@@ -87,11 +87,21 @@ export const ProccesActivityDetail = ({
         return (
           <div>
               <ul>
-                  {Object.entries(value).map(([key, value]) => (
-                      <li key={key}>
+                  {Object.entries(value).map(([key, value]) => {
+                    if(key == 'average_weight_per_animal'){
+                      return (
+                        <li key={key}>
+                          <strong>{key.replace(/_/g, ' ')}:</strong> {Math.ceil(value)}
+                        </li>
+                      )
+                    }else {
+                      return(
+                        <li key={key}>
                           <strong>{key.replace(/_/g, ' ')}:</strong> {value}
-                      </li>
-                  ))}
+                        </li>
+                      )
+                    }
+                  })}
               </ul>
           </div>
       );
@@ -263,7 +273,7 @@ export const ProccesActivityDetail = ({
           />
         </div>
       </section>
-       <div className="bg-white rounded-md border shadow-md mb-16">
+       <div className="bg-white rounded-md border shadow-md mb-24">
         <div className="grid grid-cols-1">
             <div>
               <TabelForDetail

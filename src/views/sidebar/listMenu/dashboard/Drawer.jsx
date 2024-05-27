@@ -25,7 +25,7 @@ export const Drawer = ({
     ? dataDrawer.products.map((item) => ({
         id: item.id,
         name: item.name,
-        qty: item.quantity + " pcs",
+        qty: item.quantity || 0 + " pcs",
         "harga satuan": new Intl.NumberFormat("id-ID", {
           style: "currency",
           currency: "IDR",

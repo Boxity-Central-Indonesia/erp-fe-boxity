@@ -39,6 +39,7 @@ export const Piutang = () => {
         dataHeading={dataHeading}
         setLoading={setLoading}
         setRefresh={setRefresh}
+        useReportCondition={true}
       />
     </>
   );

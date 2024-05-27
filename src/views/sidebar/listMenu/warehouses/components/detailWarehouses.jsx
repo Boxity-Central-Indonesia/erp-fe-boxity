@@ -224,7 +224,7 @@ export const DetailWarehouses = ({
             <h2 className="text-xl font-medium dark:text-white mb-4">
               Daftar produk
             </h2>
-          <div className="bg-white rounded-md shadow-md mb-16">
+          <div className="bg-white rounded-md shadow-md mb-24">
             <div>
               <Produk
                   data={dataDetail}

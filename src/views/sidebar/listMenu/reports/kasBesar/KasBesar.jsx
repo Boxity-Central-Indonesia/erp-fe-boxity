@@ -122,6 +122,7 @@ export const KasBesar = () => {
         data={data}
         dataHeading={dataHeading}
         handleEdit={handleEdit}
+        useReportCondition={true}
       />
     </>
   );

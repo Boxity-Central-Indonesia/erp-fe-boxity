@@ -263,7 +263,7 @@ export const InvoicesDetail = ({
               Riwayat Pembayaran
         </h2>
       
-        <div className="bg-white rounded-md border shadow-md mb-16">
+        <div className="bg-white rounded-md border shadow-md mb-24">
           <div className="grid grid-cols-1 gap-5">
             <div>
               <TabelForDetail

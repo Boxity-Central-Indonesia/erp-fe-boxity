@@ -46,6 +46,7 @@ export const ArusKas = () => {
         dataHeading={dataHeading}
         setRefresh={setRefresh}
         setLoading={setLoading}
+        useReportCondition={true}
       />
     </>
   );

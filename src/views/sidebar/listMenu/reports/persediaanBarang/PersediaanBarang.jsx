@@ -48,6 +48,7 @@ export const PersediaanBarang = () => {
         dataHeading={dataHeading}
         setRefresh={setRefresh}
         setLoading={setLoading}
+        useReportCondition={true}
       />
     </>
   );

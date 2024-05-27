@@ -7,31 +7,31 @@ export const StatistikOrder = ({ data }) => {
   const { globalColor, changeColor } = useColor();
   const [totalSalesThisMonth, setTotalSalesThisMonth] = useState(null);
 
-  useEffect(() => {
-    // Fetch total sales this month from API/dashboard
-    const fetchTotalSalesThisMonth = async () => {
-      try {
-        const response = await getApiData("dashboard");
-        const totalSalesThisMonth = response.data[5].total_sales_this_month;
-        setTotalSalesThisMonth(totalSalesThisMonth);
-      } catch (error) {
-        console.error("Error fetching total sales this month:", error);
-      }
-    };
+  // useEffect(() => {
+  //   // Fetch total sales this month from API/dashboard
+  //   const fetchTotalSalesThisMonth = async () => {
+  //     try {
+  //       const response = await getApiData("dashboard");
+  //       const totalSalesThisMonth = response.data[5].total_sales_this_month;
+  //       setTotalSalesThisMonth(totalSalesThisMonth);
+  //     } catch (error) {
+  //       console.error("Error fetching total sales this month:", error);
+  //     }
+  //   };
 
-    fetchTotalSalesThisMonth();
-  }, []);
+  //   fetchTotalSalesThisMonth();
+  // }, []);
 
   return (
     <div className="bg-white rounded-md p-5 max-h-68 border">
       <h2 className="text-xl font-semibold mb-1 capitalize">
         Statistik Transaksi
       </h2>
-      {totalSalesThisMonth !== null && (
-        <h4 className="text-md text-gray-600">{totalSalesThisMonth}</h4>
+      {data?.[5]?.total_sales_this_month !== null && (
+        <h4 className="text-md text-gray-600">{data?.[5]?.total_sales_this_month}</h4>
       )}
       <div className="my-3">
-        <LineChart />
+        <LineChart data={data?.[4]}/>
       </div>
       <hr className="my-3" />
       <div className="mt-7 mb-3 flex items-center justify-between">

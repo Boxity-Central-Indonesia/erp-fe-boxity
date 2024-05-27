@@ -375,7 +375,7 @@ export const OrderDetail = ({
       <h2 className="mb-4 text-xl rounded font-medium dark:text-white">
           Timbangan
       </h2>       
-      <div className="bg-white rounded px-1 mb-16">   
+      <div className="bg-white rounded px-1 mb-24">   
         <div>
           <TabelForDetail
             data={dataTimbangan}

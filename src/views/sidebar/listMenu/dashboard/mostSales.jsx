@@ -2,7 +2,7 @@ import { PieChart } from "./chart/pieChart";
 import { useColor } from "../../../config/GlobalColour";
 import { DropdownForLineChart } from "./chart/lineChart";
 
-export const MostSales = () => {
+export const MostSales = ({data}) => {
   const { globalColor, changeColor } = useColor();
 
   return (
@@ -10,7 +10,7 @@ export const MostSales = () => {
       <div className="bg-white h-fit p-5 rounded-md border">
         <div className="font-semibold text-xl">Produk Penjualan Terlaku</div>
         <div className="my-3 flex items-center justify-center">
-          <PieChart />
+          <PieChart data={data?.[6]?.products}/>
         </div>
         <hr className="my-3" />
         <div className="mt-7 mb-3 flex items-center justify-between">
