@@ -36,7 +36,7 @@ export const PersediaanBarang = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Inventory Report",
+      heading: "Laporan Persediaan Barang",
       eventToggleModal: print,
     },
   ]);

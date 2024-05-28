@@ -43,7 +43,7 @@ export const Neraca = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Balance Sheet Report",
+      heading: "Laporan Neraca",
       eventToggleModal: print,
     },
   ]);

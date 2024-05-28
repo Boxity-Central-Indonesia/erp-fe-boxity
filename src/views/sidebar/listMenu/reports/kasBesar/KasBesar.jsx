@@ -57,7 +57,7 @@ export const KasBesar = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Cash Ledger Report",
+      heading: "Cash Laporan Buku Besar",
       eventToggleModal: downloadReport,
     },
   ]);

@@ -29,7 +29,7 @@ export const LeadsProspek = () => {
     const [dataHeading, setDataHeading] = useState( [{
         label: 'Print report',
         icon: IconDownload(),
-        heading: 'Leads Report',
+        heading: 'Laporan Leads',
         eventToggleModal: downloadReport,
     }]);
 

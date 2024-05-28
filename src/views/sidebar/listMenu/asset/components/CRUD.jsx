@@ -289,7 +289,7 @@ export const CRUD = () => {
                 icon: IconAdd(),
                 information:
                   "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
-                heading: "Asset list",
+                heading: "Daftar Asset",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,

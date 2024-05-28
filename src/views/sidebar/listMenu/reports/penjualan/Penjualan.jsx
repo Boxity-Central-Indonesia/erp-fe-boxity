@@ -34,7 +34,7 @@ export const Penjualan = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Sales Report",
+      heading: "Laporan Penjualan",
       eventToggleModal: print,
     },
   ]);

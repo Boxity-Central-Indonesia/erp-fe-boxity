@@ -29,7 +29,7 @@ export const BukuBesar = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Ledger Report",
+      heading: "Laporan Buku Besar",
       eventToggleModal: print,
     },
   ]);

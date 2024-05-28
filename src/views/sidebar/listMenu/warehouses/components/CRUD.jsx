@@ -593,7 +593,7 @@ export const CRUD = () => {
           heading:
             param === "warehouses"
               ? "Daftar gudang"
-              : "Warehouse Locations list",
+              : "Daftar lokasi gudang",
           information:
             "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
@@ -872,29 +872,31 @@ export const CRUD = () => {
     const handleEdit = async (param) => {
       const id = param.textContent;
       if (path === "warehouses") {
-        const getSelectKategory = async () => {
-          const { data, status } = await getApiData("product-categories");
-          if (status === 200) {
-            const newData = data.map((item) => ({
-              id: item.id,
-              name: item.name,
-            }));
-            setDataCategorySelect(newData);
+        if(id){
+          const getSelectKategory = async () => {
+            const { data, status } = await getApiData("product-categories");
+            if (status === 200) {
+              const newData = data.map((item) => ({
+                id: item.id,
+                name: item.name,
+              }));
+              setDataCategorySelect(newData);
+            }
+          };
+          getSelectKategory();
+          setDefaultEdit(false)
+          try {
+            const { data, status } = await getApiData(path + "/" + id.trim());
+            if (status === 200) {
+              setDataDetailWarehouses(() => data)
+  
+              localStorage.setItem('idWarehouse', data.warehouse.id)
+  
+              setIdDelete(data.warehouse.id);
+            }
+          } catch (error) {
+            console.log(error);
           }
-        };
-        getSelectKategory();
-        setDefaultEdit(false)
-        try {
-          const { data, status } = await getApiData(path + "/" + id.trim());
-          if (status === 200) {
-            setDataDetailWarehouses(() => data)
-
-            localStorage.setItem('idWarehouse', data.warehouse.id)
-
-            setIdDelete(data.warehouse.id);
-          }
-        } catch (error) {
-          console.log(error);
         }
       } else if (path === "warehouse-locations") {
         setDataModal({

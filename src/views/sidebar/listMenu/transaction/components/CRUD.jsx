@@ -862,7 +862,7 @@ export const CRUD = () => {
               {
                 label: "Tambah invoice",
                 icon: IconAdd(),
-                heading: "Invoices list",
+                heading: "Daftar Faktur Tagihan",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -885,7 +885,7 @@ export const CRUD = () => {
               {
                 label: "Tambah payment",
                 icon: IconAdd(),
-                heading: "Payments list",
+                heading: "Daftar Pembayaran",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -930,7 +930,7 @@ export const CRUD = () => {
               {
                 label: "Tambah Delivery note",
                 icon: IconAdd(),
-                heading: "Good Delivery notes list",
+                heading: "Good Daftar Pengiriman Barang",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -1026,12 +1026,12 @@ export const CRUD = () => {
             param === "orders"
               ? "Manajemen Pesanan"
               : param === "invoices"
-              ? "Invoices list"
+              ? "Daftar Faktur Tagihan"
               : param === "goods-receipt"
               ? "Goods Receipt list"
               : param === "delivery-notes"
-              ? "Delivery notes list"
-              : "Payments list",
+              ? "Daftar Pengiriman Barang"
+              : "Daftar Pembayaran",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,
@@ -1494,19 +1494,21 @@ export const CRUD = () => {
   const EDIT = () => {
     const handleEdit = async (param, routes, param2) => {
       if (path === "orders" && defaultEdit === true) {
-        setDefaultEdit(false);
-        try {
-          const { data, status } = await getApiData(
-            "orders/" + param.textContent.trim()
-          );
-          if (status === 200) {
-            setDataDetailOrders(() => data);
-            getFilterWarehouseByTypeTransaction(data.vendor.id)
-            setIdDelete(data.id);
-            setOrderId(data.id);
+        if(param.textContent.trim()){
+          setDefaultEdit(false);
+          try {
+            const { data, status } = await getApiData(
+              "orders/" + param.textContent.trim()
+            );
+            if (status === 200) {
+              setDataDetailOrders(() => data);
+              getFilterWarehouseByTypeTransaction(data.vendor.id)
+              setIdDelete(data.id);
+              setOrderId(data.id);
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
         }
       } else if (
         tab === "orders" &&
@@ -1542,20 +1544,22 @@ export const CRUD = () => {
           }
         } catch (error) {}
       } else if (tab === "invoices" && defaultEdit === true) {
-        setDefaultEdit(false);
-        try {
-          const { data, status } = await getApiData(
-            path + "/" + param.textContent.trim()
-          );
-          if (status === 200) {
-            setDetailInvoices(data);
-            // setDataEdit({
-            //   invoice_id: data.id
-            // })
-            setIdDelete(data.id);
+        if(param.textContent.trim()){
+          setDefaultEdit(false);
+          try {
+            const { data, status } = await getApiData(
+              path + "/" + param.textContent.trim()
+            );
+            if (status === 200) {
+              setDetailInvoices(data);
+              // setDataEdit({
+              //   invoice_id: data.id
+              // })
+              setIdDelete(data.id);
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
         }
       } else if (
         tab === "invoices" &&
@@ -1622,80 +1626,6 @@ export const CRUD = () => {
         } catch (error) {
           console.log(error);
         }
-      } else if (
-        path === "goods-receipt" &&
-        defaultEdit === true &&
-        routes !== "goods-receipt-items"
-      ) {
-        setDefaultEdit(false);
-        try {
-          const { data, status } = await getApiData(
-            "goods-receipt/" + param.textContent
-          );
-          if (status === 200) {
-            setDataEdit({});
-            setDataDetailGoodReceipt(() => data);
-            setIdDelete(data.id);
-            localStorage.setItem("idGoodReceipt", data.id);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      } else if (
-        routes === "goods-receipt" &&
-        defaultEdit === false &&
-        routes !== "goods-receipt-items"
-      ) {
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        localStorage.setItem("path", routes);
-        setPath(routes);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Edit good receipt",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        try {
-          const { data, status } = await getApiData("goods-receipt/" + param);
-          if (status === 200) {
-            setDataEdit({
-              id: data.id,
-              order_id: data.order_id,
-              warehouse_id: data.warehouse_id,
-              details: data.details,
-            });
-          }
-        } catch (error) {}
-      } else if (routes === "goods-receipt-items") {
-        setDefaultEdit(() => false);
-        setPath(routes);
-        localStorage.setItem("path", routes);
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "lg",
-          labelModal: "Edit good receipt item",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        try {
-          const { data, status } = await getApiData(
-            "goods-receipts/" + idDelete + "/items/" + param2
-          );
-          if (status === 200) {
-            setDataEdit({
-              id: data.id,
-              product_id: data.product_id,
-              quantity_ordered: data.quantity_ordered,
-              quantity_received: data.quantity_received,
-              quantity_due: data.quantity_due,
-            });
-            setIdGoodReceiptItem(data.id);
-          }
-        } catch (error) {
-          console.log(error);
-        }
       } else if (routes === "products") {
         setPath("products");
         localStorage.setItem("path", routes);
@@ -1727,21 +1657,23 @@ export const CRUD = () => {
           console.log(error);
         }
       } else if (path === "delivery-notes" && defaultEdit === true) {
-        setDefaultEdit(false);
-        try {
-          const { data, status } = await getApiData(
-            "delivery-notes/" + param.textContent.trim()
-          );
-          if (status === 200) {
-            setDataEdit({});
-            setDataDetailDeliveryNotes(() => data);
-            setIdDelete(data.id);
-            // perbaiki ini kedepannya
-            localStorage.setItem("idDeliveriyNotes", data.id);
-            // perbaiki ini kedepannya
+        if(param.textContent.trim()){
+          setDefaultEdit(false);
+          try {
+            const { data, status } = await getApiData(
+              "delivery-notes/" + param.textContent.trim()
+            );
+            if (status === 200) {
+              setDataEdit({});
+              setDataDetailDeliveryNotes(() => data);
+              setIdDelete(data.id);
+              // perbaiki ini kedepannya
+              localStorage.setItem("idDeliveriyNotes", data.id);
+              // perbaiki ini kedepannya
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
         }
       } else if (
         routes === "delivery-notes" &&

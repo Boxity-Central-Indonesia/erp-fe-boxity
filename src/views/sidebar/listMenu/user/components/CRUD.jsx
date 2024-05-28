@@ -273,7 +273,7 @@ export const CRUD = () => {
                 "Daftar pengguna adalah cara untuk mengatur dan mengelola kelompok pengguna pada sebuah situs web atau platform. Ini membantu Anda menyasar pesan-pesan tertentu, personalisasi pengalaman, menyederhanakan tugas-tugas manajemen, dan memperoleh wawasan yang lebih baik tentang bagaimana perilaku segmen pengguna yang berbeda. Di bagian daftar pengguna, Anda biasanya dapat membuat daftar baru, melihat yang sudah ada, menambahkan atau menghapus pengguna, dan mengedit detail daftar.",
               label: "Tambah User",
               icon: IconAdd(),
-              heading: "User list",
+              heading: "Daftar pengguna",
               eventToggleModal: handleCreate,
               onclick: handleClickHeading,
               showNavHeading: false,

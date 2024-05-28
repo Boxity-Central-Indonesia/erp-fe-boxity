@@ -1,7 +1,4 @@
 import { ModalConfirmDelete, ModalContainer } from "../../../layouts/ModalContainer"
-// import IconAdd from "../../../layouts/icons/IconAdd"
-// import { useEffect, useState, useRef } from "react"
-// import { TextArea } from "../../../layouts/FormInput"
 import TabelComponent from "../../../layouts/Tabel"
 import { Spinner } from "../../../layouts/Spinner"
 import { CRUD } from "./components/CRUD"

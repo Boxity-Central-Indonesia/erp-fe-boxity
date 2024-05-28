@@ -31,7 +31,7 @@ export const Pembelian = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Purchase Report",
+      heading: "Laporan Pembelian",
       eventToggleModal: print,
     },
   ]);

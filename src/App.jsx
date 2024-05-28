@@ -18,7 +18,6 @@ import { EmployesList } from "./views/sidebar/listMenu/company/employees/Employe
 import { Products } from "./views/sidebar/listMenu/products/Products";
 import { Warehouses } from "./views/sidebar/listMenu/warehouses/Warehouses";
 import { ColorProvider } from "./views/config/GlobalColour";
-import { Test } from "./views/sidebar/listMenu/user/test";
 import { Penjualan } from "./views/sidebar/listMenu/reports/penjualan/Penjualan";
 import { Pembelian } from "./views/sidebar/listMenu/reports/pembelian/Pembelian";
 import { ArusKas } from "./views/sidebar/listMenu/reports/arusKas/ArusKas";
@@ -45,6 +44,7 @@ import { RoleAndPermission } from "./views/sidebar/listMenu/role&permission/role
 import { Asset } from "./views/sidebar/listMenu/asset/Asset";
 import { VendorTransaction } from "./views/sidebar/listMenu/reports/vendorTransaction/VendorTransaction";
 import { LaporanTimbanganStock } from "./views/sidebar/listMenu/Laporan timbangan stock/laporanTimbanganStock";
+import { InfoUserProvider } from "./views/config/infoUser";
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -62,299 +62,293 @@ function App() {
   return (
     <>
       <ColorProvider>
-        <Router>
-          <div className="antialiased bg-gray-100 dark:bg-gray-900">
-            <Auth.AuthenticatedComponent>
-              <Navbar onToggleSidebar={toggleSidebar} setAuth={setAuth} />
-              <Sidebar isOpen={isSidebarOpen} />
-            </Auth.AuthenticatedComponent>
+        <InfoUserProvider>
+          <Router>
+            <div className="antialiased bg-gray-100 dark:bg-gray-900">
+              <Auth.AuthenticatedComponent>
+                <Navbar onToggleSidebar={toggleSidebar} setAuth={setAuth} />
+                <Sidebar isOpen={isSidebarOpen} />
+              </Auth.AuthenticatedComponent>
 
-            <main>
-              <div
-                style={{
-                  minHeight: "100vh",
-                  // backgroundColor: "rgba(0,0,0,0.03)",
-                }}
-                className={`p-4 ${
-                  auth ? `md:ml-64 pt-20` : `ml-0`
-                } h-auto overflow-hidden`}
-              >
-                <Routes>
-                  <Route
-                    path="/"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Dashboard />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/user"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <User />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/role-permission"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <RoleAndPermission />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/user/test"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Test />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/profile"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Profile />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/company"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Company />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  {/* <Route
-                    path="/company-detail"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <CompanyDetail />
-                      </Auth.ProtectedRoute>
-                    }
-                  /> */}
-                  <Route
-                    path="/employees"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <EmployesList />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="products/list"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Products />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="warehouses/list"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Warehouses />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="vendors"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Vendors />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="transactions"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Transactions />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="accounts"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Account />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="asset"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Asset />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="leads/list"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <LeadsProspekList />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="products-production/proses-activity"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <ProccesActifity />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="products-production/stock-balance-report"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <LaporanTimbanganStock />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/sales"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Penjualan />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
+              <main>
+                <div
+                  style={{
+                    minHeight: "100vh",
+                    // backgroundColor: "rgba(0,0,0,0.03)",
+                  }}
+                  className={`p-4 ${
+                    auth ? `md:ml-64 pt-20` : `ml-0`
+                  } h-auto overflow-hidden`}
+                >
+                  <Routes>
+                    <Route
+                      path="/"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Dashboard />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/user"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <User />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/role-permission"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <RoleAndPermission />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/profile"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Profile />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/company"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Company />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    {/* <Route
+                      path="/company-detail"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <CompanyDetail />
+                        </Auth.ProtectedRoute>
+                      }
+                    /> */}
+                    <Route
+                      path="/employees"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <EmployesList />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="products/list"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Products />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="warehouses/list"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Warehouses />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="vendors"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Vendors />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="transactions"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Transactions />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="accounts"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Account />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="asset"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Asset />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="leads/list"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <LeadsProspekList />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="products-production/proses-activity"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <ProccesActifity />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="products-production/stock-balance-report"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <LaporanTimbanganStock />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/sales"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Penjualan />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
 
-                  <Route
-                    path="/reports/purchases"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Pembelian />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/income"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Pendapatan />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/expenditure"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Pengeluaran />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/inventory"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <PersediaanBarang />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/leads"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <LeadsProspek />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/production"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Produksi />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/vendor-transactions"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <VendorTransaction />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/cash-flow"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <ArusKas />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/ledger"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <BukuBesar />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/debt"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Hutang />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/cash-account"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <KasBesar />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/balance-sheet"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Neraca />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/reports/accounts-receivable"
-                    element={
-                      <Auth.ProtectedRoute>
-                        <Piutang />
-                      </Auth.ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/login"
-                    element={
-                      <Auth.UnprotectedRoute>
-                        <Login setAuth={setAuth} />
-                      </Auth.UnprotectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/register"
-                    element={
-                      <Auth.UnprotectedRoute>
-                        <Register setAuth={setAuth} />
-                      </Auth.UnprotectedRoute>
-                    }
-                  />
-                </Routes>
-              </div>
-              <div className="md:ml-64 h-auto relative">
-                <Auth.AuthenticatedComponent>
-                  <Footer />
-                </Auth.AuthenticatedComponent>
-              </div>
-            </main>
-          </div>
-        </Router>
+                    <Route
+                      path="/reports/purchases"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Pembelian />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/income"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Pendapatan />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/expenditure"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Pengeluaran />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/inventory"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <PersediaanBarang />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/leads"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <LeadsProspek />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/production"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Produksi />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/vendor-transactions"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <VendorTransaction />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/cash-flow"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <ArusKas />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/ledger"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <BukuBesar />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/debt"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Hutang />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/cash-account"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <KasBesar />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/balance-sheet"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Neraca />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/reports/accounts-receivable"
+                      element={
+                        <Auth.ProtectedRoute>
+                          <Piutang />
+                        </Auth.ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/login"
+                      element={
+                        <Auth.UnprotectedRoute>
+                          <Login setAuth={setAuth} />
+                        </Auth.UnprotectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/register"
+                      element={
+                        <Auth.UnprotectedRoute>
+                          <Register setAuth={setAuth} />
+                        </Auth.UnprotectedRoute>
+                      }
+                    />
+                  </Routes>
+                </div>
+                <div className="md:ml-64 h-auto relative">
+                  <Auth.AuthenticatedComponent>
+                    <Footer />
+                  </Auth.AuthenticatedComponent>
+                </div>
+              </main>
+            </div>
+          </Router>
+        </InfoUserProvider>
       </ColorProvider>
     </>
   );

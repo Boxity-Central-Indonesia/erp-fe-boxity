@@ -40,7 +40,7 @@ export const ReadProccesActivity = ({
       {
         label: "Tambah process activity",
         icon: IconAdd(),
-        heading: "Process Activity List",
+        heading: "Daftar Proses Aktifitas",
         information:
           "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
         eventToggleModal: handleOpenModal,

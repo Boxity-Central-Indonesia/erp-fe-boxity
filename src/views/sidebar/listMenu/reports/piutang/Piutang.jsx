@@ -26,7 +26,7 @@ export const Piutang = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Receivables Report",
+      heading: "Laporan Piutang",
       eventToggleModal: downloadReport,
     },
   ]);

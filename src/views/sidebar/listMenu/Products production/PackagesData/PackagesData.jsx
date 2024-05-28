@@ -35,7 +35,7 @@ export const PackagesData = () => {
     //     {
     //         label: 'Add Employes',
     //         icon: IconAdd(),
-    //         heading: 'Employes list',
+    //         heading: 'Daftar karyawan',
     //         eventToggleModal: handleCreate,
     //         onclick: handleClickHeading
     //     }

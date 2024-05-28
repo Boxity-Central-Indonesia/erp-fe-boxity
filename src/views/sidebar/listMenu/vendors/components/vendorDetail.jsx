@@ -29,7 +29,7 @@ export const VendorDetail = ({
       {
         label: "Tambah vendors",
         icon: IconAdd(),
-        heading: "Vendors list",
+        heading: "Daftar Vendor",
         information:
           "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
         eventToggleModal: handleCreate,

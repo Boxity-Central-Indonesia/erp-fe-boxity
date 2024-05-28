@@ -31,7 +31,7 @@ export const VendorTransaction = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Vendor Transaction Report",
+      heading: "Laporan Transaksi Vendor",
       eventToggleModal: downloadReport,
     },
   ]);

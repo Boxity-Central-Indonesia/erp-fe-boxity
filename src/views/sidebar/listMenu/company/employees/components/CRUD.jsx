@@ -437,15 +437,15 @@ export const CRUD = () => {
               {
                 label: "Tambah Employees",
                 icon: IconAdd(),
-                heading: "Employes list",
+                heading: "Daftar karyawan",
                 information:
                   "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "employees", label: "Employees" },
-                  { path: "employee-categories", label: "Employee categories" },
+                  { path: "employees", label: "Karyawan" },
+                  { path: "employee-categories", label: "Kategori karyawan" },
                 ],
                 activeButton: path,
               },
@@ -486,7 +486,7 @@ export const CRUD = () => {
           label: param === "employees" ? "Tambah employees" : "Tambah category",
           icon: IconAdd(),
           heading:
-            param === "employees" ? "Employees" : "Category employes" + " list",
+            param === "employees" ? "Daftar karyawan" : "Kategori karayawan",
           information:
             "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
@@ -495,8 +495,8 @@ export const CRUD = () => {
             param === "employees" ? "employees" : "employee-categories",
           showNavHeading: true,
           dataNavHeading: [
-            { path: "employees", label: "Employees" },
-            { path: "employee-categories", label: "Employee categories" },
+            { path: "employees", label: "Karyawan" },
+            { path: "employee-categories", label: "Kategori karyawan" },
           ],
           activeButton: param,
         },

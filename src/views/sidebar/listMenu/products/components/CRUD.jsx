@@ -501,7 +501,7 @@ export const CRUD = () => {
               {
                 label: "Tambah product",
                 icon: IconAdd(),
-                heading: "Product list",
+                heading: "Daftar produk",
                 information:
                   "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
@@ -649,12 +649,12 @@ export const CRUD = () => {
           icon: IconAdd(),
           heading:
             param === "products"
-              ? "Products"
+              ? "Daftar Produk"
               : param === "product-categories"
-              ? "Categories"
-              : param === "Product-prices"
-              ? "product prices"
-              : "Product movement" + " list",
+              ? "Kategori Produk"
+              : param === "product-prices"
+              ? "Harga Perubahan Produk"
+              : "Pantau Pergerakan",
           information:
             "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
@@ -664,7 +664,7 @@ export const CRUD = () => {
           dataNavHeading: [
             { path: "product-categories", label: "Kategori Produk" },
             { path: "products", label: "Produk" },
-            { path: "product-prices", label: "Product Prices" },
+            { path: "product-prices", label: "Harga Perubahan Produk" },
             { path: "product-movements", label: "Pantau Pergerakan" },
           ],
           activeButton: param,

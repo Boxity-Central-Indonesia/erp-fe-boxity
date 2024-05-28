@@ -30,7 +30,7 @@ export const Pendapatan = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Revenue Report",
+      heading: "Laporan Pendapatan",
       eventToggleModal: print,
     },
   ]);

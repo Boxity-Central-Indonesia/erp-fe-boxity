@@ -33,7 +33,7 @@ export const ArusKas = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Cashflow Report",
+      heading: "Laporan Arus Kas",
       eventToggleModal: print,
     },
   ]);

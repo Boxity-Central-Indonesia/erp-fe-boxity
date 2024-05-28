@@ -1,4 +1,3 @@
-import { fa } from "@faker-js/faker";
 import { useRef, useState } from "react";
 import Select from 'react-select'
 import AsyncSelect from 'react-select/async'

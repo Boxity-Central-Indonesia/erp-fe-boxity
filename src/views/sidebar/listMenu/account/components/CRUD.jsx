@@ -6,7 +6,6 @@ import {
   deleteApiData,
 } from "../../../../../function/Api";
 import IconAdd from "../../../../layouts/icons/IconAdd";
-import { TextArea } from "../../../../layouts/FormInput";
 import FormInput from "../../../../layouts/FormInput";
 
 export const CRUD = () => {
