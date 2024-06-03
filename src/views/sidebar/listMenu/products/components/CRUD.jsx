@@ -499,7 +499,7 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah product",
+                label: "Tambah produk",
                 icon: IconAdd(),
                 heading: "Daftar produk",
                 information:
@@ -522,7 +522,7 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah category",
+                label: "Tambah kategori",
                 icon: IconAdd(),
                 heading: "Categoires list",
                 information:
@@ -638,13 +638,13 @@ export const CRUD = () => {
         {
           label:
             param === "products"
-              ? "Tambah products"
+              ? "Tambah produks"
               : param === "product-categories"
-              ? "Tambah categories"
+              ? "Tambah kategori"
               : param === "product-prices"
-              ? "Tambah product prices"
+              ? "Tambah harga produk"
               : param === "product-movements"
-              ? "Tambah product movement"
+              ? "Tambah pergerakan produk"
               : "",
           icon: IconAdd(),
           heading:
@@ -742,8 +742,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Tambah product",
-          labelBtnModal: "Tambah product",
+          labelModal: "Tambah produk",
+          labelBtnModal: "Tambah produk",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -760,8 +760,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "md",
-          labelModal: "Tambah category",
-          labelBtnModal: "Tambah category",
+          labelModal: "Tambah kategori",
+          labelBtnModal: "Tambah kategori",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -845,8 +845,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Tambah products",
-          labelBtnModal: "Tambah products",
+          labelModal: "Tambah produks",
+          labelBtnModal: "Tambah produks",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

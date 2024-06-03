@@ -435,7 +435,7 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah Employees",
+                label: "Tambah karyawan",
                 icon: IconAdd(),
                 heading: "Daftar karyawan",
                 information:
@@ -456,7 +456,7 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah category",
+                label: "Tambah kategori",
                 icon: IconAdd(),
                 heading: "Daftar Kategori",
                 information:
@@ -483,7 +483,7 @@ export const CRUD = () => {
       setPath(param);
       setDataHeading([
         {
-          label: param === "employees" ? "Tambah employees" : "Tambah category",
+          label: param === "employees" ? "Tambah karyawan" : "Tambah kategori",
           icon: IconAdd(),
           heading:
             param === "employees" ? "Daftar karyawan" : "Kategori karayawan",
@@ -574,8 +574,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Tambah Employees",
-          labelBtnModal: "Tambah Employees",
+          labelModal: "Tambah karyawan",
+          labelBtnModal: "Tambah karyawan",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -592,8 +592,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "md",
-          labelModal: "Tambah category",
-          labelBtnModal: "Tambah category",
+          labelModal: "Tambah kategori",
+          labelBtnModal: "Tambah kategori",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -643,8 +643,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Tambah Employees",
-          labelBtnModal: "Tambah Employees",
+          labelModal: "Tambah karyawan",
+          labelBtnModal: "Tambah karyawan",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

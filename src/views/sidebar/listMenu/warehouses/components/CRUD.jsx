@@ -522,7 +522,7 @@ export const CRUD = () => {
             setUsePageDetail(true)
             setDataHeading([
               {
-                label: "Tambah warehouses",
+                label: "Tambah gudang",
                 icon: IconAdd(),
                 heading: "Daftar gudang",
                 information:
@@ -544,7 +544,7 @@ export const CRUD = () => {
             setUsePageDetail(false)
             setDataHeading([
               {
-                label: "Tambah warehouses",
+                label: "Tambah gudang",
                 icon: IconAdd(),
                 heading: "Daftar gudang",
                 information:
@@ -587,8 +587,8 @@ export const CRUD = () => {
         {
           label:
             param === "warehouses"
-              ? "Tambah warehouses"
-              : "Tambah warehouse locations",
+              ? "Tambah gudang"
+              : "Tambah lokasi gudangs",
           icon: IconAdd(),
           heading:
             param === "warehouses"

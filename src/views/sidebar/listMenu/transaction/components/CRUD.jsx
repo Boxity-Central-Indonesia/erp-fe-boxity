@@ -1012,14 +1012,14 @@ export const CRUD = () => {
         {
           label:
             param === "orders"
-              ? "Tambah orders"
+              ? "Tambah pesanan"
               : param === "invoices"
-              ? "Tambah invoices"
+              ? "Tambah faktur tagihan"
               : param === "goods-receipt"
               ? "Tambah Goods Receipt"
               : param === "delivery-notes"
               ? "Tambah delivery note"
-              : "Tambah payments",
+              : "Tambah pembayaran",
 
           icon: IconAdd(),
           heading:
@@ -1107,8 +1107,8 @@ export const CRUD = () => {
         });
         setDataModal({
           size: "3xl",
-          labelModal: "Tambah orders",
-          labelBtnModal: "Tambah orders",
+          labelModal: "Tambah pesanan",
+          labelBtnModal: "Tambah pesanan",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1129,8 +1129,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Tambah invoices",
-          labelBtnModal: "Tambah invoices",
+          labelModal: "Tambah faktur tagihan",
+          labelBtnModal: "Tambah faktur tagihan",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1150,8 +1150,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Tambah payments",
-          labelBtnModal: "Tambah payments",
+          labelModal: "Tambah pembayaran",
+          labelBtnModal: "Tambah pembayaran",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1173,8 +1173,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "2xl",
-          labelModal: "Tambah products",
-          labelBtnModal: "Tambah products",
+          labelModal: "Tambah produks",
+          labelBtnModal: "Tambah produks",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1202,8 +1202,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "3xl",
-          labelModal: "Tambah delivery notes",
-          labelBtnModal: "Tambah delivery notes",
+          labelModal: "Tambah pengiriman barang",
+          labelBtnModal: "Tambah pengiriman barang",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -1218,8 +1218,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Tambah delivery notes item",
-          labelBtnModal: "Tambah delivery notes item",
+          labelModal: "Tambah pengiriman barang item",
+          labelBtnModal: "Tambah pengiriman barang item",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

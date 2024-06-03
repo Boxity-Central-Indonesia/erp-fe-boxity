@@ -38,7 +38,7 @@ export const ReadProccesActivity = ({
   useEffect(() => {
     setDataHeading([
       {
-        label: "Tambah process activity",
+        label: "Tambah proses aktifitas",
         icon: IconAdd(),
         heading: "Daftar Proses Aktifitas",
         information:

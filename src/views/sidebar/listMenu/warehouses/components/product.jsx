@@ -21,7 +21,7 @@ export const Produk = ({
 
     const [dataHeadingForLocations, setDataHeadingForLocations] = useState([
         {
-            label: "Tambah product",
+            label: "Tambah produk",
             icon: IconAdd(),
             eventToggleModal: handleCreateProduk,
         }

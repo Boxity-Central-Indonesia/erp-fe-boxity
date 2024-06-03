@@ -392,7 +392,7 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: defaultEdit === true ? "Tambah company" : "Add",
+                label: defaultEdit === true ? "Tambah perusahaan" : "Add",
                 icon: IconAdd(),
                 heading: "Daftar perusahaan",
                 information:

@@ -253,7 +253,7 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: "Tambah account",
+                label: "Tambah akun",
                 icon: IconAdd(),
                 heading: "Daftar Akun",
                 information:
@@ -274,7 +274,7 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah category",
+                label: "Tambah kategori",
                 icon: IconAdd(),
                 heading: "Daftar Kategori",
                 information:
@@ -320,7 +320,7 @@ export const CRUD = () => {
       setDataHeading([
         {
           label:
-            param === "accounts" ? "Tambah accounts" : "Tambah transaction",
+            param === "accounts" ? "Tambah akuns" : "Tambah transaksi",
           icon: IconAdd(),
           heading: param === "accounts" ? "Accounts" : "Transactions" + " list",
           information:
@@ -378,8 +378,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Tambah account",
-          labelBtnModal: "Tambah account",
+          labelModal: "Tambah akun",
+          labelBtnModal: "Tambah akun",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -399,8 +399,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "lg",
-          labelModal: "Tambah category",
-          labelBtnModal: "Tambah category",
+          labelModal: "Tambah kategori",
+          labelBtnModal: "Tambah kategori",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
