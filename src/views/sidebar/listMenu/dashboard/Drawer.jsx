@@ -25,7 +25,7 @@ export const Drawer = ({
     ? dataDrawer.products.map((item) => ({
         id: item.id,
         name: item.name,
-        qty: item.quantity || 0 + " pcs",
+        qty: item.quantity_pesanan + " Pcs",
         "harga satuan": new Intl.NumberFormat("id-ID", {
           style: "currency",
           currency: "IDR",
@@ -207,7 +207,7 @@ export const Drawer = ({
                   dataProducts.map((item) => (
                     <Table.Row
                       key={item.id}
-                      className="bg-white dark:border-gray-700 dark:bg-gray-800 border-b"
+                      className="bg-white border-b dark:border-gray-700 dark:bg-gray-800"
                     >
                       {Object.keys(item)
                         .filter((key) => key !== "id")
@@ -215,7 +215,7 @@ export const Drawer = ({
                         .map((key) => (
                           <Table.Cell
                             key={uniqueId}
-                            className="whitespace-nowrap capitalize font-medium text-gray-900 dark:text-white"
+                            className="font-medium text-gray-900 capitalize whitespace-nowrap dark:text-white"
                           >
                             {item[key]}
                           </Table.Cell>
@@ -243,7 +243,7 @@ export const Drawer = ({
         tabIndex="-1"
         aria-labelledby="drawer-right-label"
       >
-        <div className="flex justify-between items-center my-4">
+        <div className="flex items-center justify-between my-4">
           <h5
             id="drawer-right-label"
             className="inline-flex items-center text-xl font-semibold dark:text-gray-400"
