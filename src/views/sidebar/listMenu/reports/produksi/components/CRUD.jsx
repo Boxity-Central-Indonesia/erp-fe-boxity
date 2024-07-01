@@ -127,8 +127,8 @@ export const CRUD = () => {
   const CREATE = () => {
     const handleCreate = () => {
       setDataModal({
-        labelModal: "Tambah account",
-        labelBtnModal: "Tambah account",
+        labelModal: "Tambah akun",
+        labelBtnModal: "Tambah akun",
         labelBtnSecondaryModal: "Back",
         handleBtn: () => create(),
       });

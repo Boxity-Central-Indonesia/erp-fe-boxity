@@ -88,32 +88,34 @@ export const OrderDetail = ({
 
   useEffect(() => {
     const getData = async () => {
-      try {
-        const response = await getApiData(
-          "processing-activities/by-order/" + data?.id
-        );
-        if (response.status === 200) {
-          const newData = response.data
-            .filter((item) => item.activity_type === "weighing")
-            .map((item) => {
-              const formattedDetails = formatDetails(item.details);
-              return {
-                id: item.id,
-                "kode order": item.kodeOrder,
-                nama: item.product_name,
-                deskripsi: (
-                  <div dangerouslySetInnerHTML={{ __html: formattedDetails }} />
-                ),
-                "waktu timbang": item.created_at,
-              };
-            });
-          setDataTimbangan(newData);
-        } else if (response.status === 404) {
+     if(data?.id){
+        try {
+          const response = await getApiData(
+            "processing-activities/by-order/" + data?.id
+          );
+          if (response.status === 200) {
+            const newData = response.data
+              .filter((item) => item.activity_type === "weighing")
+              .map((item) => {
+                const formattedDetails = formatDetails(item.details);
+                return {
+                  id: item.id,
+                  "kode order": item.kodeOrder,
+                  nama: item.product_name,
+                  deskripsi: (
+                    <div dangerouslySetInnerHTML={{ __html: formattedDetails }} />
+                  ),
+                  "waktu timbang": item.created_at,
+                };
+              });
+            setDataTimbangan(newData);
+          } else if (response.status === 404) {
+            setDataTimbangan([]);
+          }
+        } catch (error) {
           setDataTimbangan([]);
         }
-      } catch (error) {
-        setDataTimbangan([]);
-      }
+     }
     };
 
     // Function to format details
@@ -375,7 +377,7 @@ export const OrderDetail = ({
       <h2 className="mb-4 text-xl rounded font-medium dark:text-white">
           Timbangan
       </h2>       
-      <div className="bg-white rounded px-1 mb-16">   
+      <div className="bg-white rounded px-1 mb-24">   
         <div>
           <TabelForDetail
             data={dataTimbangan}

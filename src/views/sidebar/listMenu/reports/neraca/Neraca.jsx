@@ -43,7 +43,7 @@ export const Neraca = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Balance Sheet Report",
+      heading: "Laporan Neraca",
       eventToggleModal: print,
     },
   ]);
@@ -57,6 +57,7 @@ export const Neraca = () => {
         dataHeading={dataHeading}
         setLoading={setLoading}
         setRefresh={setRefresh}
+        usePageDetail={true}
       />
     </>
   );

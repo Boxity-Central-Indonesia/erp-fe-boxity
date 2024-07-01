@@ -49,7 +49,7 @@ export const Hutang = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Payables Report",
+      heading: "Laporan Hutang",
       eventToggleModal: downloadReport,
     },
   ]);
@@ -98,6 +98,7 @@ export const Hutang = () => {
         handleEdit={handleEdit}
         setLoading={setLoading}
         setRefresh={setRefresh}
+        useReportCondition={true}
       />
     </>
   );

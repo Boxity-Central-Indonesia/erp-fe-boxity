@@ -392,11 +392,11 @@ export const CRUD = () => {
             setData(() => newData);
             setDataHeading([
               {
-                label: defaultEdit === true ? "Tambah company" : "Add",
+                label: defaultEdit === true ? "Tambah perusahaan" : "Add",
                 icon: IconAdd(),
-                heading: "Company list",
+                heading: "Daftar perusahaan",
                 information:
-                  "A company list is a directory or database of companies, often organized by industry, location, size, or other relevant criteria.  It's valuable for finding potential partners, suppliers, customers, or competitors. Company lists can also help  with market research, job searches, and investment opportunities.  Depending on the platform, you may be able to filter company lists, view company profiles with contact information, and get insights into their financial performance.",
+                  "Daftar perusahaan adalah direktori atau database perusahaan, sering kali disusun berdasarkan industri, lokasi, ukuran, atau kriteria relevan lainnya. Ini berharga untuk menemukan calon mitra, pemasok, pelanggan, atau pesaing. Daftar perusahaan juga dapat membantu riset pasar, pencarian kerja, dan peluang investasi. Tergantung pada platformnya, Anda mungkin dapat memfilter daftar perusahaan, melihat profil perusahaan dengan informasi kontak, dan mendapatkan wawasan tentang kinerja keuangan mereka.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
               },
@@ -437,9 +437,9 @@ export const CRUD = () => {
           {
             label: "Add",
             icon: IconAdd(),
-            heading: "Company list",
+            heading: "Daftar perusahaan",
             information:
-              "A company list is a directory or database of companies, often organized by industry, location, size, or other relevant criteria.  It's valuable for finding potential partners, suppliers, customers, or competitors. Company lists can also help  with market research, job searches, and investment opportunities.  Depending on the platform, you may be able to filter company lists, view company profiles with contact information, and get insights into their financial performance.",
+              "A Daftar perusahaan is a directory or database of companies, often organized by industry, location, size, or other relevant criteria.  It's valuable for finding potential partners, suppliers, customers, or competitors. Daftar perusahaans can also help  with market research, job searches, and investment opportunities.  Depending on the platform, you may be able to filter Daftar perusahaans, view company profiles with contact information, and get insights into their financial performance.",
             eventToggleModal: handleCreate,
             onclick: handleClickHeading,
             showNavHeading: false,

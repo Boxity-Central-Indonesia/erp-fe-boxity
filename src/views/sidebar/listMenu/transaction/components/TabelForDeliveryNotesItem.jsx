@@ -7,7 +7,6 @@ export const TabelForDeliveryNoteItem = ({
   dataTabelDeliveryNotes,
   setDataTabelDeliveryNotes,
 }) => {
-  const [editingItemId, setEditingItemId] = useState(null);
   const [rowCount, setRowCount] = useState(dataTabelDeliveryNotes.length);
   const { globalColor } = useColor();
 
@@ -23,7 +22,6 @@ export const TabelForDeliveryNoteItem = ({
   };
 
   const handleDelete = (index) => {
-    console.log("okeee");
     const newData = dataTabelDeliveryNotes.filter((_, i) => i !== index);
     localStorage.setItem("dataDeliveryNotesItem", JSON.stringify(newData));
     setDataTabelDeliveryNotes(newData);
@@ -37,10 +35,6 @@ export const TabelForDeliveryNoteItem = ({
     ];
     setDataTabelDeliveryNotes(newData);
     setRowCount((prevCount) => prevCount + 1);
-  };
-
-  const Save = () => {
-    setEditingItemId(null);
   };
 
   return (
@@ -113,7 +107,7 @@ export const TabelForDeliveryNoteItem = ({
             onClick={handleAddRow}
             className="w-full cursor-pointer bg-white dark:border-gray-700 dark:bg-gray-800 border-b hover:bg-gray-100"
           >
-            <Table.Cell colSpan={3} className="py-2">
+            <Table.Cell colSpan={4} className="py-2">
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white mx-auto cursor-pointer"
                 aria-hidden="true"
@@ -143,7 +137,7 @@ const QtyInput = ({ value, onChange }) => {
       value={value}
       name="quantity" // Corrected the name attribute
       onChange={onChange}
-      className="border-none w-20 h-7 px-0"
+      className="border-none focus:ring-black w-20 h-7 px-0"
     />
   );
 };

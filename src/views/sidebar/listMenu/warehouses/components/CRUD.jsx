@@ -522,11 +522,11 @@ export const CRUD = () => {
             setUsePageDetail(true)
             setDataHeading([
               {
-                label: "Tambah warehouses",
+                label: "Tambah gudang",
                 icon: IconAdd(),
-                heading: "Warehouses list",
+                heading: "Daftar gudang",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -544,11 +544,11 @@ export const CRUD = () => {
             setUsePageDetail(false)
             setDataHeading([
               {
-                label: "Tambah warehouses",
+                label: "Tambah gudang",
                 icon: IconAdd(),
-                heading: "Warehouses list",
+                heading: "Daftar gudang",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -587,15 +587,15 @@ export const CRUD = () => {
         {
           label:
             param === "warehouses"
-              ? "Tambah warehouses"
-              : "Tambah warehouse locations",
+              ? "Tambah gudang"
+              : "Tambah lokasi gudangs",
           icon: IconAdd(),
           heading:
             param === "warehouses"
-              ? "Warehouses list"
-              : "Warehouse Locations list",
+              ? "Daftar gudang"
+              : "Daftar lokasi gudang",
           information:
-            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+            "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,
@@ -872,29 +872,31 @@ export const CRUD = () => {
     const handleEdit = async (param) => {
       const id = param.textContent;
       if (path === "warehouses") {
-        const getSelectKategory = async () => {
-          const { data, status } = await getApiData("product-categories");
-          if (status === 200) {
-            const newData = data.map((item) => ({
-              id: item.id,
-              name: item.name,
-            }));
-            setDataCategorySelect(newData);
+        if(id){
+          const getSelectKategory = async () => {
+            const { data, status } = await getApiData("product-categories");
+            if (status === 200) {
+              const newData = data.map((item) => ({
+                id: item.id,
+                name: item.name,
+              }));
+              setDataCategorySelect(newData);
+            }
+          };
+          getSelectKategory();
+          setDefaultEdit(false)
+          try {
+            const { data, status } = await getApiData(path + "/" + id.trim());
+            if (status === 200) {
+              setDataDetailWarehouses(() => data)
+  
+              localStorage.setItem('idWarehouse', data.warehouse.id)
+  
+              setIdDelete(data.warehouse.id);
+            }
+          } catch (error) {
+            console.log(error);
           }
-        };
-        getSelectKategory();
-        setDefaultEdit(false)
-        try {
-          const { data, status } = await getApiData(path + "/" + id.trim());
-          if (status === 200) {
-            setDataDetailWarehouses(() => data)
-
-            localStorage.setItem('idWarehouse', data.warehouse.id)
-
-            setIdDelete(data.warehouse.id);
-          }
-        } catch (error) {
-          console.log(error);
         }
       } else if (path === "warehouse-locations") {
         setDataModal({

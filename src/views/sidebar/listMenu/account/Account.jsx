@@ -69,6 +69,7 @@ export const Account = () => {
         handleEdit={handleEdit}
         setLoading={setLoading}
         setRefresh={setRefresh}
+        usePageDetail={false}
         />
        </>
     )

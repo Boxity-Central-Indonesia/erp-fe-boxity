@@ -395,14 +395,14 @@ export const CRUD = () => {
               {
                 label: "Tambah vendors",
                 icon: IconAdd(),
-                heading: "Vendors list",
+                heading: "Daftar Vendor",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "vendors", label: "Vendors" },
+                  { path: "vendors", label: "Vendor" },
                   { path: "vendor-transactions", label: "Vendor Transaksi" },
                 ],
                 activeButton: path,
@@ -418,9 +418,9 @@ export const CRUD = () => {
               {
                 label: "Tambah vendors",
                 icon: IconAdd(),
-                heading: "Vendors list",
+                heading: "Daftar Vendor",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -442,9 +442,9 @@ export const CRUD = () => {
               {
                 label: "Tambah vendors",
                 icon: IconAdd(),
-                heading: "Vendors list",
+                heading: "Daftar Vendor",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -502,18 +502,18 @@ export const CRUD = () => {
           icon: IconAdd(),
           heading:
             param === "vendors"
-              ? "Vendors list"
+              ? "Daftar Vendor"
               : param === "vendor-transactions"
-              ? "Transaction list"
+              ? "Daftar Transaksi Vendor"
               : "Contacts list",
           information:
-            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+            "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,
           showNavHeading: true,
           dataNavHeading: [
-            { path: "vendors", label: "Vendors" },
+            { path: "vendors", label: "Vendor" },
             { path: "vendor-transactions", label: "Vendor Transaksi" },
           ],
           activeButton: param,
@@ -554,44 +554,46 @@ export const CRUD = () => {
         routes !== "vendors-edit" &&
         routes !== "vendor-contacts"
       ) {
-        setDefaultEdit(false);
-        localStorage.setItem("path", "vendors");
-        setDataHeading([
-          {
-            label: "Add",
-            icon: IconAdd(),
-            eventToggleModal: handleCreate,
-            onclick: handleClickHeading,
-            showNavHeading: false,
-          },
-        ]);
-        try {
-          const { status, data } = await getApiData("vendors/" + id);
-          if (status === 200) {
-            setDataDetailVendor(data);
-            setDataEdit({
-              name: data.name,
-              address: data.address,
-              phone_number: data.phone_number,
-              transaction_type: data.transaction_type,
-              email: data.email,
-              id: data.id,
-            });
-            setIdDelete(data.id);
-            localStorage.setItem("dataIdVendor", data.id);
-            try {
-              const { status, data } = await getApiData(
-                "vendors/" + id + "/contacts"
-              );
-              if (status === 200) {
-                setDataDetailVendorContact(data);
+        if(id){
+          setDefaultEdit(false);
+          localStorage.setItem("path", "vendors");
+          setDataHeading([
+            {
+              label: "Tambah kontak",
+              icon: IconAdd(),
+              eventToggleModal: handleCreate,
+              onclick: handleClickHeading,
+              showNavHeading: false,
+            },
+          ]);
+          try {
+            const { status, data } = await getApiData("vendors/" + id.trim());
+            if (status === 200) {
+              setDataDetailVendor(data);
+              setDataEdit({
+                name: data.name,
+                address: data.address,
+                phone_number: data.phone_number,
+                transaction_type: data.transaction_type,
+                email: data.email,
+                id: data.id,
+              });
+              setIdDelete(data.id);
+              localStorage.setItem("dataIdVendor", data.id);
+              try {
+                const { status, data } = await getApiData(
+                  "vendors/" + id + "/contacts"
+                );
+                if (status === 200) {
+                  setDataDetailVendorContact(data);
+                }
+              } catch (error) {
+                console.log(error);
               }
-            } catch (error) {
-              console.log(error);
             }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
         }
       } else if (path === "vendor-transactions") {
         setDataModal({
@@ -610,24 +612,26 @@ export const CRUD = () => {
           shipping_cost: "",
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
-        try {
-          const { data, status } = await getApiData(path + "/" + id);
-          if (status === 200) {
-            setDataEdit({
-              vendors_id: data.vendors_id,
-              amount: numberToCurrency(data.amount),
-              product_id: data.product_id,
-              unit_price: numberToCurrency(data.unit_price),
-              total_price: numberToCurrency(data.total_price),
-              taxes: data.taxes,
-              shipping_cost: data.shipping_cost,
-              id: data.id,
-            });
-
-            setIdDelete(data.id);
+        if(id){
+          try {
+            const { data, status } = await getApiData(path + "/" + id.trim());
+            if (status === 200) {
+              setDataEdit({
+                vendors_id: data.vendors_id,
+                amount: numberToCurrency(data.amount),
+                product_id: data.product_id,
+                unit_price: numberToCurrency(data.unit_price),
+                total_price: numberToCurrency(data.total_price),
+                taxes: data.taxes,
+                shipping_cost: data.shipping_cost,
+                id: data.id,
+              });
+  
+              setIdDelete(data.id);
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
         }
       } else if (routes === "vendors-edit") {
         localStorage.setItem("path", "vendors");

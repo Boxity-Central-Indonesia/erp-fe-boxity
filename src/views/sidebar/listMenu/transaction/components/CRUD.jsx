@@ -63,6 +63,7 @@ export const CRUD = () => {
   const [dataHeadingForProduct, setDataHeadingForProduct] = useState([{}]);
   const [dataHeadingForInvoices, setDataHeadingForInvoices] = useState([{}]);
   const [usePageDetail, setUsePageDetail] = useState(false)
+  const [tab, setTab] = useState('orders')
 
   const [refBody, setRefBody] = useState({
     vendor_idRef: useRef(),
@@ -791,11 +792,11 @@ export const CRUD = () => {
             console.log(error);
           }
          } else if(path === 'delivery-notes'){
-            try {
-              const {data, status} = await getApiData('delivery-notes/' + idDelete)
-              if(status === 200) {
-                setDataDetailDeliveryNotes(data)
+           try {
+             const {data, status} = await getApiData('delivery-notes/' + idDelete)
+             if(status === 200) {
                 setLoading(true)
+                setDataDetailDeliveryNotes(data)
               }
             } catch (error) {
               console.log(error);
@@ -861,7 +862,7 @@ export const CRUD = () => {
               {
                 label: "Tambah invoice",
                 icon: IconAdd(),
-                heading: "Invoices list",
+                heading: "Daftar Faktur Tagihan",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -884,7 +885,7 @@ export const CRUD = () => {
               {
                 label: "Tambah payment",
                 icon: IconAdd(),
-                heading: "Payments list",
+                heading: "Daftar Pembayaran",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -929,7 +930,7 @@ export const CRUD = () => {
               {
                 label: "Tambah Delivery note",
                 icon: IconAdd(),
-                heading: "Good Delivery notes list",
+                heading: "Good Daftar Pengiriman Barang",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -952,24 +953,6 @@ export const CRUD = () => {
     }, [refresh]);
 
     useEffect(() => {
-      const getDataOrders = async () => {
-        try {
-          const { data, status } = await getApiData("orders");
-          if (status === 200) {
-            const newData = data
-              .filter((item) => item.order_status == "Completed") // Filter item dengan status bukan "Completed"
-              .map((item) => ({
-                id: item.id,
-                name: item.kode_order,
-              }));
-            setDataOrdersSelect(newData);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      getDataOrders();
-
       const getDataInvoice = async () => {
         try {
           const { data, status } = await getApiData("invoices");
@@ -1006,32 +989,49 @@ export const CRUD = () => {
       getDataGoodReceipts();
     }, [refresh]);
 
+    const getDataOrders = async () => {
+      try {
+        const { data, status } = await getApiData("orders");
+        if (status === 200) {
+          const newData = data
+            .filter((item) => item.order_status == "Completed") // Filter item dengan status bukan "Completed"
+            .map((item) => ({
+              id: item.id,
+              name: item.kode_order,
+            }));
+          setDataOrdersSelect(newData);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
     const handleClickHeading = async (param) => {
       setPath(param);
+      setTab(param)
       setDataHeading([
         {
           label:
             param === "orders"
-              ? "Tambah orders"
+              ? "Tambah pesanan"
               : param === "invoices"
-              ? "Tambah invoices"
+              ? "Tambah faktur tagihan"
               : param === "goods-receipt"
               ? "Tambah Goods Receipt"
               : param === "delivery-notes"
               ? "Tambah delivery note"
-              : "Tambah payments",
+              : "Tambah pembayaran",
 
           icon: IconAdd(),
           heading:
             param === "orders"
               ? "Manajemen Pesanan"
               : param === "invoices"
-              ? "Invoices list"
+              ? "Daftar Faktur Tagihan"
               : param === "goods-receipt"
               ? "Goods Receipt list"
               : param === "delivery-notes"
-              ? "Delivery notes list"
-              : "Payments list",
+              ? "Daftar Pengiriman Barang"
+              : "Daftar Pembayaran",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,
@@ -1060,6 +1060,7 @@ export const CRUD = () => {
             setSkeleton((prevSkeleton) => !prevSkeleton);
             const newData = dataInvoices(data);
             setUsePageDetail(true)
+            getDataOrders();
             setData(newData);
           } else if (param === "payments") {
             setSkeleton((prevSkeleton) => !prevSkeleton);
@@ -1085,28 +1086,437 @@ export const CRUD = () => {
     return { data, handleClickHeading };
   };
 
-  const EDIT = () => {
-    const handleEdit = async (param, routes, param2) => {
-      if (path === "orders" && defaultEdit === true) {
+  const CREATE = () => {
+    const handleCreate = async (param) => {
+      if (param === "orders") {
+        setDataEdit({
+          customer_id: "",
+          warehouse_id: "",
+          status: "",
+          details: "",
+          order_type: "",
+          products: "",
+        });
+        setValidationError({
+          customer_id: "",
+          warehouse_id: "",
+          status: "",
+          details: "",
+          order_type: "",
+          products: "",
+        });
+        setDataModal({
+          size: "3xl",
+          labelModal: "Tambah pesanan",
+          labelBtnModal: "Tambah pesanan",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+      } else if (param === "invoices") {
+        setDataEdit({
+          order_id: "",
+          invoice_date: "",
+          due_date: "",
+          status: "",
+        });
+        setValidationError({
+          order_id: "",
+          invoice_date: "",
+          due_date: "",
+          status: "",
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Tambah faktur tagihan",
+          labelBtnModal: "Tambah faktur tagihan",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "payments") {
+        setDataEdit({
+          invoice_id: "",
+          amount_paid: "",
+          payment_method: "",
+          payment_date: "",
+        });
+        setValidationError({
+          invoice_id: "",
+          amount_paid: "",
+          payment_method: "",
+          payment_date: "",
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Tambah pembayaran",
+          labelBtnModal: "Tambah pembayaran",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "products") {
+        setEditProduct(false);
+        setPath(param);
+        setDataEdit({
+          invoice_id: "",
+          amount_paid: "",
+          payment_method: "",
+          payment_date: "",
+        });
+        setValidationError({
+          invoice_id: "",
+          amount_paid: "",
+          payment_method: "",
+          payment_date: "",
+        });
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Tambah produks",
+          labelBtnModal: "Tambah produks",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "goods-receipt") {
+        setDataEdit({
+          order_id: "",
+          warehouse_id: "",
+        });
+        setValidationError({});
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Tambah good receipt",
+          labelBtnModal: "Tambah good receipt",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "delivery-notes") {
+        setDataEdit({
+          order_id: "",
+          warehouse_id: "",
+          vendor_id: "",
+        });
+        setValidationError({});
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "3xl",
+          labelModal: "Tambah pengiriman barang",
+          labelBtnModal: "Tambah pengiriman barang",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "delivery-notes-item") {
+        setPath(param);
+        setDataEdit({
+          order_id: "",
+          product_id: "",
+          quantity: "",
+        });
+        setValidationError({});
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "lg",
+          labelModal: "Tambah pengiriman barang item",
+          labelBtnModal: "Tambah pengiriman barang item",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      } else if (param === "invoices-payments") {
         setDefaultEdit(false);
+        setPath(param);
+        setDataEdit({
+          order_id: "",
+          product_id: "",
+        });
+        setValidationError({});
+        setOpenModal((prevOpenModal) => !prevOpenModal);
+        setDataModal({
+          size: "2xl",
+          labelModal: "Tambah Payment",
+          labelBtnModal: "Tambah Payment",
+          labelBtnSecondaryModal: "Back",
+          handleBtn: create,
+        });
+      }
+    };
+
+    const create = async (param) => {
+      setLoading((prevLoading) => !prevLoading);
+      let dataBody = {};
+      if (param === "orders") {
+        dataBody = {
+          vendor_id: refBody.vendor_idRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          details: refBody.detailsRef.current.value,
+          status: "pending",
+          no_ref: refBody.no_refRef.current.value,
+          order_type: localStorage.getItem("order_type"),
+          products: JSON.parse(localStorage.getItem("dataTabelProducts")),
+        };
+
         try {
-          const { data, status } = await getApiData(
-            "orders/" + param.textContent.trim()
-          );
-          if (status === 200) {
-            setDataDetailOrders(() => data);
-            getFilterWarehouseByTypeTransaction(data.vendor.id)
-            setIdDelete(data.id);
-            setOrderId(data.id);
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            localStorage.removeItem("dataTabelProducts");
+            setDataTabelProducts([]);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "invoices") {
+        dataBody = {
+          order_id: refBody.order_idRef.current.value,
+          invoice_date: refBody.invoice_dateRef.current.value,
+          due_date: refBody.due_dateRef.current.value,
+          status: refBody.statusRef.current.value,
+        };
+
+        try {
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
           }
         } catch (error) {
           console.log(error);
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "payments") {
+        dataBody = {
+          invoice_id: refBody.invoice_idRef.current.value,
+          amount_paid: currencyToNumber(refBody.amount_paidRef.current.value),
+          payment_method: refBody.payment_methodRef.current.value,
+          payment_date: refBody.payment_dateRef.current.value,
+        };
+
+        try {
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "goods-receipt") {
+        dataBody = {
+          order_id: refBody.order_idRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          details: refBody.detailsRef.current.value,
+        };
+
+        try {
+          const store = await postApiData(param, dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "products") {
+        const product = JSON.parse(localStorage.getItem("dataTabelProducts"));
+
+        const dataBody = Object.fromEntries(
+          product.map((obj) => ["product", obj])
+        );
+
+        try {
+          const store = await postApiData(
+            "orders/" + refBody.order_idRef.current.value + "/add-product",
+            dataBody
+          );
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData(
+                "orders/" + refBody.order_idRef.current.value
+              );
+              if (status === 200) {
+                setDataDetailOrders(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "delivery-notes") {
+        dataBody = {
+          number: refBody.numberRef.current.value,
+          date: refBody.dateRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          vendor_id: refBody.vendor_idRef.current.value,
+          details: refBody.detailsRef.current.value,
+          deliveryNoteItems: JSON.parse(
+            localStorage.getItem("dataDeliveryNotesItem")
+          ),
+        };
+        try {
+          const { data, status } = await postApiData(
+            "delivery-notes",
+            dataBody
+          );
+          if (status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "delivery-notes-item") {
+        dataBody = {
+          order_id: parseInt(refBody.order_idRef.current.value),
+          product_id: parseInt(refBody.product_idRef.current.value),
+          quantity: parseInt(refBody.quantityRef.current.value),
+        };
+        console.log(dataBody);
+        try {
+          const { data, status } = await postApiData(
+            "delivery-notes/" +
+              localStorage.getItem("idDeliveriyNotes") +
+              "/items",
+            dataBody
+          );
+          if (status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData(
+                "delivery-notes/" + localStorage.getItem("idDeliveriyNotes")
+              );
+              if (status === 200) {
+                setDataEdit({});
+                setDataDetailDeliveryNotes(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else if (param === "invoices-payments") {
+        dataBody = {
+          invoice_id: refBody.invoice_idRef.current.value,
+          amount_paid: currencyToNumber(refBody.amount_paidRef.current.value),
+          payment_method: refBody.payment_methodRef.current.value,
+          payment_date: refBody.payment_dateRef.current.value,
+        };
+
+        // console.log(dataBody);
+
+        try {
+          const store = await postApiData("payments", dataBody);
+          if (store.status === 201) {
+            setPath("invoices");
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+            try {
+              const { data, status } = await getApiData(
+                "invoices/" + refBody.invoice_idRef.current.value
+              );
+              if (status === 200) {
+                setDetailInvoices(() => data);
+                setIdDelete(data.id);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      } else {
+        dataBody = {
+          vendor_id: refBody.vendor_idRef.current.value,
+          warehouse_id: refBody.warehouse_idRef.current.value,
+          details: refBody.detailsRef.current.value,
+          status: "pending",
+          order_type: localStorage.getItem("order_type"),
+          products: JSON.parse(localStorage.getItem("dataTabelProducts")),
+        };
+
+        console.log(dataBody);
+
+        try {
+          const store = await postApiData("orders/", dataBody);
+          if (store.status === 201) {
+            setPath(param);
+            setRefresh(!refresh);
+            setLoading((prevLoading) => !prevLoading);
+            setOpenModal((prevOpenModal) => !prevOpenModal);
+          }
+        } catch (error) {
+          setLoading((prevLoading) => !prevLoading);
+          setResponseError(error.response.data.errors);
+        }
+      }
+    };
+
+    return {
+      handleCreate,
+      create,
+    };
+  };
+
+  const EDIT = () => {
+    const handleEdit = async (param, routes, param2) => {
+      if (path === "orders" && defaultEdit === true) {
+        if(param.textContent.trim()){
+          setDefaultEdit(false);
+          try {
+            const { data, status } = await getApiData(
+              "orders/" + param.textContent.trim()
+            );
+            if (status === 200) {
+              setDataDetailOrders(() => data);
+              getFilterWarehouseByTypeTransaction(data.vendor.id)
+              setIdDelete(data.id);
+              setOrderId(data.id);
+            }
+          } catch (error) {
+            console.log(error);
+          }
         }
       } else if (
-        path === "orders" &&
+        tab === "orders" &&
         defaultEdit === false &&
         routes !== "products"
       ) {
+        setPath('orders')
+        localStorage.setItem("path", 'orders')
         setDataModal({
           labelModal: "Edit orders",
           labelBtnModal: "Save",
@@ -1119,6 +1529,7 @@ export const CRUD = () => {
           vendor_id: [],
         })
 
+        setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
           const { data, status } = await getApiData("orders/" + param);
           if (status === 200) {
@@ -1132,30 +1543,30 @@ export const CRUD = () => {
             });
           }
         } catch (error) {}
-
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-      } else if (path === "invoices" && defaultEdit === true) {
-        setDefaultEdit(false);
-        console.log('okeee');
-        try {
-          const { data, status } = await getApiData(
-            path + "/" + param.textContent.trim()
-          );
-          if (status === 200) {
-            setDetailInvoices(data);
-            // setDataEdit({
-            //   invoice_id: data.id
-            // })
-            setIdDelete(data.id);
+      } else if (tab === "invoices" && defaultEdit === true) {
+        if(param.textContent.trim()){
+          setDefaultEdit(false);
+          try {
+            const { data, status } = await getApiData(
+              path + "/" + param.textContent.trim()
+            );
+            if (status === 200) {
+              setDetailInvoices(data);
+              // setDataEdit({
+              //   invoice_id: data.id
+              // })
+              setIdDelete(data.id);
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
         }
       } else if (
-        path === "invoices" &&
+        tab === "invoices" &&
         defaultEdit === false &&
         routes !== "invoices-payments"
       ) {
+        localStorage.setItem('path', 'invoices')
         setDataModal({
           labelModal: "Edit invoices",
           labelBtnModal: "Save",
@@ -1164,7 +1575,7 @@ export const CRUD = () => {
         });
         setOpenModal((prevOpenModal) => !prevOpenModal);
         try {
-          const { data, status } = await getApiData("invoices/" + param.trim());
+          const { data, status } = await getApiData("invoices/" + param);
           if (status === 200) {
             setDataEdit({
               id: data.id,
@@ -1178,7 +1589,11 @@ export const CRUD = () => {
 
             setIdDelete(data.id);
           }
-        } catch (error) {}
+        } catch (error) {
+          console.log('====================================');
+          console.log(error);
+          console.log('====================================');
+        }
       } else if (path === "payments") {
         setDataModal({
           labelModal: "Update payments",
@@ -1207,80 +1622,6 @@ export const CRUD = () => {
             });
 
             setIdDelete(data.id);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      } else if (
-        path === "goods-receipt" &&
-        defaultEdit === true &&
-        routes !== "goods-receipt-items"
-      ) {
-        setDefaultEdit(false);
-        try {
-          const { data, status } = await getApiData(
-            "goods-receipt/" + param.textContent
-          );
-          if (status === 200) {
-            setDataEdit({});
-            setDataDetailGoodReceipt(() => data);
-            setIdDelete(data.id);
-            localStorage.setItem("idGoodReceipt", data.id);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      } else if (
-        routes === "goods-receipt" &&
-        defaultEdit === false &&
-        routes !== "goods-receipt-items"
-      ) {
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        localStorage.setItem("path", routes);
-        setPath(routes);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Edit good receipt",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        try {
-          const { data, status } = await getApiData("goods-receipt/" + param);
-          if (status === 200) {
-            setDataEdit({
-              id: data.id,
-              order_id: data.order_id,
-              warehouse_id: data.warehouse_id,
-              details: data.details,
-            });
-          }
-        } catch (error) {}
-      } else if (routes === "goods-receipt-items") {
-        setDefaultEdit(() => false);
-        setPath(routes);
-        localStorage.setItem("path", routes);
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "lg",
-          labelModal: "Edit good receipt item",
-          labelBtnModal: "Save",
-          labelBtnSecondaryModal: "Delete",
-          handleBtn: edit,
-        });
-        try {
-          const { data, status } = await getApiData(
-            "goods-receipts/" + idDelete + "/items/" + param2
-          );
-          if (status === 200) {
-            setDataEdit({
-              id: data.id,
-              product_id: data.product_id,
-              quantity_ordered: data.quantity_ordered,
-              quantity_received: data.quantity_received,
-              quantity_due: data.quantity_due,
-            });
-            setIdGoodReceiptItem(data.id);
           }
         } catch (error) {
           console.log(error);
@@ -1316,21 +1657,23 @@ export const CRUD = () => {
           console.log(error);
         }
       } else if (path === "delivery-notes" && defaultEdit === true) {
-        setDefaultEdit(false);
-        try {
-          const { data, status } = await getApiData(
-            "delivery-notes/" + param.textContent.trim()
-          );
-          if (status === 200) {
-            setDataEdit({});
-            setDataDetailDeliveryNotes(() => data);
-            setIdDelete(data.id);
-            // perbaiki ini kedepannya
-            localStorage.setItem("idDeliveriyNotes", data.id);
-            // perbaiki ini kedepannya
+        if(param.textContent.trim()){
+          setDefaultEdit(false);
+          try {
+            const { data, status } = await getApiData(
+              "delivery-notes/" + param.textContent.trim()
+            );
+            if (status === 200) {
+              setDataEdit({});
+              setDataDetailDeliveryNotes(() => data);
+              setIdDelete(data.id);
+              // perbaiki ini kedepannya
+              localStorage.setItem("idDeliveriyNotes", data.id);
+              // perbaiki ini kedepannya
+            }
+          } catch (error) {
+            console.log(error);
           }
-        } catch (error) {
-          console.log(error);
         }
       } else if (
         routes === "delivery-notes" &&
@@ -1434,7 +1777,7 @@ export const CRUD = () => {
     const edit = async () => {
       let dataBody = {};
       setLoading((prevLoading) => !prevLoading);
-      if (path === "orders" && localStorage.getItem("path") !== "products") {
+      if (localStorage.getItem("path") === "orders") {
         dataBody = {
           vendor_id: refBody.vendor_idRef.current.value,
           warehouse_id: refBody.warehouse_idRef.current.value,
@@ -1447,7 +1790,7 @@ export const CRUD = () => {
         // gunakan componen terpisah
         try {
           const { data, status } = await putApiData(
-            path + "/" + refBody.idRef.current.value,
+            "orders/" + refBody.idRef.current.value,
             dataBody
           );
           if (status === 201) {
@@ -1469,7 +1812,7 @@ export const CRUD = () => {
           setResponseError(error.response.data);
         }
         // gunakan componen terpisah
-      } else if (path === "invoices") {
+      } else if (localStorage.getItem("path") === 'invoices') {
         dataBody = {
           order_id: refBody.order_idRef.current.value,
           // total_amount: refBody.total_amountRef.current.value,
@@ -1830,411 +2173,6 @@ export const CRUD = () => {
       openModalDelete,
       closeModalDelete,
       handleDelete,
-    };
-  };
-
-  const CREATE = () => {
-    const handleCreate = async (param) => {
-      if (param === "orders") {
-        setDataEdit({
-          customer_id: "",
-          warehouse_id: "",
-          status: "",
-          details: "",
-          order_type: "",
-          products: "",
-        });
-        setValidationError({
-          customer_id: "",
-          warehouse_id: "",
-          status: "",
-          details: "",
-          order_type: "",
-          products: "",
-        });
-        setDataModal({
-          size: "2xl",
-          labelModal: "Tambah orders",
-          labelBtnModal: "Tambah orders",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-      } else if (param === "invoices") {
-        setDataEdit({
-          order_id: "",
-          invoice_date: "",
-          due_date: "",
-          status: "",
-        });
-        setValidationError({
-          order_id: "",
-          invoice_date: "",
-          due_date: "",
-          status: "",
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Tambah invoices",
-          labelBtnModal: "Tambah invoices",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      } else if (param === "payments") {
-        setDataEdit({
-          invoice_id: "",
-          amount_paid: "",
-          payment_method: "",
-          payment_date: "",
-        });
-        setValidationError({
-          invoice_id: "",
-          amount_paid: "",
-          payment_method: "",
-          payment_date: "",
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Tambah payments",
-          labelBtnModal: "Tambah payments",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      } else if (param === "products") {
-        setEditProduct(false);
-        setPath(param);
-        setDataEdit({
-          invoice_id: "",
-          amount_paid: "",
-          payment_method: "",
-          payment_date: "",
-        });
-        setValidationError({
-          invoice_id: "",
-          amount_paid: "",
-          payment_method: "",
-          payment_date: "",
-        });
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Tambah products",
-          labelBtnModal: "Tambah products",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      } else if (param === "goods-receipt") {
-        setDataEdit({
-          order_id: "",
-          warehouse_id: "",
-        });
-        setValidationError({});
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Tambah good receipt",
-          labelBtnModal: "Tambah good receipt",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      } else if (param === "delivery-notes") {
-        setDataEdit({
-          order_id: "",
-          warehouse_id: "",
-          vendor_id: "",
-        });
-        setValidationError({});
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Tambah delivery notes",
-          labelBtnModal: "Tambah delivery notes",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      } else if (param === "delivery-notes-item") {
-        setPath(param);
-        setDataEdit({
-          order_id: "",
-          product_id: "",
-          quantity: "",
-        });
-        setValidationError({});
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "lg",
-          labelModal: "Tambah delivery notes item",
-          labelBtnModal: "Tambah delivery notes item",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      } else if (param === "invoices-payments") {
-        setDefaultEdit(false);
-        setPath(param);
-        setDataEdit({
-          order_id: "",
-          product_id: "",
-        });
-        setValidationError({});
-        setOpenModal((prevOpenModal) => !prevOpenModal);
-        setDataModal({
-          size: "2xl",
-          labelModal: "Tambah Payment",
-          labelBtnModal: "Tambah Payment",
-          labelBtnSecondaryModal: "Back",
-          handleBtn: create,
-        });
-      }
-    };
-
-    const create = async (param) => {
-      setLoading((prevLoading) => !prevLoading);
-      let dataBody = {};
-      if (param === "orders") {
-        dataBody = {
-          vendor_id: refBody.vendor_idRef.current.value,
-          warehouse_id: refBody.warehouse_idRef.current.value,
-          details: refBody.detailsRef.current.value,
-          status: "pending",
-          no_ref: refBody.no_refRef.current.value,
-          order_type: localStorage.getItem("order_type"),
-          products: JSON.parse(localStorage.getItem("dataTabelProducts")),
-        };
-
-        try {
-          const store = await postApiData(param, dataBody);
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-            localStorage.removeItem("dataTabelProducts");
-            setDataTabelProducts([]);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (param === "invoices") {
-        dataBody = {
-          order_id: refBody.order_idRef.current.value,
-          invoice_date: refBody.invoice_dateRef.current.value,
-          due_date: refBody.due_dateRef.current.value,
-          status: refBody.statusRef.current.value,
-        };
-
-        try {
-          const store = await postApiData(param, dataBody);
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          console.log(error);
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (param === "payments") {
-        dataBody = {
-          invoice_id: refBody.invoice_idRef.current.value,
-          amount_paid: currencyToNumber(refBody.amount_paidRef.current.value),
-          payment_method: refBody.payment_methodRef.current.value,
-          payment_date: refBody.payment_dateRef.current.value,
-        };
-
-        try {
-          const store = await postApiData(param, dataBody);
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (param === "goods-receipt") {
-        dataBody = {
-          order_id: refBody.order_idRef.current.value,
-          warehouse_id: refBody.warehouse_idRef.current.value,
-          details: refBody.detailsRef.current.value,
-        };
-
-        try {
-          const store = await postApiData(param, dataBody);
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (param === "products") {
-        const product = JSON.parse(localStorage.getItem("dataTabelProducts"));
-
-        const dataBody = Object.fromEntries(
-          product.map((obj) => ["product", obj])
-        );
-
-        try {
-          const store = await postApiData(
-            "orders/" + refBody.order_idRef.current.value + "/add-product",
-            dataBody
-          );
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-            try {
-              const { data, status } = await getApiData(
-                "orders/" + refBody.order_idRef.current.value
-              );
-              if (status === 200) {
-                setDataDetailOrders(() => data);
-                setIdDelete(data.id);
-              }
-            } catch (error) {
-              console.log(error);
-            }
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (param === "delivery-notes") {
-        dataBody = {
-          number: refBody.numberRef.current.value,
-          date: refBody.dateRef.current.value,
-          warehouse_id: refBody.warehouse_idRef.current.value,
-          vendor_id: refBody.vendor_idRef.current.value,
-          details: refBody.detailsRef.current.value,
-          deliveryNoteItems: JSON.parse(
-            localStorage.getItem("dataDeliveryNotesItem")
-          ),
-        };
-        try {
-          const { data, status } = await postApiData(
-            "delivery-notes",
-            dataBody
-          );
-          if (status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (param === "delivery-notes-item") {
-        dataBody = {
-          order_id: parseInt(refBody.order_idRef.current.value),
-          product_id: parseInt(refBody.product_idRef.current.value),
-          quantity: parseInt(refBody.quantityRef.current.value),
-        };
-        console.log(dataBody);
-        try {
-          const { data, status } = await postApiData(
-            "delivery-notes/" +
-              localStorage.getItem("idDeliveriyNotes") +
-              "/items",
-            dataBody
-          );
-          if (status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-            try {
-              const { data, status } = await getApiData(
-                "delivery-notes/" + localStorage.getItem("idDeliveriyNotes")
-              );
-              if (status === 200) {
-                setDataEdit({});
-                setDataDetailDeliveryNotes(() => data);
-                setIdDelete(data.id);
-              }
-            } catch (error) {
-              console.log(error);
-            }
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else if (param === "invoices-payments") {
-        dataBody = {
-          invoice_id: refBody.invoice_idRef.current.value,
-          amount_paid: currencyToNumber(refBody.amount_paidRef.current.value),
-          payment_method: refBody.payment_methodRef.current.value,
-          payment_date: refBody.payment_dateRef.current.value,
-        };
-
-        // console.log(dataBody);
-
-        try {
-          const store = await postApiData("payments", dataBody);
-          if (store.status === 201) {
-            setPath("invoices");
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-            try {
-              const { data, status } = await getApiData(
-                "invoices/" + refBody.invoice_idRef.current.value
-              );
-              if (status === 200) {
-                setDetailInvoices(() => data);
-                setIdDelete(data.id);
-              }
-            } catch (error) {
-              console.log(error);
-            }
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      } else {
-        dataBody = {
-          vendor_id: refBody.vendor_idRef.current.value,
-          warehouse_id: refBody.warehouse_idRef.current.value,
-          details: refBody.detailsRef.current.value,
-          status: "pending",
-          order_type: localStorage.getItem("order_type"),
-          products: JSON.parse(localStorage.getItem("dataTabelProducts")),
-        };
-
-        console.log(dataBody);
-
-        try {
-          const store = await postApiData("orders/", dataBody);
-          if (store.status === 201) {
-            setPath(param);
-            setRefresh(!refresh);
-            setLoading((prevLoading) => !prevLoading);
-            setOpenModal((prevOpenModal) => !prevOpenModal);
-          }
-        } catch (error) {
-          setLoading((prevLoading) => !prevLoading);
-          setResponseError(error.response.data.errors);
-        }
-      }
-    };
-
-    return {
-      handleCreate,
-      create,
     };
   };
 

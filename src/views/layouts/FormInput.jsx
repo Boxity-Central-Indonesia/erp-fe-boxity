@@ -1,4 +1,3 @@
-import { fa } from "@faker-js/faker";
 import { useRef, useState } from "react";
 import Select from 'react-select'
 import AsyncSelect from 'react-select/async'
@@ -62,6 +61,7 @@ const FormInput = ({
               onChange={onChange}
               placeholder={placeholder}
               className={classNameInput}
+              disabled={disabled}
             />
             <p
               className={`text-red-500 mt-2 text-sm ${

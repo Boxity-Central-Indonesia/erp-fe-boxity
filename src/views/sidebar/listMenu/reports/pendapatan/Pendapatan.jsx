@@ -30,7 +30,7 @@ export const Pendapatan = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Revenue Report",
+      heading: "Laporan Pendapatan",
       eventToggleModal: print,
     },
   ]);
@@ -38,7 +38,7 @@ export const Pendapatan = () => {
   return (
     <>
       <Spinner loading={loading} />
-      <TabelComponent data={data} dataHeading={dataHeading} setLoading={setLoading} setRefresh={setRefresh}/>
+      <TabelComponent data={data} dataHeading={dataHeading} setLoading={setLoading} setRefresh={setRefresh} useReportCondition={true}/>
     </>
   );
 };

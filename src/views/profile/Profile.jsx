@@ -2,8 +2,11 @@ import { FotoProfile } from "./components/fotoProfile";
 import { InfoBisnsi } from "./components/infoBisnis/infoBisnis";
 import { InfoUser } from "./components/infoUser/infoUser";
 import { LogoBisnis } from "./components/logoBisnsi";
+import { useState } from "react";
 
 function Profile() {
+  const [profilePicture, setProfilePicture] = useState("");
+
   return (
     <section className="mb-20">
       <div className="grid grid-cols-1 px-4 pt-6 xl:grid-cols-4 xl:gap-4 dark:bg-gray-900">
@@ -13,8 +16,8 @@ function Profile() {
           </h1>
         </div>
         <div className="col-span-full xl:col-span-2">
-          <FotoProfile />
-          <InfoUser />
+          <FotoProfile setProfilePicture={setProfilePicture} profilePicture={profilePicture}/>
+          <InfoUser setProfilePicture={setProfilePicture}/>
         </div>
         <div className="col-span-full xl:col-span-2">
           <LogoBisnis />

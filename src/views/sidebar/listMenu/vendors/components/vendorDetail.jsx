@@ -29,9 +29,9 @@ export const VendorDetail = ({
       {
         label: "Tambah vendors",
         icon: IconAdd(),
-        heading: "Vendors list",
+        heading: "Daftar Vendor",
         information:
-          "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+          "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
         eventToggleModal: handleCreate,
         onclick: handleClickHeading,
         showNavHeading: true,
@@ -161,7 +161,7 @@ export const VendorDetail = ({
         <h2 className="text-xl font-medium dark:text-white mb-4">
               Daftar Kontak Vendor
         </h2>
-        <div className="bg-white rounded-md border shadow-md mb-16">
+        <div className="bg-white rounded-md border shadow-md mb-24">
           <div className="grid grid-cols-1 gap-5">
             <div>
               <TabelForDetail

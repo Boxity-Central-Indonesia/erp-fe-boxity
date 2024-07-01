@@ -29,7 +29,7 @@ export const LeadsProspek = () => {
     const [dataHeading, setDataHeading] = useState( [{
         label: 'Print report',
         icon: IconDownload(),
-        heading: 'Leads Report',
+        heading: 'Laporan Leads',
         eventToggleModal: downloadReport,
     }]);
 
@@ -37,7 +37,7 @@ export const LeadsProspek = () => {
     return (
         <>
         <Spinner loading={loading} />
-        < TabelComponent data={data}  dataHeading={dataHeading} setRefresh={setRefresh} setLoading={setLoading}/>
+        < TabelComponent data={data}  dataHeading={dataHeading} setRefresh={setRefresh} setLoading={setLoading} useReportCondition={true}/>
         </>
     )
 

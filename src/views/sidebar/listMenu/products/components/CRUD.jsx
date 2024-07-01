@@ -453,7 +453,7 @@ export const CRUD = () => {
       berat: (item.weight ?? 0.0) + " " + item.unit_of_measure,
       jumlah: item.stock + " pcs",
       "harga satuan": item.price,
-      "HPP Balance": item.price * item.stock,
+      "hpp balance": item.price * item.stock,
     }));
   };
 
@@ -499,11 +499,11 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah product",
+                label: "Tambah produk",
                 icon: IconAdd(),
-                heading: "Product list",
+                heading: "Daftar produk",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -522,11 +522,11 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah category",
+                label: "Tambah kategori",
                 icon: IconAdd(),
                 heading: "Categoires list",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -549,7 +549,7 @@ export const CRUD = () => {
                 icon: IconAdd(),
                 heading: "Prices list",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -572,7 +572,7 @@ export const CRUD = () => {
                 icon: IconAdd(),
                 heading: "Movements list",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -638,25 +638,25 @@ export const CRUD = () => {
         {
           label:
             param === "products"
-              ? "Tambah products"
+              ? "Tambah produks"
               : param === "product-categories"
-              ? "Tambah categories"
+              ? "Tambah kategori"
               : param === "product-prices"
-              ? "Tambah product prices"
+              ? "Tambah harga produk"
               : param === "product-movements"
-              ? "Tambah product movement"
+              ? "Tambah pergerakan produk"
               : "",
           icon: IconAdd(),
           heading:
             param === "products"
-              ? "Products"
+              ? "Daftar Produk"
               : param === "product-categories"
-              ? "Categories"
-              : param === "Product-prices"
-              ? "product prices"
-              : "Product movement" + " list",
+              ? "Kategori Produk"
+              : param === "product-prices"
+              ? "Harga Perubahan Produk"
+              : "Pantau Pergerakan",
           information:
-            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+            "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,
@@ -664,7 +664,7 @@ export const CRUD = () => {
           dataNavHeading: [
             { path: "product-categories", label: "Kategori Produk" },
             { path: "products", label: "Produk" },
-            { path: "product-prices", label: "Product Prices" },
+            { path: "product-prices", label: "Harga Perubahan Produk" },
             { path: "product-movements", label: "Pantau Pergerakan" },
           ],
           activeButton: param,
@@ -742,8 +742,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Tambah product",
-          labelBtnModal: "Tambah product",
+          labelModal: "Tambah produk",
+          labelBtnModal: "Tambah produk",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -760,8 +760,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "md",
-          labelModal: "Tambah category",
-          labelBtnModal: "Tambah category",
+          labelModal: "Tambah kategori",
+          labelBtnModal: "Tambah kategori",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -845,8 +845,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Tambah products",
-          labelBtnModal: "Tambah products",
+          labelModal: "Tambah produks",
+          labelBtnModal: "Tambah produks",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

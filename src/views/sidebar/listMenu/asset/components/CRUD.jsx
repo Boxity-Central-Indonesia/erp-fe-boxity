@@ -288,8 +288,8 @@ export const CRUD = () => {
                 label: "Tambah asset",
                 icon: IconAdd(),
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
-                heading: "Asset list",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
+                heading: "Daftar Asset",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -308,10 +308,10 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah category",
+                label: "Tambah kategori",
                 icon: IconAdd(),
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 heading: "Daftar Kategori",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
@@ -331,10 +331,10 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah category",
+                label: "Tambah kategori",
                 icon: IconAdd(),
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 heading: "Daftar Kategori",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
@@ -354,10 +354,10 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah category",
+                label: "Tambah kategori",
                 icon: IconAdd(),
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 heading: "Daftar Kategori",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
@@ -447,7 +447,7 @@ export const CRUD = () => {
               ? "Depresiatins"
               : "Conditions" + " list",
           information:
-            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+            "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter: param,

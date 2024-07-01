@@ -7,38 +7,11 @@ import { postApiData } from "../../function/Api";
 import { AppsForNavbar } from "../layouts/AppForNavbar";
 import Swal from "sweetalert2";
 import { displayToast } from "./displayToast";
+import { getProfile } from "../config/infoUser";
 function Navbar({ onToggleSidebar, setAuth }) {
   const [isOpenSideBar, setIsOpenSideBar] = useState();
   const navigate = useNavigate();
-  const [profile, setProfile] = useState({
-    name: "",
-    email: "",
-    img: "",
-    phone_number: "",
-    username: "",
-  });
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const { data, status } = await getApiData("profile");
-        if (status === 200) {
-          // Assuming the first item in data array is the user profile
-          const profileGet = data[0];
-          setProfile({
-            name: profileGet.nama_lengkap,
-            username: profileGet.user.username,
-            phone_number: profileGet.phone_number,
-            email: profileGet.user.email,
-            img: profileGet.photo_profile,
-          });
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, []);
-
+  const {dataUser} = getProfile()
   const dropdown = () => {
     return (
       <Dropdown
@@ -46,9 +19,9 @@ function Navbar({ onToggleSidebar, setAuth }) {
         inline
         label={
           <Avatar
-            alt={profile.name}
+            alt={dataUser?.[0]?.nama_lengkap}
             status="online"
-            img={profile.img}
+            img={dataUser?.[0]?.photo_profile}
             size="sm"
             rounded
           />
@@ -57,9 +30,9 @@ function Navbar({ onToggleSidebar, setAuth }) {
         <Dropdown.Header>
           <div className="flex items-center">
             <div className="ml-2">
-              <span className="block text-sm">{profile.name}</span>
+              <span className="block text-sm">{dataUser?.[0]?.nama_lengkap}</span>
               <span className="block truncate text-sm font-medium">
-                {profile.email}
+                {dataUser?.[0]?.user.email}
               </span>
             </div>
           </div>
@@ -249,9 +222,9 @@ function Navbar({ onToggleSidebar, setAuth }) {
           <div className="flex items-center gap-3">
             <AppsForNavbar />
             <div className="text-right">
-              <span className="block text-sm">{profile.name}</span>
+              <span className="block text-sm">{dataUser?.[0]?.nama_lengkap}</span>
               <span className="block truncate text-sm font-medium">
-                {profile.email}
+                {dataUser?.[0]?.user?.email}
               </span>
             </div>
             {dropdown()}

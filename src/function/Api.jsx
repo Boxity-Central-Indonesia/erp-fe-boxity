@@ -26,7 +26,7 @@ export const getApiData = async (endpoint) => {
 };
 
 // Fungsi untuk melakukan POST request
-export const postApiData = async (endpoint, data) => {
+export const postApiData = async (endpoint, data) => { 
   // try {
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}${endpoint}`,

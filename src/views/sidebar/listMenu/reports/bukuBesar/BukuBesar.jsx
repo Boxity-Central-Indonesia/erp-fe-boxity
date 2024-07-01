@@ -29,7 +29,7 @@ export const BukuBesar = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Ledger Report",
+      heading: "Laporan Buku Besar",
       eventToggleModal: print,
     },
   ]);
@@ -37,7 +37,7 @@ export const BukuBesar = () => {
   return (
     <>
       <Spinner loading={loading} />
-      <TabelComponent data={data} dataHeading={dataHeading} setRefresh={setRefresh} setLoading={setLoading}/>
+      <TabelComponent data={data} dataHeading={dataHeading} setRefresh={setRefresh} setLoading={setLoading} useReportCondition={true}/>
     </>
   );
 };

@@ -31,7 +31,7 @@ export const VendorTransaction = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Vendor Transaction Report",
+      heading: "Laporan Transaksi Vendor",
       eventToggleModal: downloadReport,
     },
   ]);
@@ -39,7 +39,7 @@ export const VendorTransaction = () => {
   return (
     <>
       <Spinner loading={loading}/>
-      <TabelComponent data={data} dataHeading={dataHeading} setRefresh={setRefresh} setLoading={setLoading}/>
+      <TabelComponent data={data} dataHeading={dataHeading} setRefresh={setRefresh} setLoading={setLoading} useReportCondition={true}/>
     </>
   );
 };

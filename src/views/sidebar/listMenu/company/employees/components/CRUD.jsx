@@ -435,17 +435,17 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah Employees",
+                label: "Tambah karyawan",
                 icon: IconAdd(),
-                heading: "Employes list",
+                heading: "Daftar karyawan",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
                 dataNavHeading: [
-                  { path: "employees", label: "Employees" },
-                  { path: "employee-categories", label: "Employee categories" },
+                  { path: "employees", label: "Karyawan" },
+                  { path: "employee-categories", label: "Kategori karyawan" },
                 ],
                 activeButton: path,
               },
@@ -456,11 +456,11 @@ export const CRUD = () => {
             setLoading(true)
             setDataHeading([
               {
-                label: "Tambah category",
+                label: "Tambah kategori",
                 icon: IconAdd(),
                 heading: "Daftar Kategori",
                 information:
-                  "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+                  "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
                 eventToggleModal: handleCreate,
                 onclick: handleClickHeading,
                 showNavHeading: true,
@@ -483,20 +483,20 @@ export const CRUD = () => {
       setPath(param);
       setDataHeading([
         {
-          label: param === "employees" ? "Tambah employees" : "Tambah category",
+          label: param === "employees" ? "Tambah karyawan" : "Tambah kategori",
           icon: IconAdd(),
           heading:
-            param === "employees" ? "Employees" : "Category employes" + " list",
+            param === "employees" ? "Daftar karyawan" : "Kategori karayawan",
           information:
-            "This is additional information about the content of this section. You can provide any relevant details or instructions here.",
+            "Ini adalah informasi tambahan tentang isi bagian ini. Anda dapat memberikan detail atau instruksi apa pun yang relevan di sini.",
           eventToggleModal: handleCreate,
           onclick: handleClickHeading,
           parameter:
             param === "employees" ? "employees" : "employee-categories",
           showNavHeading: true,
           dataNavHeading: [
-            { path: "employees", label: "Employees" },
-            { path: "employee-categories", label: "Employee categories" },
+            { path: "employees", label: "Karyawan" },
+            { path: "employee-categories", label: "Kategori karyawan" },
           ],
           activeButton: param,
         },
@@ -574,8 +574,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Tambah Employees",
-          labelBtnModal: "Tambah Employees",
+          labelModal: "Tambah karyawan",
+          labelBtnModal: "Tambah karyawan",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -592,8 +592,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "md",
-          labelModal: "Tambah category",
-          labelBtnModal: "Tambah category",
+          labelModal: "Tambah kategori",
+          labelBtnModal: "Tambah kategori",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });
@@ -643,8 +643,8 @@ export const CRUD = () => {
         setOpenModal((prevOpenModal) => !prevOpenModal);
         setDataModal({
           size: "6xl",
-          labelModal: "Tambah Employees",
-          labelBtnModal: "Tambah Employees",
+          labelModal: "Tambah karyawan",
+          labelBtnModal: "Tambah karyawan",
           labelBtnSecondaryModal: "Back",
           handleBtn: create,
         });

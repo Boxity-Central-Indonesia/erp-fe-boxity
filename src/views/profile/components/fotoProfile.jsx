@@ -3,30 +3,9 @@ import Button from "../../layouts/Button";
 import IconSave from "../../layouts/icons/IconSave";
 import { getApiData } from "../../../function/Api";
 
-export const FotoProfile = () => {
-  const [profilePicture, setProfilePicture] = useState("");
-
-  useEffect(() => {
-    const fetchProfilePicture = async () => {
-      try {
-        const { data, status } = await getApiData("profile");
-        if (
-          status === 200 &&
-          data &&
-          data.length > 0 &&
-          data[0].photo_profile
-        ) {
-          setProfilePicture(data[0].photo_profile);
-        }
-      } catch (error) {
-        console.error("Error fetching profile picture:", error);
-      }
-    };
-
-    fetchProfilePicture();
-  }, []);
-
-  console.log(profilePicture);
+export const FotoProfile = ({
+  profilePicture
+}) => {
 
   return (
     <>

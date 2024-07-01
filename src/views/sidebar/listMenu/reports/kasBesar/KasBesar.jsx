@@ -57,7 +57,7 @@ export const KasBesar = () => {
     {
       label: "Print report",
       icon: IconDownload(),
-      heading: "Cash Ledger Report",
+      heading: "Cash Laporan Buku Besar",
       eventToggleModal: downloadReport,
     },
   ]);
@@ -122,6 +122,7 @@ export const KasBesar = () => {
         data={data}
         dataHeading={dataHeading}
         handleEdit={handleEdit}
+        useReportCondition={true}
       />
     </>
   );
