@@ -1,5 +1,5 @@
 import Button from "../../../../layouts/Button";
-import { numberToCurrency, stringToDecimal } from "../../../../config/FormatCurrency";
+import { numberToCurrency, stringToDecimal, currencyToNumber } from "../../../../config/FormatCurrency";
 import { useEffect, useState } from "react";
 import { getApiData, putApiData } from "../../../../../function/Api";
 import { WarehousesLocations } from "./warehousesLocations";
@@ -89,10 +89,11 @@ export const DetailWarehouses = ({
             id: "",
         });
         setOpenModal(prevOpenModal => !prevOpenModal)
+        console.log(dataDetail.capacity,)
         setDataEdit({
             name: dataDetail.name,
             address: dataDetail.address,
-            capacity: dataDetail.capacity,
+            capacity: stringToDecimal(dataDetail.capacity),
             description: dataDetail.description,
             id: dataDetail.id,
         })
