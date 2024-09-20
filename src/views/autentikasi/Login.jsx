@@ -39,8 +39,8 @@ const Login = ({ setAuth }) => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-  
+    setLoading(() => !loading);
+
     try {
       const response = await axios.post(
         import.meta.env.VITE_API_URL + "login",
@@ -53,37 +53,38 @@ const Login = ({ setAuth }) => {
             "X-CSRF-TOKEN": document
               .querySelector('meta[name="csrf-token"]')
               .getAttribute("content"),
-            "Access-Control-Allow-Origin": "*", // Tambahkan header ini
           },
-          withCredentials: true, // Jika Anda membutuhkan session atau cookie
         }
       );
-  
+
       setResponse(response.data);
-  
+
       if (response.data.status === 200) {
         Cookies.set("token", response.data.access_token, { secure: true, expires: 1 });
-        setAuth(true); 
+        // document.cookie = "token=" + response.data.access_token + ";secure;expires=" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toUTCString() + ";domain=" + import.meta.env.VITE_SESSION_URL + ";path=/";
+        setAuth(true); // Update auth state
         navigate("/");
       }
     } catch (error) {
       if (error.response && error.response.data.message) {
+        // Handle specific error messages from the API
         setValidationPassword(error.response.data.message);
+        setLoading(() => loading);
       } else {
+        // Handle generic errors
         setValidationPassword("An error occurred. Please try again.");
+        setLoading(() => loading);
       }
-      setLoading(false);
+      // setResponse(error.response.data)
     }
   };
-  
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div
         modal-backdrop=""
-        className={`${
-          loading ? `hidden` : `fixed z-10 inset-0`
-        } bg-gray-900 bg-opacity-50 dark:bg-opacity-80  flex items-center justify-center`}
+        className={`${loading ? `hidden` : `fixed z-10 inset-0`
+          } bg-gray-900 bg-opacity-50 dark:bg-opacity-80  flex items-center justify-center`}
       >
         {/* <Spinner className={`${loading ? `hidden` : ``}`} aria-label="Extra large spinner example" size="xl" /> */}
         <div role="status">
@@ -144,9 +145,8 @@ const Login = ({ setAuth }) => {
                   required=""
                 />
                 <p
-                  className={`${
-                    !!validationEmail ? `` : `hidden`
-                  } text-red-500 text-sm font-medium mt-2`}
+                  className={`${!!validationEmail ? `` : `hidden`
+                    } text-red-500 text-sm font-medium mt-2`}
                 >
                   {validationEmail}
                 </p>
@@ -167,9 +167,8 @@ const Login = ({ setAuth }) => {
                   required=""
                 />
                 <p
-                  className={`${
-                    !!validationPassword ? `` : `hidden`
-                  } text-red-500 text-sm font-medium mt-2`}
+                  className={`${!!validationPassword ? `` : `hidden`
+                    } text-red-500 text-sm font-medium mt-2`}
                 >
                   {validationPassword}
                 </p>
