@@ -87,11 +87,11 @@ export const DetailWarehouses = ({
             id: "",
         });
         setOpenModal(prevOpenModal => !prevOpenModal)
-        console.log(dataDetail.capacity,)
+        console.log(dataDetail.capacity);
         setDataEdit({
             name: dataDetail.name,
             address: dataDetail.address,
-            capacity: stringToDecimal(dataDetail.capacity),
+            capacity: dataDetail.capacity.toLocaleString(),
             description: dataDetail.description,
             id: dataDetail.id,
         })
