@@ -50,18 +50,13 @@ const Login = ({ setAuth }) => {
         },
         {
           withXSRFToken: true,
-          // headers: {
-          //   "X-CSRF-TOKEN": document
-          //     .querySelector('meta[name="csrf-token"]')
-          //     .getAttribute("content"),
-          // },
         }
       );
 
       setResponse(response.data);
 
       if (response.data.status === 200) {
-        Cookies.set("token", response.data.access_token, { secure: true, expires: 1 });
+        Cookies.set("token", response.data.access_token, { secure: true, expires: 1, domain: import.meta.env.VITE_SESSION_URL});
         // document.cookie = "token=" + response.data.access_token + ";secure;expires=" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toUTCString() + ";domain=" + import.meta.env.VITE_SESSION_URL + ";path=/";
         setAuth(true); // Update auth state
         navigate("/");
