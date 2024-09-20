@@ -49,11 +49,12 @@ const Login = ({ setAuth }) => {
           password: passwordRef.current.value,
         },
         {
-          headers: {
-            "X-CSRF-TOKEN": document
-              .querySelector('meta[name="csrf-token"]')
-              .getAttribute("content"),
-          },
+          withXSRFToken: true,
+          // headers: {
+          //   "X-CSRF-TOKEN": document
+          //     .querySelector('meta[name="csrf-token"]')
+          //     .getAttribute("content"),
+          // },
         }
       );
 
