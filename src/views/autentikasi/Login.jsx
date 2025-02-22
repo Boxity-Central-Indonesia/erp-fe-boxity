@@ -112,9 +112,8 @@ const Login = ({ setAuth }) => {
             {" "}
             <img
               src={import.meta.env.VITE_CLIENT_LOGO_DARK}
-              className="mr-3 h-5 md:h-12"
+              className="mr-3 h-3 md:h-12"
               alt="Logo image"
-              style="max-width:200px"
             />
           </div>
           {/* <p>PT Boxity Central Indonesia</p> */}
